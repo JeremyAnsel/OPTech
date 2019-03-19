@@ -1,0 +1,203 @@
+﻿<Window x:Class="OPTech.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPTech"
+        mc:Ignorable="d"
+        Title="OPTech v2.0 &lt;none&gt;"
+        Height="800" Width="1200"
+        MinHeight="700" MinWidth="800"
+        UseLayoutRounding="True"
+        WindowState="Maximized"
+        Closing="Window_Closing">
+    <DockPanel>
+        <!--<StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock Text="TEST" Margin="5 0" />
+            <Button x:Name="showDialog1Button" Margin="5 0" Content="Show MeshChoiceDialog" Click="showDialog1Button_Click" />
+            <Button x:Name="showDialog2Button" Margin="5 0" Content="Show ErrorListDialog" Click="showDialog2Button_Click" />
+            <Button x:Name="showDialog3Button" Margin="5 0" Content="Show StatusBarDialog" Click="showDialog3Button_Click" />
+            <Button x:Name="showDialog0Button" Margin="5 0" Content="Show Exception Message and Shutdown" Click="showDialog0Button_Click" />
+        </StackPanel>-->
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock Text="Page Rate: " />
+            <TextBlock x:Name="pageRateText" Text="0" />
+            <Separator />
+            <TextBlock Text="Clipboard: " />
+            <TextBlock x:Name="clipboardText" Text="" />
+        </StatusBar>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem x:Name="filemenu" Header="File">
+                <MenuItem x:Name="opznewmenu" Header="new .OPZ" Click="opznewmenu_Click" />
+                <MenuItem x:Name="opzopenmenu" Header="open .OPZ" Click="opzopenmenu_Click" />
+                <MenuItem x:Name="saveopzmenu" Header="save .OPZ" Click="saveopzmenu_Click" />
+                <MenuItem x:Name="saveopzasmenu" Header="save .OPZ as" Click="saveopzasmenu_Click" />
+                <MenuItem x:Name="optimportmenu" Header="import .OPT" Click="optimportmenu_Click" />
+                <MenuItem x:Name="dxfimportmenu" Header="import .DXF" Click="dxfimportmenu_Click" />
+                <MenuItem x:Name="objimportmenu" Header="import .OBJ" Click="objimportmenu_Click" />
+                <MenuItem x:Name="opzimportmenu" Header="import .OPZ" Click="opzimportmenu_Click" />
+                <MenuItem x:Name="dxfexportmenu" Header="export .DXF" Click="dxfexportmenu_Click" />
+                <MenuItem x:Name="optxwacreatemenu" Header="create .OPT (XWA)" Click="optxwacreatemenu_Click" />
+                <MenuItem x:Name="optxvtcreatemenu" Header="create .OPT (XvT)" Click="optxvtcreatemenu_Click" />
+            </MenuItem>
+            <MenuItem x:Name="calculatemenu" Header="Calculate">
+                <MenuItem x:Name="facenormalmenu" Header="Face Normals" Click="facenormalmenu_Click" />
+                <MenuItem x:Name="vertexnormalmenu" Header="Vertex Normals" Click="vertexnormalmenu_Click" />
+                <MenuItem x:Name="hitzonemenu" Header="Hitzones" Click="hitzonemenu_Click" />
+                <MenuItem x:Name="rotationmenu" Header="Transformations" Click="rotationmenu_Click" />
+                <MenuItem x:Name="texturecoordinatemenu" Header="Texture Coordinates" Click="texturecoordinatemenu_Click" />
+                <MenuItem x:Name="softwarevectorresmenu" Header="Software Vectors (resolution)" Click="softwarevectorresmenu_Click" />
+                <MenuItem x:Name="softwarevectorcompmenu" Header="Software Vectors (compatibility)" Visibility="Collapsed"  Click="softwarevectorcompmenu_Click" />
+            </MenuItem>
+            <MenuItem x:Name="fixmenu" Header="Fix">
+                <MenuItem x:Name="vertexordermenu" Header="Vertex Order" Click="vertexordermenu_Click" />
+                <MenuItem x:Name="quad2trimenu" Header="Quad2Tri" Click="quad2trimenu_Click" />
+                <MenuItem x:Name="tri2quadmenu" Header="Tri2Quad" Click="tri2quadmenu_Click" />
+                <MenuItem x:Name="coincidentvertexmenu" Header="Coincident Vertices" Click="coincidentvertexmenu_Click" />
+                <MenuItem x:Name="resethitzonesmenu" Header="Reset Hitzones" Click="resethitzonesmenu_Click" />
+            </MenuItem>
+            <MenuItem x:Name="optionmenu" Header="Options">
+                <MenuItem x:Name="colormenu" Header="Colors">
+                    <MenuItem x:Name="primaryselecttexmenu" Header="Primary Select (Textured)" Click="primaryselecttexmenu_Click" />
+                    <MenuItem x:Name="primaryselectwiremenu" Header="Primary Select (Wire)" Click="primaryselectwiremenu_Click" />
+                    <MenuItem x:Name="secondaryselecttexmenu" Header="Secondary Select (Textured)" Click="secondaryselecttexmenu_Click" />
+                    <MenuItem x:Name="secondaryselectwiremenu" Header="Secondary Select (Wire)" Click="secondaryselectwiremenu_Click" />
+                    <MenuItem x:Name="normalcolormenu" Header="Normals" Click="normalcolormenu_Click" />
+                    <MenuItem x:Name="softvector1colormenu" Header="Software Vectors (1)" Click="softvector1colormenu_Click" />
+                    <MenuItem x:Name="softvector2colormenu" Header="Software Vectors (2)" Click="softvector2colormenu_Click" />
+                    <MenuItem x:Name="hitzonemeshcolormenu" Header="Hitzones (Mesh)" Click="hitzonemeshcolormenu_Click" />
+                    <MenuItem x:Name="hitzonetargetcolormenu" Header="Hitzones (Target)" Click="hitzonetargetcolormenu_Click" />
+                    <MenuItem x:Name="rotationaxiscolormenu" Header="Transformations (Rotate)" Click="rotationaxiscolormenu_Click" />
+                    <MenuItem x:Name="rotationaimcolormenu" Header="Transformations (Translate)" Click="rotationaimcolormenu_Click" />
+                    <MenuItem x:Name="rotationdegreecolormenu" Header="Transformations (Scale)" Click="rotationdegreecolormenu_Click" />
+                </MenuItem>
+                <MenuItem x:Name="drawingmenu" Header="Drawing">
+                    <MenuItem x:Name="alldrawingmenu" Header="Show Back Faces" IsCheckable="True" Click="alldrawingmenu_Click" />
+                    <MenuItem x:Name="aaonmenu" Header="Enable Lines Antialiasing" IsCheckable="True" Click="aaonmenu_Click" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="infomenu" Header="Info">
+                <MenuItem x:Name="facecountmenu" Header="Face Count" Click="facecountmenu_Click" />
+                <MenuItem x:Name="errorcheckmenu" Header="Error Check" Click="errorcheckmenu_Click" />
+                <MenuItem x:Name="flattexturescheckmenu" Header="Check for Flat Textures" Click="flattexturescheckmenu_Click" />
+                <MenuItem x:Name="flattexturesselectmenu" Header="Select Flat Textures" Click="flattexturesselectmenu_Click" />
+                <MenuItem x:Name="modeldimmenu" Header="Model Dimensions" Click="modeldimmenu_Click" />
+            </MenuItem>
+            <MenuItem x:Name="helpmenu" Header="Help..." Click="helpmenu_Click" />
+        </Menu>
+        <DockPanel>
+            <Expander DockPanel.Dock="Right"
+                      ExpandDirection="Left"
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="History">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90" />
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Expander.Header>
+                <DockPanel>
+                    <UniformGrid DockPanel.Dock="Top" Rows="1">
+                        <Button x:Name="PushUndoStackButton" Content="Push" Click="PushUndoStackButton_Click" />
+                        <Button x:Name="RestoreUndoStackButton" Content="Restore" Click="RestoreUndoStackButton_Click" />
+                        <Button x:Name="ClearUndoStackButton" Content="Clear" Click="ClearUndoStackButton_Click" />
+                    </UniformGrid>
+                    <ListBox x:Name="UndoStackListBox" Width="150" ItemsSource="{x:Static local:UndoStack.Stack}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Item1}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Expander>
+            <TabControl DockPanel.Dock="Left" TabStripPlacement="Bottom">
+                <TabItem x:Name="geometryframe" Tag="geometry" ToolTip="Geometry" Margin="-2,-2,-1.8,0.2">
+                    <TabItem.Header>
+                        <Button x:Name="geometry" Click="geometry_Click">
+                            <Image Source="Images/edit_geometry.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:GeometryControl x:Name="frmgeometry" Width="500" />
+                </TabItem>
+                <TabItem x:Name="textureframe" Tag="texture" ToolTip="Texture">
+                    <TabItem.Header>
+                        <Button x:Name="texture" Click="texture_Click">
+                            <Image Source="Images/edit_textures.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:TextureControl x:Name="frmtexture" Width="500" />
+                </TabItem>
+                <TabItem x:Name="hitzoneframe" Tag="hitzone" ToolTip="Hitzone">
+                    <TabItem.Header>
+                        <Button x:Name="hitzone" Click="hitzone_Click">
+                            <Image Source="Images/edit_hitzones.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:HitzoneControl x:Name="frmhitzone" Width="500" />
+                </TabItem>
+                <TabItem x:Name="rotationframe" Tag="rotation" ToolTip="Transformation">
+                    <TabItem.Header>
+                        <Button x:Name="rotation" Click="rotation_Click">
+                            <Image Source="Images/edit_transformation.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:TransformationControl x:Name="frmtransformation" Width="500" />
+                </TabItem>
+                <TabItem x:Name="hardpointframe" Tag="hardpoint" ToolTip="Hardpoint">
+                    <TabItem.Header>
+                        <Button x:Name="hardpoint" Click="hardpoint_Click">
+                            <Image Source="Images/edit_hardpoints.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:HardpointControl x:Name="frmhardpoint" Width="500" />
+                </TabItem>
+                <TabItem x:Name="engineglowframe" Tag="engine glow" ToolTip="Engine Glow">
+                    <TabItem.Header>
+                        <Button x:Name="engineglow" Click="engineglow_Click">
+                            <Image Source="Images/edit_enginglow.ico" Width="40" Height="40" />
+                        </Button>
+                    </TabItem.Header>
+                    <local:EngineGlowControl x:Name="frmengineglow" Width="500" />
+                </TabItem>
+            </TabControl>
+            <DockPanel>
+                <ToolBarTray DockPanel.Dock="Top" IsLocked="True">
+                    <ToolBar x:Name="dispbar">
+                        <RadioButton x:Name="dispbar_highlevel" GroupName="dispbar_lodgroup" Tag="high level" ToolTip="High Level" IsChecked="True" Click="dispbar_highlevel_Click">
+                            <Image Width="40" Height="40" Source="Images/lod_high.ico" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_lowlevel" GroupName="dispbar_lodgroup" Tag="low level" ToolTip="Low Level" Click="dispbar_lowlevel_Click">
+                            <Image Width="40" Height="40" Source="Images/lod_low.ico" />
+                        </RadioButton>
+                        <Separator Width="10" Background="Transparent" />
+                        <RadioButton x:Name="dispbar_mesh" GroupName="dispbar_geogroup" Tag="mesh" ToolTip="Mesh" IsChecked="True" Click="dispbar_mesh_Click">
+                            <Image Width="40" Height="40" Source="Images/frmoptech_13FE.ico" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_face" GroupName="dispbar_geogroup" Tag="face" ToolTip="Face" Click="dispbar_face_Click">
+                            <Image Width="40" Height="40" Source="Images/frmoptech_171A.ico" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_vertex" GroupName="dispbar_geogroup" Tag="vertex" ToolTip="Vertex" Click="dispbar_vertex_Click">
+                            <Image Width="40" Height="40" Source="Images/frmoptech_1A36.ico" />
+                        </RadioButton>
+                        <Separator Width="10" Background="Transparent" />
+                        <RadioButton x:Name="dispbar_wireframe" GroupName="dispbar_rendergroup" Tag="wireframe" ToolTip="Wireframe" IsChecked="True" Click="dispbar_wireframe_Click">
+                            <Image Width="40" Height="40" Source="Images/display_wireframe.ico" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_texture" GroupName="dispbar_rendergroup" Tag="texture" ToolTip="Texture" Click="dispbar_texture_Click">
+                            <Image Width="40" Height="40" Source="Images/display_textured.ico" />
+                        </RadioButton>
+                        <Separator Width="10" Background="Transparent" />
+                        <RadioButton x:Name="dispbar_nonorm" GroupName="dispbar_normalgroup" Tag="no norm" ToolTip="Hide Normals" IsChecked="True" Click="dispbar_nonorm_Click">
+                            <Image Width="40" Height="40" Source="Images/frmoptech_206E.ico" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_norm" GroupName="dispbar_normalgroup" Tag="norm" ToolTip="Show Normals" Click="dispbar_norm_Click">
+                            <Image Width="40" Height="40" Source="Images/frmoptech_2396.ico" />
+                        </RadioButton>
+                    </ToolBar>
+                </ToolBarTray>
+                <local:RenderScreenControl x:Name="frmrenderscreen" />
+            </DockPanel>
+        </DockPanel>
+    </DockPanel>
+</Window>

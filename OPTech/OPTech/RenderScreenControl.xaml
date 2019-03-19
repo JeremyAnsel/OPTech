@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="OPTech.RenderScreenControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:gl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+             xmlns:local="clr-namespace:OPTech"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600"
+             UseLayoutRounding="True">
+    <GroupBox x:Name="renderframe" Header="Display">
+        <DockPanel>
+            <GroupBox x:Name="viewopframe" DockPanel.Dock="Bottom">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="10 5 0 0">
+                        <TextBlock Text="FG: " />
+                        <xctk:IntegerUpDown x:Name="fgversionctrl" ToolTip="Version" Minimum="0" Maximum="3" DefaultValue="0" Value="0" ValueChanged="fgversionctrl_ValueChanged" />
+                    </StackPanel>
+                    <UniformGrid DockPanel.Dock="Left" Columns="1" Margin="0 10 10 0">
+                        <RadioButton x:Name="cameraop0" GroupName="cameraop" IsChecked="True" Content="Rotate" Click="cameraop_Click" />
+                        <RadioButton x:Name="cameraop1" GroupName="cameraop" Content="Pan" Click="cameraop_Click" />
+                    </UniformGrid>
+                    <ToolBarTray IsLocked="True" Margin="10 5 10 0">
+                        <ToolBar x:Name="viewbar">
+                            <Button Tag="perspective" ToolTip="Perspective" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_perspective.ico" />
+                            </Button>
+                            <Button Tag="top" ToolTip="Top" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_top.ico" />
+                            </Button>
+                            <Button Tag="bottom" ToolTip="Bottom" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_bottom.ico" />
+                            </Button>
+                            <Button Tag="right" ToolTip="Right" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_right.ico" />
+                            </Button>
+                            <Button Tag="left" ToolTip="Left" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_left.ico" />
+                            </Button>
+                            <Button Tag="front" ToolTip="Front" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_front.ico" />
+                            </Button>
+                            <Button Tag="back" ToolTip="Back" Click="viewbar_Click">
+                                <Image Height="40" Width="40" Source="Images/view_back.ico" />
+                            </Button>
+                        </ToolBar>
+                    </ToolBarTray>
+                </DockPanel>
+            </GroupBox>
+            <gl:OpenGLControl x:Name="renderscreen"
+                              RenderContextType="FBO"
+                              Focusable="True"
+                              MouseDown="renderscreen_MouseDown"
+                              MouseUp="renderscreen_MouseUp"
+                              MouseMove="renderscreen_MouseMove"
+                              KeyUp="renderscreen_KeyUp"
+                              KeyDown="renderscreen_KeyDown"
+                              Initialized="renderscreen_Initialized"
+                              SizeChanged="renderscreen_SizeChanged"
+                              OpenGLInitialized="renderscreen_OpenGLInitialized"
+                              OpenGLDraw="renderscreen_OpenGLDraw" />
+        </DockPanel>
+    </GroupBox>
+</UserControl>

@@ -1,0 +1,81 @@
+OPZ version(v1.1)
+Mesh Quantity
+Texture Quantity
+For Each Mesh...	//Do not write these FOR statements or their corresponding NEXT
+	Mesh Name
+	LOD Quantity
+	Hardpoint Quantity
+	Engine Glow Quantity
+	Hitzone Type
+	Hitzone Explosion Type
+	Hitzone Span X,Y,Z
+	Hitzone Center X,Y,Z
+	Hitzone Min X,Y,Z
+	Hitzone Max X,Y,Z
+	Hitzone Target ID
+	Hitzone Target X,Y,Z
+	Rotation Pivot X,Y,Z
+	Rotation Axis X,Y,Z
+	Rotation Aim X,Y,Z
+	Rotation Degree X,Y,Z
+	For Each LOD...
+		LOD Name
+		Face Quantity
+		Cloaking Distance(km)
+		For Each Face...
+			Face Name
+			Vertex Coord0 X,Y,Z
+			Vertex Coord1 X,Y,Z
+			Vertex Coord2 X,Y,Z
+			Vertex Coord3 X,Y,Z
+			Vertex TexCoord0 U,V
+			Vertex TexCoord1 U,V
+			Vertex TexCoord2 U,V
+			Vertex TexCoord3 U,V
+			Vertex Normal0 I,J,K
+			Vertex Normal1 I,J,K
+			Vertex Normal2 I,J,K
+			Vertex Normal3 I,J,K
+			Face Normal I,J,K
+			Face Vector1 X,Y,Z
+			Face Vector2 X,Y,Z
+			Texture Name R(*.bmp)
+			Texture Name Y(*.bmp)
+			Texture Name B(*.bmp)
+			Texture Name G(*.bmp)
+		Next Face
+	Next LOD
+	For Each Hardpoint...
+		Hardpoint Name
+		Hardpoint Type
+		Hardpoint X,Y,Z
+	Next Hardpoint
+	For Each Engine Glow...
+		Engine Glow Name
+		Engine Glow Inner R,G,B,A
+		Engine Glow Outer R,G,B,A
+		Engine Glow X,Y,Z
+		Engine Glow Vector X,Y,Z
+		Engine Glow Direction1 X,Y,Z
+		Engine Glow Direction2 X,Y,Z
+		Engine Glow Direction3 X,Y,Z
+	Next Engine Glow
+Next Mesh
+For Each Texture...
+	Texture Name(*.bmp)
+	Transparency Filter Quantity
+	For Each Transparency Filter...
+		Filter R,G,B
+		Transparency Tolerance
+		Transparency Opacity
+	Next Transparency Filter
+	Illumination Filter Quantity
+	For Each Illumination Filter...
+		Filter R,G,B
+		Illumination Tolerance
+		Illumination Brightness
+	Next Illumination Filter
+Next Texture
+
+				
+		

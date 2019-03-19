@@ -1,0 +1,371 @@
+﻿<UserControl x:Class="OPTech.GeometryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OPTech"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="500"
+             UseLayoutRounding="True"
+             PreviewKeyDown="UserControl_PreviewKeyDown">
+    <GroupBox Header="Geometry">
+        <TabControl x:Name="geometrytab" TabStripPlacement="Bottom">
+            <TabItem x:Name="geometrysubframe" Tag="subgeometry" ToolTip="Geometry">
+                <TabItem.Header>
+                    <Button x:Name="subgeometry" Click="subgeometry_Click">
+                        <Image Source="Images/frmoptech_3F9E.ico" Height="40" Width="40" />
+                    </Button>
+                </TabItem.Header>
+                <GroupBox Header="Geometry">
+                    <TabControl x:Name="geometrysubframe_tab" TabStripPlacement="Bottom">
+                        <TabItem x:Name="geometrysubframe_mesh" Header="Mesh">
+                            <GroupBox Header="Mesh">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="5*" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <ListBox x:Name="meshlist"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="2"
+                                             Grid.Row="0"
+                                             ToolTip="Mesh List"
+                                             SelectionMode="Extended"
+                                             MouseDoubleClick="meshlist_MouseDoubleClick"
+                                             KeyUp="meshlist_KeyUp"
+                                             MouseUp="meshlist_MouseUp" />
+                                    <UniformGrid Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Columns="1">
+                                        <Button x:Name="meshassignbut" Margin="20 2" Content="Assign" Click="meshassignbut_Click" />
+                                        <Button x:Name="meshdeletebut" Margin="20 2" Content="Delete" Click="meshdeletebut_Click" />
+                                        <Button x:Name="meshmoverUp" Margin="20 2" Content="▲ Move Up" Click="meshmoverUp_Click"  />
+                                        <Button x:Name="meshmoverDown" Margin="20 2" Content="▼ Move Down" Click="meshmoverDown_Click" />
+                                        <Button x:Name="meshduplicatebut" Margin="20 2" Content="Duplicate" Click="meshduplicatebut_Click" />
+                                        <DockPanel>
+                                            <UniformGrid Columns="1" DockPanel.Dock="Left" Margin="5 0">
+                                                <Button Margin="1" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="meshmovetextCopy_Click" />
+                                                <Button Margin="1" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="meshmovetextPaste_Click" />
+                                            </UniformGrid>
+                                            <UniformGrid Rows="1">
+                                                <TextBox x:Name="meshmovex" Margin="1 5" Text="0" ToolTip="Move X" />
+                                                <TextBox x:Name="meshmovey" Margin="1 5" Text="0" ToolTip="Move Y" />
+                                                <TextBox x:Name="meshmovez" Margin="1 5" Text="0" ToolTip="Move Z" />
+                                                <Button x:Name="meshmovebut" Margin="1 5" Content="Move" Click="meshmovebut_Click" />
+                                            </UniformGrid>
+                                        </DockPanel>
+                                    </UniformGrid>
+                                    <CheckBox x:Name="meshvisiblecheck" Grid.Column="1" Grid.Row="1" Margin="20 10" Content="Visible" Click="meshvisiblecheck_Click" />
+                                    <TextBox x:Name="Xmeshtext" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="mesh position X" Background="#FFFFC0" PreviewKeyDown="Xmeshtext_PreviewKeyDown" LostFocus="Xmeshtext_LostFocus" />
+                                    <TextBox x:Name="Ymeshtext" Grid.Column="1" Grid.Row="2" Margin="10" ToolTip="mesh position Y" Background="#FFFFC0" PreviewKeyDown="Ymeshtext_PreviewKeyDown" LostFocus="Ymeshtext_LostFocus" />
+                                    <TextBox x:Name="Zmeshtext" Grid.Column="2" Grid.Row="2" Margin="10" ToolTip="mesh position Z" Background="#FFFFC0" PreviewKeyDown="Zmeshtext_PreviewKeyDown" LostFocus="Zmeshtext_LostFocus" />
+                                    <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="meshtextCopy_Click" />
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="meshtextPaste_Click" />
+                                    </StackPanel>
+                                    <TextBox x:Name="Xmeshangletext" Grid.Column="0" Grid.Row="3" Margin="10" ToolTip="mesh rotation X (°)" Background="#C0FFFF" PreviewKeyDown="Xmeshangletext_PreviewKeyDown" LostFocus="Xmeshangletext_LostFocus" />
+                                    <TextBox x:Name="Ymeshangletext" Grid.Column="1" Grid.Row="3" Margin="10" ToolTip="mesh rotation Y (°)" Background="#C0FFFF" PreviewKeyDown="Ymeshangletext_PreviewKeyDown" LostFocus="Ymeshangletext_LostFocus" />
+                                    <TextBox x:Name="Zmeshangletext" Grid.Column="2" Grid.Row="3" Margin="10" ToolTip="mesh rotation Z (°)" Background="#C0FFFF" PreviewKeyDown="Zmeshangletext_PreviewKeyDown" LostFocus="Zmeshangletext_LostFocus" />
+                                    <TextBox x:Name="Xmeshsizetext" Grid.Column="0" Grid.Row="4" Margin="10" ToolTip="mesh scale X (%)" Background="#C0C0FF" PreviewKeyDown="Xmeshsizetext_PreviewKeyDown" LostFocus="Xmeshsizetext_LostFocus" />
+                                    <TextBox x:Name="Ymeshsizetext" Grid.Column="1" Grid.Row="4" Margin="10" ToolTip="mesh scale Y (%)" Background="#C0C0FF" PreviewKeyDown="Ymeshsizetext_PreviewKeyDown" LostFocus="Ymeshsizetext_LostFocus" />
+                                    <TextBox x:Name="Zmeshsizetext" Grid.Column="2" Grid.Row="4" Margin="10" ToolTip="mesh scale Z (%)" Background="#C0C0FF" PreviewKeyDown="Zmeshsizetext_PreviewKeyDown" LostFocus="Zmeshsizetext_LostFocus" />
+                                    <TextBox x:Name="meshloddisttext" Grid.Column="1" Grid.Row="5" Margin="10" ToolTip="cloaking distance (km)" Background="#C0FFC0" GotFocus="meshloddisttext_GotFocus" PreviewKeyDown="meshloddisttext_PreviewKeyDown" LostFocus="meshloddisttext_LostFocus" />
+                                </Grid>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem x:Name="geometrysubframe_face" Header="Face">
+                            <GroupBox Header="Face">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="6*" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <ListBox x:Name="facelist"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="2"
+                                             Grid.Row="0"
+                                             ToolTip="Face List"
+                                             SelectionMode="Extended"
+                                             KeyUp="facelist_KeyUp"
+                                             MouseUp="facelist_MouseUp "/>
+                                    <UniformGrid Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Columns="1">
+                                        <Button x:Name="normalflipbut" Margin="20 2" Content="Flip Normal" Click="normalflipbut_Click" />
+                                        <Button x:Name="texturecoordinatebut" Margin="20 2" Content="Calculate&#xa;Texture Coordinates" Click="texturecoordinatebut_Click" />
+                                        <Button x:Name="faceassignbut" Margin="20 2" Content="Assign" Click="faceassignbut_Click" />
+                                        <Button x:Name="facedeletebut" Margin="20 2" Content="Delete" Click="facedeletebut_Click" />
+                                        <Button x:Name="faceduplicatebut" Margin="20 2" Content="Duplicate" Click="faceduplicatebut_Click" />
+                                        <Button x:Name="facesortindexbut" Margin="20 2" Content="Sort by Index" Click="facesortindexbut_Click" />
+                                        <Button x:Name="facesorttexbut" Margin="20 2" Content="Sort by Texture" Click="facesorttexbut_Click" />
+                                    </UniformGrid>
+                                    <TextBox x:Name="Xfacetext" Grid.Column="0" Grid.Row="1" Margin="10" ToolTip="face position X" Background="#FFFFC0" PreviewKeyDown="Xfacetext_PreviewKeyDown" LostFocus="Xfacetext_LostFocus" />
+                                    <TextBox x:Name="Yfacetext" Grid.Column="1" Grid.Row="1" Margin="10" ToolTip="face position Y" Background="#FFFFC0" PreviewKeyDown="Yfacetext_PreviewKeyDown" LostFocus="Yfacetext_LostFocus" />
+                                    <TextBox x:Name="Zfacetext" Grid.Column="2" Grid.Row="1" Margin="10" ToolTip="face position Z" Background="#FFFFC0" PreviewKeyDown="Zfacetext_PreviewKeyDown" LostFocus="Zfacetext_LostFocus" />
+                                    <StackPanel Grid.Column="3" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="facetextCopy_Click" />
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="facetextPaste_Click" />
+                                    </StackPanel>
+                                    <TextBox x:Name="Xfaceangletext" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="face rotation X (°)" Background="#C0FFFF" PreviewKeyDown="Xfaceangletext_PreviewKeyDown" LostFocus="Xfaceangletext_LostFocus" />
+                                    <TextBox x:Name="Yfaceangletext" Grid.Column="1" Grid.Row="2" Margin="10" ToolTip="face rotation Y (°)" Background="#C0FFFF" PreviewKeyDown="Yfaceangletext_PreviewKeyDown" LostFocus="Yfaceangletext_LostFocus" />
+                                    <TextBox x:Name="Zfaceangletext" Grid.Column="2" Grid.Row="2" Margin="10" ToolTip="face rotation Z (°)" Background="#C0FFFF" PreviewKeyDown="Zfaceangletext_PreviewKeyDown" LostFocus="Zfaceangletext_LostFocus" />
+                                    <TextBox x:Name="Xfacesizetext" Grid.Column="0" Grid.Row="3" Margin="10" ToolTip="face scale X (%)" Background="#C0C0FF" PreviewKeyDown="Xfacesizetext_PreviewKeyDown" LostFocus="Xfacesizetext_LostFocus" />
+                                    <TextBox x:Name="Yfacesizetext" Grid.Column="1" Grid.Row="3" Margin="10" ToolTip="face scale Y (%)" Background="#C0C0FF" PreviewKeyDown="Yfacesizetext_PreviewKeyDown" LostFocus="Yfacesizetext_LostFocus" />
+                                    <TextBox x:Name="Zfacesizetext" Grid.Column="2" Grid.Row="3" Margin="10" ToolTip="face scale Z (%)" Background="#C0C0FF" PreviewKeyDown="Zfacesizetext_PreviewKeyDown" LostFocus="Zfacesizetext_LostFocus" />
+                                    <TextBox x:Name="Ifacenormtext" Grid.Column="0" Grid.Row="4" Margin="10" ToolTip="I face normal" Background="#FFC0FF" IsReadOnly="True" />
+                                    <TextBox x:Name="Jfacenormtext" Grid.Column="1" Grid.Row="4" Margin="10" ToolTip="J face normal" Background="#FFC0FF" IsReadOnly="True" />
+                                    <TextBox x:Name="Kfacenormtext" Grid.Column="2" Grid.Row="4" Margin="10" ToolTip="K face normal" Background="#FFC0FF" IsReadOnly="True" />
+                                </Grid>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem x:Name="geometrysubframe_vertex" Header="Vertex">
+                            <GroupBox Header="Vertex">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <ListBox x:Name="Xvertexlist" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" ToolTip="X vertex coords" SelectionMode="Extended" KeyUp="Xvertexlist_KeyUp" MouseUp="Xvertexlist_MouseUp" />
+                                    <ListBox x:Name="Yvertexlist" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" ToolTip="Y vertex coords" SelectionMode="Extended" KeyUp="Yvertexlist_KeyUp" MouseUp="Yvertexlist_MouseUp" />
+                                    <ListBox x:Name="Zvertexlist" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" ToolTip="Z vertex coords" SelectionMode="Extended" KeyUp="Zvertexlist_KeyUp" MouseUp="Zvertexlist_MouseUp" />
+                                    <TextBox x:Name="Xvertextext" Grid.Column="0" Grid.Row="3" Margin="10" ToolTip="vertex position X" Background="#FFFFC0" PreviewKeyDown="Xvertextext_PreviewKeyDown" LostFocus="Xvertextext_LostFocus" />
+                                    <TextBox x:Name="Yvertextext" Grid.Column="1" Grid.Row="3" Margin="10" ToolTip="vertex position Y" Background="#FFFFC0" PreviewKeyDown="Yvertextext_PreviewKeyDown" LostFocus="Yvertextext_LostFocus" />
+                                    <TextBox x:Name="Zvertextext" Grid.Column="2" Grid.Row="3" Margin="10" ToolTip="vertex position Z" Background="#FFFFC0" PreviewKeyDown="Zvertextext_PreviewKeyDown" LostFocus="Zvertextext_LostFocus" />
+                                    <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="vertextextCopy_Click" />
+                                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="vertextextPaste_Click" />
+                                    </StackPanel>
+                                    <ListBox x:Name="Ivertnormlist" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3" ToolTip="I vertex normal coords" SelectionMode="Extended" KeyUp="Ivertnormlist_KeyUp" MouseUp="Ivertnormlist_MouseUp" />
+                                    <ListBox x:Name="Jvertnormlist" Grid.Column="1" Grid.Row="4" Grid.RowSpan="3" ToolTip="J vertex normal coords" SelectionMode="Extended" KeyUp="Jvertnormlist_KeyUp" MouseUp="Jvertnormlist_MouseUp" />
+                                    <ListBox x:Name="Kvertnormlist" Grid.Column="2" Grid.Row="4" Grid.RowSpan="3" ToolTip="K vertex normal coords" SelectionMode="Extended" KeyUp="Kvertnormlist_KeyUp" MouseUp="Kvertnormlist_MouseUp" />
+                                    <TextBox x:Name="Ivertnormtext" Grid.Column="0" Grid.Row="7" Margin="10" ToolTip="vertex normal I" Background="#FFC0FF" IsReadOnly="True" />
+                                    <TextBox x:Name="Jvertnormtext" Grid.Column="1" Grid.Row="7" Margin="10" ToolTip="vertex normal J" Background="#FFC0FF" IsReadOnly="True" />
+                                    <TextBox x:Name="Kvertnormtext" Grid.Column="2" Grid.Row="7" Margin="10" ToolTip="vertex normal K" Background="#FFC0FF" IsReadOnly="True" />
+                                </Grid>
+                            </GroupBox>
+                        </TabItem>
+                    </TabControl>
+                </GroupBox>
+            </TabItem>
+            <TabItem x:Name="texturesubframe" Tag="subtexture" ToolTip="Texture">
+                <TabItem.Header>
+                    <Button x:Name="subtexture" Click="subtexture_Click">
+                        <Image Source="Images/frmoptech_42BA.ico" Height="40" Width="40" />
+                    </Button>
+                </TabItem.Header>
+                <GroupBox Header="Texture">
+                    <TabControl x:Name="texturesubframe_tab" TabStripPlacement="Bottom">
+                        <TabItem x:Name="texturesubframe_face" Header="Face">
+                            <GroupBox Header="Face">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="3*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="3*" />
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3" BorderThickness="1" BorderBrush="Black" Background="#808080">
+                                        <Image x:Name="textureviewer" />
+                                    </Border>
+                                    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                                        <RadioButton x:Name="fgoffop" GroupName="fgop" Content="FG off" IsChecked="True" Click="fgoffop_Click" />
+                                        <RadioButton x:Name="fgonop" GroupName="fgop" Content="FG on" Click="fgonop_Click" />
+                                    </StackPanel>
+                                    <GroupBox x:Name="fgframe" Grid.Column="0" Grid.Row="1" Header="FG Color">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Column="0" Grid.Row="0">
+                                                <Rectangle Fill="Red" />
+                                                <RadioButton x:Name="redfgsel" GroupName="fgsel" Content="Red" IsChecked="True" Click="redfgsel_Click" />
+                                            </Grid>
+                                            <Grid Grid.Column="0" Grid.Row="1">
+                                                <Rectangle Fill="Yellow" />
+                                                <RadioButton x:Name="yellowfgsel" GroupName="fgsel" Content="Yellow" Click="yellowfgsel_Click" />
+                                            </Grid>
+                                            <Grid Grid.Column="0" Grid.Row="2">
+                                                <Rectangle Fill="Blue" />
+                                                <RadioButton x:Name="bluefgsel" GroupName="fgsel" Content="Blue" Click="bluefgsel_Click" />
+                                            </Grid>
+                                            <Grid Grid.Column="0" Grid.Row="3">
+                                                <Rectangle Fill="Green" />
+                                                <RadioButton x:Name="greenfgsel" GroupName="fgsel" Content="Green" Click="greenfgsel_Click" />
+                                            </Grid>
+                                        </Grid>
+                                    </GroupBox>
+                                    <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="2" Header="Stitching">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Button x:Name="topstitchbut" Grid.Column="0" Grid.Row="0" Content="Top/Bottom" Click="topstitchbut_Click" />
+                                            <Button x:Name="frontstitchbut" Grid.Column="0" Grid.Row="1" Content="Front/Back" Click="frontstitchbut_Click" />
+                                            <Button x:Name="sidestitchbut" Grid.Column="1" Grid.Row="1" Content="Side" Click="sidestitchbut_Click" />
+                                        </Grid>
+                                    </GroupBox>
+                                    <Grid Grid.Column="0" Grid.Row="3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Button x:Name="texhflipbut" Grid.Column="0" Grid.Row="0" Height="40" Width="40" ToolTip="Horizontal flip" Click="texhflipbut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_03F8.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Button x:Name="texvflipbut" Grid.Column="1" Grid.Row="0" Height="40" Width="40" ToolTip="Vertical flip" Click="texvflipbut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_0702.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Button x:Name="texcrotatebut" Grid.Column="0" Grid.Row="1" Height="40" Width="40" ToolTip="Clockwise rotate" Click="texcrotatebut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_0A0C.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Button x:Name="texccrotatebut" Grid.Column="1" Grid.Row="1" Height="40" Width="40" ToolTip="Counterclockwise rotate" Click="texccrotatebut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_0D16.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <TextBox x:Name="texanglerotatetext" Grid.Column="2" Grid.Row="0" Height="30" Width="50" Margin="5" Text="45" ToolTip="Angle" />
+                                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1">
+                                            <Button x:Name="texanglerotatebut"  Height="30" Width="40" Content="Rotate" ToolTip="Rotate Texture" Click="texanglerotatebut_Click" />
+                                            <Button x:Name="texstitchrotatebut" Height="30" Width="40" Content="Stitch" ToolTip="Stitching Rotate" Click="texstitchrotatebut_Click" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                        <Button x:Name="texzoominbut" Height="50" Width="50" Margin="5" ToolTip="Magnify" Click="texzoominbut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_1020.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <Button x:Name="texzoomoutbut" Height="50" Width="50" Margin="5" ToolTip="Multiply" Click="texzoomoutbut_Click">
+                                            <Button.Content>
+                                                <Image Source="Images/frmgeometry_132A.ico" />
+                                            </Button.Content>
+                                        </Button>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0">
+                                                <TextBox x:Name="texzoomtext" Height="25" Width="50" Margin="2" Text="2.0" ToolTip="Scale" />
+                                                <Button x:Name="texzoomhbut" Height="30" Width="30" Margin="2" ToolTip="Scale Horizontal" Click="texzoomhbut_Click">
+                                                    <Button.Content>
+                                                        <Image Source="Images/icon_H.bmp" />
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button x:Name="texzoomvbut" Height="30" Width="30" Margin="2" ToolTip="Scale Vertical" Click="texzoomvbut_Click">
+                                                    <Button.Content>
+                                                        <Image Source="Images/icon_V.bmp" />
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button x:Name="texzoomhvbut" Height="30" Width="30" Margin="2" ToolTip="Scale Horizontal/Vertical" Click="texzoomhvbut_Click">
+                                                    <Button.Content>
+                                                        <Image Source="Images/icon_HV.bmp" />
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Margin="0">
+                                                <TextBox x:Name="texmovetext" Height="25" Width="50" Margin="2" Text="0.5" ToolTip="Move" />
+                                                <Button x:Name="texmovehbut" Height="30" Margin="2" Content="Move H" ToolTip="Move Horizontal" Click="texmovehbut_Click" />
+                                                <Button x:Name="texmovevbut" Height="30" Margin="2" Content="Move V" ToolTip="Move Vertical" Click="texmovevbut_Click" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <TextBox x:Name="X1vectortext" Grid.Column="0" Grid.Row="4" ToolTip="X1 software vector" Background="#FFE0C0" GotFocus="X1vectortext_GotFocus" PreviewKeyDown="X1vectortext_PreviewKeyDown" LostFocus="X1vectortext_LostFocus" />
+                                    <TextBox x:Name="Y1vectortext" Grid.Column="1" Grid.Row="4" ToolTip="Y1 software vector" Background="#FFE0C0" GotFocus="Y1vectortext_GotFocus" PreviewKeyDown="Y1vectortext_PreviewKeyDown" LostFocus="Y1vectortext_LostFocus" />
+                                    <TextBox x:Name="Z1vectortext" Grid.Column="2" Grid.Row="4" ToolTip="Z1 software vector" Background="#FFE0C0" GotFocus="Z1vectortext_GotFocus" PreviewKeyDown="Z1vectortext_PreviewKeyDown" LostFocus="Z1vectortext_LostFocus" />
+                                    <TextBox x:Name="X2vectortext" Grid.Column="0" Grid.Row="5" ToolTip="X2 software vector" Background="#FFE0C0" GotFocus="X2vectortext_GotFocus" PreviewKeyDown="X2vectortext_PreviewKeyDown" LostFocus="X2vectortext_LostFocus" />
+                                    <TextBox x:Name="Y2vectortext" Grid.Column="1" Grid.Row="5" ToolTip="Y2 software vector" Background="#FFE0C0" GotFocus="Y2vectortext_GotFocus" PreviewKeyDown="Y2vectortext_PreviewKeyDown" LostFocus="Y2vectortext_LostFocus" />
+                                    <TextBox x:Name="Z2vectortext" Grid.Column="2" Grid.Row="5" ToolTip="Z2 software vector" Background="#FFE0C0" GotFocus="Z2vectortext_GotFocus" PreviewKeyDown="Z2vectortext_PreviewKeyDown" LostFocus="Z2vectortext_LostFocus" />
+                                    <Border Grid.Column="0" Grid.Row="6" BorderThickness="1" BorderBrush="Black">
+                                        <Image x:Name="texturepreview"/>
+                                    </Border>
+                                    <ListBox x:Name="texturelist"
+                                             Grid.Column="1"
+                                             Grid.Row="6"
+                                             Grid.ColumnSpan="2"
+                                             KeyUp="texturelist_KeyUp"
+                                             MouseLeftButtonUp="texturelist_MouseLeftButtonUp"
+                                             MouseRightButtonUp="texturelist_MouseRightButtonUp"
+                                             MouseDoubleClick="texturelist_MouseDoubleClick" />
+                                </Grid>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem x:Name="texturesubframe_vertex" Header="Vertex">
+                            <GroupBox Header="Vertex">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="3*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="2*" />
+                                    </Grid.RowDefinitions>
+                                    <ListBox x:Name="Ucoordlist" Grid.Column="0" Grid.Row="1" Margin="10" ToolTip="U texture vertex coords" SelectionMode="Extended" KeyUp="Ucoordlist_KeyUp" MouseUp="Ucoordlist_MouseUp" />
+                                    <ListBox x:Name="Vcoordlist" Grid.Column="1" Grid.Row="1" Margin="10" ToolTip="V texture vertex coords" SelectionMode="Extended" KeyUp="Vcoordlist_KeyUp" MouseUp="Vcoordlist_MouseUp" />
+                                    <TextBox x:Name="Ucoordtext" Grid.Column="0" Grid.Row="2" Margin="10" Background="#FFC0C0" PreviewKeyDown="Ucoordtext_PreviewKeyDown" LostFocus="Ucoordtext_LostFocus" />
+                                    <TextBox x:Name="Vcoordtext" Grid.Column="1" Grid.Row="2" Margin="10" Background="#FFC0C0" PreviewKeyDown="Vcoordtext_PreviewKeyDown" LostFocus="Vcoordtext_LostFocus" />
+                                </Grid>
+                            </GroupBox>
+                        </TabItem>
+                    </TabControl>
+                </GroupBox>
+            </TabItem>
+        </TabControl>
+    </GroupBox>
+</UserControl>

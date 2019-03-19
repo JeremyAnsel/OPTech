@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="OPTech.HardpointControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OPTech"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="500"
+             UseLayoutRounding="True"
+             PreviewKeyDown="UserControl_PreviewKeyDown">
+    <GroupBox Header="Hardpoint">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <ListBox x:Name="hardpointlist"
+                         Width="170"
+                         ToolTip="Hardpoint List"
+                         SelectionMode="Extended"
+                         KeyUp="hardpointlist_KeyUp"
+                         MouseUp="hardpointlist_MouseUp" />
+                <Button x:Name="hpdeletebut" Margin="20 0" Height="40" Width="86" Content="Delete" Click="hpdeletebut_Click" />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Center" Width="200">
+                <Label Content="Hardpoint type:" FontWeight="Bold" Height="30" Target="{Binding ElementName=hardpointtypetext}" />
+                <ComboBox x:Name="hardpointtypetext"
+                          Height="32"
+                          ToolTip="hardpoint type"
+                          PreviewKeyDown="hardpointtypetext_PreviewKeyDown"
+                          LostFocus="hardpointtypetext_LostFocus">
+                    <ComboBoxItem Tag="C5C5D2" Content="0-None" IsSelected="True" />
+                    <ComboBoxItem Tag="FF6250" Content="1-RebelLaser" />
+                    <ComboBoxItem Tag="FF3300" Content="2-TurboRebelLaser" />
+                    <ComboBoxItem Tag="78FF78" Content="3-EmpireLaser" />
+                    <ComboBoxItem Tag="96E100" Content="4-TurboEmpireLaser" />
+                    <ComboBoxItem Tag="78D2FF" Content="5-IonCannon" />
+                    <ComboBoxItem Tag="788AFF" Content="6-TurboIonCannon" />
+                    <ComboBoxItem Tag="B9851D" Content="7-Torpedo" />
+                    <ComboBoxItem Tag="FF9428" Content="8-Missile" />
+                    <ComboBoxItem Tag="E10000" Content="9-SuperRebelLaser" />
+                    <ComboBoxItem Tag="00FF00" Content="10-SuperEmpireLaser" />
+                    <ComboBoxItem Tag="005AE1" Content="11-SuperIonCannon" />
+                    <ComboBoxItem Tag="B96300" Content="12-SuperTorpedo" />
+                    <ComboBoxItem Tag="E15A00" Content="13-SuperMissile" />
+                    <ComboBoxItem Tag="FFFF00" Content="14-DumbBomb" />
+                    <ComboBoxItem Tag="FFFF00" Content="15-FiredBomb" />
+                    <ComboBoxItem Tag="D278FF" Content="16-MagPulse" />
+                    <ComboBoxItem Tag="A43CFF" Content="17-TurboMagPulse" />
+                    <ComboBoxItem Tag="6600FF" Content="18-SuperMagPulse" />
+                    <ComboBoxItem Tag="7A7A82" Content="19-Gunner" />
+                    <ComboBoxItem Tag="FFFF00" Content="20-CockpitSparks" />
+                    <ComboBoxItem Tag="7A7A82" Content="21-DockingPoint" />
+                    <ComboBoxItem Tag="7A7A82" Content="22-Towing" />
+                    <ComboBoxItem Tag="7A7A82" Content="23-AccStart" />
+                    <ComboBoxItem Tag="7A7A82" Content="24-AccEnd" />
+                    <ComboBoxItem Tag="7A7A82" Content="25-InsideHangar" />
+                    <ComboBoxItem Tag="7A7A82" Content="26-OutsideHangar" />
+                    <ComboBoxItem Tag="7A7A82" Content="27-DockFromBig" />
+                    <ComboBoxItem Tag="7A7A82" Content="28-DockFromSmall" />
+                    <ComboBoxItem Tag="7A7A82" Content="29-DockToBig" />
+                    <ComboBoxItem Tag="7A7A82" Content="30-DockToSmall" />
+                    <ComboBoxItem Tag="7A7A82" Content="31-Cockpit" />
+                    <ComboBoxItem Tag="FFFF00" Content="32-EngineGlow" />
+                    <ComboBoxItem Tag="7A7A82" Content="33-Unknown1" />
+                    <ComboBoxItem Tag="7A7A82" Content="34-Unknown2" />
+                    <ComboBoxItem Tag="7A7A82" Content="35-Unknown3" />
+                    <ComboBoxItem Tag="7A7A82" Content="36-Unknown4" />
+                    <ComboBoxItem Tag="7A7A82" Content="37-Unknown5" />
+                    <ComboBoxItem Tag="7A7A82" Content="38-Unknown6" />
+                    <ComboBoxItem Tag="7A7A82" Content="39-AIHanger" />
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Width="130">
+                <TextBlock Text="Position:" FontWeight="Bold" Height="24" />
+                <Label Content="x" FontWeight="Bold" Height="24" Target="{Binding ElementName=Xhptext}" />
+                <TextBox x:Name="Xhptext" Height="29" ToolTip="X position" PreviewKeyDown="Xhptext_PreviewKeyDown" LostFocus="Xhptext_LostFocus" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Width="130">
+                <TextBlock Text="" FontWeight="Bold" Height="24" />
+                <Label Content="y" FontWeight="Bold" Height="24" Target="{Binding ElementName=Yhptext}" />
+                <TextBox x:Name="Yhptext" Height="29" ToolTip="Y position" PreviewKeyDown="Yhptext_PreviewKeyDown" LostFocus="Yhptext_LostFocus" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Width="130">
+                <TextBlock Text="" FontWeight="Bold" Height="24" />
+                <Label Content="z" FontWeight="Bold" Height="24" Target="{Binding ElementName=Zhptext}" />
+                <TextBox x:Name="Zhptext" Height="29" ToolTip="Z position" PreviewKeyDown="Zhptext_PreviewKeyDown" LostFocus="Zhptext_LostFocus" />
+            </StackPanel>
+            <StackPanel Grid.Column="3" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="hptextCopy_Click" />
+                <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="hptextPaste_Click" />
+            </StackPanel>
+            <Button x:Name="hpaddbut" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Margin="10 0" Height="40" Width="110" Content="Add HP" Click="hpaddbut_Click" />
+            <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="hpsetfacebut" Margin="10 0" Height="40" Width="110" Content="Set to Face" Click="hpsetfacebut_Click" />
+                <Button x:Name="hpsetvertexbut" Margin="10 0" Height="40" Width="110" Content="Set to Vertex" Click="hpsetvertexbut_Click" />
+            </StackPanel>
+        </Grid>
+    </GroupBox>
+</UserControl>

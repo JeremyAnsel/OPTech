@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EA3301F3-A2F4-4C74-BE5F-8164365936FC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OPTech</RootNamespace>
+    <AssemblyName>OPTech</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Properties\sgKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SharpGL, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.2.4.0.0\lib\net40\SharpGL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpGL.SceneGraph, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.2.4.0.0\lib\net40\SharpGL.SceneGraph.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpGL.WPF, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.WPF.2.4.0.0\lib\net40\SharpGL.WPF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\Components\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ErrorListDialog.xaml.cs">
+      <DependentUpon>ErrorListDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FaceStruct.cs" />
+    <Compile Include="FilterStruct.cs" />
+    <Compile Include="GeometryControl.xaml.cs">
+      <DependentUpon>GeometryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HardpointControl.xaml.cs">
+      <DependentUpon>HardpointControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HardpointStruct.cs" />
+    <Compile Include="HitzoneControl.xaml.cs">
+      <DependentUpon>HitzoneControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImageHelpers.cs" />
+    <Compile Include="ListBoxExtensions.cs" />
+    <Compile Include="LODStruct.cs" />
+    <Compile Include="MeshChoiceDialog.xaml.cs">
+      <DependentUpon>MeshChoiceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MeshStruct.cs" />
+    <Compile Include="OptRead.cs" />
+    <Compile Include="OptStruct.cs" />
+    <Compile Include="RenderScreenControl.xaml.cs">
+      <DependentUpon>RenderScreenControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Shapes.cs" />
+    <Compile Include="StatusBarDialog.xaml.cs">
+      <DependentUpon>StatusBarDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StringHelpers.cs" />
+    <Compile Include="TextureControl.xaml.cs">
+      <DependentUpon>TextureControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextureStruct.cs" />
+    <Compile Include="TransformationControl.xaml.cs">
+      <DependentUpon>TransformationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UndoStack.cs" />
+    <Compile Include="UndoStackItem.cs" />
+    <Compile Include="VertexStruct.cs" />
+    <Page Include="EngineGlowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ErrorListDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GeometryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HardpointControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HitzoneControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BinaryReaderExtensions.cs" />
+    <Compile Include="BinaryWriterExtensions.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="CXXX.cs" />
+    <Compile Include="EngineGlowControl.xaml.cs">
+      <DependentUpon>EngineGlowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EngineGlowStruct.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MeshChoiceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RenderScreenControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatusBarDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextureControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransformationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="options.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Properties\sgKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\display_textured.ico" />
+    <Resource Include="Images\display_wireframe.ico" />
+    <Resource Include="Images\edit_enginglow.ico" />
+    <Resource Include="Images\edit_geometry.ico" />
+    <Resource Include="Images\edit_hardpoints.ico" />
+    <Resource Include="Images\edit_hitzones.ico" />
+    <Resource Include="Images\edit_textures.ico" />
+    <Resource Include="Images\edit_transformation.ico" />
+    <Resource Include="Images\frmengineglow_0000.ico" />
+    <Resource Include="Images\frmgeometry_0000.ico" />
+    <Resource Include="Images\frmgeometry_03F8.ico" />
+    <Resource Include="Images\frmgeometry_0702.ico" />
+    <Resource Include="Images\frmgeometry_0A0C.ico" />
+    <Resource Include="Images\frmgeometry_0D16.ico" />
+    <Resource Include="Images\frmgeometry_1020.ico" />
+    <Resource Include="Images\frmgeometry_132A.ico" />
+    <Resource Include="Images\frmhardpoint_0000.ico" />
+    <Resource Include="Images\frmhitzone_0000.ico" />
+    <Resource Include="Images\frmoptech_014A.ico" />
+    <Resource Include="Images\frmoptech_0466.ico" />
+    <Resource Include="Images\frmoptech_0782.ico" />
+    <Resource Include="Images\frmoptech_0A9E.ico" />
+    <Resource Include="Images\frmoptech_0DBA.ico" />
+    <Resource Include="Images\frmoptech_10E2.ico" />
+    <Resource Include="Images\frmoptech_13FE.ico" />
+    <Resource Include="Images\frmoptech_171A.ico" />
+    <Resource Include="Images\frmoptech_1A36.ico" />
+    <Resource Include="Images\frmoptech_1D52.ico" />
+    <Resource Include="Images\frmoptech_206E.ico" />
+    <Resource Include="Images\frmoptech_2396.ico" />
+    <Resource Include="Images\frmoptech_26BE.ico" />
+    <Resource Include="Images\frmoptech_29DA.ico" />
+    <Resource Include="Images\frmoptech_2CF6.ico" />
+    <Resource Include="Images\frmoptech_3012.ico" />
+    <Resource Include="Images\frmoptech_332E.ico" />
+    <Resource Include="Images\frmoptech_364A.ico" />
+    <Resource Include="Images\frmoptech_3966.ico" />
+    <Resource Include="Images\frmoptech_3C82.ico" />
+    <Resource Include="Images\frmoptech_3F9E.ico" />
+    <Resource Include="Images\frmoptech_42BA.ico" />
+    <Resource Include="Images\frmrenderscreen_0000.ico" />
+    <Resource Include="Images\frmrenderscreen_031C.ico" />
+    <Resource Include="Images\frmrenderscreen_0638.ico" />
+    <Resource Include="Images\frmrenderscreen_0954.ico" />
+    <Resource Include="Images\frmrenderscreen_0C70.ico" />
+    <Resource Include="Images\frmrenderscreen_0F98.ico" />
+    <Resource Include="Images\frmrenderscreen_12B4.ico" />
+    <Resource Include="Images\frmrenderscreen_15D0.ico" />
+    <Resource Include="Images\frmrenderscreen_18EC.ico" />
+    <Resource Include="Images\frmrenderscreen_1C08.ico" />
+    <Resource Include="Images\frmrenderscreen_1F24.ico" />
+    <Resource Include="Images\frmrenderscreen_224C.ico" />
+    <Resource Include="Images\frmrenderscreen_2574.ico" />
+    <Resource Include="Images\frmrenderscreen_2890.ico" />
+    <Resource Include="Images\frmrenderscreen_2BAC.ico" />
+    <Resource Include="Images\frmrenderscreen_2EC8.ico" />
+    <Resource Include="Images\frmrenderscreen_31E4.ico" />
+    <Resource Include="Images\frmrenderscreen_3500.ico" />
+    <Resource Include="Images\frmrenderscreen_381C.ico" />
+    <Resource Include="Images\frmrenderscreen_3B38.ico" />
+    <Resource Include="Images\frmrenderscreen_3E54.ico" />
+    <Resource Include="Images\frmrenderscreen_4170.ico" />
+    <Resource Include="Images\frmrenderscreen_back.ico" />
+    <Resource Include="Images\frmrenderscreen_bottom.ico" />
+    <Resource Include="Images\frmrenderscreen_left.ico" />
+    <Resource Include="Images\frmrenderscreen_right.ico" />
+    <Resource Include="Images\frmtexture_0000.ico" />
+    <Resource Include="Images\frmtexture_030A.ico" />
+    <Resource Include="Images\frmtransformation_0000.ico" />
+    <Resource Include="Images\icon_H.bmp" />
+    <Resource Include="Images\icon_HV.bmp" />
+    <Resource Include="Images\icon_V.bmp" />
+    <Resource Include="Images\lod_high.ico" />
+    <Resource Include="Images\lod_low.ico" />
+    <Resource Include="Images\view_back.ico" />
+    <Resource Include="Images\view_bottom.ico" />
+    <Resource Include="Images\view_front.ico" />
+    <Resource Include="Images\view_left.ico" />
+    <Resource Include="Images\view_perspective.ico" />
+    <Resource Include="Images\view_right.ico" />
+    <Resource Include="Images\view_top.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

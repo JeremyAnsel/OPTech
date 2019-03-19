@@ -13,5 +13,10 @@
 *.DOT  diff=astextplain
 *.pdf  diff=astextplain
 *.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+*.rtf	 text diff=astextplain eol=crlf
+*.RTF	 text diff=astextplain eol=crlf
+
+*.opz	 text diff=astextplain eol=crlf
+*.dat	 text diff=astextplain eol=crlf
+
+*.txt eol=crlf

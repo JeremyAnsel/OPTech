@@ -121,5 +121,32 @@ namespace OPTech
             this.VertexArray[2].Move(moveX, moveY, moveZ);
             this.VertexArray[3].Move(moveX, moveY, moveZ);
         }
+
+        public void Mirror()
+        {
+            float min = this.MinX;
+            float max = this.MaxX;
+
+            this.MinX = -max;
+            this.MaxX = -min;
+            this.CenterX = -this.CenterX;
+
+            this.ICoord = -this.ICoord;
+
+            var v0 = this.VertexArray[0];
+            var v1 = this.VertexArray[1];
+            var v2 = this.VertexArray[2];
+            var v3 = this.VertexArray[3];
+
+            v0.Mirror();
+            v1.Mirror();
+            v2.Mirror();
+            v3.Mirror();
+
+            this.VertexArray[0] = v3;
+            this.VertexArray[1] = v2;
+            this.VertexArray[2] = v1;
+            this.VertexArray[3] = v0;
+        }
     }
 }

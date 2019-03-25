@@ -44,5 +44,11 @@ namespace OPTech
             this.YCoord += moveY;
             this.ZCoord += moveZ;
         }
+
+        public void Mirror()
+        {
+            this.XCoord = -this.XCoord;
+            this.ICoord = -this.ICoord;
+        }
     }
 }

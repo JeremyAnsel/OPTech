@@ -32,5 +32,10 @@ namespace OPTech
             this.HPCenterY += moveY;
             this.HPCenterZ += moveZ;
         }
+
+        public void Mirror()
+        {
+            this.HPCenterX = -this.HPCenterX;
+        }
     }
 }

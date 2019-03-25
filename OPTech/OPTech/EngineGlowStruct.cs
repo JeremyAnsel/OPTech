@@ -75,5 +75,10 @@ namespace OPTech
             this.EGCenterY += moveY;
             this.EGCenterZ += moveZ;
         }
+
+        public void Mirror()
+        {
+            this.EGCenterX = -this.EGCenterX;
+        }
     }
 }

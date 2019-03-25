@@ -142,6 +142,34 @@ namespace OPTech
             return newMesh;
         }
 
+        public MeshStruct MirrorDuplicate()
+        {
+            var newMesh = this.Clone();
+
+            newMesh.Mirror();
+
+            foreach (var lod in newMesh.LODArray)
+            {
+                Global.MeshIDQueue++;
+                lod.ID = Global.MeshIDQueue;
+                lod.Selected = false;
+
+                foreach (var face in lod.FaceArray)
+                {
+                    Global.FaceIDQueue++;
+                    face.ID = Global.FaceIDQueue;
+
+                    for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                    {
+                        Global.VertexIDQueue++;
+                        face.VertexArray[vertexIndex].ID = Global.VertexIDQueue;
+                    }
+                }
+            }
+
+            return newMesh;
+        }
+
         public void Move(float moveX, float moveY, float moveZ)
         {
             this.HitCenterX += moveX;
@@ -177,6 +205,37 @@ namespace OPTech
             foreach (var lod in this.LODArray)
             {
                 lod.Move(moveX, moveY, moveZ);
+            }
+        }
+
+        public void Mirror()
+        {
+            this.HitCenterX = -this.HitCenterX;
+
+            float min = this.HitMinX;
+            float max = this.HitMaxX;
+            this.HitMinX = -max;
+            this.HitMaxX = -min;
+
+            this.HitTargetX = -this.HitTargetX;
+            this.RotPivotX = -this.RotPivotX;
+            this.RotAxisX = -this.RotAxisX;
+            this.RotAimX = -this.RotAimX;
+            this.RotDegreeX = -this.RotDegreeX;
+
+            foreach (var hp in this.HPArray)
+            {
+                hp.Mirror();
+            }
+
+            foreach (var eg in this.EGArray)
+            {
+                eg.Mirror();
+            }
+
+            foreach (var lod in this.LODArray)
+            {
+                lod.Mirror();
             }
         }
     }

@@ -71,5 +71,20 @@ namespace OPTech
                 face.Move(moveX, moveY, moveZ);
             }
         }
+
+        public void Mirror()
+        {
+            float min = this.MinX;
+            float max = this.MaxX;
+
+            this.MinX = -max;
+            this.MaxX = -min;
+            this.CenterX = -this.CenterX;
+
+            foreach (var face in this.FaceArray)
+            {
+                face.Mirror();
+            }
+        }
     }
 }

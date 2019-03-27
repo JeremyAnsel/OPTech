@@ -1220,10 +1220,10 @@ namespace OPTech
                             }
                             else
                             {
-                                face.VertexArray[0] = v3;
-                                face.VertexArray[1] = v2;
-                                face.VertexArray[2] = v1;
-                                face.VertexArray[3] = v0;
+                                face.VertexArray[0] = v0;
+                                face.VertexArray[1] = v3;
+                                face.VertexArray[2] = v2;
+                                face.VertexArray[3] = v1;
                             }
 
                             Global.ModelChanged = true;

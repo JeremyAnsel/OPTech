@@ -162,10 +162,9 @@ namespace OPTech
             }
             else
             {
-                this.VertexArray[0] = v3;
-                this.VertexArray[1] = v2;
-                this.VertexArray[2] = v1;
-                this.VertexArray[3] = v0;
+                this.VertexArray[1] = v3;
+                this.VertexArray[2] = v2;
+                this.VertexArray[3] = v1;
             }
         }
     }

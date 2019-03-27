@@ -133,6 +133,18 @@ namespace OPTech
 
             this.ICoord = -this.ICoord;
 
+            int polyVerts;
+            if (this.VertexArray[0].XCoord == this.VertexArray[3].XCoord
+                && this.VertexArray[0].YCoord == this.VertexArray[3].YCoord
+                && this.VertexArray[0].ZCoord == this.VertexArray[3].ZCoord)
+            {
+                polyVerts = 2;
+            }
+            else
+            {
+                polyVerts = 3;
+            }
+
             var v0 = this.VertexArray[0];
             var v1 = this.VertexArray[1];
             var v2 = this.VertexArray[2];
@@ -143,10 +155,18 @@ namespace OPTech
             v2.Mirror();
             v3.Mirror();
 
-            this.VertexArray[0] = v3;
-            this.VertexArray[1] = v2;
-            this.VertexArray[2] = v1;
-            this.VertexArray[3] = v0;
+            if (polyVerts == 2)
+            {
+                this.VertexArray[1] = v2;
+                this.VertexArray[2] = v1;
+            }
+            else
+            {
+                this.VertexArray[0] = v3;
+                this.VertexArray[1] = v2;
+                this.VertexArray[2] = v1;
+                this.VertexArray[3] = v0;
+            }
         }
     }
 }

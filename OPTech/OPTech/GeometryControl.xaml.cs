@@ -1183,6 +1183,18 @@ namespace OPTech
 
                         if (face.Selected)
                         {
+                            int polyVerts;
+                            if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                                && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                                && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+                            {
+                                polyVerts = 2;
+                            }
+                            else
+                            {
+                                polyVerts = 3;
+                            }
+
                             face.ICoord *= -1;
                             face.JCoord *= -1;
                             face.KCoord *= -1;
@@ -1199,10 +1211,20 @@ namespace OPTech
                             var v2 = face.VertexArray[2].Clone();
                             var v3 = face.VertexArray[3].Clone();
 
-                            face.VertexArray[0] = v3;
-                            face.VertexArray[1] = v2;
-                            face.VertexArray[2] = v1;
-                            face.VertexArray[3] = v0;
+                            if (polyVerts == 2)
+                            {
+                                face.VertexArray[0] = v0;
+                                face.VertexArray[1] = v2;
+                                face.VertexArray[2] = v1;
+                                face.VertexArray[3] = v3;
+                            }
+                            else
+                            {
+                                face.VertexArray[0] = v3;
+                                face.VertexArray[1] = v2;
+                                face.VertexArray[2] = v1;
+                                face.VertexArray[3] = v0;
+                            }
 
                             Global.ModelChanged = true;
                         }

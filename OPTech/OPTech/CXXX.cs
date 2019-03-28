@@ -1099,6 +1099,7 @@ namespace OPTech
                     Global.frmgeometry.meshmoverUp.IsEnabled = true;
                     Global.frmgeometry.meshmoverDown.IsEnabled = true;
                     Global.frmgeometry.meshduplicatebut.IsEnabled = true;
+                    Global.frmgeometry.meshmirrorduplicatebut.IsEnabled = true;
                     Global.frmgeometry.meshmirrorbut.IsEnabled = true;
                     Global.frmgeometry.meshmovex.IsEnabled = true;
                     Global.frmgeometry.meshmovey.IsEnabled = true;
@@ -1319,6 +1320,7 @@ namespace OPTech
                 Global.frmgeometry.meshmoverUp.IsEnabled = false;
                 Global.frmgeometry.meshmoverDown.IsEnabled = false;
                 Global.frmgeometry.meshduplicatebut.IsEnabled = false;
+                Global.frmgeometry.meshmirrorduplicatebut.IsEnabled = false;
                 Global.frmgeometry.meshmirrorbut.IsEnabled = false;
                 Global.frmgeometry.meshmovex.IsEnabled = false;
                 Global.frmgeometry.meshmovey.IsEnabled = false;

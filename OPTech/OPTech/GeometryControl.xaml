@@ -50,6 +50,7 @@
                                         <Button x:Name="meshmoverUp" Margin="20 2" Content="▲ Move Up" Click="meshmoverUp_Click"  />
                                         <Button x:Name="meshmoverDown" Margin="20 2" Content="▼ Move Down" Click="meshmoverDown_Click" />
                                         <Button x:Name="meshduplicatebut" Margin="20 2" Content="Duplicate" Click="meshduplicatebut_Click" />
+                                        <Button x:Name="meshmirrorduplicatebut" Margin="20 2" Content="Mirror Duplicate" Click="meshmirrorduplicatebut_Click" />
                                         <Button x:Name="meshmirrorbut" Margin="20 2" Content="Mirror" Click="meshmirrorbut_Click" />
                                         <DockPanel>
                                             <UniformGrid Columns="1" DockPanel.Dock="Left" Margin="5 0">

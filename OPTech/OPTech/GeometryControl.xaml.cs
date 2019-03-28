@@ -637,7 +637,7 @@ namespace OPTech
             UndoStack.Push("duplicate mesh");
         }
 
-        private void meshmirrorbut_Click(object sender, RoutedEventArgs e)
+        private void meshmirrorduplicatebut_Click(object sender, RoutedEventArgs e)
         {
             if (this.meshlist.SelectedIndex == -1)
             {
@@ -672,6 +672,41 @@ namespace OPTech
                 string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
                 this.meshlist.AddText(meshName);
                 Global.frmhitzone.meshlist.AddText(meshName);
+            }
+
+            Global.ModelChanged = true;
+
+            Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
+            //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
+            //Global.CX.VertexScreens(this.meshlist.SelectedIndex, whichLOD, -1, -1);
+            Global.CX.CreateCall();
+
+            UndoStack.Push("mirror duplicate mesh");
+        }
+
+        private void meshmirrorbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            for (int i = 0; i < this.meshlist.Items.Count; i++)
+            {
+                if (this.meshlist.IsSelected(i))
+                {
+                    Global.OPT.MeshArray[i].Mirror();
+                }
             }
 
             Global.ModelChanged = true;

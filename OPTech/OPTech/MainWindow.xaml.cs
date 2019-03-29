@@ -2904,6 +2904,13 @@ namespace OPTech
                 return;
             }
 
+            bool invertVertexOrder = false;
+
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you want to invert vertex order?", "Invert vertex order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                invertVertexOrder = true;
+            }
+
             Global.ModelChanged = true;
 
             this.saveopzmenu.IsEnabled = true;
@@ -3083,6 +3090,11 @@ namespace OPTech
                         face.TextureArray[1] = "BLANK";
                         face.TextureArray[2] = "BLANK";
                         face.TextureArray[3] = "BLANK";
+
+                        if (invertVertexOrder)
+                        {
+                            DxfInvertVertexOrder(face);
+                        }
                     }
                     else
                     {
@@ -3177,6 +3189,11 @@ namespace OPTech
                         face.TextureArray[1] = "BLANK";
                         face.TextureArray[2] = "BLANK";
                         face.TextureArray[3] = "BLANK";
+
+                        if (invertVertexOrder)
+                        {
+                            DxfInvertVertexOrder(face);
+                        }
                     }
                 }
                 while (Dummy == "0");
@@ -3896,7 +3913,39 @@ namespace OPTech
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import .OPZ");
         }
 
-        private void DxfExport(string path, int whichLOD)
+        private static void DxfInvertVertexOrder(FaceStruct face)
+        {
+            int polyVerts;
+            if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+            {
+                polyVerts = 2;
+            }
+            else
+            {
+                polyVerts = 3;
+            }
+
+            var v0 = face.VertexArray[0];
+            var v1 = face.VertexArray[1];
+            var v2 = face.VertexArray[2];
+            var v3 = face.VertexArray[3];
+
+            if (polyVerts == 2)
+            {
+                face.VertexArray[1] = v2;
+                face.VertexArray[2] = v1;
+            }
+            else
+            {
+                face.VertexArray[1] = v3;
+                face.VertexArray[2] = v2;
+                face.VertexArray[3] = v1;
+            }
+        }
+
+        private void DxfExport(string path, int whichLOD, bool invertVertexOrder)
         {
             using (var file = new System.IO.StreamWriter(path, false, Encoding.ASCII))
             {
@@ -3919,7 +3968,12 @@ namespace OPTech
 
                     for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
                     {
-                        var face = lod.FaceArray[faceIndex];
+                        var face = lod.FaceArray[faceIndex].Clone();
+
+                        if (invertVertexOrder)
+                        {
+                            DxfInvertVertexOrder(face);
+                        }
 
                         int polyVerts;
                         if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
@@ -3985,7 +4039,14 @@ namespace OPTech
                 return;
             }
 
-            this.DxfExport(dialog.FileName, 0);
+            bool invertVertexOrder = false;
+
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you want to invert vertex order?", "Invert vertex order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                invertVertexOrder = true;
+            }
+
+            this.DxfExport(dialog.FileName, 0, invertVertexOrder);
 
             string lowPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(dialog.FileName), System.IO.Path.GetFileNameWithoutExtension(dialog.FileName) + "_low.dxf");
             bool hasLod = false;
@@ -4003,7 +4064,7 @@ namespace OPTech
 
             if (hasLod)
             {
-                this.DxfExport(lowPath, 1);
+                this.DxfExport(lowPath, 1, invertVertexOrder);
             }
 
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "export .DXF");

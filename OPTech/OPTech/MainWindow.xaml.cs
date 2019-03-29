@@ -7416,6 +7416,14 @@ namespace OPTech
                             vertex.ICoord = AveragerI / VertexTicker;
                             vertex.JCoord = AveragerJ / VertexTicker;
                             vertex.KCoord = AveragerK / VertexTicker;
+
+                            float length = (float)Math.Sqrt(vertex.ICoord * vertex.ICoord + vertex.JCoord * vertex.JCoord + vertex.KCoord * vertex.KCoord);
+                            if (length != 0)
+                            {
+                                vertex.ICoord /= length;
+                                vertex.JCoord /= length;
+                                vertex.KCoord /= length;
+                            }
                         }
                     }
                 }

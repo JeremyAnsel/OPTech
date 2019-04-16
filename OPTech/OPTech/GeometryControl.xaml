@@ -193,51 +193,52 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="3*" />
+                                        <RowDefinition Height="4*" />
                                         <RowDefinition Height="2*" />
                                         <RowDefinition Height="2*" />
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="3*" />
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3" BorderThickness="1" BorderBrush="Black" Background="#808080">
+                                    <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Background="#808080">
                                         <Image x:Name="textureviewer" />
                                     </Border>
-                                    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
-                                        <RadioButton x:Name="fgoffop" GroupName="fgop" Content="FG off" IsChecked="True" Click="fgoffop_Click" />
-                                        <RadioButton x:Name="fgonop" GroupName="fgop" Content="FG on" Click="fgonop_Click" />
-                                    </StackPanel>
-                                    <GroupBox x:Name="fgframe" Grid.Column="0" Grid.Row="1" Header="FG Color">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Column="0" Grid.Row="0">
-                                                <Rectangle Fill="Red" />
-                                                <RadioButton x:Name="redfgsel" GroupName="fgsel" Content="Red" IsChecked="True" Click="redfgsel_Click" />
+                                    <DockPanel Grid.Column="0" Grid.Row="0">
+                                        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <RadioButton x:Name="fgoffop" GroupName="fgop" Content="FG off " IsChecked="True" Click="fgoffop_Click" />
+                                            <RadioButton x:Name="fgonop" GroupName="fgop" Content="FG on " Click="fgonop_Click" />
+                                        </StackPanel>
+                                        <GroupBox x:Name="fgframe" Header="FG Color">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Column="0" Grid.Row="0">
+                                                    <Rectangle Fill="Red" />
+                                                    <RadioButton x:Name="redfgsel" GroupName="fgsel" Content="Red" IsChecked="True" Click="redfgsel_Click" />
+                                                </Grid>
+                                                <Grid Grid.Column="0" Grid.Row="1">
+                                                    <Rectangle Fill="Yellow" />
+                                                    <RadioButton x:Name="yellowfgsel" GroupName="fgsel" Content="Yellow" Click="yellowfgsel_Click" />
+                                                </Grid>
+                                                <Grid Grid.Column="0" Grid.Row="2">
+                                                    <Rectangle Fill="Blue" />
+                                                    <RadioButton x:Name="bluefgsel" GroupName="fgsel" Content="Blue" Click="bluefgsel_Click" />
+                                                </Grid>
+                                                <Grid Grid.Column="0" Grid.Row="3">
+                                                    <Rectangle Fill="Green" />
+                                                    <RadioButton x:Name="greenfgsel" GroupName="fgsel" Content="Green" Click="greenfgsel_Click" />
+                                                </Grid>
                                             </Grid>
-                                            <Grid Grid.Column="0" Grid.Row="1">
-                                                <Rectangle Fill="Yellow" />
-                                                <RadioButton x:Name="yellowfgsel" GroupName="fgsel" Content="Yellow" Click="yellowfgsel_Click" />
-                                            </Grid>
-                                            <Grid Grid.Column="0" Grid.Row="2">
-                                                <Rectangle Fill="Blue" />
-                                                <RadioButton x:Name="bluefgsel" GroupName="fgsel" Content="Blue" Click="bluefgsel_Click" />
-                                            </Grid>
-                                            <Grid Grid.Column="0" Grid.Row="3">
-                                                <Rectangle Fill="Green" />
-                                                <RadioButton x:Name="greenfgsel" GroupName="fgsel" Content="Green" Click="greenfgsel_Click" />
-                                            </Grid>
-                                        </Grid>
-                                    </GroupBox>
-                                    <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="2" Header="Stitching">
+                                        </GroupBox>
+                                    </DockPanel>
+                                    <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="1" Header="Stitching">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition />
@@ -252,7 +253,7 @@
                                             <Button x:Name="sidestitchbut" Grid.Column="1" Grid.Row="1" Content="Side" Click="sidestitchbut_Click" />
                                         </Grid>
                                     </GroupBox>
-                                    <Grid Grid.Column="0" Grid.Row="3">
+                                    <Grid Grid.Column="0" Grid.Row="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
@@ -288,7 +289,7 @@
                                             <Button x:Name="texstitchrotatebut" Height="30" Width="40" Content="Stitch" ToolTip="Stitching Rotate" Click="texstitchrotatebut_Click" />
                                         </StackPanel>
                                     </Grid>
-                                    <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                    <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                                         <Button x:Name="texzoominbut" Height="50" Width="50" Margin="5" ToolTip="Magnify" Click="texzoominbut_Click">
                                             <Button.Content>
                                                 <Image Source="Images/frmgeometry_1020.ico" />
@@ -325,18 +326,18 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
-                                    <TextBox x:Name="X1vectortext" Grid.Column="0" Grid.Row="4" ToolTip="X1 software vector" Background="#FFE0C0" GotFocus="X1vectortext_GotFocus" PreviewKeyDown="X1vectortext_PreviewKeyDown" LostFocus="X1vectortext_LostFocus" />
-                                    <TextBox x:Name="Y1vectortext" Grid.Column="1" Grid.Row="4" ToolTip="Y1 software vector" Background="#FFE0C0" GotFocus="Y1vectortext_GotFocus" PreviewKeyDown="Y1vectortext_PreviewKeyDown" LostFocus="Y1vectortext_LostFocus" />
-                                    <TextBox x:Name="Z1vectortext" Grid.Column="2" Grid.Row="4" ToolTip="Z1 software vector" Background="#FFE0C0" GotFocus="Z1vectortext_GotFocus" PreviewKeyDown="Z1vectortext_PreviewKeyDown" LostFocus="Z1vectortext_LostFocus" />
-                                    <TextBox x:Name="X2vectortext" Grid.Column="0" Grid.Row="5" ToolTip="X2 software vector" Background="#FFE0C0" GotFocus="X2vectortext_GotFocus" PreviewKeyDown="X2vectortext_PreviewKeyDown" LostFocus="X2vectortext_LostFocus" />
-                                    <TextBox x:Name="Y2vectortext" Grid.Column="1" Grid.Row="5" ToolTip="Y2 software vector" Background="#FFE0C0" GotFocus="Y2vectortext_GotFocus" PreviewKeyDown="Y2vectortext_PreviewKeyDown" LostFocus="Y2vectortext_LostFocus" />
-                                    <TextBox x:Name="Z2vectortext" Grid.Column="2" Grid.Row="5" ToolTip="Z2 software vector" Background="#FFE0C0" GotFocus="Z2vectortext_GotFocus" PreviewKeyDown="Z2vectortext_PreviewKeyDown" LostFocus="Z2vectortext_LostFocus" />
-                                    <Border Grid.Column="0" Grid.Row="6" BorderThickness="1" BorderBrush="Black">
+                                    <TextBox x:Name="X1vectortext" Grid.Column="0" Grid.Row="3" ToolTip="X1 software vector" Background="#FFE0C0" GotFocus="X1vectortext_GotFocus" PreviewKeyDown="X1vectortext_PreviewKeyDown" LostFocus="X1vectortext_LostFocus" />
+                                    <TextBox x:Name="Y1vectortext" Grid.Column="1" Grid.Row="3" ToolTip="Y1 software vector" Background="#FFE0C0" GotFocus="Y1vectortext_GotFocus" PreviewKeyDown="Y1vectortext_PreviewKeyDown" LostFocus="Y1vectortext_LostFocus" />
+                                    <TextBox x:Name="Z1vectortext" Grid.Column="2" Grid.Row="3" ToolTip="Z1 software vector" Background="#FFE0C0" GotFocus="Z1vectortext_GotFocus" PreviewKeyDown="Z1vectortext_PreviewKeyDown" LostFocus="Z1vectortext_LostFocus" />
+                                    <TextBox x:Name="X2vectortext" Grid.Column="0" Grid.Row="4" ToolTip="X2 software vector" Background="#FFE0C0" GotFocus="X2vectortext_GotFocus" PreviewKeyDown="X2vectortext_PreviewKeyDown" LostFocus="X2vectortext_LostFocus" />
+                                    <TextBox x:Name="Y2vectortext" Grid.Column="1" Grid.Row="4" ToolTip="Y2 software vector" Background="#FFE0C0" GotFocus="Y2vectortext_GotFocus" PreviewKeyDown="Y2vectortext_PreviewKeyDown" LostFocus="Y2vectortext_LostFocus" />
+                                    <TextBox x:Name="Z2vectortext" Grid.Column="2" Grid.Row="4" ToolTip="Z2 software vector" Background="#FFE0C0" GotFocus="Z2vectortext_GotFocus" PreviewKeyDown="Z2vectortext_PreviewKeyDown" LostFocus="Z2vectortext_LostFocus" />
+                                    <Border Grid.Column="0" Grid.Row="5" BorderThickness="1" BorderBrush="Black">
                                         <Image x:Name="texturepreview"/>
                                     </Border>
                                     <ListBox x:Name="texturelist"
                                              Grid.Column="1"
-                                             Grid.Row="6"
+                                             Grid.Row="5"
                                              Grid.ColumnSpan="2"
                                              KeyUp="texturelist_KeyUp"
                                              MouseLeftButtonUp="texturelist_MouseLeftButtonUp"

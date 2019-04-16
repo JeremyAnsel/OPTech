@@ -2297,10 +2297,15 @@ namespace OPTech
             {
                 var separator = new char[] { ',', ' ' };
                 string[] line;
+                string currentLine;
 
-                version = file.ReadLine();
-                int numMeshes = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                int numTextures = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
+                version = currentLine;
+                currentLine = file.ReadLine();
+                int numMeshes = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
+                int numTextures = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
 
                 Global.OPT.MeshArray.Clear();
                 Global.OPT.MeshArray.Capacity = numMeshes;
@@ -2312,50 +2317,66 @@ namespace OPTech
                     var mesh = new MeshStruct();
                     Global.OPT.MeshArray.Add(mesh);
                     mesh.Drawable = true;
-                    string meshNum = file.ReadLine();
+                    string meshNum = currentLine;
+                    currentLine = file.ReadLine();
                     this.frmgeometry.meshlist.AddText(meshNum);
-                    int numLods = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numLods = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.LODArray.Capacity = numLods;
-                    int numHardpoints = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numHardpoints = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.HPArray.Capacity = numHardpoints;
-                    int numEngineGlows = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numEngineGlows = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.EGArray.Capacity = numEngineGlows;
-                    mesh.HitType = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    mesh.HitExp = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    mesh.HitType = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    mesh.HitExp = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitSpanX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitSpanY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitSpanZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitMinX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitMinY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitMinZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitMaxX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitMaxY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitMaxZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    mesh.HitTargetID = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    mesh.HitTargetID = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitTargetX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitTargetY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitTargetZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotPivotX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotPivotY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotPivotZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotAxisX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotAxisY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotAxisZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotAimX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotAimY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotAimZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotDegreeX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotDegreeY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotDegreeZ = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -2364,19 +2385,21 @@ namespace OPTech
                     {
                         var lod = new LODStruct();
                         mesh.LODArray.Add(lod);
-                        file.ReadLine();
-                        int numFaces = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        int numFaces = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                         Global.MeshIDQueue++;
                         lod.ID = Global.MeshIDQueue;
                         lod.Selected = false;
-                        lod.CloakDist = float.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        lod.CloakDist = float.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                         lod.FaceArray.Capacity = numFaces;
 
                         for (int faceIndex = 0; faceIndex < numFaces; faceIndex++)
                         {
                             var face = new FaceStruct();
                             lod.FaceArray.Add(face);
-                            file.ReadLine();
+                            currentLine = file.ReadLine();
                             Global.FaceIDQueue++;
                             face.ID = Global.FaceIDQueue;
                             face.Selected = false;
@@ -2388,7 +2411,8 @@ namespace OPTech
                                 Global.VertexIDQueue++;
                                 vertex.ID = Global.VertexIDQueue;
                                 vertex.Selected = false;
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.XCoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.YCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                                 vertex.ZCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -2397,7 +2421,8 @@ namespace OPTech
                             for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                             {
                                 var vertex = face.VertexArray[vertexIndex];
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.UCoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.VCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                             }
@@ -2405,28 +2430,38 @@ namespace OPTech
                             for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                             {
                                 var vertex = face.VertexArray[vertexIndex];
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.ICoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.JCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                                 vertex.KCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
                             }
 
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.ICoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.JCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.KCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.X1Vector = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.Y1Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z1Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.X2Vector = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.Y2Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z2Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
 
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; currentLine != null; i++)
                             {
-                                face.TextureArray[i] = file.ReadLine();
+                                if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    break;
+                                }
+
+                                face.TextureArray[i] = currentLine;
+                                currentLine = file.ReadLine();
 
                                 if (face.TextureArray[i] == "BLANK")
                                 {
@@ -2447,9 +2482,11 @@ namespace OPTech
                     {
                         var hardpoint = new HardpointStruct();
                         mesh.HPArray.Add(hardpoint);
-                        file.ReadLine();
-                        hardpoint.HPType = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
+                        hardpoint.HPType = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         hardpoint.HPCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         hardpoint.HPCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         hardpoint.HPCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -2459,34 +2496,41 @@ namespace OPTech
                     {
                         var engineGlow = new EngineGlowStruct();
                         mesh.EGArray.Add(engineGlow);
-                        file.ReadLine();
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGInnerR = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerG = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerB = byte.Parse(line[2], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerA = byte.Parse(line[3], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGOuterR = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterG = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterB = byte.Parse(line[2], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterA = byte.Parse(line[3], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGVectorX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGVectorY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGVectorZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity1A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity1B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity1C = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity2A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity2B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity2C = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity3A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity3B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity3C = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -2498,7 +2542,8 @@ namespace OPTech
                 for (int textureIndex = 0; textureIndex < numTextures; textureIndex++)
                 {
                     var texture = new TextureStruct();
-                    texture.TextureName = file.ReadLine();
+                    texture.TextureName = currentLine;
+                    currentLine = file.ReadLine();
 
                     bool addTexture = true;
 
@@ -2556,7 +2601,8 @@ namespace OPTech
                         this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
                     }
 
-                    int numTransFilters = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numTransFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
 
                     if (addTexture)
                     {
@@ -2572,15 +2618,19 @@ namespace OPTech
                             texture.TransValues.Add(filter);
                         }
 
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         filter.RValue = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         filter.GValue = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         filter.BValue = byte.Parse(line[2], CultureInfo.InvariantCulture);
-                        filter.Tolerance = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        filter.Characteristic = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        filter.Tolerance = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        filter.Characteristic = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                     }
 
-                    int numIllumFilters = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numIllumFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
 
                     if (addTexture)
                     {
@@ -2596,12 +2646,15 @@ namespace OPTech
                             texture.IllumValues.Add(filter);
                         }
 
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         filter.RValue = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         filter.GValue = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         filter.BValue = byte.Parse(line[2], CultureInfo.InvariantCulture);
-                        filter.Tolerance = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        filter.Characteristic = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        filter.Tolerance = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        filter.Characteristic = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                     }
 
                     if (addTexture)
@@ -3577,10 +3630,15 @@ namespace OPTech
             {
                 var separator = new char[] { ',', ' ' };
                 string[] line;
+                string currentLine;
 
-                version = file.ReadLine();
-                int numMeshes = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                int numTextures = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
+                version = currentLine;
+                currentLine = file.ReadLine();
+                int numMeshes = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
+                int numTextures = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                currentLine = file.ReadLine();
 
                 Global.OPT.MeshArray.Capacity = Global.OPT.MeshArray.Count + numMeshes;
                 Global.OPT.TextureArray.Capacity = Global.OPT.TextureArray.Count + numTextures;
@@ -3590,50 +3648,66 @@ namespace OPTech
                     var mesh = new MeshStruct();
                     Global.OPT.MeshArray.Add(mesh);
                     mesh.Drawable = true;
-                    string MeshNum = file.ReadLine();
+                    string MeshNum = currentLine;
+                    currentLine = file.ReadLine();
                     this.frmgeometry.meshlist.AddText(MeshNum);
-                    int numLods = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numLods = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.LODArray.Capacity = numLods;
-                    int numHardpoints = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numHardpoints = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.HPArray.Capacity = numHardpoints;
-                    int numEngineGlows = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numEngineGlows = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
                     mesh.EGArray.Capacity = numEngineGlows;
-                    mesh.HitType = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    mesh.HitExp = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    mesh.HitType = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    mesh.HitExp = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitSpanX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitSpanY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitSpanZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitMinX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitMinY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitMinZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitMaxX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitMaxY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitMaxZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    mesh.HitTargetID = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    mesh.HitTargetID = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.HitTargetX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.HitTargetY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.HitTargetZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotPivotX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotPivotY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotPivotZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotAxisX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotAxisY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotAxisZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotAimX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotAimY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotAimZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                    line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    currentLine = file.ReadLine();
                     mesh.RotDegreeX = float.Parse(line[0], CultureInfo.InvariantCulture);
                     mesh.RotDegreeY = float.Parse(line[1], CultureInfo.InvariantCulture);
                     mesh.RotDegreeZ = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -3642,19 +3716,21 @@ namespace OPTech
                     {
                         var lod = new LODStruct();
                         mesh.LODArray.Add(lod);
-                        file.ReadLine();
-                        int numFaces = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        int numFaces = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                         Global.MeshIDQueue++;
                         lod.ID = Global.MeshIDQueue;
                         lod.Selected = false;
-                        lod.CloakDist = float.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        lod.CloakDist = float.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                         lod.FaceArray.Capacity = numFaces;
 
                         for (int faceIndex = 0; faceIndex < numFaces; faceIndex++)
                         {
                             var face = new FaceStruct();
                             lod.FaceArray.Add(face);
-                            file.ReadLine();
+                            currentLine = file.ReadLine();
                             Global.FaceIDQueue++;
                             face.ID = Global.FaceIDQueue;
                             face.Selected = false;
@@ -3666,7 +3742,8 @@ namespace OPTech
                                 Global.VertexIDQueue++;
                                 vertex.ID = Global.VertexIDQueue;
                                 vertex.Selected = false;
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.XCoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.YCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                                 vertex.ZCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -3675,7 +3752,8 @@ namespace OPTech
                             for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                             {
                                 var vertex = face.VertexArray[vertexIndex];
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.UCoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.VCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                             }
@@ -3683,28 +3761,38 @@ namespace OPTech
                             for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                             {
                                 var vertex = face.VertexArray[vertexIndex];
-                                line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                                currentLine = file.ReadLine();
                                 vertex.ICoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                                 vertex.JCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                                 vertex.KCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
                             }
 
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.ICoord = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.JCoord = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.KCoord = float.Parse(line[2], CultureInfo.InvariantCulture);
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.X1Vector = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.Y1Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z1Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
-                            line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                            currentLine = file.ReadLine();
                             face.X2Vector = float.Parse(line[0], CultureInfo.InvariantCulture);
                             face.Y2Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z2Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
 
-                            for (int i = 0; i < 4; i++)
+                            for (int i = 0; currentLine != null; i++)
                             {
-                                face.TextureArray[i] = file.ReadLine();
+                                if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    break;
+                                }
+
+                                face.TextureArray[i] = currentLine;
+                                currentLine = file.ReadLine();
 
                                 if (face.TextureArray[i] == "BLANK")
                                 {
@@ -3725,9 +3813,11 @@ namespace OPTech
                     {
                         var hardpoint = new HardpointStruct();
                         mesh.HPArray.Add(hardpoint);
-                        file.ReadLine();
-                        hardpoint.HPType = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
+                        hardpoint.HPType = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         hardpoint.HPCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         hardpoint.HPCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         hardpoint.HPCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -3737,34 +3827,41 @@ namespace OPTech
                     {
                         var engineGlow = new EngineGlowStruct();
                         mesh.EGArray.Add(engineGlow);
-                        file.ReadLine();
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGInnerR = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerG = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerB = byte.Parse(line[2], CultureInfo.InvariantCulture);
                         engineGlow.EGInnerA = byte.Parse(line[3], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGOuterR = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterG = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterB = byte.Parse(line[2], CultureInfo.InvariantCulture);
                         engineGlow.EGOuterA = byte.Parse(line[3], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGCenterX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGCenterY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGCenterZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGVectorX = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGVectorY = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGVectorZ = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity1A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity1B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity1C = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity2A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity2B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity2C = float.Parse(line[2], CultureInfo.InvariantCulture);
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         engineGlow.EGDensity3A = float.Parse(line[0], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity3B = float.Parse(line[1], CultureInfo.InvariantCulture);
                         engineGlow.EGDensity3C = float.Parse(line[2], CultureInfo.InvariantCulture);
@@ -3776,7 +3873,8 @@ namespace OPTech
                 for (int textureIndex = 0; textureIndex < numTextures; textureIndex++)
                 {
                     var texture = new TextureStruct();
-                    texture.TextureName = file.ReadLine();
+                    texture.TextureName = currentLine;
+                    currentLine = file.ReadLine();
 
                     bool addTexture = true;
 
@@ -3815,7 +3913,8 @@ namespace OPTech
                         this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
                     }
 
-                    int numTransFilters = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numTransFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
 
                     if (addTexture)
                     {
@@ -3831,12 +3930,15 @@ namespace OPTech
                             texture.TransValues.Add(filter);
                         }
 
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         filter.RValue = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         filter.GValue = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         filter.BValue = byte.Parse(line[2], CultureInfo.InvariantCulture);
-                        filter.Tolerance = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        filter.Characteristic = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        filter.Tolerance = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        filter.Characteristic = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                     }
 
                     if (texture.TransValues.Count > 0)
@@ -3845,7 +3947,8 @@ namespace OPTech
                         this.frmtexture.transtexturelist.SelectedIndex = this.frmtexture.transtexturelist.Items.Count - 1;
                     }
 
-                    int numIllumFilters = int.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                    int numIllumFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
+                    currentLine = file.ReadLine();
 
                     if (addTexture)
                     {
@@ -3861,12 +3964,15 @@ namespace OPTech
                             texture.IllumValues.Add(filter);
                         }
 
-                        line = file.ReadLine().Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        line = currentLine.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        currentLine = file.ReadLine();
                         filter.RValue = byte.Parse(line[0], CultureInfo.InvariantCulture);
                         filter.GValue = byte.Parse(line[1], CultureInfo.InvariantCulture);
                         filter.BValue = byte.Parse(line[2], CultureInfo.InvariantCulture);
-                        filter.Tolerance = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
-                        filter.Characteristic = byte.Parse(file.ReadLine(), CultureInfo.InvariantCulture);
+                        filter.Tolerance = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
+                        filter.Characteristic = byte.Parse(currentLine, CultureInfo.InvariantCulture);
+                        currentLine = file.ReadLine();
                     }
 
                     if (texture.IllumValues.Count > 0)

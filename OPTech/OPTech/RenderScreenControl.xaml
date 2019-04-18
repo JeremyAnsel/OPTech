@@ -15,7 +15,7 @@
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="10 5 0 0">
                         <TextBlock Text="FG: " />
-                        <xctk:IntegerUpDown x:Name="fgversionctrl" ToolTip="Version" Minimum="0" Maximum="3" DefaultValue="0" Value="0" ValueChanged="fgversionctrl_ValueChanged" />
+                        <xctk:IntegerUpDown x:Name="fgversionctrl" ToolTip="Version" Minimum="0" DefaultValue="0" Value="0" ValueChanged="fgversionctrl_ValueChanged" />
                     </StackPanel>
                     <UniformGrid DockPanel.Dock="Left" Columns="1" Margin="0 10 10 0">
                         <RadioButton x:Name="cameraop0" GroupName="cameraop" IsChecked="True" Content="Rotate" Click="cameraop_Click" />

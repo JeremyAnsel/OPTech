@@ -436,8 +436,8 @@ namespace OPTech
             string fileName = ((System.IO.FileStream)file.BaseStream).Name;
             string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetFileName(fileName));
 
-            var TexEntry = new string[4];
-            var TexEntryStruct = new TextureStruct[4];
+            var TexEntry = new List<string>();
+            var TexEntryStruct = new List<TextureStruct>();
             int ScrollOPT;
             int ScrollFile;
 
@@ -535,12 +535,12 @@ namespace OPTech
                             {
                                 ScrollOPT = ZJBFaceGroup - GlobalOffset + 24;
                                 int texLength;
-                                TexEntry[0] = file.ReadNullTerminatedString(ScrollOPT, out texLength);
+                                TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                string textureName = fileNameWithoutExtension + "_" + TexEntry[0] + ".BMP";
+                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                 {
-                                    TexEntry[0] = string.Empty;
+                                    TexEntry[TexEntry.Count - 1] = string.Empty;
                                     continue;
                                 }
 
@@ -574,8 +574,8 @@ namespace OPTech
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                        TexEntryStruct[0] = new TextureStruct();
-                                        OptRead.AddTextureIllum(TexEntryStruct[0], fullPalData, TexData);
+                                        TexEntryStruct.Add(new TextureStruct());
+                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                         Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                         Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -603,8 +603,8 @@ namespace OPTech
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                        TexEntryStruct[0] = new TextureStruct();
-                                        OptRead.AddTextureIllum(TexEntryStruct[0], fullPalData, TexData);
+                                        TexEntryStruct.Add(new TextureStruct());
+                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                         Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                         Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -637,9 +637,9 @@ namespace OPTech
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
-                                    TexEntryStruct[0] = new TextureStruct();
-                                    OptRead.AddTextureIllum(TexEntryStruct[0], fullPalData, TexData);
-                                    OptRead.AddTextureTrans(TexEntryStruct[0], fullPalData, TexData, AlphaData);
+                                    TexEntryStruct.Add(new TextureStruct());
+                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
                                     Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                     Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -667,22 +667,17 @@ namespace OPTech
                                             ScrollFile = ZJBFaceFaceGroup - GlobalOffset + 4;
                                             int ZFaceFaceGroupType = file.ReadInt32(ScrollFile);
 
-                                            if (ZScrollFaceFaceGroups >= 4)
-                                            {
-                                                continue;
-                                            }
-
                                             // if texture block(20)
                                             if (ZFaceFaceGroupType == 20)
                                             {
                                                 ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
                                                 int texLength;
-                                                TexEntry[ZScrollFaceFaceGroups] = file.ReadNullTerminatedString(ScrollOPT, out texLength);
+                                                TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                                string textureName = fileNameWithoutExtension + "_" + TexEntry[ZScrollFaceFaceGroups] + ".BMP";
+                                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
                                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                                 {
-                                                    TexEntry[ZScrollFaceFaceGroups] = string.Empty;
+                                                    TexEntry[TexEntry.Count - 1] = string.Empty;
                                                     continue;
                                                 }
 
@@ -716,8 +711,8 @@ namespace OPTech
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                                        TexEntryStruct[ZScrollFaceFaceGroups] = new TextureStruct();
-                                                        OptRead.AddTextureIllum(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData);
+                                                        TexEntryStruct.Add(new TextureStruct());
+                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                                         Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                                         Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -745,8 +740,8 @@ namespace OPTech
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                                        TexEntryStruct[ZScrollFaceFaceGroups] = new TextureStruct();
-                                                        OptRead.AddTextureIllum(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData);
+                                                        TexEntryStruct.Add(new TextureStruct());
+                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                                         Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                                         Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -779,9 +774,9 @@ namespace OPTech
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
-                                                    TexEntryStruct[ZScrollFaceFaceGroups] = new TextureStruct();
-                                                    OptRead.AddTextureIllum(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData);
-                                                    OptRead.AddTextureTrans(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData, AlphaData);
+                                                    TexEntryStruct.Add(new TextureStruct());
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
                                                     Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                                     Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -801,22 +796,17 @@ namespace OPTech
                                             ScrollFile = ZJBFaceFaceGroup - GlobalOffset + 4;
                                             int ZFaceFaceGroupType = file.ReadInt32(ScrollFile);
 
-                                            if (ZScrollFaceFaceGroups >= 4)
-                                            {
-                                                continue;
-                                            }
-
                                             // if texture block(20) AAA
                                             if (ZFaceFaceGroupType == 20)
                                             {
                                                 ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
                                                 int texLength;
-                                                TexEntry[ZScrollFaceFaceGroups] = file.ReadNullTerminatedString(ScrollOPT, out texLength);
+                                                TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                                string textureName = fileNameWithoutExtension + "_" + TexEntry[ZScrollFaceFaceGroups] + ".BMP";
+                                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
                                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                                 {
-                                                    TexEntry[ZScrollFaceFaceGroups] = string.Empty;
+                                                    TexEntry[TexEntry.Count - 1] = string.Empty;
                                                     continue;
                                                 }
 
@@ -845,8 +835,8 @@ namespace OPTech
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                                    TexEntryStruct[ZScrollFaceFaceGroups] = new TextureStruct();
-                                                    OptRead.AddTextureIllum(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData);
+                                                    TexEntryStruct.Add(new TextureStruct());
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                                     Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                                     Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -878,9 +868,9 @@ namespace OPTech
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
-                                                    TexEntryStruct[ZScrollFaceFaceGroups] = new TextureStruct();
-                                                    OptRead.AddTextureIllum(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData);
-                                                    OptRead.AddTextureTrans(TexEntryStruct[ZScrollFaceFaceGroups], fullPalData, TexData, AlphaData);
+                                                    TexEntryStruct.Add(new TextureStruct());
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
                                                     Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                                     Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -895,12 +885,12 @@ namespace OPTech
                                     int ZJBFaceFaceGroup = file.ReadInt32(ScrollFile);
                                     ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
                                     int texLength;
-                                    TexEntry[0] = file.ReadNullTerminatedString(ScrollOPT, out texLength);
+                                    TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                    string textureName = fileNameWithoutExtension + "_" + TexEntry[0] + ".BMP";
+                                    string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
                                     if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                     {
-                                        TexEntry[0] = string.Empty;
+                                        TexEntry[TexEntry.Count - 1] = string.Empty;
                                         continue;
                                     }
 
@@ -925,8 +915,8 @@ namespace OPTech
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
-                                    TexEntryStruct[0] = new TextureStruct();
-                                    OptRead.AddTextureIllum(TexEntryStruct[0], fullPalData, TexData);
+                                    TexEntryStruct.Add(new TextureStruct());
+                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
                                     Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
                                     Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
@@ -934,7 +924,7 @@ namespace OPTech
                             }
                             else if (ZFaceGroupType == 1 /*&& !string.IsNullOrEmpty(TexEntry[0])*/)
                             {
-                                for (int EachFG = 0; EachFG < 4; EachFG++)
+                                for (int EachFG = 0; EachFG < TexEntry.Count; EachFG++)
                                 {
                                     if (string.IsNullOrEmpty(TexEntry[EachFG]))
                                     {
@@ -954,15 +944,8 @@ namespace OPTech
                                     texture.CreateTexture(Global.OpenGL);
                                 }
 
-                                TexEntry[0] = string.Empty;
-                                TexEntry[1] = string.Empty;
-                                TexEntry[2] = string.Empty;
-                                TexEntry[3] = string.Empty;
-
-                                TexEntryStruct[0] = null;
-                                TexEntryStruct[1] = null;
-                                TexEntryStruct[2] = null;
-                                TexEntryStruct[3] = null;
+                                TexEntry.Clear();
+                                TexEntryStruct.Clear();
                             }
                         }
                     }
@@ -1903,7 +1886,7 @@ namespace OPTech
             string fileName = ((System.IO.FileStream)file.BaseStream).Name;
             string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetFileName(fileName));
 
-            var TexEntry = new string[4];
+            var TexEntry = new List<string>();
             int ScrollFile;
 
             ScrollFile = 8;
@@ -1997,7 +1980,7 @@ namespace OPTech
                             if (ZFaceGroupType == 20 || ZFaceGroupType == 7) // if texture block(20)
                             {
                                 int ScrollOPT = ZJBFaceGroup - GlobalOffset + 24;
-                                TexEntry[0] = file.ReadNullTerminatedString(ScrollOPT);
+                                TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT));
                             }
                             else if (ZFaceGroupType == 24) // if texture block(24)
                             {
@@ -2026,13 +2009,8 @@ namespace OPTech
                                                 continue;
                                             }
 
-                                            if (ZScrollFaceFaceGroups >= 4)
-                                            {
-                                                continue;
-                                            }
-
                                             int ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
-                                            TexEntry[ZScrollFaceFaceGroups] = file.ReadNullTerminatedString(ScrollOPT);
+                                            TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT));
                                         }
                                     }
                                     else if (ZFaceGroupType == 0) // if texture block(24) CCC
@@ -2052,13 +2030,8 @@ namespace OPTech
                                                 continue;
                                             }
 
-                                            if (ZScrollFaceFaceGroups >= 4)
-                                            {
-                                                continue;
-                                            }
-
                                             int ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
-                                            TexEntry[ZScrollFaceFaceGroups] = file.ReadNullTerminatedString(ScrollOPT);
+                                            TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT));
                                         }
                                     }
                                 }
@@ -2067,7 +2040,7 @@ namespace OPTech
                                     ScrollFile = ZJBFaceGroup - GlobalOffset + 24;
                                     int ZJBFaceFaceGroup = file.ReadInt32(ScrollFile);
                                     int ScrollOPT = ZJBFaceFaceGroup - GlobalOffset + 24;
-                                    TexEntry[0] = file.ReadNullTerminatedString(ScrollOPT);
+                                    TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT));
                                 }
                             }
                             else if (ZFaceGroupType == 1) // if face data block(1)
@@ -2082,25 +2055,18 @@ namespace OPTech
                                 {
                                     var face = lod.FaceArray[NumFaces - ZFaceNum + ZScrollFaces];
 
-                                    face.TextureArray[0] = fileNameWithoutExtension + "_" + TexEntry[0] + ".BMP";
+                                    foreach (string textureName in TexEntry)
+                                    {
+                                        if (string.IsNullOrEmpty(textureName))
+                                        {
+                                            continue;
+                                        }
 
-                                    if (!string.IsNullOrEmpty(TexEntry[1]))
-                                    {
-                                        face.TextureArray[1] = fileNameWithoutExtension + "_" + TexEntry[1] + ".BMP";
-                                        face.TextureArray[2] = fileNameWithoutExtension + "_" + TexEntry[2] + ".BMP";
-                                        face.TextureArray[3] = fileNameWithoutExtension + "_" + TexEntry[3] + ".BMP";
-                                    }
-                                    else
-                                    {
-                                        face.TextureArray[1] = "BLANK";
-                                        face.TextureArray[2] = "BLANK";
-                                        face.TextureArray[3] = "BLANK";
+                                        face.TextureList.Add(fileNameWithoutExtension + "_" + textureName + ".BMP");
                                     }
                                 }
 
-                                TexEntry[1] = string.Empty;
-                                TexEntry[2] = string.Empty;
-                                TexEntry[3] = string.Empty;
+                                TexEntry.Clear();
                             }
                         }
                     }

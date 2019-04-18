@@ -149,11 +149,11 @@ namespace OPTech
                                 {
                                     var lod1Face = lod1.FaceArray[EachFace];
 
-                                    for (int EachFG = 0; EachFG < 4; EachFG++)
+                                    for (int EachFG = 0; EachFG < lod1Face.TextureList.Count; EachFG++)
                                     {
                                         for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                         {
-                                            if (lod1Face.TextureArray[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                            if (lod1Face.TextureList[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
                                             {
                                                 int TexUsageCount = 0;
 
@@ -169,9 +169,9 @@ namespace OPTech
                                                         {
                                                             var faceCheck = lodCheck.FaceArray[EachFaceCheck];
 
-                                                            for (int EachFGCheck = 0; EachFGCheck < 4; EachFGCheck++)
+                                                            for (int EachFGCheck = 0; EachFGCheck < faceCheck.TextureList.Count; EachFGCheck++)
                                                             {
-                                                                if (lod1Face.TextureArray[EachFG] == faceCheck.TextureArray[EachFGCheck])
+                                                                if (lod1Face.TextureList[EachFG] == faceCheck.TextureList[EachFGCheck])
                                                                 {
                                                                     TexUsageCount++;
                                                                 }
@@ -180,10 +180,10 @@ namespace OPTech
                                                     }
                                                 }
 
+                                                lod1Face.TextureList[EachFG] = "BLANK";
+
                                                 if (TexUsageCount == 1)
                                                 {
-                                                    lod1Face.TextureArray[EachFG] = "BLANK";
-
                                                     for (int EachTextureAfter = EachTexture; EachTextureAfter < Global.OPT.TextureArray.Count - 1; EachTextureAfter++)
                                                     {
                                                         Global.OPT.TextureArray[EachTextureAfter] = Global.OPT.TextureArray[EachTextureAfter + 1];

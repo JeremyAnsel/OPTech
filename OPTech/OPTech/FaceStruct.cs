@@ -42,7 +42,7 @@ namespace OPTech
             new VertexStruct()
         };
 
-        public string[] TextureArray = new string[4];
+        public List<string> TextureList = new List<string>();
 
         public FaceStruct Clone()
         {
@@ -75,10 +75,7 @@ namespace OPTech
             newFace.VertexArray[2] = this.VertexArray[2].Clone();
             newFace.VertexArray[3] = this.VertexArray[3].Clone();
 
-            newFace.TextureArray[0] = this.TextureArray[0];
-            newFace.TextureArray[1] = this.TextureArray[1];
-            newFace.TextureArray[2] = this.TextureArray[2];
-            newFace.TextureArray[3] = this.TextureArray[3];
+            newFace.TextureList.AddRange(this.TextureList);
 
             return newFace;
         }

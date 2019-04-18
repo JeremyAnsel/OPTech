@@ -855,11 +855,11 @@ namespace OPTech
                             {
                                 var face = lod.FaceArray[EachFace];
 
-                                for (int EachFG = 0; EachFG < 4; EachFG++)
+                                for (int EachFG = 0; EachFG < face.TextureList.Count; EachFG++)
                                 {
                                     for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                     {
-                                        if (face.TextureArray[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                        if (face.TextureList[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
                                         {
                                             int TexUsageCount = 0;
 
@@ -875,9 +875,9 @@ namespace OPTech
                                                     {
                                                         var faceCheck = lodCheck.FaceArray[EachFaceCheck];
 
-                                                        for (int EachFGCheck = 0; EachFGCheck < 4; EachFGCheck++)
+                                                        for (int EachFGCheck = 0; EachFGCheck < faceCheck.TextureList.Count; EachFGCheck++)
                                                         {
-                                                            if (face.TextureArray[EachFG] == faceCheck.TextureArray[EachFGCheck])
+                                                            if (face.TextureList[EachFG] == faceCheck.TextureList[EachFGCheck])
                                                             {
                                                                 TexUsageCount++;
                                                             }
@@ -886,7 +886,7 @@ namespace OPTech
                                                 }
                                             }
 
-                                            face.TextureArray[EachFG] = "BLANK";
+                                            face.TextureList[EachFG] = "BLANK";
 
                                             if (TexUsageCount == 1)
                                             {
@@ -944,11 +944,11 @@ namespace OPTech
                         {
                             var face = lod.FaceArray[EachFace];
 
-                            for (int EachFG = 0; EachFG < 4; EachFG++)
+                            for (int EachFG = 0; EachFG < face.TextureList.Count; EachFG++)
                             {
                                 for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                 {
-                                    if (face.TextureArray[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                    if (face.TextureList[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
                                     {
                                         int TexUsageCount = 0;
 
@@ -964,9 +964,9 @@ namespace OPTech
                                                 {
                                                     var faceCheck = lodCheck.FaceArray[EachFaceCheck];
 
-                                                    for (int EachFGCheck = 0; EachFGCheck < 4; EachFGCheck++)
+                                                    for (int EachFGCheck = 0; EachFGCheck < faceCheck.TextureList.Count; EachFGCheck++)
                                                     {
-                                                        if (face.TextureArray[EachFG] == faceCheck.TextureArray[EachFGCheck])
+                                                        if (face.TextureList[EachFG] == faceCheck.TextureList[EachFGCheck])
                                                         {
                                                             TexUsageCount++;
                                                         }
@@ -975,7 +975,7 @@ namespace OPTech
                                             }
                                         }
 
-                                        face.TextureArray[EachFG] = "BLANK";
+                                        face.TextureList[EachFG] = "BLANK";
 
                                         if (TexUsageCount == 1)
                                         {
@@ -1052,11 +1052,11 @@ namespace OPTech
 
                         if (face.Selected)
                         {
-                            for (int EachFG = 0; EachFG < 4; EachFG++)
+                            for (int EachFG = 0; EachFG < face.TextureList.Count; EachFG++)
                             {
                                 for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                 {
-                                    if (face.TextureArray[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                    if (face.TextureList[EachFG] == Global.OPT.TextureArray[EachTexture].TextureName)
                                     {
                                         int TexUsageCount = 0;
 
@@ -1072,9 +1072,9 @@ namespace OPTech
                                                 {
                                                     var faceCheck = lodCheck.FaceArray[EachFaceCheck];
 
-                                                    for (int EachFGCheck = 0; EachFGCheck < 4; EachFGCheck++)
+                                                    for (int EachFGCheck = 0; EachFGCheck < faceCheck.TextureList.Count; EachFGCheck++)
                                                     {
-                                                        if (face.TextureArray[EachFG] == faceCheck.TextureArray[EachFGCheck])
+                                                        if (face.TextureList[EachFG] == faceCheck.TextureList[EachFGCheck])
                                                         {
                                                             TexUsageCount++;
                                                         }
@@ -1083,7 +1083,7 @@ namespace OPTech
                                             }
                                         }
 
-                                        face.TextureArray[EachFG] = "BLANK";
+                                        face.TextureList[EachFG] = "BLANK";
 
                                         if (TexUsageCount == 1)
                                         {
@@ -7127,9 +7127,9 @@ namespace OPTech
 
                     if (face.Selected)
                     {
-                        face.TextureArray[1] = "BLANK";
-                        face.TextureArray[2] = "BLANK";
-                        face.TextureArray[3] = "BLANK";
+                        string textureName = face.TextureList[0];
+                        face.TextureList.Clear();
+                        face.TextureList.Add(textureName);
                     }
                 }
             }
@@ -7143,6 +7143,7 @@ namespace OPTech
                 StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
             }
 
+            Global.CX.MeshScreens(IndexMesh, whichLOD);
             Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
             Global.CX.CreateCall();
             Global.ModelChanged = true;
@@ -7178,15 +7179,40 @@ namespace OPTech
             {
                 var face = mesh.LODArray[whichLOD].FaceArray[thisFace];
 
-                if (face.TextureArray[1] == "BLANK" || face.TextureArray[2] == "BLANK" || face.TextureArray[3] == "BLANK")
+                if (face.TextureList.Count <= 1 || face.TextureList.Contains("BLANK"))
                 {
                     this.fgoffop.IsChecked = true;
                 }
             }
         }
 
-        private void redfgsel_Click(object sender, RoutedEventArgs e)
+        private void fgsellist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (this.fgsellist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int selected = Global.FGSelected;
+
+            if (this.fgsellist.SelectedIndex >= this.fgsellist.Items.Count - 1)
+            {
+                Global.FGSelected = 0;
+            }
+            else
+            {
+                Global.FGSelected = this.fgsellist.SelectedIndex;
+            }
+
+            if (Global.FGSelected != selected)
+            {
+                Global.frmrenderscreen.fgversionctrl.Value = Global.FGSelected;
+            }
+            else
+            {
+                return;
+            }
+
             int whichLOD;
             if (Global.DetailMode == "high")
             {
@@ -7195,109 +7221,6 @@ namespace OPTech
             else
             {
                 whichLOD = 1;
-            }
-
-            Global.FGSelected = 0;
-
-            if (Global.frmrenderscreen != null)
-            {
-                Global.frmrenderscreen.fgversionctrl.Value = Global.FGSelected;
-            }
-
-            int IndexMesh = -1;
-            int IndexFace = -1;
-
-            if (this.facelist.SelectedIndex != -1)
-            {
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-            }
-
-            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-            Global.CX.CreateCall();
-        }
-
-        private void yellowfgsel_Click(object sender, RoutedEventArgs e)
-        {
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            Global.FGSelected = 1;
-
-            if (Global.frmrenderscreen != null)
-            {
-                Global.frmrenderscreen.fgversionctrl.Value = Global.FGSelected;
-            }
-
-            int IndexMesh = -1;
-            int IndexFace = -1;
-
-            if (this.facelist.SelectedIndex != -1)
-            {
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-            }
-
-            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-            Global.CX.CreateCall();
-        }
-
-        private void bluefgsel_Click(object sender, RoutedEventArgs e)
-        {
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            Global.FGSelected = 2;
-
-            if (Global.frmrenderscreen != null)
-            {
-                Global.frmrenderscreen.fgversionctrl.Value = Global.FGSelected;
-            }
-
-            int IndexMesh = -1;
-            int IndexFace = -1;
-
-            if (this.facelist.SelectedIndex != -1)
-            {
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-            }
-
-            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-            Global.CX.CreateCall();
-        }
-
-        private void greenfgsel_Click(object sender, RoutedEventArgs e)
-        {
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            Global.FGSelected = 3;
-
-            if (Global.frmrenderscreen != null)
-            {
-                Global.frmrenderscreen.fgversionctrl.Value = Global.FGSelected;
             }
 
             int IndexMesh = -1;
@@ -9558,7 +9481,7 @@ namespace OPTech
                             {
                                 var texture = Global.OPT.TextureArray[EachTexture];
 
-                                if (face.TextureArray[Global.FGSelected] == texture.TextureName)
+                                if (face.TextureList.Count > Global.FGSelected && face.TextureList[Global.FGSelected] == texture.TextureName)
                                 {
                                     int TexUsageCount = 0;
 
@@ -9574,9 +9497,9 @@ namespace OPTech
                                             {
                                                 var faceCheck = lodCheck.FaceArray[EachFaceCheck];
 
-                                                for (int EachFGCheck = 0; EachFGCheck < 4; EachFGCheck++)
+                                                for (int EachFGCheck = 0; EachFGCheck < faceCheck.TextureList.Count; EachFGCheck++)
                                                 {
-                                                    if (face.TextureArray[Global.FGSelected] == faceCheck.TextureArray[EachFGCheck])
+                                                    if (face.TextureList[Global.FGSelected] == faceCheck.TextureList[EachFGCheck])
                                                     {
                                                         TexUsageCount++;
                                                     }
@@ -9601,7 +9524,17 @@ namespace OPTech
                                 }
                             }
 
-                            face.TextureArray[Global.FGSelected] = this.texturelist.GetSelectedText();
+                            string textureName = this.texturelist.GetSelectedText();
+                            int selectedIndex = this.fgsellist.SelectedIndex;
+
+                            if (selectedIndex != -1 && face.TextureList.Count > selectedIndex)
+                            {
+                                face.TextureList[selectedIndex] = textureName;
+                            }
+                            else
+                            {
+                                face.TextureList.Add(textureName);
+                            }
 
                             bool TexFound = false;
 
@@ -9609,7 +9542,7 @@ namespace OPTech
                             {
                                 var texture = Global.OPT.TextureArray[EachTexture];
 
-                                if (face.TextureArray[Global.FGSelected] == texture.TextureName)
+                                if (textureName == texture.TextureName)
                                 {
                                     TexFound = true;
                                 }
@@ -9619,7 +9552,7 @@ namespace OPTech
                             {
                                 var texture = new TextureStruct();
                                 Global.OPT.TextureArray.Add(texture);
-                                texture.TextureName = face.TextureArray[Global.FGSelected];
+                                texture.TextureName = textureName;
                                 texture.CreateTexture(Global.OpenGL);
 
                                 Global.frmtexture.transtexturelist.AddCheck("TEX");

@@ -152,53 +152,62 @@ namespace OPTech
 
         private void fgversionctrl_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            Global.FGSelected = (int)e.NewValue;
+            int newValue = (int)e.NewValue;
+
+            if (Global.FGSelected == newValue)
+            {
+                return;
+            }
+
+            int maxValue = Global.OPT.GetVersionCount();
+
+            if (newValue >= maxValue)
+            {
+                newValue = maxValue - 1;
+                this.fgversionctrl.Value = newValue;
+                return;
+            }
+
+            Global.FGSelected = newValue;
 
             if (Global.frmgeometry == null)
             {
                 return;
             }
 
-            switch (Global.FGSelected)
+            if (Global.frmgeometry.fgsellist.SelectedIndex != -1)
             {
-                case 0:
-                    Global.frmgeometry.redfgsel.IsChecked = true;
-                    break;
+                if (Global.FGSelected < Global.frmgeometry.fgsellist.Items.Count - 1)
+                {
+                    Global.frmgeometry.fgsellist.SelectedIndex = Global.FGSelected;
+                }
+                else
+                {
+                    //Global.frmgeometry.fgsellist.SelectedIndex = 0;
+                }
 
-                case 1:
-                    Global.frmgeometry.yellowfgsel.IsChecked = true;
-                    break;
+                int whichLOD;
+                if (Global.DetailMode == "high")
+                {
+                    whichLOD = 0;
+                }
+                else
+                {
+                    whichLOD = 1;
+                }
 
-                case 2:
-                    Global.frmgeometry.bluefgsel.IsChecked = true;
-                    break;
+                int IndexMesh = -1;
+                int IndexFace = -1;
 
-                case 3:
-                    Global.frmgeometry.greenfgsel.IsChecked = true;
-                    break;
+                if (Global.frmgeometry.facelist.SelectedIndex != -1)
+                {
+                    string text = Global.frmgeometry.facelist.GetSelectedText();
+                    StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+                }
+
+                Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+                Global.CX.CreateCall();
             }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            int IndexMesh = -1;
-            int IndexFace = -1;
-
-            if (Global.frmgeometry.facelist.SelectedIndex != -1)
-            {
-                string text = Global.frmgeometry.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-            }
-
-            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-            Global.CX.CreateCall();
         }
     }
 }

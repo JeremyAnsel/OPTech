@@ -209,33 +209,7 @@
                                             <RadioButton x:Name="fgonop" GroupName="fgop" Content="FG on " Click="fgonop_Click" />
                                         </StackPanel>
                                         <GroupBox x:Name="fgframe" Header="FG Color">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Column="0" Grid.Row="0">
-                                                    <Rectangle Fill="Red" />
-                                                    <RadioButton x:Name="redfgsel" GroupName="fgsel" Content="Red" IsChecked="True" Click="redfgsel_Click" />
-                                                </Grid>
-                                                <Grid Grid.Column="0" Grid.Row="1">
-                                                    <Rectangle Fill="Yellow" />
-                                                    <RadioButton x:Name="yellowfgsel" GroupName="fgsel" Content="Yellow" Click="yellowfgsel_Click" />
-                                                </Grid>
-                                                <Grid Grid.Column="0" Grid.Row="2">
-                                                    <Rectangle Fill="Blue" />
-                                                    <RadioButton x:Name="bluefgsel" GroupName="fgsel" Content="Blue" Click="bluefgsel_Click" />
-                                                </Grid>
-                                                <Grid Grid.Column="0" Grid.Row="3">
-                                                    <Rectangle Fill="Green" />
-                                                    <RadioButton x:Name="greenfgsel" GroupName="fgsel" Content="Green" Click="greenfgsel_Click" />
-                                                </Grid>
-                                            </Grid>
+                                            <ListBox x:Name="fgsellist" SelectionChanged="fgsellist_SelectionChanged" />
                                         </GroupBox>
                                     </DockPanel>
                                     <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="1" Header="Stitching">

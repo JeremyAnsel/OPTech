@@ -438,10 +438,7 @@ namespace OPTech
                         }
 
                         // face uses default.bmp
-                        if (face.TextureArray[0] == "default.bmp"
-                            || face.TextureArray[1] == "default.bmp"
-                            || face.TextureArray[2] == "default.bmp"
-                            || face.TextureArray[3] == "default.bmp")
+                        if (face.TextureList.Contains("default.bmp"))
                         {
                             text.AppendLine("* " + faceName + " uses default.bmp");
                         }
@@ -1338,10 +1335,7 @@ namespace OPTech
                                     }
 
                                     if (matchCount == 2
-                                        && faceSub.TextureArray[0] == face.TextureArray[0]
-                                        && faceSub.TextureArray[1] == face.TextureArray[1]
-                                        && faceSub.TextureArray[2] == face.TextureArray[2]
-                                        && faceSub.TextureArray[3] == face.TextureArray[3])
+                                        && faceSub.TextureList.SequenceEqual(face.TextureList))
                                     {
                                         float ASpanX = face.VertexArray[1].XCoord - face.VertexArray[0].XCoord;
                                         float ASpanY = face.VertexArray[1].YCoord - face.VertexArray[0].YCoord;
@@ -2453,27 +2447,29 @@ namespace OPTech
                             face.Y2Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z2Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
 
-                            for (int i = 0; currentLine != null; i++)
+                            while (currentLine != null && file.Peek() != ' ')
                             {
                                 if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
                                 {
                                     break;
                                 }
 
-                                face.TextureArray[i] = currentLine;
+                                string textureName = currentLine;
                                 currentLine = file.ReadLine();
 
-                                if (face.TextureArray[i] == "BLANK")
+                                if (textureName == "BLANK")
                                 {
                                     continue;
                                 }
 
-                                string filename = System.IO.Path.Combine(Global.opzpath, face.TextureArray[i]);
+                                string filename = System.IO.Path.Combine(Global.opzpath, textureName);
 
                                 if (!System.IO.File.Exists(filename))
                                 {
-                                    face.TextureArray[i] = "default.bmp";
+                                    textureName = "default.bmp";
                                 }
+
+                                face.TextureList.Add(textureName);
                             }
                         }
                     }
@@ -2789,9 +2785,14 @@ namespace OPTech
                             file.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0:F4}, {1:F4}, {2:F4}", face.X1Vector, face.Y1Vector, face.Z1Vector));
                             file.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0:F4}, {1:F4}, {2:F4}", face.X2Vector, face.Y2Vector, face.Z2Vector));
 
-                            for (int i = 0; i < 4; i++)
+                            foreach (string textureName in face.TextureList)
                             {
-                                file.WriteLine(face.TextureArray[i]);
+                                file.WriteLine(textureName);
+                            }
+
+                            for (int i = face.TextureList.Count; i < 4; i++)
+                            {
+                                file.WriteLine("BLANK");
                             }
                         }
                     }
@@ -3139,10 +3140,7 @@ namespace OPTech
 
                         Global.FaceIDQueue++;
                         face.ID = Global.FaceIDQueue;
-                        face.TextureArray[0] = "default.bmp";
-                        face.TextureArray[1] = "BLANK";
-                        face.TextureArray[2] = "BLANK";
-                        face.TextureArray[3] = "BLANK";
+                        face.TextureList.Add("default.bmp");
 
                         if (invertVertexOrder)
                         {
@@ -3238,10 +3236,7 @@ namespace OPTech
 
                         Global.FaceIDQueue++;
                         face.ID = Global.FaceIDQueue;
-                        face.TextureArray[0] = "default.bmp";
-                        face.TextureArray[1] = "BLANK";
-                        face.TextureArray[2] = "BLANK";
-                        face.TextureArray[3] = "BLANK";
+                        face.TextureList.Add("default.bmp");
 
                         if (invertVertexOrder)
                         {
@@ -3439,10 +3434,7 @@ namespace OPTech
                         lod.FaceArray.Add(face);
                         Global.FaceIDQueue++;
                         face.ID = Global.FaceIDQueue;
-                        face.TextureArray[0] = "default.bmp";
-                        face.TextureArray[1] = "BLANK";
-                        face.TextureArray[2] = "BLANK";
-                        face.TextureArray[3] = "BLANK";
+                        face.TextureList.Add("default.bmp");
                         SType = GetWord(file);
 
                         SlashFinder = SType.Split('/');
@@ -3784,27 +3776,29 @@ namespace OPTech
                             face.Y2Vector = float.Parse(line[1], CultureInfo.InvariantCulture);
                             face.Z2Vector = float.Parse(line[2], CultureInfo.InvariantCulture);
 
-                            for (int i = 0; currentLine != null; i++)
+                            while (currentLine != null && file.Peek() != ' ')
                             {
                                 if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
                                 {
                                     break;
                                 }
 
-                                face.TextureArray[i] = currentLine;
+                                string textureName = currentLine;
                                 currentLine = file.ReadLine();
 
-                                if (face.TextureArray[i] == "BLANK")
+                                if (textureName == "BLANK")
                                 {
                                     continue;
                                 }
 
-                                string filename = System.IO.Path.Combine(Global.opzpath, face.TextureArray[i]);
+                                string filename = System.IO.Path.Combine(Global.opzpath, textureName);
 
                                 if (!System.IO.File.Exists(filename))
                                 {
-                                    face.TextureArray[i] = "default.bmp";
+                                    textureName = "default.bmp";
                                 }
+
+                                face.TextureList.Add(textureName);
                             }
                         }
                     }
@@ -4247,11 +4241,7 @@ namespace OPTech
                     TexVertArray[i] = new List<float>();
                 }
 
-                var TextureArray = new List<string>[4];
-                for (int i = 0; i < TextureArray.Length; i++)
-                {
-                    TextureArray[i] = new List<string>();
-                }
+                var TextureArray = new List<List<string>>();
 
                 var TextureArrayFaceIndices = new List<List<int>>();
 
@@ -4657,10 +4647,7 @@ namespace OPTech
                                         file.Write(0);
                                         file.Write(0);
 
-                                        TextureArray[0].Clear();
-                                        TextureArray[1].Clear();
-                                        TextureArray[2].Clear();
-                                        TextureArray[3].Clear();
+                                        TextureArray.Clear();
                                         TextureArrayFaceIndices.Clear();
 
                                         for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
@@ -4668,9 +4655,9 @@ namespace OPTech
                                             var face = lod.FaceArray[faceIndex];
 
                                             int VertFound = -1;
-                                            for (int ScanVertArray = 0; ScanVertArray < TextureArray[0].Count; ScanVertArray++)
+                                            for (int ScanVertArray = 0; ScanVertArray < TextureArray.Count; ScanVertArray++)
                                             {
-                                                if (face.TextureArray[0] == TextureArray[0][ScanVertArray] && face.TextureArray[1] == TextureArray[1][ScanVertArray] && face.TextureArray[2] == TextureArray[2][ScanVertArray] && face.TextureArray[3] == TextureArray[3][ScanVertArray])
+                                                if (face.TextureList.SequenceEqual(TextureArray[ScanVertArray]))
                                                 {
                                                     VertFound = ScanVertArray;
                                                     break;
@@ -4679,10 +4666,7 @@ namespace OPTech
 
                                             if (VertFound == -1)
                                             {
-                                                TextureArray[0].Add(face.TextureArray[0]);
-                                                TextureArray[1].Add(face.TextureArray[1]);
-                                                TextureArray[2].Add(face.TextureArray[2]);
-                                                TextureArray[3].Add(face.TextureArray[3]);
+                                                TextureArray.Add(new List<string>(face.TextureList));
                                                 TextureArrayFaceIndices.Add(new List<int>());
                                                 VertFound = TextureArrayFaceIndices.Count - 1;
                                             }
@@ -4692,20 +4676,17 @@ namespace OPTech
 
                                         const int MaxVerticesCount = 384;
 
-                                        var groups = new List<Tuple<string, string, string, string, List<int>>>();
+                                        var groups = new List<Tuple<List<string>, List<int>>>();
 
-                                        var createNewGroup = new Func<int, Tuple<string, string, string, string, List<int>>>(faceGroupIndex =>
+                                        var createNewGroup = new Func<int, Tuple<List<string>, List<int>>>(faceGroupIndex =>
                                         {
-                                            string texture0 = TextureArray[0][faceGroupIndex];
-                                            string texture1 = TextureArray[1][faceGroupIndex];
-                                            string texture2 = TextureArray[2][faceGroupIndex];
-                                            string texture3 = TextureArray[3][faceGroupIndex];
+                                            var textures = new List<string>(TextureArray[faceGroupIndex]);
                                             var faceIndices = new List<int>();
 
-                                            return Tuple.Create(texture0, texture1, texture2, texture3, faceIndices);
+                                            return Tuple.Create(textures, faceIndices);
                                         });
 
-                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count; faceGroupIndex++)
+                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count; faceGroupIndex++)
                                         {
                                             int EdgeCount = 0;
 
@@ -4731,7 +4712,7 @@ namespace OPTech
                                             if (EdgeCount <= MaxVerticesCount)
                                             {
                                                 var group = createNewGroup(faceGroupIndex);
-                                                group.Item5.AddRange(TextureArrayFaceIndices[faceGroupIndex]);
+                                                group.Item2.AddRange(TextureArrayFaceIndices[faceGroupIndex]);
                                                 groups.Add(group);
                                             }
                                             else
@@ -4764,45 +4745,42 @@ namespace OPTech
                                                         group = createNewGroup(faceGroupIndex);
                                                     }
 
-                                                    group.Item5.Add(faceIndex);
+                                                    group.Item2.Add(faceIndex);
                                                 }
 
                                                 groups.Add(group);
                                             }
                                         }
 
-                                        TextureArray[0] = groups.Select(t => t.Item1).ToList();
-                                        TextureArray[1] = groups.Select(t => t.Item2).ToList();
-                                        TextureArray[2] = groups.Select(t => t.Item3).ToList();
-                                        TextureArray[3] = groups.Select(t => t.Item4).ToList();
-                                        TextureArrayFaceIndices = groups.Select(t => t.Item5).ToList();
+                                        TextureArray = groups.Select(t => t.Item1).ToList();
+                                        TextureArrayFaceIndices = groups.Select(t => t.Item2).ToList();
 
-                                        file.Write(TextureArray[0].Count * 2);
+                                        file.Write(TextureArray.Count * 2);
                                         file.Write(100 + (int)file.BaseStream.Length + 12);
                                         file.Write(1);
                                         file.Write(0);
 
                                         int FaceGroupRefPos = (int)file.BaseStream.Length;
 
-                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count * 2; faceGroupIndex++)
+                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count * 2; faceGroupIndex++)
                                         {
                                             file.Write(0);
                                         }
 
-                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count * 2; faceGroupIndex++)
+                                        for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count * 2; faceGroupIndex++)
                                         {
                                             file.Seek(FaceGroupRefPos + (4 * faceGroupIndex), System.IO.SeekOrigin.Begin);
                                             file.Write(100 + (int)file.BaseStream.Length);
 
                                             if (faceGroupIndex % 2 == 0)
                                             {
-                                                if (TextureArray[1][faceGroupIndex / 2] == "BLANK" && TextureArray[2][faceGroupIndex / 2] == "BLANK" && TextureArray[3][faceGroupIndex / 2] == "BLANK")
+                                                if (TextureArray[faceGroupIndex / 2].Skip(1).All(t => t == "BLANK"))
                                                 {
                                                     int HoldTexLoc = 0;
 
                                                     for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
                                                     {
-                                                        if (TextureArray[0][faceGroupIndex / 2] == Global.OPT.TextureArray[textureIndex].TextureName)
+                                                        if (TextureArray[faceGroupIndex / 2][0] == Global.OPT.TextureArray[textureIndex].TextureName)
                                                         {
                                                             HoldTexLoc = textureIndex;
                                                             break;
@@ -4838,7 +4816,7 @@ namespace OPTech
 
                                                             try
                                                             {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                 using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                 {
@@ -4879,7 +4857,7 @@ namespace OPTech
 
                                                             try
                                                             {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                 using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                 {
@@ -4927,7 +4905,7 @@ namespace OPTech
 
                                                         try
                                                         {
-                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                             {
@@ -4985,7 +4963,7 @@ namespace OPTech
 
                                                         try
                                                         {
-                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                             {
@@ -5267,21 +5245,24 @@ namespace OPTech
                                                 }
                                                 else
                                                 {
+                                                    int fgTexCount = TextureArray[faceGroupIndex / 2].Count;
+
                                                     file.Seek(0, System.IO.SeekOrigin.End);
                                                     file.Write(0);
                                                     file.Write(24);
-                                                    file.Write(4);
+                                                    file.Write(fgTexCount);
                                                     file.Write(100 + (int)file.BaseStream.Length + 12);
                                                     file.Write(1);
                                                     file.Write(0);
+
                                                     int FGTexRefPos = (int)file.BaseStream.Length;
 
-                                                    for (int fgTexIndex = 0; fgTexIndex < 4; fgTexIndex++)
+                                                    for (int fgTexIndex = 0; fgTexIndex < fgTexCount; fgTexIndex++)
                                                     {
                                                         file.Write(0);
                                                     }
 
-                                                    for (int fgTexIndex = 0; fgTexIndex < 4; fgTexIndex++)
+                                                    for (int fgTexIndex = 0; fgTexIndex < fgTexCount; fgTexIndex++)
                                                     {
                                                         file.Write(FGTexRefPos + 4 * fgTexIndex, 100 + (int)file.BaseStream.Length);
 
@@ -5289,7 +5270,7 @@ namespace OPTech
 
                                                         for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
                                                         {
-                                                            if (TextureArray[fgTexIndex][faceGroupIndex / 2] == Global.OPT.TextureArray[textureIndex].TextureName)
+                                                            if (TextureArray[faceGroupIndex / 2][fgTexIndex] == Global.OPT.TextureArray[textureIndex].TextureName)
                                                             {
                                                                 HoldTexLoc = textureIndex;
                                                                 break;
@@ -5305,7 +5286,7 @@ namespace OPTech
 
                                                             for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
                                                             {
-                                                                if (TextureArray[fgTexIndex][faceGroupIndex / 2] == Global.OPT.TextureArray[textureIndex].TextureName)
+                                                                if (TextureArray[faceGroupIndex / 2][fgTexIndex] == Global.OPT.TextureArray[textureIndex].TextureName)
                                                                 {
                                                                     HoldTexLoc = textureIndex;
                                                                     break;
@@ -5334,7 +5315,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[fgTexIndex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -5375,7 +5356,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[fgTexIndex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -5423,7 +5404,7 @@ namespace OPTech
 
                                                             try
                                                             {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[fgTexIndex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                 using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                 {
@@ -5481,7 +5462,7 @@ namespace OPTech
 
                                                             try
                                                             {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[fgTexIndex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                 using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                 {
@@ -5976,11 +5957,7 @@ namespace OPTech
                     TexVertArray[i] = new List<float>();
                 }
 
-                var TextureArray = new List<string>[4];
-                for (int i = 0; i < TextureArray.Length; i++)
-                {
-                    TextureArray[i] = new List<string>();
-                }
+                var TextureArray = new List<List<string>>();
 
                 var TextureArrayFaceIndices = new List<List<int>>();
 
@@ -6359,10 +6336,7 @@ namespace OPTech
                                                 file.Write(0);
                                                 file.Write(0);
 
-                                                TextureArray[0].Clear();
-                                                TextureArray[1].Clear();
-                                                TextureArray[2].Clear();
-                                                TextureArray[3].Clear();
+                                                TextureArray.Clear();
                                                 TextureArrayFaceIndices.Clear();
 
                                                 for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
@@ -6370,9 +6344,9 @@ namespace OPTech
                                                     var face = lod.FaceArray[faceIndex];
 
                                                     int VertFound = -1;
-                                                    for (int ScanVertArray = 0; ScanVertArray < TextureArray[0].Count; ScanVertArray++)
+                                                    for (int ScanVertArray = 0; ScanVertArray < TextureArray.Count; ScanVertArray++)
                                                     {
-                                                        if (face.TextureArray[0] == TextureArray[0][ScanVertArray] && face.TextureArray[1] == TextureArray[1][ScanVertArray] && face.TextureArray[2] == TextureArray[2][ScanVertArray] && face.TextureArray[3] == TextureArray[3][ScanVertArray])
+                                                        if (face.TextureList.SequenceEqual(TextureArray[ScanVertArray]))
                                                         {
                                                             VertFound = ScanVertArray;
                                                             break;
@@ -6381,10 +6355,7 @@ namespace OPTech
 
                                                     if (VertFound == -1)
                                                     {
-                                                        TextureArray[0].Add(face.TextureArray[0]);
-                                                        TextureArray[1].Add(face.TextureArray[1]);
-                                                        TextureArray[2].Add(face.TextureArray[2]);
-                                                        TextureArray[3].Add(face.TextureArray[3]);
+                                                        TextureArray.Add(new List<string>(face.TextureList));
                                                         TextureArrayFaceIndices.Add(new List<int>());
                                                         VertFound = TextureArrayFaceIndices.Count - 1;
                                                     }
@@ -6394,20 +6365,17 @@ namespace OPTech
 
                                                 const int MaxVerticesCount = 384;
 
-                                                var groups = new List<Tuple<string, string, string, string, List<int>>>();
+                                                var groups = new List<Tuple<List<string>, List<int>>>();
 
-                                                var createNewGroup = new Func<int, Tuple<string, string, string, string, List<int>>>(faceGroupIndex =>
+                                                var createNewGroup = new Func<int, Tuple<List<string>, List<int>>>(faceGroupIndex =>
                                                 {
-                                                    string texture0 = TextureArray[0][faceGroupIndex];
-                                                    string texture1 = TextureArray[1][faceGroupIndex];
-                                                    string texture2 = TextureArray[2][faceGroupIndex];
-                                                    string texture3 = TextureArray[3][faceGroupIndex];
+                                                    var textures = new List<string>(TextureArray[faceGroupIndex]);
                                                     var faceIndices = new List<int>();
 
-                                                    return Tuple.Create(texture0, texture1, texture2, texture3, faceIndices);
+                                                    return Tuple.Create(textures, faceIndices);
                                                 });
 
-                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count; faceGroupIndex++)
+                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count; faceGroupIndex++)
                                                 {
                                                     int EdgeCount = 0;
 
@@ -6433,7 +6401,7 @@ namespace OPTech
                                                     if (EdgeCount <= MaxVerticesCount)
                                                     {
                                                         var group = createNewGroup(faceGroupIndex);
-                                                        group.Item5.AddRange(TextureArrayFaceIndices[faceGroupIndex]);
+                                                        group.Item2.AddRange(TextureArrayFaceIndices[faceGroupIndex]);
                                                         groups.Add(group);
                                                     }
                                                     else
@@ -6466,44 +6434,41 @@ namespace OPTech
                                                                 group = createNewGroup(faceGroupIndex);
                                                             }
 
-                                                            group.Item5.Add(faceIndex);
+                                                            group.Item2.Add(faceIndex);
                                                         }
 
                                                         groups.Add(group);
                                                     }
                                                 }
 
-                                                TextureArray[0] = groups.Select(t => t.Item1).ToList();
-                                                TextureArray[1] = groups.Select(t => t.Item2).ToList();
-                                                TextureArray[2] = groups.Select(t => t.Item3).ToList();
-                                                TextureArray[3] = groups.Select(t => t.Item4).ToList();
-                                                TextureArrayFaceIndices = groups.Select(t => t.Item5).ToList();
+                                                TextureArray = groups.Select(t => t.Item1).ToList();
+                                                TextureArrayFaceIndices = groups.Select(t => t.Item2).ToList();
 
-                                                file.Write(TextureArray[0].Count * 2);
+                                                file.Write(TextureArray.Count * 2);
                                                 file.Write(100 + (int)file.BaseStream.Length + 12);
                                                 file.Write(1);
                                                 file.Write(0);
 
                                                 int FaceGroupRefPos = (int)file.BaseStream.Length;
 
-                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count * 2; faceGroupIndex++)
+                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count * 2; faceGroupIndex++)
                                                 {
                                                     file.Write(0);
                                                 }
 
-                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray[0].Count * 2; faceGroupIndex++)
+                                                for (int faceGroupIndex = 0; faceGroupIndex < TextureArray.Count * 2; faceGroupIndex++)
                                                 {
                                                     file.Write(FaceGroupRefPos + (4 * faceGroupIndex), 100 + (int)file.BaseStream.Length);
 
                                                     if (faceGroupIndex % 2 == 0)
                                                     {
-                                                        if (TextureArray[1][faceGroupIndex / 2] == "BLANK" && TextureArray[2][faceGroupIndex / 2] == "BLANK" && TextureArray[3][faceGroupIndex / 2] == "BLANK")
+                                                        if (TextureArray[faceGroupIndex / 2].Skip(1).All(t => t == "BLANK"))
                                                         {
                                                             int HoldTexLoc = 0;
 
                                                             for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                                             {
-                                                                if (TextureArray[0][faceGroupIndex / 2] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                                                if (TextureArray[faceGroupIndex / 2][0] == Global.OPT.TextureArray[EachTexture].TextureName)
                                                                 {
                                                                     HoldTexLoc = EachTexture;
                                                                     break;
@@ -6535,7 +6500,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -6578,7 +6543,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -6636,7 +6601,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[0][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -6855,22 +6820,24 @@ namespace OPTech
                                                         }
                                                         else
                                                         {
+                                                            int fgTexCount = TextureArray[faceGroupIndex / 2].Count;
+
                                                             file.Seek(0, System.IO.SeekOrigin.End);
                                                             file.Write(0);
                                                             file.Write(24);
-                                                            file.Write(4);
+                                                            file.Write(fgTexCount);
                                                             file.Write(100 + (int)file.BaseStream.Length + 12);
                                                             file.Write(1);
                                                             file.Write(0);
 
                                                             int FGTexRefPos = (int)file.BaseStream.Length;
 
-                                                            for (int EachFGTex = 0; EachFGTex < 4; EachFGTex++)
+                                                            for (int EachFGTex = 0; EachFGTex < fgTexCount; EachFGTex++)
                                                             {
                                                                 file.Write(0);
                                                             }
 
-                                                            for (int EachFGTex = 0; EachFGTex < 4; EachFGTex++)
+                                                            for (int EachFGTex = 0; EachFGTex < fgTexCount; EachFGTex++)
                                                             {
                                                                 file.Write(FGTexRefPos + (4 * EachFGTex), 100 + (int)file.BaseStream.Length);
 
@@ -6878,7 +6845,7 @@ namespace OPTech
 
                                                                 for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                                                 {
-                                                                    if (TextureArray[EachFGTex][faceGroupIndex / 2] == Global.OPT.TextureArray[EachTexture].TextureName)
+                                                                    if (TextureArray[faceGroupIndex / 2][EachFGTex] == Global.OPT.TextureArray[EachTexture].TextureName)
                                                                     {
                                                                         HoldTexLoc = EachTexture;
                                                                         break;
@@ -6910,7 +6877,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[EachFGTex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {
@@ -6953,7 +6920,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[EachFGTex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {
@@ -7011,7 +6978,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[EachFGTex][faceGroupIndex / 2]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {

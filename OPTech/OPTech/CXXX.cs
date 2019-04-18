@@ -207,43 +207,34 @@ namespace OPTech
                         {
                             var face = lod.FaceArray[EachFace];
 
+                            string faceTextureName;
+
+                            if (face.TextureList.Contains("BLANK") || Global.FGSelected >= face.TextureList.Count)
+                            {
+                                faceTextureName = face.TextureList[0];
+                            }
+                            else
+                            {
+                                faceTextureName = face.TextureList[Global.FGSelected];
+                            }
+
                             for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                             {
                                 var texture = Global.OPT.TextureArray[EachTexture];
 
-                                if (face.TextureArray[1] == "BLANK" || face.TextureArray[2] == "BLANK" || face.TextureArray[3] == "BLANK")
+                                if (faceTextureName == texture.TextureName)
                                 {
-                                    if (face.TextureArray[0] == texture.TextureName)
+                                    if (EachTrans == 0)
                                     {
-                                        if (EachTrans == 0)
-                                        {
-                                            texture.TexturePic.Bind(gl);
-                                        }
-                                        else
-                                        {
-                                            texture.TexturePic.Bind(gl);
-                                            RememberTexture = EachTexture;
-                                        }
-
-                                        textureHasAlpha = texture.TransValues.Count > 0;
+                                        texture.TexturePic.Bind(gl);
                                     }
-                                }
-                                else
-                                {
-                                    if (face.TextureArray[Global.FGSelected] == texture.TextureName)
+                                    else
                                     {
-                                        if (EachTrans == 0)
-                                        {
-                                            texture.TexturePic.Bind(gl);
-                                        }
-                                        else
-                                        {
-                                            texture.TexturePic.Bind(gl);
-                                            RememberTexture = EachTexture;
-                                        }
-
-                                        textureHasAlpha = texture.TransValues.Count > 0;
+                                        texture.TexturePic.Bind(gl);
+                                        RememberTexture = EachTexture;
                                     }
+
+                                    textureHasAlpha = texture.TransValues.Count > 0;
                                 }
                             }
 
@@ -1210,13 +1201,13 @@ namespace OPTech
                                     var eachFace = eachLod.FaceArray[eachFaceIndex];
 
                                     var sb = new StringBuilder();
-                                    sb.Append(System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureArray[0]));
+                                    sb.Append(System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]));
 
                                     bool fg = false;
 
-                                    for (int i = 1; i < 4; i++)
+                                    for (int i = 1; i < eachFace.TextureList.Count; i++)
                                     {
-                                        string tex = System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureArray[i]);
+                                        string tex = System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[i]);
                                         sb.Append(", ");
                                         sb.Append(tex);
 
@@ -1226,7 +1217,7 @@ namespace OPTech
                                         }
                                     }
 
-                                    string texNames = fg ? sb.ToString() : System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureArray[0]);
+                                    string texNames = fg ? sb.ToString() : System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]);
 
                                     Global.frmgeometry.facelist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} F:{1} T:{2}", eachMeshIndex + 1, eachFaceIndex + 1, texNames), eachFace.Selected);
                                 }
@@ -1466,6 +1457,23 @@ namespace OPTech
                 Global.frmgeometry.fgonop.IsEnabled = true;
                 Global.frmgeometry.fgoffop.IsEnabled = true;
 
+                var fglist = Global.frmgeometry.fgsellist.GetAllText();
+
+                if (!fglist.Take(fglist.Length - 1)
+                    .SequenceEqual(whichFace.TextureList.Select(t => System.IO.Path.GetFileNameWithoutExtension(t))))
+                {
+                    int selectedIndex = Global.frmgeometry.fgsellist.SelectedIndex;
+                    Global.frmgeometry.fgsellist.Items.Clear();
+
+                    foreach (string textureName in whichFace.TextureList)
+                    {
+                        Global.frmgeometry.fgsellist.AddText(System.IO.Path.GetFileNameWithoutExtension(textureName));
+                    }
+
+                    Global.frmgeometry.fgsellist.AddText("new");
+                    Global.frmgeometry.fgsellist.SelectedIndex = selectedIndex;
+                }
+
                 Global.frmgeometry.Xfacetext.Text = whichFace.CenterX.ToString(CultureInfo.InvariantCulture);
                 Global.frmgeometry.Yfacetext.Text = whichFace.CenterY.ToString(CultureInfo.InvariantCulture);
                 Global.frmgeometry.Zfacetext.Text = whichFace.CenterZ.ToString(CultureInfo.InvariantCulture);
@@ -1485,7 +1493,7 @@ namespace OPTech
                 Global.frmgeometry.Y2vectortext.Text = whichFace.Y2Vector.ToString(CultureInfo.InvariantCulture);
                 Global.frmgeometry.Z2vectortext.Text = whichFace.Z2Vector.ToString(CultureInfo.InvariantCulture);
 
-                if (whichFace.TextureArray[1] == "BLANK" || whichFace.TextureArray[2] == "BLANK" || whichFace.TextureArray[3] == "BLANK")
+                if (whichFace.TextureList.Count <= 1 || whichFace.TextureList.Contains("BLANK"))
                 {
                     Global.frmgeometry.fgoffop.IsChecked = true;
                 }
@@ -1498,13 +1506,13 @@ namespace OPTech
                 Global.frmgeometry.textureviewer.Source = null;
                 Global.frmgeometry.texturelist.SelectedIndex = -1;
 
-                if (whichFace.TextureArray[Global.FGSelected] != "BLANK")
+                if (whichFace.TextureList.Count > Global.FGSelected && whichFace.TextureList[Global.FGSelected] != "BLANK")
                 {
                     for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                     {
                         var texture = Global.OPT.TextureArray[EachTexture];
 
-                        if (whichFace.TextureArray[Global.FGSelected] == texture.TextureName)
+                        if (whichFace.TextureList[Global.FGSelected] == texture.TextureName)
                         {
                             string fileName = texture.FullTexturePath;
 
@@ -1543,7 +1551,7 @@ namespace OPTech
                     {
                         var texture = Global.OPT.TextureArray[EachTexture];
 
-                        if (whichFace.TextureArray[0] == texture.TextureName)
+                        if (whichFace.TextureList[0] == texture.TextureName)
                         {
                             Global.frmtexture.transtexturelist.SelectedIndex = EachTexture;
                             Global.frmtexture.illumtexturelist.SelectedIndex = EachTexture;
@@ -1703,6 +1711,7 @@ namespace OPTech
                 Global.frmgeometry.fgframe.IsEnabled = false;
                 Global.frmgeometry.fgonop.IsEnabled = false;
                 Global.frmgeometry.fgoffop.IsEnabled = false;
+                Global.frmgeometry.fgsellist.Items.Clear();
 
                 Global.frmgeometry.Xfacetext.Text = string.Empty;
                 Global.frmgeometry.Yfacetext.Text = string.Empty;

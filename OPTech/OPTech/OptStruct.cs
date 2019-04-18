@@ -76,5 +76,28 @@ namespace OPTech
                 mesh.Move(moveX, moveY, moveZ);
             }
         }
+
+        public int GetVersionCount()
+        {
+            int version = 1;
+
+            foreach (var mesh in this.MeshArray)
+            {
+                foreach (var lod in mesh.LODArray)
+                {
+                    foreach (var face in lod.FaceArray)
+                    {
+                        int count = face.TextureList.Count;
+
+                        if (count > version)
+                        {
+                            version = count;
+                        }
+                    }
+                }
+            }
+
+            return version;
+        }
     }
 }

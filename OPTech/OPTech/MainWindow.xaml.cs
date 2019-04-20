@@ -4798,6 +4798,7 @@ namespace OPTech
 
                                                         int ImageWidth;
                                                         int ImageHeight;
+                                                        int ImageColorsCount;
                                                         int ImageMipWidth;
                                                         int ImageMipHeight;
                                                         int ImageSizeSum;
@@ -4824,6 +4825,12 @@ namespace OPTech
 
                                                                     ImageWidth = fileTexture.ReadInt32(18);
                                                                     ImageHeight = fileTexture.ReadInt32(22);
+                                                                    ImageColorsCount = fileTexture.ReadInt32(46);
+
+                                                                    if (ImageColorsCount == 0)
+                                                                    {
+                                                                        ImageColorsCount = 256;
+                                                                    }
                                                                 }
                                                             }
                                                             finally
@@ -4865,6 +4872,12 @@ namespace OPTech
 
                                                                     ImageWidth = fileTexture.ReadInt32(18);
                                                                     ImageHeight = fileTexture.ReadInt32(22);
+                                                                    ImageColorsCount = fileTexture.ReadInt32(46);
+
+                                                                    if (ImageColorsCount == 0)
+                                                                    {
+                                                                        ImageColorsCount = 256;
+                                                                    }
                                                                 }
                                                             }
                                                             finally
@@ -4957,7 +4970,7 @@ namespace OPTech
                                                             file.Write(MipString.ToArray());
                                                         }
 
-                                                        byte[] PaletteBytes;
+                                                        byte[] PaletteBytes = new byte[1024];
 
                                                         filestreamTexture = null;
 
@@ -4969,8 +4982,8 @@ namespace OPTech
                                                             {
                                                                 filestreamTexture = null;
 
-                                                                fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidth * ImageHeight) - 1024, System.IO.SeekOrigin.Begin);
-                                                                PaletteBytes = fileTexture.ReadBytes(1024);
+                                                                fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidth * ImageHeight) - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
+                                                                fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
                                                             }
                                                         }
                                                         finally
@@ -5297,6 +5310,7 @@ namespace OPTech
 
                                                             int ImageWidth;
                                                             int ImageHeight;
+                                                            int ImageColorsCount;
                                                             int ImageMipWidth;
                                                             int ImageMipHeight;
                                                             int ImageSizeSum;
@@ -5323,6 +5337,12 @@ namespace OPTech
 
                                                                         ImageWidth = fileTexture.ReadInt32(18);
                                                                         ImageHeight = fileTexture.ReadInt32(22);
+                                                                        ImageColorsCount = fileTexture.ReadInt32(46);
+
+                                                                        if (ImageColorsCount == 0)
+                                                                        {
+                                                                            ImageColorsCount = 256;
+                                                                        }
                                                                     }
                                                                 }
                                                                 finally
@@ -5364,6 +5384,12 @@ namespace OPTech
 
                                                                         ImageWidth = fileTexture.ReadInt32(18);
                                                                         ImageHeight = fileTexture.ReadInt32(22);
+                                                                        ImageColorsCount = fileTexture.ReadInt32(46);
+
+                                                                        if (ImageColorsCount == 0)
+                                                                        {
+                                                                            ImageColorsCount = 256;
+                                                                        }
                                                                     }
                                                                 }
                                                                 finally
@@ -5456,7 +5482,7 @@ namespace OPTech
                                                                 file.Write(MipString.ToArray());
                                                             }
 
-                                                            byte[] PaletteBytes;
+                                                            byte[] PaletteBytes = new byte[1024];
 
                                                             filestreamTexture = null;
 
@@ -5468,8 +5494,8 @@ namespace OPTech
                                                                 {
                                                                     filestreamTexture = null;
 
-                                                                    fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidth * ImageHeight) - 1024, System.IO.SeekOrigin.Begin);
-                                                                    PaletteBytes = fileTexture.ReadBytes(1024);
+                                                                    fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidth * ImageHeight) - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
+                                                                    fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
                                                                 }
                                                             }
                                                             finally

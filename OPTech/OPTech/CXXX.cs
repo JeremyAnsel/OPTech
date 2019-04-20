@@ -211,7 +211,7 @@ namespace OPTech
 
                             if (face.TextureList.Contains("BLANK") || Global.FGSelected >= face.TextureList.Count)
                             {
-                                faceTextureName = face.TextureList[0];
+                                faceTextureName = face.TextureList.Last(t => t != "BLANK");
                             }
                             else
                             {

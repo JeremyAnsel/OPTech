@@ -1418,8 +1418,9 @@ namespace OPTech
 
                     int mesh;
                     int face;
+                    int count;
                     string tex;
-                    StringHelpers.SplitFace(item, out mesh, out face, out tex);
+                    StringHelpers.SplitFace(item, out mesh, out face, out count, out tex);
 
                     return new
                     {
@@ -1427,6 +1428,7 @@ namespace OPTech
                         Selected = t.Item2,
                         Mesh = mesh,
                         Face = face,
+                        Count = count,
                         Tex = tex
                     };
                 })
@@ -1457,8 +1459,9 @@ namespace OPTech
 
                     int mesh;
                     int face;
+                    int count;
                     string tex;
-                    StringHelpers.SplitFace(item, out mesh, out face, out tex);
+                    StringHelpers.SplitFace(item, out mesh, out face, out count, out tex);
 
                     return new
                     {
@@ -1466,10 +1469,54 @@ namespace OPTech
                         Selected = t.Item2,
                         Mesh = mesh,
                         Face = face,
+                        Count = count,
                         Tex = tex
                     };
                 })
                 .OrderBy(t => t.Tex)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .Select(t => Tuple.Create(t.Item, t.Selected))
+                .ToArray();
+
+            this.facelist.Items.Clear();
+
+            for (int faceIndex = 0; faceIndex < faces.Length; faceIndex++)
+            {
+                var face = faces[faceIndex];
+                this.facelist.AddText(face.Item1, face.Item2);
+            }
+
+            this.facelist.ScrollIntoView(this.facelist.SelectedItem);
+        }
+
+        private void facesortcountbut_Click(object sender, RoutedEventArgs e)
+        {
+            var faces = this.facelist.GetAllTextWithSelected();
+
+            faces = faces
+                .Select(t =>
+                {
+                    string item = t.Item1;
+
+                    int mesh;
+                    int face;
+                    int count;
+                    string tex;
+                    StringHelpers.SplitFace(item, out mesh, out face, out count, out tex);
+
+                    return new
+                    {
+                        Item = t.Item1,
+                        Selected = t.Item2,
+                        Mesh = mesh,
+                        Face = face,
+                        Count = count,
+                        Tex = tex
+                    };
+                })
+                .OrderByDescending(t => t.Count)
+                .ThenBy(t => t.Tex)
                 .ThenBy(t => t.Mesh)
                 .ThenBy(t => t.Face)
                 .Select(t => Tuple.Create(t.Item, t.Selected))

@@ -1218,8 +1218,9 @@ namespace OPTech
                                     }
 
                                     string texNames = fg ? sb.ToString() : System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]);
+                                    int texCount = fg ? eachFace.TextureList.Count : 1;
 
-                                    Global.frmgeometry.facelist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} F:{1} T:{2}", eachMeshIndex + 1, eachFaceIndex + 1, texNames), eachFace.Selected);
+                                    Global.frmgeometry.facelist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} F:{1} T:{2}, {3}", eachMeshIndex + 1, eachFaceIndex + 1, texCount, texNames), eachFace.Selected);
                                 }
                             }
                         }

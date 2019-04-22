@@ -109,12 +109,13 @@
                                              MouseUp="facelist_MouseUp "/>
                                     <UniformGrid Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Columns="1">
                                         <Button x:Name="normalflipbut" Margin="20 2" Content="Flip Normal" Click="normalflipbut_Click" />
-                                        <Button x:Name="texturecoordinatebut" Margin="20 2" Content="Calculate&#xa;Texture Coordinates" Click="texturecoordinatebut_Click" />
+                                        <Button x:Name="texturecoordinatebut" Margin="20 2" Content="Calculate Coordinates" ToolTip="Calculate Texture Coordinates" Click="texturecoordinatebut_Click" />
                                         <Button x:Name="faceassignbut" Margin="20 2" Content="Assign" Click="faceassignbut_Click" />
                                         <Button x:Name="facedeletebut" Margin="20 2" Content="Delete" Click="facedeletebut_Click" />
                                         <Button x:Name="faceduplicatebut" Margin="20 2" Content="Duplicate" Click="faceduplicatebut_Click" />
                                         <Button x:Name="facesortindexbut" Margin="20 2" Content="Sort by Index" Click="facesortindexbut_Click" />
                                         <Button x:Name="facesorttexbut" Margin="20 2" Content="Sort by Texture" Click="facesorttexbut_Click" />
+                                        <Button x:Name="facesortcountbut" Margin="20 2" Content="Sort by Count" Click="facesortcountbut_Click" />
                                     </UniformGrid>
                                     <TextBox x:Name="Xfacetext" Grid.Column="0" Grid.Row="1" Margin="10" ToolTip="face position X" Background="#FFFFC0" PreviewKeyDown="Xfacetext_PreviewKeyDown" LostFocus="Xfacetext_LostFocus" />
                                     <TextBox x:Name="Yfacetext" Grid.Column="1" Grid.Row="1" Margin="10" ToolTip="face position Y" Background="#FFFFC0" PreviewKeyDown="Yfacetext_PreviewKeyDown" LostFocus="Yfacetext_LostFocus" />

@@ -32,7 +32,7 @@ namespace OPTech
             return true;
         }
 
-        public static bool SplitFace(string line, out int thisMesh, out int thisFace, out string texture)
+        public static bool SplitFace(string line, out int thisMesh, out int thisFace, out int textureCount, out string texture)
         {
             string[] parts = line.Split(faceSeparators, StringSplitOptions.RemoveEmptyEntries);
 
@@ -41,12 +41,14 @@ namespace OPTech
                 thisMesh = -1;
                 thisFace = -1;
                 texture = null;
+                textureCount = 0;
                 return false;
             }
 
             thisMesh = int.Parse(parts[1], CultureInfo.InvariantCulture) - 1;
             thisFace = int.Parse(parts[3], CultureInfo.InvariantCulture) - 1;
-            texture = parts[5];
+            textureCount = int.Parse(parts[5].TrimEnd(','), CultureInfo.InvariantCulture);
+            texture = string.Join(" ", parts.Skip(6));
             return true;
         }
 

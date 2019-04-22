@@ -195,7 +195,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="4*" />
-                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="1.5*" />
                                         <RowDefinition Height="2*" />
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="1*" />
@@ -209,24 +209,21 @@
                                             <RadioButton x:Name="fgoffop" GroupName="fgop" Content="FG off " IsChecked="True" Click="fgoffop_Click" />
                                             <RadioButton x:Name="fgonop" GroupName="fgop" Content="FG on " Click="fgonop_Click" />
                                         </StackPanel>
+                                        <Button x:Name="fgremovebut"
+                                                DockPanel.Dock="Bottom"
+                                                Content="Remove FG"
+                                                IsEnabled="{Binding ElementName=fgsellist, Path=HasItems}"
+                                                Click="fgremovebut_Click" />
                                         <GroupBox x:Name="fgframe" Header="FG Color">
                                             <ListBox x:Name="fgsellist" SelectionChanged="fgsellist_SelectionChanged" />
                                         </GroupBox>
                                     </DockPanel>
                                     <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="1" Header="Stitching">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Button x:Name="topstitchbut" Grid.Column="0" Grid.Row="0" Content="Top/Bottom" Click="topstitchbut_Click" />
-                                            <Button x:Name="frontstitchbut" Grid.Column="0" Grid.Row="1" Content="Front/Back" Click="frontstitchbut_Click" />
-                                            <Button x:Name="sidestitchbut" Grid.Column="1" Grid.Row="1" Content="Side" Click="sidestitchbut_Click" />
-                                        </Grid>
+                                        <UniformGrid Rows="1">
+                                            <Button x:Name="topstitchbut" Content="Top&#xa;Bottom" Click="topstitchbut_Click" />
+                                            <Button x:Name="frontstitchbut" Content="Front&#xa;Back" Click="frontstitchbut_Click" />
+                                            <Button x:Name="sidestitchbut" Content="Side" Click="sidestitchbut_Click" />
+                                        </UniformGrid>
                                     </GroupBox>
                                     <Grid Grid.Column="0" Grid.Row="2">
                                         <Grid.ColumnDefinitions>

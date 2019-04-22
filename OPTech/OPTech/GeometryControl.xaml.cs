@@ -7283,6 +7283,79 @@ namespace OPTech
             Global.CX.CreateCall();
         }
 
+        private void fgremovebut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (this.fgsellist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (this.fgsellist.Items.Count <= 2)
+            {
+                return;
+            }
+
+            if (this.fgsellist.SelectedIndex >= this.fgsellist.Items.Count - 1)
+            {
+                return;
+            }
+
+            int fgIndex = this.fgsellist.SelectedIndex;
+            var fgTextures = this.fgsellist.GetAllText();
+            fgTextures = fgTextures.Take(fgTextures.Length - 1).ToArray();
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            for (int EachFace = 0; EachFace < this.facelist.Items.Count; EachFace++)
+            {
+                string wholeLine = this.facelist.GetText(EachFace);
+
+                int thisMesh;
+                int thisFace;
+                StringHelpers.SplitFace(wholeLine, out thisMesh, out thisFace);
+
+                var mesh = Global.OPT.MeshArray[thisMesh];
+
+                if (mesh.LODArray.Count > whichLOD)
+                {
+                    var face = mesh.LODArray[whichLOD].FaceArray[thisFace];
+
+                    if (face.Selected)
+                    {
+                        if (fgTextures.SequenceEqual(face.TextureList.Select(t => System.IO.Path.GetFileNameWithoutExtension(t))))
+                        {
+                            face.TextureList.RemoveAt(fgIndex);
+                        }
+                    }
+                }
+            }
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.MeshScreens(IndexMesh, whichLOD);
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("remove fg");
+        }
+
         private void topstitchbut_Click(object sender, RoutedEventArgs e)
         {
             if (this.facelist.SelectedIndex == -1)

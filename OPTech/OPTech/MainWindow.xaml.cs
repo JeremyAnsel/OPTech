@@ -2188,6 +2188,9 @@ namespace OPTech
             this.dxfexportmenu.IsEnabled = false;
 
             Global.opzpath = System.IO.Path.GetFullPath(folderName);
+
+            System.IO.File.Copy("default.bmp", System.IO.Path.Combine(Global.opzpath, "default.bmp"), true);
+
             this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
                 .EnumerateFiles(Global.opzpath, "*.bmp")
                 .Select(t => System.IO.Path.GetFileName(t));
@@ -2470,6 +2473,11 @@ namespace OPTech
                                 }
 
                                 face.TextureList.Add(textureName);
+                            }
+
+                            if (face.TextureList.Count == 0)
+                            {
+                                face.TextureList.Add("default.bmp");
                             }
                         }
                     }
@@ -3800,6 +3808,11 @@ namespace OPTech
 
                                 face.TextureList.Add(textureName);
                             }
+
+                            if (face.TextureList.Count == 0)
+                            {
+                                face.TextureList.Add("default.bmp");
+                            }
                         }
                     }
 
@@ -4776,6 +4789,11 @@ namespace OPTech
                                             {
                                                 if (TextureArray[faceGroupIndex / 2].Skip(1).All(t => t == "BLANK"))
                                                 {
+                                                    if (TextureArray[faceGroupIndex / 2].Count == 0)
+                                                    {
+                                                        TextureArray[faceGroupIndex / 2].Add("default.bmp");
+                                                    }
+
                                                     int HoldTexLoc = 0;
 
                                                     for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
@@ -6520,6 +6538,11 @@ namespace OPTech
                                                     {
                                                         if (TextureArray[faceGroupIndex / 2].Skip(1).All(t => t == "BLANK"))
                                                         {
+                                                            if (TextureArray[faceGroupIndex / 2].Count == 0)
+                                                            {
+                                                                TextureArray[faceGroupIndex / 2].Add("default.bmp");
+                                                            }
+
                                                             int HoldTexLoc = 0;
 
                                                             for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)

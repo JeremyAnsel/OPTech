@@ -629,6 +629,10 @@ namespace OPTech
 
             Global.ModelChanged = true;
 
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
             //Global.CX.VertexScreens(this.meshlist.SelectedIndex, whichLOD, -1, -1);
@@ -676,6 +680,10 @@ namespace OPTech
 
             Global.ModelChanged = true;
 
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
             //Global.CX.VertexScreens(this.meshlist.SelectedIndex, whichLOD, -1, -1);
@@ -710,6 +718,10 @@ namespace OPTech
             }
 
             Global.ModelChanged = true;
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
@@ -765,6 +777,10 @@ namespace OPTech
             }
 
             Global.ModelChanged = true;
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
@@ -1010,6 +1026,10 @@ namespace OPTech
                 Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
             }
 
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+
             Global.CX.TextureScreens(Global.frmtexture.transtexturelist.SelectedIndex);
             Global.CX.MeshScreens(-1, whichLOD);
             Global.CX.FaceScreens(-1, whichLOD, -1);
@@ -1163,6 +1183,7 @@ namespace OPTech
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
             Global.OrthoZoom = RememberZoom;
+
             Global.CX.InitCamera();
             Global.NumberTrim();
             Global.CX.TextureScreens(Global.frmtexture.transtexturelist.SelectedIndex);
@@ -1398,6 +1419,10 @@ namespace OPTech
             }
 
             Global.ModelChanged = true;
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);

@@ -819,6 +819,197 @@ namespace OPTech
             this.meshmovez.Text = values[2];
         }
 
+        private void meshscalebut_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.meshlist.HasItems)
+            {
+                return;
+            }
+
+            var dialog = new ScaleFactorDialog(Global.frmoptech, Global.OPT.SpanX * OptStruct.ScaleFactor, Global.OPT.SpanY * OptStruct.ScaleFactor, Global.OPT.SpanZ * OptStruct.ScaleFactor);
+
+            if (dialog.ShowDialog() != true)
+            {
+                return;
+            }
+
+            if (dialog.ScaleX <= 0 || dialog.ScaleY <= 0 || dialog.ScaleZ <= 0)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                for (int meshIndex = 0; meshIndex < this.meshlist.Items.Count; meshIndex++)
+                {
+                    var mesh = Global.OPT.MeshArray[meshIndex];
+
+                    foreach (var lod in mesh.LODArray)
+                    {
+                        foreach (var face in lod.FaceArray)
+                        {
+                            for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                            {
+                                var vertex = face.VertexArray[vertexIndex];
+                                vertex.XCoord *= dialog.ScaleX;
+                                vertex.YCoord *= dialog.ScaleY;
+                                vertex.ZCoord *= dialog.ScaleZ;
+                            }
+                        }
+                    }
+
+                    foreach (var hardpoint in mesh.HPArray)
+                    {
+                        hardpoint.HPCenterX *= dialog.ScaleX;
+                        hardpoint.HPCenterY *= dialog.ScaleY;
+                        hardpoint.HPCenterZ *= dialog.ScaleZ;
+                    }
+
+                    foreach (var engineGlow in mesh.EGArray)
+                    {
+                        engineGlow.EGCenterX *= dialog.ScaleX;
+                        engineGlow.EGCenterY *= dialog.ScaleY;
+                        engineGlow.EGCenterZ *= dialog.ScaleZ;
+
+                        engineGlow.EGVectorX *= dialog.ScaleX;
+                        engineGlow.EGVectorY *= dialog.ScaleY;
+                        engineGlow.EGVectorZ *= dialog.ScaleZ;
+                    }
+
+                    mesh.HitCenterX *= dialog.ScaleX;
+                    mesh.HitCenterY *= dialog.ScaleY;
+                    mesh.HitCenterZ *= dialog.ScaleZ;
+
+                    mesh.HitMinX *= dialog.ScaleX;
+                    mesh.HitMinY *= dialog.ScaleY;
+                    mesh.HitMinZ *= dialog.ScaleZ;
+
+                    mesh.HitMaxX *= dialog.ScaleX;
+                    mesh.HitMaxY *= dialog.ScaleY;
+                    mesh.HitMaxZ *= dialog.ScaleZ;
+
+                    mesh.HitSpanX = mesh.HitMaxX - mesh.HitMinX;
+                    mesh.HitSpanY = mesh.HitMaxY - mesh.HitMinY;
+                    mesh.HitSpanZ = mesh.HitMaxZ - mesh.HitMinZ;
+
+                    mesh.HitTargetX *= dialog.ScaleX;
+                    mesh.HitTargetY *= dialog.ScaleY;
+                    mesh.HitTargetZ *= dialog.ScaleZ;
+
+                    mesh.RotPivotX *= dialog.ScaleX;
+                    mesh.RotPivotY *= dialog.ScaleY;
+                    mesh.RotPivotZ *= dialog.ScaleZ;
+                }
+            }
+            else
+            {
+                for (int meshIndex = 0; meshIndex < this.meshlist.Items.Count; meshIndex++)
+                {
+                    if (!this.meshlist.IsSelected(meshIndex))
+                    {
+                        continue;
+                    }
+
+                    var mesh = Global.OPT.MeshArray[meshIndex];
+
+                    if (mesh.LODArray.Count <= whichLOD)
+                    {
+                        continue;
+                    }
+
+                    var lod = mesh.LODArray[whichLOD];
+
+                    if (!lod.Selected)
+                    {
+                        continue;
+                    }
+
+                    foreach (var face in lod.FaceArray)
+                    {
+                        for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
+                        {
+                            var vertex = face.VertexArray[vertexIndex];
+                            vertex.XCoord = (vertex.XCoord - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                            vertex.YCoord = (vertex.YCoord - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                            vertex.ZCoord = (vertex.ZCoord - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        }
+                    }
+
+                    if (whichLOD == 0)
+                    {
+                        foreach (var hardpoint in mesh.HPArray)
+                        {
+                            hardpoint.HPCenterX = (hardpoint.HPCenterX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                            hardpoint.HPCenterY = (hardpoint.HPCenterY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                            hardpoint.HPCenterZ = (hardpoint.HPCenterZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        }
+
+                        foreach (var engineGlow in mesh.EGArray)
+                        {
+                            engineGlow.EGCenterX = (engineGlow.EGCenterX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                            engineGlow.EGCenterY = (engineGlow.EGCenterY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                            engineGlow.EGCenterZ = (engineGlow.EGCenterZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+
+                            engineGlow.EGVectorX = (engineGlow.EGVectorX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                            engineGlow.EGVectorY = (engineGlow.EGVectorY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                            engineGlow.EGVectorZ = (engineGlow.EGVectorZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        }
+
+                        mesh.HitMinX = (mesh.HitMinX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                        mesh.HitMinY = (mesh.HitMinY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                        mesh.HitMinZ = (mesh.HitMinZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+
+                        mesh.HitMaxX = (mesh.HitMaxX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                        mesh.HitMaxY = (mesh.HitMaxY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                        mesh.HitMaxZ = (mesh.HitMaxZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+
+                        mesh.HitSpanX = mesh.HitMaxX - mesh.HitMinX;
+                        mesh.HitSpanY = mesh.HitMaxY - mesh.HitMinY;
+                        mesh.HitSpanZ = mesh.HitMaxZ - mesh.HitMinZ;
+
+                        mesh.HitTargetX = (mesh.HitTargetX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                        mesh.HitTargetY = (mesh.HitTargetY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                        mesh.HitTargetZ = (mesh.HitTargetZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+
+                        mesh.RotPivotX = (mesh.RotPivotX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
+                        mesh.RotPivotY = (mesh.RotPivotY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
+                        mesh.RotPivotZ = (mesh.RotPivotZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                    }
+                }
+            }
+
+            Global.ModelChanged = true;
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                Global.OrthoZoom = RememberZoom * dialog.ScaleFactor;
+            }
+            else
+            {
+                Global.OrthoZoom = RememberZoom;
+            }
+
+            Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
+            //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
+            //Global.CX.VertexScreens(this.meshlist.SelectedIndex, whichLOD, -1, -1);
+            Global.CX.CreateCall();
+
+            UndoStack.Push("scale mesh");
+        }
+
         private void meshassignbut_Click(object sender, RoutedEventArgs e)
         {
             if (!this.meshlist.HasItems)

@@ -109,6 +109,9 @@
     <Compile Include="RenderScreenControl.xaml.cs">
       <DependentUpon>RenderScreenControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScaleFactorDialog.xaml.cs">
+      <DependentUpon>ScaleFactorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shapes.cs" />
     <Compile Include="StatusBarDialog.xaml.cs">
       <DependentUpon>StatusBarDialog.xaml</DependentUpon>
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RenderScreenControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScaleFactorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

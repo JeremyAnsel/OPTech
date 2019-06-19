@@ -7,6 +7,8 @@ namespace OPTech
 {
     public class OptStruct
     {
+        public const float ScaleFactor = 1600.0f * 1.52587890625E-05f;
+
         public float MinX;
         public float MinY;
         public float MinZ;

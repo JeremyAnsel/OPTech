@@ -4844,12 +4844,14 @@ namespace OPTech
 
                                                                     ImageWidth = fileTexture.ReadInt32(18);
                                                                     ImageHeight = fileTexture.ReadInt32(22);
-                                                                    ImageSize = fileTexture.ReadInt32(34);
+                                                                    //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                    if (ImageSize == 0)
-                                                                    {
-                                                                        ImageSize = ImageWidth * ImageHeight;
-                                                                    }
+                                                                    //if (ImageSize == 0)
+                                                                    //{
+                                                                    //    ImageSize = ImageWidth * ImageHeight;
+                                                                    //}
+
+                                                                    ImageSize = ImageWidth * ImageHeight;
 
                                                                     ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -4898,12 +4900,14 @@ namespace OPTech
 
                                                                     ImageWidth = fileTexture.ReadInt32(18);
                                                                     ImageHeight = fileTexture.ReadInt32(22);
-                                                                    ImageSize = fileTexture.ReadInt32(34);
+                                                                    //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                    if (ImageSize == 0)
-                                                                    {
-                                                                        ImageSize = ImageWidth * ImageHeight;
-                                                                    }
+                                                                    //if (ImageSize == 0)
+                                                                    //{
+                                                                    //    ImageSize = ImageWidth * ImageHeight;
+                                                                    //}
+
+                                                                    ImageSize = ImageWidth * ImageHeight;
 
                                                                     ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -5371,12 +5375,14 @@ namespace OPTech
 
                                                                         ImageWidth = fileTexture.ReadInt32(18);
                                                                         ImageHeight = fileTexture.ReadInt32(22);
-                                                                        ImageSize = fileTexture.ReadInt32(34);
+                                                                        //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                        if (ImageSize == 0)
-                                                                        {
-                                                                            ImageSize = ImageWidth * ImageHeight;
-                                                                        }
+                                                                        //if (ImageSize == 0)
+                                                                        //{
+                                                                        //    ImageSize = ImageWidth * ImageHeight;
+                                                                        //}
+
+                                                                        ImageSize = ImageWidth * ImageHeight;
 
                                                                         ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -5425,12 +5431,14 @@ namespace OPTech
 
                                                                         ImageWidth = fileTexture.ReadInt32(18);
                                                                         ImageHeight = fileTexture.ReadInt32(22);
-                                                                        ImageSize = fileTexture.ReadInt32(34);
+                                                                        //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                        if (ImageSize == 0)
-                                                                        {
-                                                                            ImageSize = ImageWidth * ImageHeight;
-                                                                        }
+                                                                        //if (ImageSize == 0)
+                                                                        //{
+                                                                        //    ImageSize = ImageWidth * ImageHeight;
+                                                                        //}
+
+                                                                        ImageSize = ImageWidth * ImageHeight;
 
                                                                         ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -5994,7 +6002,7 @@ namespace OPTech
 
             if (error != null)
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, error.Message, "create .OPT (XWA)", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Xceed.Wpf.Toolkit.MessageBox.Show(this, error.ToString(), "create .OPT (XWA)", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -6589,12 +6597,14 @@ namespace OPTech
 
                                                                         ImageWidth = fileTexture.ReadInt32(18);
                                                                         ImageHeight = fileTexture.ReadInt32(22);
-                                                                        ImageSize = fileTexture.ReadInt32(34);
+                                                                        //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                        if (ImageSize == 0)
-                                                                        {
-                                                                            ImageSize = ImageWidth * ImageHeight;
-                                                                        }
+                                                                        //if (ImageSize == 0)
+                                                                        //{
+                                                                        //    ImageSize = ImageWidth * ImageHeight;
+                                                                        //}
+
+                                                                        ImageSize = ImageWidth * ImageHeight;
 
                                                                         ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -6981,12 +6991,14 @@ namespace OPTech
 
                                                                             ImageWidth = fileTexture.ReadInt32(18);
                                                                             ImageHeight = fileTexture.ReadInt32(22);
-                                                                            ImageSize = fileTexture.ReadInt32(34);
+                                                                            //ImageSize = fileTexture.ReadInt32(34);
 
-                                                                            if (ImageSize == 0)
-                                                                            {
-                                                                                ImageSize = ImageWidth * ImageHeight;
-                                                                            }
+                                                                            //if (ImageSize == 0)
+                                                                            //{
+                                                                            //    ImageSize = ImageWidth * ImageHeight;
+                                                                            //}
+
+                                                                            ImageSize = ImageWidth * ImageHeight;
 
                                                                             ImageColorsCount = fileTexture.ReadInt32(46);
 
@@ -7488,7 +7500,7 @@ namespace OPTech
 
             if (error != null)
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, error.Message, "create.OPT(XvT)", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Xceed.Wpf.Toolkit.MessageBox.Show(this, error.ToString(), "create .OPT(XvT)", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {

@@ -198,8 +198,8 @@
                                         <RowDefinition Height="4*" />
                                         <RowDefinition Height="1.5*" />
                                         <RowDefinition Height="2*" />
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="0.5*" />
+                                        <RowDefinition Height="0.5*" />
                                         <RowDefinition Height="3*" />
                                     </Grid.RowDefinitions>
                                     <Border Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" BorderThickness="1" BorderBrush="Black" Background="#808080">
@@ -221,82 +221,98 @@
                                     </DockPanel>
                                     <GroupBox x:Name="stitchframe" Grid.Column="0" Grid.Row="1" Header="Stitching">
                                         <UniformGrid Rows="1">
-                                            <Button x:Name="topstitchbut" Content="Top&#xa;Bottom" Click="topstitchbut_Click" />
-                                            <Button x:Name="frontstitchbut" Content="Front&#xa;Back" Click="frontstitchbut_Click" />
-                                            <Button x:Name="sidestitchbut" Content="Side" Click="sidestitchbut_Click" />
+                                            <Button x:Name="topstitchbut" Height="40" Content="Top&#xa;Bottom" ToolTip=" Stich Top Bottom" Click="topstitchbut_Click" />
+                                            <Button x:Name="frontstitchbut" Height="40" Content="Front&#xa;Back" ToolTip="Stich Front Back" Click="frontstitchbut_Click" />
+                                            <Button x:Name="sidestitchbut" Height="40" Content="Side" ToolTip="Stich Side" Click="sidestitchbut_Click" />
                                         </UniformGrid>
                                     </GroupBox>
                                     <Grid Grid.Column="0" Grid.Row="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="3*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <Button x:Name="texhflipbut" Grid.Column="0" Grid.Row="0" Height="40" Width="40" ToolTip="Horizontal flip" Click="texhflipbut_Click">
+                                        <Button x:Name="texhflipbut" Grid.Column="0" Grid.Row="0" Height="30" Width="30" ToolTip="Horizontal flip" Click="texhflipbut_Click">
                                             <Button.Content>
-                                                <Image Source="Images/frmgeometry_03F8.ico" />
+                                                <Image Source="Images/frmgeometry_03F8.ico" Width="30" Height="30" />
                                             </Button.Content>
                                         </Button>
-                                        <Button x:Name="texvflipbut" Grid.Column="1" Grid.Row="0" Height="40" Width="40" ToolTip="Vertical flip" Click="texvflipbut_Click">
+                                        <Button x:Name="texvflipbut" Grid.Column="1" Grid.Row="0" Height="30" Width="30" ToolTip="Vertical flip" Click="texvflipbut_Click">
                                             <Button.Content>
-                                                <Image Source="Images/frmgeometry_0702.ico" />
+                                                <Image Source="Images/frmgeometry_0702.ico" Width="30" Height="30" />
                                             </Button.Content>
                                         </Button>
-                                        <Button x:Name="texcrotatebut" Grid.Column="0" Grid.Row="1" Height="40" Width="40" ToolTip="Clockwise rotate" Click="texcrotatebut_Click">
+                                        <Button x:Name="texcrotatebut" Grid.Column="0" Grid.Row="1" Height="30" Width="30" ToolTip="Clockwise rotate" Click="texcrotatebut_Click">
                                             <Button.Content>
-                                                <Image Source="Images/frmgeometry_0A0C.ico" />
+                                                <Image Source="Images/frmgeometry_0A0C.ico" Width="30" Height="30" />
                                             </Button.Content>
                                         </Button>
-                                        <Button x:Name="texccrotatebut" Grid.Column="1" Grid.Row="1" Height="40" Width="40" ToolTip="Counterclockwise rotate" Click="texccrotatebut_Click">
+                                        <Button x:Name="texccrotatebut" Grid.Column="1" Grid.Row="1" Height="30" Width="30" ToolTip="Counterclockwise rotate" Click="texccrotatebut_Click">
                                             <Button.Content>
-                                                <Image Source="Images/frmgeometry_0D16.ico" />
+                                                <Image Source="Images/frmgeometry_0D16.ico" Width="30" Height="30" />
                                             </Button.Content>
                                         </Button>
-                                        <TextBox x:Name="texanglerotatetext" Grid.Column="2" Grid.Row="0" Height="30" Width="50" Margin="5" Text="45" ToolTip="Angle" />
+                                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+                                            <TextBlock Height="30" Margin="2" Text="Angle: " />
+                                            <TextBox x:Name="texanglerotatetext" Height="30" Width="30" Margin="2" Text="45" ToolTip="Angle" />
+                                        </StackPanel>
                                         <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1">
-                                            <Button x:Name="texanglerotatebut"  Height="30" Width="40" Content="Rotate" ToolTip="Rotate Texture" Click="texanglerotatebut_Click" />
-                                            <Button x:Name="texstitchrotatebut" Height="30" Width="40" Content="Stitch" ToolTip="Stitching Rotate" Click="texstitchrotatebut_Click" />
+                                            <Button x:Name="texanglerotatebut"  Height="30" Width="40" Margin="2" Content="Rotate" ToolTip="Rotate Texture" Click="texanglerotatebut_Click" />
+                                            <Button x:Name="texstitchrotatebut" Height="30" Width="40" Margin="2" Content="Stitch" ToolTip="Stitching Rotate" Click="texstitchrotatebut_Click" />
                                         </StackPanel>
                                     </Grid>
-                                    <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
-                                        <Button x:Name="texzoominbut" Height="50" Width="50" Margin="5" ToolTip="Magnify" Click="texzoominbut_Click">
-                                            <Button.Content>
-                                                <Image Source="Images/frmgeometry_1020.ico" />
-                                            </Button.Content>
-                                        </Button>
-                                        <Button x:Name="texzoomoutbut" Height="50" Width="50" Margin="5" ToolTip="Multiply" Click="texzoomoutbut_Click">
-                                            <Button.Content>
-                                                <Image Source="Images/frmgeometry_132A.ico" />
-                                            </Button.Content>
-                                        </Button>
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0">
-                                                <TextBox x:Name="texzoomtext" Height="25" Width="50" Margin="2" Text="2.0" ToolTip="Scale" />
-                                                <Button x:Name="texzoomhbut" Height="30" Width="30" Margin="2" ToolTip="Scale Horizontal" Click="texzoomhbut_Click">
-                                                    <Button.Content>
-                                                        <Image Source="Images/icon_H.bmp" />
-                                                    </Button.Content>
-                                                </Button>
-                                                <Button x:Name="texzoomvbut" Height="30" Width="30" Margin="2" ToolTip="Scale Vertical" Click="texzoomvbut_Click">
-                                                    <Button.Content>
-                                                        <Image Source="Images/icon_V.bmp" />
-                                                    </Button.Content>
-                                                </Button>
-                                                <Button x:Name="texzoomhvbut" Height="30" Width="30" Margin="2" ToolTip="Scale Horizontal/Vertical" Click="texzoomhvbut_Click">
-                                                    <Button.Content>
-                                                        <Image Source="Images/icon_HV.bmp" />
-                                                    </Button.Content>
-                                                </Button>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Margin="0">
-                                                <TextBox x:Name="texmovetext" Height="25" Width="50" Margin="2" Text="0.5" ToolTip="Move" />
-                                                <Button x:Name="texmovehbut" Height="30" Margin="2" Content="Move H" ToolTip="Move Horizontal" Click="texmovehbut_Click" />
-                                                <Button x:Name="texmovevbut" Height="30" Margin="2" Content="Move V" ToolTip="Move Vertical" Click="texmovevbut_Click" />
-                                            </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="texshearbut0" Height="20" Width="60" Margin="2" Content="Shear" ToolTip="Shear Texture" Click="texshearbut0_Click" />
+                                            <Button x:Name="texshearbutuv" Height="20" Width="60" Margin="2" Content="Shear UV" ToolTip="Shear Texture UV" Click="texshearbutuv_Click" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="texshearbutxy" Height="20" Width="60" Margin="2" Content="Shear XY" ToolTip="Shear Texture XY" Click="texshearbutxy_Click" />
+                                            <Button x:Name="texshearbutxz" Height="20" Width="60" Margin="2" Content="Shear XZ" ToolTip="Shear Texture XZ" Click="texshearbutxz_Click" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="texshearbutyz" Height="20" Width="60" Margin="2" Content="Shear YZ" ToolTip="Shear Texture YZ" Click="texshearbutyz_Click" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Grid.Row="2">
+                                        <StackPanel Orientation="Horizontal" Margin="0">
+                                            <Button x:Name="texzoominbut" Height="25" Width="40" Margin="5 0" ToolTip="Magnify" Click="texzoominbut_Click">
+                                                <Button.Content>
+                                                    <Image Source="Images/frmgeometry_1020.ico" />
+                                                </Button.Content>
+                                            </Button>
+                                            <Button x:Name="texzoomoutbut" Height="25" Width="40" Margin="5 0" ToolTip="Multiply" Click="texzoomoutbut_Click">
+                                                <Button.Content>
+                                                    <Image Source="Images/frmgeometry_132A.ico" />
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox x:Name="texzoomtext" Height="20" Width="30" Margin="5 0" Text="2.0" ToolTip="Scale" />
+                                            <Button x:Name="texzoomhbut" Height="25" Width="25" Margin="2 0" ToolTip="Scale Horizontal" Click="texzoomhbut_Click">
+                                                <Button.Content>
+                                                    <Image Source="Images/icon_H.bmp" />
+                                                </Button.Content>
+                                            </Button>
+                                            <Button x:Name="texzoomvbut" Height="25" Width="25" Margin="2 0" ToolTip="Scale Vertical" Click="texzoomvbut_Click">
+                                                <Button.Content>
+                                                    <Image Source="Images/icon_V.bmp" />
+                                                </Button.Content>
+                                            </Button>
+                                            <Button x:Name="texzoomhvbut" Height="25" Width="25" Margin="2 0" ToolTip="Scale Horizontal/Vertical" Click="texzoomhvbut_Click">
+                                                <Button.Content>
+                                                    <Image Source="Images/icon_HV.bmp" />
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox x:Name="texmovetext" Height="20" Width="30" Margin="5 0" Text="0.5" ToolTip="Move" />
+                                            <Button x:Name="texmovehbut" Height="20" Margin="2 0" Content="Move H" ToolTip="Move Horizontal" Click="texmovehbut_Click" />
+                                            <Button x:Name="texmovevbut" Height="20" Margin="2 0" Content="Move V" ToolTip="Move Vertical" Click="texmovevbut_Click" />
                                         </StackPanel>
                                     </StackPanel>
                                     <TextBox x:Name="X1vectortext" Grid.Column="0" Grid.Row="3" ToolTip="X1 software vector" Background="#FFE0C0" GotFocus="X1vectortext_GotFocus" PreviewKeyDown="X1vectortext_PreviewKeyDown" LostFocus="X1vectortext_LostFocus" />

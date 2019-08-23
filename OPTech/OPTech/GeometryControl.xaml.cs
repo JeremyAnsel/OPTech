@@ -7680,8 +7680,23 @@ namespace OPTech
                 {
                     var vertex = face.VertexArray[EachVertex];
 
-                    vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
-                    vertex.VCoord = (vertex.YCoord - LesserY) / (GreaterY - LesserY);
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterY == LesserY)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.YCoord - LesserY) / (GreaterY - LesserY);
+                    }
                 }
             }
 
@@ -7818,8 +7833,23 @@ namespace OPTech
                 {
                     var vertex = face.VertexArray[EachVertex];
 
-                    vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
-                    vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterZ == LesserZ)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    }
                 }
             }
 
@@ -7956,8 +7986,23 @@ namespace OPTech
                 {
                     var vertex = face.VertexArray[EachVertex];
 
-                    vertex.UCoord = (LesserY - vertex.YCoord) / (LesserY - GreaterY);
-                    vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    if (LesserY == GreaterY)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (LesserY - vertex.YCoord) / (LesserY - GreaterY);
+                    }
+
+                    if (GreaterZ == LesserZ)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    }
                 }
             }
 
@@ -8300,6 +8345,1134 @@ namespace OPTech
             UndoStack.Push("counterclockwise rotate");
         }
 
+        private void texshearbut0_Click(object sender, RoutedEventArgs e)
+        {
+            float value;
+            float.TryParse(this.texanglerotatetext.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            this.texanglerotatetext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            int polyVerts;
+                            if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                                && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                                && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+                            {
+                                polyVerts = 2;
+                            }
+                            else
+                            {
+                                polyVerts = 3;
+                            }
+
+                            for (int EachVertex = 0; EachVertex <= polyVerts; EachVertex++)
+                            {
+                                var vertex = face.VertexArray[EachVertex];
+
+                                vertex.VCoord = vertex.VCoord + value * vertex.UCoord;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Global.NumberTrim();
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+
+            if (this.Xvertexlist.SelectedIndex != -1)
+            {
+                int IndexVertex = -1;
+
+                text = this.Xvertexlist.GetSelectedText();
+                StringHelpers.SplitVertex(text, out IndexMesh, out IndexFace, out IndexVertex);
+
+                Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
+            }
+
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("shear " + this.texanglerotatetext.Text);
+        }
+
+        private void MeshShearUV(float value, int whichLOD)
+        {
+            double angle = (Math.PI / 180) * value;
+            float tan = (float)Math.Tan(angle);
+
+            float LesserX = float.MinValue;
+            float GreaterX = float.MaxValue;
+            float LesserY = float.MaxValue;
+            float GreaterY = float.MinValue;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                var vertex = face.VertexArray[i];
+
+                                if (vertex.UCoord > LesserX)
+                                {
+                                    LesserX = vertex.UCoord;
+                                }
+
+                                if (vertex.UCoord < GreaterX)
+                                {
+                                    GreaterX = vertex.UCoord;
+                                }
+
+                                if (vertex.VCoord < LesserY)
+                                {
+                                    LesserY = vertex.VCoord;
+                                }
+
+                                if (vertex.VCoord > GreaterY)
+                                {
+                                    GreaterY = vertex.VCoord;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (LesserX == GreaterX)
+            {
+                return;
+            }
+
+            float length = (1 - tan) * (LesserX - GreaterX);
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                            {
+                                var vertex = face.VertexArray[EachVertex];
+
+                                vertex.VCoord += length * (vertex.UCoord - GreaterX) / (LesserX - GreaterX);
+                            }
+                        }
+                    }
+                }
+            }
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+            Global.CX.InitCamera();
+            Global.NumberTrim();
+        }
+
+        private void texshearbutuv_Click(object sender, RoutedEventArgs e)
+        {
+            float value;
+            float.TryParse(this.texanglerotatetext.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            this.texanglerotatetext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            this.MeshShearUV(value, whichLOD);
+
+            var FacePos0 = new List<int>();
+            var FacePos1 = new List<int>();
+            int FacePosAmount = 0;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            FacePosAmount++;
+                            FacePos0.Add(EachMesh);
+                            FacePos1.Add(EachFace);
+                        }
+                    }
+                }
+            }
+
+            float LesserX = 0;
+            float GreaterX = 0;
+            float LesserY = 0;
+            float GreaterY = 0;
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                if (EachPos == 0)
+                {
+                    LesserX = float.MinValue;
+                    GreaterX = float.MaxValue;
+                    LesserY = float.MaxValue;
+                    GreaterY = float.MinValue;
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    var vertex = face.VertexArray[i];
+
+                    if (vertex.UCoord > LesserX)
+                    {
+                        LesserX = vertex.UCoord;
+                    }
+
+                    if (vertex.UCoord < GreaterX)
+                    {
+                        GreaterX = vertex.UCoord;
+                    }
+
+                    if (vertex.VCoord < LesserY)
+                    {
+                        LesserY = vertex.VCoord;
+                    }
+
+                    if (vertex.VCoord > GreaterY)
+                    {
+                        GreaterY = vertex.VCoord;
+                    }
+                }
+            }
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                {
+                    var vertex = face.VertexArray[EachVertex];
+
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (vertex.UCoord - GreaterX) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterY == LesserY)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.VCoord - LesserY) / (GreaterY - LesserY);
+                    }
+                }
+            }
+
+            Global.NumberTrim();
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+
+            if (this.Xvertexlist.SelectedIndex != -1)
+            {
+                int IndexVertex = -1;
+
+                text = this.Xvertexlist.GetSelectedText();
+                StringHelpers.SplitVertex(text, out IndexMesh, out IndexFace, out IndexVertex);
+
+                Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
+            }
+
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("shear UV " + this.texanglerotatetext.Text);
+        }
+
+        private void MeshShearXY(float value, int whichLOD)
+        {
+            double angle = (Math.PI / 180) * value;
+            float tan = (float)Math.Tan(angle);
+
+            float LesserX = float.MinValue;
+            float GreaterX = float.MaxValue;
+            float LesserY = float.MaxValue;
+            float GreaterY = float.MinValue;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            if (face.MaxX > LesserX)
+                            {
+                                LesserX = face.MaxX;
+                            }
+
+                            if (face.MinX < GreaterX)
+                            {
+                                GreaterX = face.MinX;
+                            }
+
+                            if (face.MinY < LesserY)
+                            {
+                                LesserY = face.MinY;
+                            }
+
+                            if (face.MaxY > GreaterY)
+                            {
+                                GreaterY = face.MaxY;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (LesserX == GreaterX)
+            {
+                return;
+            }
+
+            float length = tan * (LesserX - GreaterX);
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                            {
+                                var vertex = face.VertexArray[EachVertex];
+
+                                vertex.YCoord -= length * (vertex.XCoord - GreaterX) / (LesserX - GreaterX);
+                            }
+                        }
+                    }
+                }
+            }
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+            Global.CX.InitCamera();
+            Global.NumberTrim();
+        }
+
+        private void texshearbutxy_Click(object sender, RoutedEventArgs e)
+        {
+            float value;
+            float.TryParse(this.texanglerotatetext.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            this.texanglerotatetext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            this.MeshShearXY(-value, whichLOD);
+
+            var FacePos0 = new List<int>();
+            var FacePos1 = new List<int>();
+            int FacePosAmount = 0;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            FacePosAmount++;
+                            FacePos0.Add(EachMesh);
+                            FacePos1.Add(EachFace);
+                        }
+                    }
+                }
+            }
+
+            float LesserX = 0;
+            float GreaterX = 0;
+            float LesserY = 0;
+            float GreaterY = 0;
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                if (EachPos == 0)
+                {
+                    LesserX = float.MinValue;
+                    GreaterX = float.MaxValue;
+                    LesserY = float.MaxValue;
+                    GreaterY = float.MinValue;
+                }
+
+                if (face.MaxX > LesserX)
+                {
+                    LesserX = face.MaxX;
+                }
+
+                if (face.MinX < GreaterX)
+                {
+                    GreaterX = face.MinX;
+                }
+
+                if (face.MinY < LesserY)
+                {
+                    LesserY = face.MinY;
+                }
+
+                if (face.MaxY > GreaterY)
+                {
+                    GreaterY = face.MaxY;
+                }
+            }
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                {
+                    var vertex = face.VertexArray[EachVertex];
+
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (vertex.XCoord - GreaterX) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterY == LesserY)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.YCoord - LesserY) / (GreaterY - LesserY);
+                    }
+                }
+            }
+
+            this.MeshShearXY(value, whichLOD);
+
+            Global.NumberTrim();
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+
+            if (this.Xvertexlist.SelectedIndex != -1)
+            {
+                int IndexVertex = -1;
+
+                text = this.Xvertexlist.GetSelectedText();
+                StringHelpers.SplitVertex(text, out IndexMesh, out IndexFace, out IndexVertex);
+
+                Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
+            }
+
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("shear XY " + this.texanglerotatetext.Text);
+        }
+
+        private void MeshShearXZ(float value, int whichLOD)
+        {
+            double angle = (Math.PI / 180) * value;
+            float tan = (float)Math.Tan(angle);
+
+            float LesserX = float.MinValue;
+            float GreaterX = float.MaxValue;
+            float LesserZ = float.MaxValue;
+            float GreaterZ = float.MinValue;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            if (face.MaxX > LesserX)
+                            {
+                                LesserX = face.MaxX;
+                            }
+
+                            if (face.MinX < GreaterX)
+                            {
+                                GreaterX = face.MinX;
+                            }
+
+                            if (face.MinZ < LesserZ)
+                            {
+                                LesserZ = face.MinZ;
+                            }
+
+                            if (face.MaxZ > GreaterZ)
+                            {
+                                GreaterZ = face.MaxZ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (LesserX == GreaterX)
+            {
+                return;
+            }
+
+            float length = tan * (LesserX - GreaterX);
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                            {
+                                var vertex = face.VertexArray[EachVertex];
+
+                                vertex.ZCoord -= length * (vertex.XCoord - GreaterX) / (LesserX - GreaterX);
+                            }
+                        }
+                    }
+                }
+            }
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+            Global.CX.InitCamera();
+            Global.NumberTrim();
+        }
+
+        private void texshearbutxz_Click(object sender, RoutedEventArgs e)
+        {
+            float value;
+            float.TryParse(this.texanglerotatetext.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            this.texanglerotatetext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            this.MeshShearXZ(-value, whichLOD);
+
+            var FacePos0 = new List<int>();
+            var FacePos1 = new List<int>();
+            int FacePosAmount = 0;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            FacePosAmount++;
+                            FacePos0.Add(EachMesh);
+                            FacePos1.Add(EachFace);
+                        }
+                    }
+                }
+            }
+
+            float LesserX = 0;
+            float GreaterX = 0;
+            float LesserZ = 0;
+            float GreaterZ = 0;
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                if (EachPos == 0)
+                {
+                    LesserX = float.MinValue;
+                    GreaterX = float.MaxValue;
+                    LesserZ = float.MaxValue;
+                    GreaterZ = float.MinValue;
+                }
+
+                if (face.MaxX > LesserX)
+                {
+                    LesserX = face.MaxX;
+                }
+
+                if (face.MinX < GreaterX)
+                {
+                    GreaterX = face.MinX;
+                }
+
+                if (face.MinZ < LesserZ)
+                {
+                    LesserZ = face.MinZ;
+                }
+
+                if (face.MaxZ > GreaterZ)
+                {
+                    GreaterZ = face.MaxZ;
+                }
+            }
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                {
+                    var vertex = face.VertexArray[EachVertex];
+
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (vertex.XCoord - GreaterX) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterZ == LesserZ)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    }
+                }
+            }
+
+            this.MeshShearXZ(value, whichLOD);
+
+            Global.NumberTrim();
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+
+            if (this.Xvertexlist.SelectedIndex != -1)
+            {
+                int IndexVertex = -1;
+
+                text = this.Xvertexlist.GetSelectedText();
+                StringHelpers.SplitVertex(text, out IndexMesh, out IndexFace, out IndexVertex);
+
+                Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
+            }
+
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("shear XZ " + this.texanglerotatetext.Text);
+        }
+
+        private void MeshShearYZ(float value, int whichLOD)
+        {
+            double angle = (Math.PI / 180) * value;
+            float tan = (float)Math.Tan(angle);
+
+            float LesserY = float.MinValue;
+            float GreaterY = float.MaxValue;
+            float LesserZ = float.MaxValue;
+            float GreaterZ = float.MinValue;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            if (face.MaxY > LesserY)
+                            {
+                                LesserY = face.MaxY;
+                            }
+
+                            if (face.MinY < GreaterY)
+                            {
+                                GreaterY = face.MinY;
+                            }
+
+                            if (face.MinZ < LesserZ)
+                            {
+                                LesserZ = face.MinZ;
+                            }
+
+                            if (face.MaxZ > GreaterZ)
+                            {
+                                GreaterZ = face.MaxZ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (LesserY == GreaterY)
+            {
+                return;
+            }
+
+            float length = tan * (LesserY - GreaterY);
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                            {
+                                var vertex = face.VertexArray[EachVertex];
+
+                                vertex.ZCoord -= length * (vertex.YCoord - GreaterY) / (LesserY - GreaterY);
+                            }
+                        }
+                    }
+                }
+            }
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+            Global.CX.InitCamera();
+            Global.NumberTrim();
+        }
+
+        private void texshearbutyz_Click(object sender, RoutedEventArgs e)
+        {
+            float value;
+            float.TryParse(this.texanglerotatetext.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            this.texanglerotatetext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            this.MeshShearYZ(-value, whichLOD);
+
+            var FacePos0 = new List<int>();
+            var FacePos1 = new List<int>();
+            int FacePosAmount = 0;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            FacePosAmount++;
+                            FacePos0.Add(EachMesh);
+                            FacePos1.Add(EachFace);
+                        }
+                    }
+                }
+            }
+
+            float LesserY = 0;
+            float GreaterY = 0;
+            float LesserZ = 0;
+            float GreaterZ = 0;
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                if (EachPos == 0)
+                {
+                    LesserY = float.MinValue;
+                    GreaterY = float.MaxValue;
+                    LesserZ = float.MaxValue;
+                    GreaterZ = float.MinValue;
+                }
+
+                if (face.MaxY > LesserY)
+                {
+                    LesserY = face.MaxY;
+                }
+
+                if (face.MinY < GreaterY)
+                {
+                    GreaterY = face.MinY;
+                }
+
+                if (face.MinZ < LesserZ)
+                {
+                    LesserZ = face.MinZ;
+                }
+
+                if (face.MaxZ > GreaterZ)
+                {
+                    GreaterZ = face.MaxZ;
+                }
+            }
+
+            for (int EachPos = 0; EachPos < FacePosAmount; EachPos++)
+            {
+                var mesh = Global.OPT.MeshArray[FacePos0[EachPos]];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var face = mesh.LODArray[whichLOD].FaceArray[FacePos1[EachPos]];
+
+                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
+                {
+                    var vertex = face.VertexArray[EachVertex];
+
+                    if (LesserY == GreaterY)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (vertex.YCoord - GreaterY) / (LesserY - GreaterY);
+                    }
+
+                    if (GreaterZ == LesserZ)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.ZCoord - LesserZ) / (GreaterZ - LesserZ);
+                    }
+                }
+            }
+
+            this.MeshShearYZ(value, whichLOD);
+
+            Global.NumberTrim();
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+
+            if (this.Xvertexlist.SelectedIndex != -1)
+            {
+                int IndexVertex = -1;
+
+                text = this.Xvertexlist.GetSelectedText();
+                StringHelpers.SplitVertex(text, out IndexMesh, out IndexFace, out IndexVertex);
+
+                Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
+            }
+
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("shear YZ " + this.texanglerotatetext.Text);
+        }
+
         private void texanglerotatebut_Click(object sender, RoutedEventArgs e)
         {
             float value;
@@ -8565,8 +9738,23 @@ namespace OPTech
                 {
                     var vertex = face.VertexArray[EachVertex];
 
-                    vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
-                    vertex.VCoord = (vertex.YCoord - LesserY) / (GreaterY - LesserY);
+                    if (LesserX == GreaterX)
+                    {
+                        vertex.UCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.UCoord = (LesserX - vertex.XCoord) / (LesserX - GreaterX);
+                    }
+
+                    if (GreaterY == LesserY)
+                    {
+                        vertex.VCoord = 0;
+                    }
+                    else
+                    {
+                        vertex.VCoord = (vertex.YCoord - LesserY) / (GreaterY - LesserY);
+                    }
                 }
             }
 

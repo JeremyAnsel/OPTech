@@ -1443,6 +1443,11 @@ namespace OPTech
                 Global.frmgeometry.texhflipbut.IsEnabled = true;
                 Global.frmgeometry.texvflipbut.IsEnabled = true;
                 Global.frmgeometry.texanglerotatetext.IsEnabled = true;
+                Global.frmgeometry.texshearbut0.IsEnabled = true;
+                Global.frmgeometry.texshearbutuv.IsEnabled = true;
+                Global.frmgeometry.texshearbutxy.IsEnabled = true;
+                Global.frmgeometry.texshearbutxz.IsEnabled = true;
+                Global.frmgeometry.texshearbutyz.IsEnabled = true;
                 Global.frmgeometry.texanglerotatebut.IsEnabled = true;
                 Global.frmgeometry.texstitchrotatebut.IsEnabled = true;
                 Global.frmgeometry.texzoominbut.IsEnabled = true;
@@ -1698,6 +1703,11 @@ namespace OPTech
                 Global.frmgeometry.texhflipbut.IsEnabled = false;
                 Global.frmgeometry.texvflipbut.IsEnabled = false;
                 Global.frmgeometry.texanglerotatetext.IsEnabled = false;
+                Global.frmgeometry.texshearbut0.IsEnabled = false;
+                Global.frmgeometry.texshearbutuv.IsEnabled = false;
+                Global.frmgeometry.texshearbutxy.IsEnabled = false;
+                Global.frmgeometry.texshearbutxz.IsEnabled = false;
+                Global.frmgeometry.texshearbutyz.IsEnabled = false;
                 Global.frmgeometry.texanglerotatebut.IsEnabled = false;
                 Global.frmgeometry.texstitchrotatebut.IsEnabled = false;
                 Global.frmgeometry.texzoominbut.IsEnabled = false;

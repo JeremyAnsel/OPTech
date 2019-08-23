@@ -3023,8 +3023,24 @@ namespace OPTech
                 {
                     Dummy = file.ReadLine().Trim();
 
+                    if (Dummy == "EOF")
+                    {
+                        break;
+                    }
+
                     if (Dummy == "ENDSEC")
                     {
+                        Dummy = file.ReadLine().Trim();
+                        continue;
+                    }
+
+                    if (Dummy != "3DFACE")
+                    {
+                        while (Dummy != "0")
+                        {
+                            Dummy = file.ReadLine().Trim();
+                        }
+
                         continue;
                     }
 

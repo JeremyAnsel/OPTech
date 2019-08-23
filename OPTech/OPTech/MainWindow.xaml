@@ -181,12 +181,12 @@
                             <Image Width="40" Height="40" Source="Images/frmoptech_1A36.ico" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
-                        <RadioButton x:Name="dispbar_wireframe" GroupName="dispbar_rendergroup" Tag="wireframe" ToolTip="Wireframe" IsChecked="True" Click="dispbar_wireframe_Click">
+                        <CheckBox x:Name="dispbar_wireframe" Tag="wireframe" ToolTip="Wireframe" IsChecked="True" Click="dispbar_wireframe_Click">
                             <Image Width="40" Height="40" Source="Images/display_wireframe.ico" />
-                        </RadioButton>
-                        <RadioButton x:Name="dispbar_texture" GroupName="dispbar_rendergroup" Tag="texture" ToolTip="Texture" Click="dispbar_texture_Click">
+                        </CheckBox>
+                        <CheckBox x:Name="dispbar_texture" Tag="texture" ToolTip="Texture" Click="dispbar_texture_Click">
                             <Image Width="40" Height="40" Source="Images/display_textured.ico" />
-                        </RadioButton>
+                        </CheckBox>
                         <Separator Width="10" Background="Transparent" />
                         <RadioButton x:Name="dispbar_nonorm" GroupName="dispbar_normalgroup" Tag="no norm" ToolTip="Hide Normals" IsChecked="True" Click="dispbar_nonorm_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_206E.ico" />

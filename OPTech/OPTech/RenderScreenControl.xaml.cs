@@ -100,7 +100,23 @@ namespace OPTech
 
             Global.CX.InitCamera();
             Global.CX.InitGL();
-            Global.CX.CreateCall2();
+
+            string displayMode = Global.DisplayMode;
+
+            if (Global.frmoptech.dispbar_texture.IsChecked == true)
+            {
+                Global.DisplayMode = "texture";
+                Global.CX.CreateCall2();
+            }
+
+            if (Global.frmoptech.dispbar_wireframe.IsChecked == true)
+            {
+                Global.DisplayMode = "wire";
+                Global.CX.CreateCall2();
+            }
+
+            Global.DisplayMode = displayMode;
+
             Global.CX.Draw();
 
             gl.Flush();

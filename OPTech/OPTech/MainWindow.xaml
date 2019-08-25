@@ -171,6 +171,13 @@
                             <Image Width="40" Height="40" Source="Images/lod_low.ico" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
+                        <RadioButton x:Name="dispbar_meshzoomoff" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom off" ToolTip="Mesh Zoom Off" IsChecked="True"  Click="dispbar_meshzoomoff_Click">
+                            <Image Width="40" Height="40" Source="Images/MeshZoomOff.png" />
+                        </RadioButton>
+                        <RadioButton x:Name="dispbar_meshzoomon" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom on" ToolTip="Mesh Zoom On" Click="dispbar_meshzoomon_Click">
+                            <Image Width="40" Height="40" Source="Images/MeshZoomOn.png" />
+                        </RadioButton>
+                        <Separator Width="10" Background="Transparent" />
                         <RadioButton x:Name="dispbar_mesh" GroupName="dispbar_geogroup" Tag="mesh" ToolTip="Mesh" IsChecked="True" Click="dispbar_mesh_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_13FE.ico" />
                         </RadioButton>

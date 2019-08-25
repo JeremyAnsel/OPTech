@@ -94,6 +94,42 @@ namespace OPTech
             }
         }
 
+        private void meshlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (Global.IsMeshZoomOn)
+            {
+                var mesh = Global.OPT.MeshArray[this.meshlist.SelectedIndex];
+
+                float HighestSpan = mesh.HitSpanX;
+
+                if (mesh.HitSpanY > HighestSpan)
+                {
+                    HighestSpan = mesh.HitSpanY;
+                }
+
+                if (mesh.HitSpanZ > HighestSpan)
+                {
+                    HighestSpan = mesh.HitSpanZ;
+                }
+
+                Global.NormalLength = HighestSpan / 16;
+                Global.OrthoZoom = HighestSpan;
+
+                //Global.Camera.Near = -HighestSpan * 2;
+                //Global.Camera.Far = HighestSpan * 2;
+
+                Global.CX.InitCamera();
+                Global.Camera.Translate(-mesh.HitCenterX, -mesh.HitCenterY, -mesh.HitCenterZ);
+                //Global.Camera.Rotate(180, 0, 180);
+                Global.CX.CreateCall();
+            }
+        }
+
         internal void meshlist_KeyUp(object sender, KeyEventArgs e)
         {
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;

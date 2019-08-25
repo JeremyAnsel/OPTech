@@ -43,7 +43,8 @@
                                              SelectionMode="Extended"
                                              MouseDoubleClick="meshlist_MouseDoubleClick"
                                              KeyUp="meshlist_KeyUp"
-                                             MouseUp="meshlist_MouseUp" />
+                                             MouseUp="meshlist_MouseUp"
+                                             SelectionChanged="meshlist_SelectionChanged" />
                                     <UniformGrid Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Columns="1">
                                         <Button x:Name="meshscalebut" Margin="20 2" Content="Scale OPT..." Click="meshscalebut_Click" />
                                         <Button x:Name="meshassignbut" Margin="20 2" Content="Assign..." Click="meshassignbut_Click" />

@@ -9046,6 +9046,16 @@ namespace OPTech
             }
         }
 
+        public void dispbar_meshzoomoff_Click(object sender, RoutedEventArgs e)
+        {
+            Global.IsMeshZoomOn = false;
+        }
+
+        public void dispbar_meshzoomon_Click(object sender, RoutedEventArgs e)
+        {
+            Global.IsMeshZoomOn = true;
+        }
+
         public void dispbar_mesh_Click(object sender, RoutedEventArgs e)
         {
             // TODO

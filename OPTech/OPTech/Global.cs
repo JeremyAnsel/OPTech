@@ -42,6 +42,8 @@ namespace OPTech
         public static int RotTranslate;
         public static int RotScale;
 
+        public static bool IsMeshZoomOn = false;
+
         public static byte RPrimarySelectWireColor;
         public static byte GPrimarySelectWireColor;
         public static byte BPrimarySelectWireColor;

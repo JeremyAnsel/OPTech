@@ -118,8 +118,11 @@ namespace OPTech
 
             gl.Ortho(l, r, b, t, this.Near, this.Far);
 
-            gl.Translate(this.PositionX, this.PositionY, this.PositionZ);
+            //gl.Translate(this.PositionX, this.PositionY, this.PositionZ);
+            //gl.Rotate(this.AngleX, this.AngleY, this.AngleZ);
+
             gl.Rotate(this.AngleX, this.AngleY, this.AngleZ);
+            gl.Translate(this.PositionX, this.PositionY, this.PositionZ);
         }
 
         public void OnSize(double w, double h)

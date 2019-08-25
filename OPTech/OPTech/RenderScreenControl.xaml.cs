@@ -88,38 +88,44 @@ namespace OPTech
         {
             //Global.CX.Draw();
 
-            var gl = args.OpenGL;
-
-            if (gl == null)
+            try
             {
-                return;
+                var gl = args.OpenGL;
+
+                if (gl == null)
+                {
+                    return;
+                }
+
+                gl.Enable(OpenGL.GL_DEPTH_TEST);
+                gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+
+                Global.CX.InitCamera();
+                Global.CX.InitGL();
+
+                string displayMode = Global.DisplayMode;
+
+                if (Global.frmoptech.dispbar_texture.IsChecked == true)
+                {
+                    Global.DisplayMode = "texture";
+                    Global.CX.CreateCall2();
+                }
+
+                if (Global.frmoptech.dispbar_wireframe.IsChecked == true)
+                {
+                    Global.DisplayMode = "wire";
+                    Global.CX.CreateCall2();
+                }
+
+                Global.DisplayMode = displayMode;
+
+                Global.CX.Draw();
+
+                gl.Flush();
             }
-
-            gl.Enable(OpenGL.GL_DEPTH_TEST);
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-
-            Global.CX.InitCamera();
-            Global.CX.InitGL();
-
-            string displayMode = Global.DisplayMode;
-
-            if (Global.frmoptech.dispbar_texture.IsChecked == true)
+            catch
             {
-                Global.DisplayMode = "texture";
-                Global.CX.CreateCall2();
             }
-
-            if (Global.frmoptech.dispbar_wireframe.IsChecked == true)
-            {
-                Global.DisplayMode = "wire";
-                Global.CX.CreateCall2();
-            }
-
-            Global.DisplayMode = displayMode;
-
-            Global.CX.Draw();
-
-            gl.Flush();
         }
 
         private void viewbar_Click(object sender, RoutedEventArgs e)

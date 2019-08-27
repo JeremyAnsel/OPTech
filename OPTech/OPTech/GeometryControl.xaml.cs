@@ -5929,6 +5929,135 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
+
+        private void Xvertexlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.Xvertexlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            if (Global.IsMeshZoomOn)
+            {
+                float minX = float.MaxValue;
+                float minY = float.MaxValue;
+                float minZ = float.MaxValue;
+                float maxX = float.MinValue;
+                float maxY = float.MinValue;
+                float maxZ = float.MinValue;
+
+                for (int listIndex = 0; listIndex < this.Xvertexlist.Items.Count; listIndex++)
+                {
+                    if (!this.Xvertexlist.IsSelected(listIndex))
+                    {
+                        continue;
+                    }
+
+                    string wholeLine = this.Xvertexlist.GetText(listIndex);
+
+                    int thisMesh;
+                    int thisFace;
+                    int thisVertex;
+                    StringHelpers.SplitVertex(wholeLine, out thisMesh, out thisFace, out thisVertex);
+
+                    var mesh = Global.OPT.MeshArray[thisMesh];
+
+                    if (mesh.LODArray.Count <= whichLOD)
+                    {
+                        continue;
+                    }
+
+                    var face = mesh.LODArray[whichLOD].FaceArray[thisFace];
+
+                    int polyVerts;
+                    if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                        && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                        && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+                    {
+                        polyVerts = 2;
+                    }
+                    else
+                    {
+                        polyVerts = 3;
+                    }
+
+                    for (int vertexIndex = 0; vertexIndex <= polyVerts; vertexIndex++)
+                    {
+                        var vertex = face.VertexArray[vertexIndex];
+
+                        if (vertex.XCoord < minX)
+                        {
+                            minX = vertex.XCoord;
+                        }
+
+                        if (vertex.XCoord > maxX)
+                        {
+                            maxX = vertex.XCoord;
+                        }
+
+                        if (vertex.YCoord < minY)
+                        {
+                            minY = vertex.YCoord;
+                        }
+
+                        if (vertex.YCoord > maxY)
+                        {
+                            maxY = vertex.YCoord;
+                        }
+
+                        if (vertex.ZCoord < minZ)
+                        {
+                            minZ = vertex.ZCoord;
+                        }
+
+                        if (vertex.ZCoord > maxZ)
+                        {
+                            maxZ = vertex.ZCoord;
+                        }
+                    }
+                }
+
+                float spanX = maxX - minX;
+                float spanY = maxY - minY;
+                float spanZ = maxZ - minZ;
+                float centerX = (minX + maxX) / 2;
+                float centerY = (minY + maxY) / 2;
+                float centerZ = (minZ + maxZ) / 2;
+
+                float highestSpan = spanX;
+
+                if (spanY > highestSpan)
+                {
+                    highestSpan = spanY;
+                }
+
+                if (spanZ > highestSpan)
+                {
+                    highestSpan = spanZ;
+                }
+
+                Global.NormalLength = highestSpan / 16;
+                Global.OrthoZoom = highestSpan;
+
+                //Global.Camera.Near = -HighestSpan * 2;
+                //Global.Camera.Far = HighestSpan * 2;
+
+                Global.CX.InitCamera();
+                Global.Camera.ObjectTranslate(-centerX, -centerY, -centerZ);
+                Global.CX.CreateCall();
+            }
+        }
+
         private void Xvertexlist_KeyUp(object sender, KeyEventArgs e)
         {
             int whichLOD;
@@ -6014,6 +6143,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Xvertexlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -6101,6 +6232,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Yvertexlist_KeyUp(object sender, KeyEventArgs e)
@@ -6188,6 +6321,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Yvertexlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -6275,6 +6410,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Zvertexlist_KeyUp(object sender, KeyEventArgs e)
@@ -6362,6 +6499,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Zvertexlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -6449,6 +6588,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Xvertextext_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -7184,6 +7325,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Ivertnormlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -7271,6 +7414,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Jvertnormlist_KeyUp(object sender, KeyEventArgs e)
@@ -7358,6 +7503,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Jvertnormlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -7445,6 +7592,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Kvertnormlist_KeyUp(object sender, KeyEventArgs e)
@@ -7532,6 +7681,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void Kvertnormlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -7619,6 +7770,8 @@ namespace OPTech
 
             Global.CX.VertexScreens(IndexMesh, whichLOD, IndexFace, IndexVertex);
             Global.CX.CreateCall();
+
+            this.Xvertexlist_SelectionChanged(null, null);
         }
 
         private void fgoffop_Click(object sender, RoutedEventArgs e)

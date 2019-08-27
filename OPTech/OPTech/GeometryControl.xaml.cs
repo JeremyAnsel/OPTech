@@ -101,31 +101,119 @@ namespace OPTech
                 return;
             }
 
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
             if (Global.IsMeshZoomOn)
             {
-                var mesh = Global.OPT.MeshArray[this.meshlist.SelectedIndex];
+                float minX = float.MaxValue;
+                float minY = float.MaxValue;
+                float minZ = float.MaxValue;
+                float maxX = float.MinValue;
+                float maxY = float.MinValue;
+                float maxZ = float.MinValue;
 
-                float HighestSpan = mesh.HitSpanX;
-
-                if (mesh.HitSpanY > HighestSpan)
+                for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
                 {
-                    HighestSpan = mesh.HitSpanY;
+                    if (!this.meshlist.IsSelected(meshIndex))
+                    {
+                        continue;
+                    }
+
+                    var mesh = Global.OPT.MeshArray[meshIndex];
+
+                    if (mesh.LODArray.Count <= whichLOD)
+                    {
+                        continue;
+                    }
+
+                    var lod = mesh.LODArray[whichLOD];
+
+                    foreach (var face in lod.FaceArray)
+                    {
+                        int polyVerts;
+                        if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                            && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                            && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+                        {
+                            polyVerts = 2;
+                        }
+                        else
+                        {
+                            polyVerts = 3;
+                        }
+
+                        for (int vertexIndex = 0; vertexIndex <= polyVerts; vertexIndex++)
+                        {
+                            var vertex = face.VertexArray[vertexIndex];
+
+                            if (vertex.XCoord < minX)
+                            {
+                                minX = vertex.XCoord;
+                            }
+
+                            if (vertex.XCoord > maxX)
+                            {
+                                maxX = vertex.XCoord;
+                            }
+
+                            if (vertex.YCoord < minY)
+                            {
+                                minY = vertex.YCoord;
+                            }
+
+                            if (vertex.YCoord > maxY)
+                            {
+                                maxY = vertex.YCoord;
+                            }
+
+                            if (vertex.ZCoord < minZ)
+                            {
+                                minZ = vertex.ZCoord;
+                            }
+
+                            if (vertex.ZCoord > maxZ)
+                            {
+                                maxZ = vertex.ZCoord;
+                            }
+                        }
+                    }
                 }
 
-                if (mesh.HitSpanZ > HighestSpan)
+                float spanX = maxX - minX;
+                float spanY = maxY - minY;
+                float spanZ = maxZ - minZ;
+                float centerX = (minX + maxX) / 2;
+                float centerY = (minY + maxY) / 2;
+                float centerZ = (minZ + maxZ) / 2;
+
+                float highestSpan = spanX;
+
+                if (spanY > highestSpan)
                 {
-                    HighestSpan = mesh.HitSpanZ;
+                    highestSpan = spanY;
                 }
 
-                Global.NormalLength = HighestSpan / 16;
-                Global.OrthoZoom = HighestSpan;
+                if (spanZ > highestSpan)
+                {
+                    highestSpan = spanZ;
+                }
+
+                Global.NormalLength = highestSpan / 16;
+                Global.OrthoZoom = highestSpan;
 
                 //Global.Camera.Near = -HighestSpan * 2;
                 //Global.Camera.Far = HighestSpan * 2;
 
                 Global.CX.InitCamera();
-                Global.Camera.Translate(-mesh.HitCenterX, -mesh.HitCenterY, -mesh.HitCenterZ);
-                //Global.Camera.Rotate(180, 0, 180);
+                Global.Camera.ObjectTranslate(-centerX, -centerY, -centerZ);
                 Global.CX.CreateCall();
             }
         }
@@ -211,6 +299,8 @@ namespace OPTech
             {
                 this.meshlist.CopyItems(Global.frmhitzone.meshlist);
             }
+
+            this.meshlist_SelectionChanged(null, null);
         }
 
         internal void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
@@ -294,6 +384,8 @@ namespace OPTech
             {
                 this.meshlist.CopyItems(Global.frmhitzone.meshlist);
             }
+
+            this.meshlist_SelectionChanged(null, null);
         }
 
         private void facelist_KeyUp(object sender, KeyEventArgs e)

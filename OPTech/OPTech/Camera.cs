@@ -22,6 +22,9 @@ namespace OPTech
         public double Top { get; set; }
         public double Width { get; private set; }
         public double Height { get; private set; }
+        public float ObjectPositionX { get; set; }
+        public float ObjectPositionY { get; set; }
+        public float ObjectPositionZ { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
         public float PositionZ { get; set; }
@@ -39,6 +42,9 @@ namespace OPTech
             this.Top = 10.0;
             this.Width = 1.0;
             this.Height = 1.0;
+            this.ObjectPositionX = 0.0f;
+            this.ObjectPositionY = 0.0f;
+            this.ObjectPositionZ = 0.0f;
             this.PositionX = 0.0f;
             this.PositionY = 0.0f;
             this.PositionZ = 0.0f;
@@ -61,6 +67,9 @@ namespace OPTech
                 Top = this.Top,
                 Width = this.Width,
                 Height = this.Height,
+                ObjectPositionX = this.ObjectPositionX,
+                ObjectPositionY = this.ObjectPositionY,
+                ObjectPositionZ = this.ObjectPositionZ,
                 PositionX = this.PositionX,
                 PositionY = this.PositionY,
                 PositionZ = this.PositionZ,
@@ -118,17 +127,22 @@ namespace OPTech
 
             gl.Ortho(l, r, b, t, this.Near, this.Far);
 
-            //gl.Translate(this.PositionX, this.PositionY, this.PositionZ);
-            //gl.Rotate(this.AngleX, this.AngleY, this.AngleZ);
-
-            gl.Rotate(this.AngleX, this.AngleY, this.AngleZ);
             gl.Translate(this.PositionX, this.PositionY, this.PositionZ);
+            gl.Rotate(this.AngleX, this.AngleY, this.AngleZ);
+            gl.Translate(this.ObjectPositionX, this.ObjectPositionY, this.ObjectPositionZ);
         }
 
         public void OnSize(double w, double h)
         {
             this.Width = w;
             this.Height = h;
+        }
+
+        public void ObjectTranslate(float positionx, float positiony, float positionz)
+        {
+            this.ObjectPositionX = positionx;
+            this.ObjectPositionY = positiony;
+            this.ObjectPositionZ = positionz;
         }
 
         public void Translate(float positionx, float positiony, float positionz)

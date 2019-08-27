@@ -108,7 +108,8 @@
                                              ToolTip="Face List"
                                              SelectionMode="Extended"
                                              KeyUp="facelist_KeyUp"
-                                             MouseUp="facelist_MouseUp "/>
+                                             MouseUp="facelist_MouseUp"
+                                             SelectionChanged="facelist_SelectionChanged" />
                                     <UniformGrid Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Columns="1">
                                         <Button x:Name="normalflipbut" Margin="20 2" Content="Flip Normal" Click="normalflipbut_Click" />
                                         <Button x:Name="texturecoordinatebut" Margin="20 2" Content="Calculate Coordinates" ToolTip="Calculate Texture Coordinates" Click="texturecoordinatebut_Click" />

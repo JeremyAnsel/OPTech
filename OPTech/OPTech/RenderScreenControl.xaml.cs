@@ -130,6 +130,44 @@ namespace OPTech
 
         private void viewbar_Click(object sender, RoutedEventArgs e)
         {
+            if (Global.IsMeshZoomOn)
+            {
+                switch (Global.ViewMode)
+                {
+                    case "mesh":
+                        if (Global.frmgeometry.meshlist.SelectedIndex == -1)
+                        {
+                            Global.Camera.ObjectTranslate(0, 0, 0);
+                            OptRead.CalcDomain();
+                        }
+
+                        break;
+
+                    case "face":
+                        if (Global.frmgeometry.facelist.SelectedIndex == -1)
+                        {
+                            Global.Camera.ObjectTranslate(0, 0, 0);
+                            OptRead.CalcDomain();
+                        }
+
+                        break;
+
+                    case "vertex":
+                        if (Global.frmgeometry.Xvertexlist.SelectedIndex == -1)
+                        {
+                            Global.Camera.ObjectTranslate(0, 0, 0);
+                            OptRead.CalcDomain();
+                        }
+
+                        break;
+                }
+            }
+            else
+            {
+                Global.Camera.ObjectTranslate(0, 0, 0);
+                OptRead.CalcDomain();
+            }
+
             Global.Camera.Translate(0, 0, 0);
             Global.Camera.Rotate(180, 0, 180);
 

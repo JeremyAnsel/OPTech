@@ -46,11 +46,13 @@ namespace OPTech
                     gl.Enable(OpenGL.GL_CULL_FACE);
                 }
 
+                gl.CullFace((uint)FaceMode.Back);
                 gl.PolygonMode(FaceMode.FrontAndBack, PolygonMode.Lines);
             }
             else if (Global.DisplayMode == "texture")
             {
                 gl.Enable(OpenGL.GL_CULL_FACE);
+                gl.CullFace((uint)FaceMode.Back);
                 gl.PolygonMode(FaceMode.Front, PolygonMode.Filled);
             }
 
@@ -395,11 +397,13 @@ namespace OPTech
 
                                         if (CosAngle > 0)
                                         {
+                                            gl.Enable(OpenGL.GL_CULL_FACE);
                                             gl.CullFace((uint)FaceMode.Back);
                                             gl.PolygonMode(FaceMode.Front, PolygonMode.Filled);
                                         }
                                         else
                                         {
+                                            gl.Enable(OpenGL.GL_CULL_FACE);
                                             gl.CullFace((uint)FaceMode.Front);
                                             gl.PolygonMode(FaceMode.Back, PolygonMode.Filled);
                                         }
@@ -419,6 +423,7 @@ namespace OPTech
 
                                     if (Global.DisplayMode == "texture")
                                     {
+                                        gl.Enable(OpenGL.GL_CULL_FACE);
                                         gl.CullFace((uint)FaceMode.Back);
                                         gl.PolygonMode(FaceMode.Front, PolygonMode.Filled);
                                     }

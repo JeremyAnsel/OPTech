@@ -189,9 +189,12 @@ namespace OPTech
 
             gl.MatrixMode(MatrixMode.Modelview);
 
+            string displayMode = Global.DisplayMode;
+            Global.DisplayMode = "wire";
             //Global.CX.CreateCall();
             Global.CX.CreateCall2();
             Global.CX.Draw();
+            Global.DisplayMode = displayMode;
 
             gl.Flush();
 

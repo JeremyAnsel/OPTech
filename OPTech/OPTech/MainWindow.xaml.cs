@@ -304,6 +304,7 @@ namespace OPTech
 
         private void facecountmenu_Click(object sender, RoutedEventArgs e)
         {
+            int vertexCount = 0;
             int triCount = 0;
             int quadCount = 0;
 
@@ -317,10 +318,12 @@ namespace OPTech
                             && (face.VertexArray[0].YCoord == face.VertexArray[3].YCoord)
                             && (face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord))
                         {
+                            vertexCount += 3;
                             triCount++;
                         }
                         else
                         {
+                            vertexCount += 4;
                             quadCount++;
                         }
                     }
@@ -331,7 +334,8 @@ namespace OPTech
 
             Xceed.Wpf.Toolkit.MessageBox.Show(
                 this,
-                "Tris: " + triCount.ToString(CultureInfo.InvariantCulture)
+                "Vertex: " + vertexCount.ToString(CultureInfo.InvariantCulture)
+                + "\nTris: " + triCount.ToString(CultureInfo.InvariantCulture)
                 + "\nQuads: " + quadCount.ToString(CultureInfo.InvariantCulture)
                 + "\nTotal: " + total.ToString(CultureInfo.InvariantCulture),
                 "Face Count");

@@ -11393,6 +11393,7 @@ namespace OPTech
 
             string text = this.facelist.GetSelectedText();
             StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+            int selectedIndex = -1;
 
             for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
             {
@@ -11461,15 +11462,16 @@ namespace OPTech
                             }
 
                             string textureName = this.texturelist.GetSelectedText();
-                            int selectedIndex = this.fgsellist.SelectedIndex;
+                            selectedIndex = this.fgsellist.SelectedIndex == -1 ? 0 : this.fgsellist.SelectedIndex;
 
-                            if (selectedIndex != -1 && face.TextureList.Count > selectedIndex)
+                            if (face.TextureList.Count > selectedIndex)
                             {
                                 face.TextureList[selectedIndex] = textureName;
                             }
                             else
                             {
                                 face.TextureList.Add(textureName);
+                                selectedIndex++;
                             }
 
                             bool TexFound = false;
@@ -11508,6 +11510,7 @@ namespace OPTech
 
             Global.CX.MeshScreens(IndexMesh, whichLOD);
             Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+            this.fgsellist.SelectedIndex = selectedIndex;
             Global.CX.CreateCall();
             Global.ModelChanged = true;
         }

@@ -2855,8 +2855,42 @@ namespace OPTech
             }
         }
 
+        private void backupopz()
+        {
+            string name = System.IO.Path.GetFileName(Global.opzpath);
+            string fileName = System.IO.Path.Combine(Global.opzpath, name + ".opz");
+
+            if (!System.IO.File.Exists(fileName))
+            {
+                return;
+            }
+
+            int count = System.IO.Directory.EnumerateFiles(Global.opzpath, name + ".*.opz")
+                .Select(t => t.Substring(0, t.LastIndexOf('.')))
+                .Select(t => t.Substring(t.LastIndexOf('.') + 1))
+                .Select(t =>
+                {
+                    int i;
+                    if (int.TryParse(t, NumberStyles.Integer, CultureInfo.InvariantCulture, out i))
+                    {
+                        return i + 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                })
+                .OrderByDescending(t => t)
+                .FirstOrDefault();
+
+            string backupFileName = System.IO.Path.Combine(Global.opzpath, name + "." + count.ToString(CultureInfo.InvariantCulture) + ".opz");
+            System.IO.File.Move(fileName, backupFileName);
+        }
+
         private void saveopzmenu_Click(object sender, RoutedEventArgs e)
         {
+            this.backupopz();
+
             string fileName = System.IO.Path.Combine(Global.opzpath, System.IO.Path.GetFileName(Global.opzpath) + ".opz");
             Global.ModelChanged = false;
             this.saveopz(fileName);

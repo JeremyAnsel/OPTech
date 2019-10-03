@@ -19,6 +19,39 @@ namespace OPTech
         private float m_StartX;
         private float m_StartY;
 
+        public void RotAnim()
+        {
+            if (Global.frmtransformation.rotanimaxis.IsChecked == true)
+            {
+                Global.RotDegrees += 5;
+
+                if (Global.RotDegrees == 360)
+                {
+                    Global.RotDegrees = 0;
+                }
+            }
+
+            if (Global.frmtransformation.rotanimaim.IsChecked == true)
+            {
+                Global.RotTranslate += 2;
+
+                if (Global.RotTranslate > 20)
+                {
+                    Global.RotTranslate = 0;
+                }
+            }
+
+            if (Global.frmtransformation.rotanimdegree.IsChecked == true)
+            {
+                Global.RotScale++;
+
+                if (Global.RotScale > 10)
+                {
+                    Global.RotScale = 0;
+                }
+            }
+        }
+
         public void CreateCall()
         {
             // do nothing
@@ -79,35 +112,7 @@ namespace OPTech
                 whichLOD = 1;
             }
 
-            if (Global.frmtransformation.rotanimaxis.IsChecked == true)
-            {
-                Global.RotDegrees += 5;
-
-                if (Global.RotDegrees == 360)
-                {
-                    Global.RotDegrees = 0;
-                }
-            }
-
-            if (Global.frmtransformation.rotanimaim.IsChecked == true)
-            {
-                Global.RotTranslate += 2;
-
-                if (Global.RotTranslate > 20)
-                {
-                    Global.RotTranslate = 0;
-                }
-            }
-
-            if (Global.frmtransformation.rotanimdegree.IsChecked == true)
-            {
-                Global.RotScale++;
-
-                if (Global.RotScale > 10)
-                {
-                    Global.RotScale = 0;
-                }
-            }
+            //this.RotAnim();
 
             int FIndexMesh = -1;
             int FIndexFace = -1;

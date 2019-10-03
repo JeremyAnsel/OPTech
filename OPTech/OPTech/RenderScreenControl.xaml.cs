@@ -97,6 +97,8 @@ namespace OPTech
                     return;
                 }
 
+                Global.CX.RotAnim();
+
                 gl.Enable(OpenGL.GL_DEPTH_TEST);
                 gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 

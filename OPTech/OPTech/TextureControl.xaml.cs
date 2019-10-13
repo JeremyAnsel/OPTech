@@ -147,7 +147,7 @@ namespace OPTech
 
             this.transtintdisplay.Background = new SolidColorBrush(this.transtextureviewer.Source.CopyPixel(mousePosition.Item1, mousePosition.Item2));
 
-            if (mousePosition.Item1 <= this.transtextureviewer.Source.Width && mousePosition.Item2 <= this.transtextureviewer.Source.Height)
+            if (mousePosition.Item1 <= this.transtextureviewer.Source.GetPixelWidth() && mousePosition.Item2 <= this.transtextureviewer.Source.GetPixelHeight())
             {
                 var color = (this.transtintdisplay.Background as SolidColorBrush).Color;
                 this.transtintdisplay.ToolTip = string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", color.B, color.G, color.R);
@@ -1606,7 +1606,7 @@ namespace OPTech
 
             this.illumtintdisplay.Background = new SolidColorBrush(this.illumtextureviewer.Source.CopyPixel(mousePosition.Item1, mousePosition.Item2));
 
-            if (mousePosition.Item1 <= this.illumtextureviewer.Source.Width && mousePosition.Item2 <= this.illumtextureviewer.Source.Height)
+            if (mousePosition.Item1 <= this.illumtextureviewer.Source.GetPixelWidth() && mousePosition.Item2 <= this.illumtextureviewer.Source.GetPixelHeight())
             {
                 var color = (this.illumtintdisplay.Background as SolidColorBrush).Color;
                 this.illumtintdisplay.ToolTip = string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", color.B, color.G, color.R);

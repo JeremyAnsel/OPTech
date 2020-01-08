@@ -219,7 +219,8 @@ namespace OPTech
 
             this.HitTargetX = -this.HitTargetX;
             this.RotPivotX = -this.RotPivotX;
-            this.RotAxisX = -this.RotAxisX;
+
+            this.RotAxisY = -this.RotAxisY;
             this.RotAimX = -this.RotAimX;
             this.RotDegreeX = -this.RotDegreeX;
 

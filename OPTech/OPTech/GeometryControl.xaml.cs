@@ -2092,7 +2092,6 @@ namespace OPTech
                             mesh.HitCenterX += add;
                             mesh.HitMinX += add;
                             mesh.HitMaxX += add;
-                            mesh.HitSpanX += add;
                             mesh.HitTargetX += add;
                             mesh.RotPivotX += add;
                         }
@@ -2173,7 +2172,6 @@ namespace OPTech
                         mesh.HitCenterX += add;
                         mesh.HitMinX += add;
                         mesh.HitMaxX += add;
-                        mesh.HitSpanX += add;
                         mesh.HitTargetX += add;
                         mesh.RotPivotX += add;
                     }
@@ -2276,7 +2274,6 @@ namespace OPTech
                             mesh.HitCenterY += add;
                             mesh.HitMinY += add;
                             mesh.HitMaxY += add;
-                            mesh.HitSpanY += add;
                             mesh.HitTargetY += add;
                             mesh.RotPivotY += add;
                         }
@@ -2357,7 +2354,6 @@ namespace OPTech
                         mesh.HitCenterY += add;
                         mesh.HitMinY += add;
                         mesh.HitMaxY += add;
-                        mesh.HitSpanY += add;
                         mesh.HitTargetY += add;
                         mesh.RotPivotY += add;
                     }
@@ -2460,7 +2456,6 @@ namespace OPTech
                             mesh.HitCenterZ += add;
                             mesh.HitMinZ += add;
                             mesh.HitMaxZ += add;
-                            mesh.HitSpanZ += add;
                             mesh.HitTargetZ += add;
                             mesh.RotPivotZ += add;
                         }
@@ -2541,7 +2536,6 @@ namespace OPTech
                         mesh.HitCenterZ += add;
                         mesh.HitMinZ += add;
                         mesh.HitMaxZ += add;
-                        mesh.HitSpanZ += add;
                         mesh.HitTargetZ += add;
                         mesh.RotPivotZ += add;
                     }
@@ -2558,6 +2552,60 @@ namespace OPTech
             Global.CX.EngineGlowScreens(-1, -1);
             Global.CX.CreateCall();
             Global.ModelChanged = true;
+        }
+
+        private static void RotateXYZ(double radianX, double radianY, double radianZ, float x, float y, float z, out float newX, out float newY, out float newZ)
+        {
+            float currentX;
+            float currentY;
+            float currentZ;
+
+            currentX = z * (float)Math.Sin(radianX) + x * (float)Math.Cos(radianX);
+            currentY = y;
+            currentZ = z * (float)Math.Cos(radianX) - x * (float)Math.Sin(radianX);
+            x = currentX;
+            y = currentY;
+            z = currentZ;
+            currentX = x;
+            currentY = y * (float)Math.Cos(radianY) - z * (float)Math.Sin(radianY);
+            currentZ = y * (float)Math.Sin(radianY) + z * (float)Math.Cos(radianY);
+            x = currentX;
+            y = currentY;
+            z = currentZ;
+            currentX = y * (float)Math.Sin(radianZ) + x * (float)Math.Cos(radianZ);
+            currentY = y * (float)Math.Cos(radianZ) - x * (float)Math.Sin(radianZ);
+            currentZ = z;
+
+            newX = currentX;
+            newY = currentY;
+            newZ = currentZ;
+        }
+
+        private static void RotateMesh(MeshStruct mesh, double radianX, double radianY, double radianZ)
+        {
+            float x;
+            float y;
+            float z;
+
+            RotateXYZ(radianX, radianY, radianZ, mesh.RotPivotX, mesh.RotPivotY, mesh.RotPivotZ, out x, out y, out z);
+            mesh.RotPivotX = x;
+            mesh.RotPivotY = y;
+            mesh.RotPivotZ = z;
+
+            RotateXYZ(radianX, radianY, radianZ, mesh.RotAxisX, mesh.RotAxisY, mesh.RotAxisZ, out x, out y, out z);
+            mesh.RotAxisX = x;
+            mesh.RotAxisY = y;
+            mesh.RotAxisZ = z;
+
+            RotateXYZ(radianX, radianY, radianZ, mesh.RotAimX, mesh.RotAimY, mesh.RotAimZ, out x, out y, out z);
+            mesh.RotAimX = x;
+            mesh.RotAimY = y;
+            mesh.RotAimZ = z;
+
+            RotateXYZ(radianX, radianY, radianZ, mesh.RotDegreeX, mesh.RotDegreeY, mesh.RotDegreeZ, out x, out y, out z);
+            mesh.RotDegreeX = x;
+            mesh.RotDegreeY = y;
+            mesh.RotDegreeZ = z;
         }
 
         private void Xmeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -2611,6 +2659,8 @@ namespace OPTech
 
                     if (lod.Selected)
                     {
+                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                         float XCoord;
                         float YCoord;
                         float ZCoord;
@@ -2771,6 +2821,8 @@ namespace OPTech
 
                 if (lod.Selected)
                 {
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                     float XCoord;
                     float YCoord;
                     float ZCoord;
@@ -2943,6 +2995,8 @@ namespace OPTech
 
                     if (lod.Selected)
                     {
+                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                         float XCoord;
                         float YCoord;
                         float ZCoord;
@@ -3103,6 +3157,8 @@ namespace OPTech
 
                 if (lod.Selected)
                 {
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                     float XCoord;
                     float YCoord;
                     float ZCoord;
@@ -3275,6 +3331,8 @@ namespace OPTech
 
                     if (lod.Selected)
                     {
+                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                         float XCoord;
                         float YCoord;
                         float ZCoord;
@@ -3435,6 +3493,8 @@ namespace OPTech
 
                 if (lod.Selected)
                 {
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
                     float XCoord;
                     float YCoord;
                     float ZCoord;

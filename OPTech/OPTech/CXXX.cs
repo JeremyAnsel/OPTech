@@ -1211,7 +1211,7 @@ namespace OPTech
                                     var eachFace = eachLod.FaceArray[eachFaceIndex];
 
                                     var sb = new StringBuilder();
-                                    sb.Append(System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]));
+                                    sb.Append(System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList.Count == 0 ? "BLANK" : eachFace.TextureList[0]));
 
                                     bool fg = false;
 
@@ -1227,7 +1227,7 @@ namespace OPTech
                                         }
                                     }
 
-                                    string texNames = fg ? sb.ToString() : System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]);
+                                    string texNames = fg ? sb.ToString() : eachFace.TextureList.Count == 0 ? "BLANK" : System.IO.Path.GetFileNameWithoutExtension(eachFace.TextureList[0]);
                                     int texCount = fg ? eachFace.TextureList.Count : 1;
 
                                     Global.frmgeometry.facelist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} F:{1} T:{2}, {3}", eachMeshIndex + 1, eachFaceIndex + 1, texCount, texNames), eachFace.Selected);
@@ -1567,7 +1567,7 @@ namespace OPTech
                     {
                         var texture = Global.OPT.TextureArray[EachTexture];
 
-                        if (whichFace.TextureList[0] == texture.TextureName)
+                        if (whichFace.TextureList.Count != 0 && whichFace.TextureList[0] == texture.TextureName)
                         {
                             Global.frmtexture.transtexturelist.SelectedIndex = EachTexture;
                             Global.frmtexture.illumtexturelist.SelectedIndex = EachTexture;

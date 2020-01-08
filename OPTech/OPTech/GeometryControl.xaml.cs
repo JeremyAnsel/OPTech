@@ -7802,9 +7802,12 @@ namespace OPTech
 
                     if (face.Selected)
                     {
-                        string textureName = face.TextureList[0];
-                        face.TextureList.Clear();
-                        face.TextureList.Add(textureName);
+                        if (face.TextureList.Count != 0)
+                        {
+                            string textureName = face.TextureList[0];
+                            face.TextureList.Clear();
+                            face.TextureList.Add(textureName);
+                        }
                     }
                 }
             }

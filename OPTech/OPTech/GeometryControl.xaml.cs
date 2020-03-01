@@ -23,6 +23,8 @@ namespace OPTech
     {
         private string RememberVal;
 
+        private float[] clipboardVertexStructUV;
+
         public GeometryControl()
         {
             InitializeComponent();
@@ -1825,6 +1827,121 @@ namespace OPTech
             Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
             Global.CX.CreateCall();
             UndoStack.Push("texture coordinates");
+        }
+
+        private void texturecoordinatecopybut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            var mesh = Global.OPT.MeshArray[IndexMesh];
+
+            if (mesh.LODArray.Count <= whichLOD)
+            {
+                return;
+            }
+
+            var lod = mesh.LODArray[whichLOD];
+            var face = lod.FaceArray[IndexFace];
+
+            var uv = new float[8];
+            uv[0] = face.VertexArray[0].UCoord;
+            uv[1] = face.VertexArray[0].VCoord;
+            uv[2] = face.VertexArray[1].UCoord;
+            uv[3] = face.VertexArray[1].VCoord;
+            uv[4] = face.VertexArray[2].UCoord;
+            uv[5] = face.VertexArray[2].VCoord;
+            uv[6] = face.VertexArray[3].UCoord;
+            uv[7] = face.VertexArray[3].VCoord;
+
+            this.clipboardVertexStructUV = uv;
+        }
+
+        private void texturecoordinatepastebut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (this.clipboardVertexStructUV == null || this.clipboardVertexStructUV.Length != 8)
+            {
+                return;
+            }
+
+            var uv = this.clipboardVertexStructUV;
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
+                    {
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            face.VertexArray[0].UCoord = uv[0];
+                            face.VertexArray[0].VCoord = uv[1];
+                            face.VertexArray[1].UCoord = uv[2];
+                            face.VertexArray[1].VCoord = uv[3];
+                            face.VertexArray[2].UCoord = uv[4];
+                            face.VertexArray[2].VCoord = uv[5];
+                            face.VertexArray[3].UCoord = uv[6];
+                            face.VertexArray[3].VCoord = uv[7];
+
+                            Global.ModelChanged = true;
+                        }
+                    }
+                }
+            }
+
+            int IndexMesh = -1;
+            int IndexFace = -1;
+
+            string text = this.facelist.GetSelectedText();
+            StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
+
+            Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
+            Global.CX.CreateCall();
+            UndoStack.Push("texture coordinates paste");
         }
 
         private void faceduplicatebut_Click(object sender, RoutedEventArgs e)

@@ -331,13 +331,17 @@ namespace OPTech
             }
 
             int total = triCount + quadCount;
+            int meshCount = Global.OPT.MeshArray.Count;
+            int versionCount = Global.OPT.GetVersionCount();
 
             Xceed.Wpf.Toolkit.MessageBox.Show(
                 this,
-                "Vertex: " + vertexCount.ToString(CultureInfo.InvariantCulture)
+                "Meshes: " + meshCount.ToString(CultureInfo.InvariantCulture)
+                + "\nVertex: " + vertexCount.ToString(CultureInfo.InvariantCulture)
                 + "\nTris: " + triCount.ToString(CultureInfo.InvariantCulture)
                 + "\nQuads: " + quadCount.ToString(CultureInfo.InvariantCulture)
-                + "\nTotal: " + total.ToString(CultureInfo.InvariantCulture),
+                + "\nTotal Faces: " + total.ToString(CultureInfo.InvariantCulture)
+                + "\nFlight Groups: " + versionCount.ToString(CultureInfo.InvariantCulture),
                 "Face Count");
         }
 

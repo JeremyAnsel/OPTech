@@ -90,7 +90,9 @@ namespace OPTech
                 string meshRename = Microsoft.VisualBasic.Interaction.InputBox("Rename mesh to:", "Rename mesh", defaultName);
                 if (!string.IsNullOrEmpty(meshRename))
                 {
-                    this.meshlist.SetText(this.meshlist.SelectedIndex, meshRename);
+                    int index = this.meshlist.SelectedIndex;
+                    this.meshlist.SetText(index, meshRename);
+                    this.meshlist.SetSelected(index, true);
                     Global.ModelChanged = true;
                 }
             }

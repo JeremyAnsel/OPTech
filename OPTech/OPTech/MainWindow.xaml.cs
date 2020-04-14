@@ -353,7 +353,7 @@ namespace OPTech
             bool zeroedSoftVec = false;
             int clockWiseCount = 0;
 
-            if (Global.OPT.MeshArray.Count > 45)
+            if (Global.OPT.MeshArray.Count > 50)
             {
                 // too many meshes in OPT
                 text.AppendLine("* There are too many meshes in the model.");
@@ -476,14 +476,14 @@ namespace OPTech
                 {
                     text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is not a power of 2.");
                 }
-                // greater than 256 dimension
-                else if (width > 256 || height > 256)
-                {
-                    text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is greater than 256 pixels in size.");
-                }
+                //// greater than 256 dimension
+                //else if (width > 256 || height > 256)
+                //{
+                //    text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is greater than 256 pixels in size.");
+                //}
             }
 
-            if (Global.OPT.TextureArray.Count > 100)
+            if (Global.OPT.TextureArray.Count > 200)
             {
                 // too many textures in OPT
                 text.AppendLine("* There are too many textures in the model.");

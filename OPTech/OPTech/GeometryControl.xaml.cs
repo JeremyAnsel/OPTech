@@ -1202,9 +1202,9 @@ namespace OPTech
                         for (int vertexIndex = 0; vertexIndex < 4; vertexIndex++)
                         {
                             var vertex = face.VertexArray[vertexIndex];
-                            vertex.XCoord = (vertex.XCoord - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                            vertex.YCoord = (vertex.YCoord - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                            vertex.ZCoord = (vertex.ZCoord - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                            vertex.XCoord = (vertex.XCoord - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                            vertex.YCoord = (vertex.YCoord - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                            vertex.ZCoord = (vertex.ZCoord - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
                         }
                     }
 
@@ -1212,41 +1212,41 @@ namespace OPTech
                     {
                         foreach (var hardpoint in mesh.HPArray)
                         {
-                            hardpoint.HPCenterX = (hardpoint.HPCenterX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                            hardpoint.HPCenterY = (hardpoint.HPCenterY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                            hardpoint.HPCenterZ = (hardpoint.HPCenterZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                            hardpoint.HPCenterX = (hardpoint.HPCenterX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                            hardpoint.HPCenterY = (hardpoint.HPCenterY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                            hardpoint.HPCenterZ = (hardpoint.HPCenterZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
                         }
 
                         foreach (var engineGlow in mesh.EGArray)
                         {
-                            engineGlow.EGCenterX = (engineGlow.EGCenterX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                            engineGlow.EGCenterY = (engineGlow.EGCenterY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                            engineGlow.EGCenterZ = (engineGlow.EGCenterZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                            engineGlow.EGCenterX = (engineGlow.EGCenterX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                            engineGlow.EGCenterY = (engineGlow.EGCenterY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                            engineGlow.EGCenterZ = (engineGlow.EGCenterZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
 
-                            engineGlow.EGVectorX = (engineGlow.EGVectorX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                            engineGlow.EGVectorY = (engineGlow.EGVectorY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                            engineGlow.EGVectorZ = (engineGlow.EGVectorZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                            engineGlow.EGVectorX *= dialog.ScaleX;
+                            engineGlow.EGVectorY *= dialog.ScaleY;
+                            engineGlow.EGVectorZ *= dialog.ScaleZ;
                         }
 
-                        mesh.HitMinX = (mesh.HitMinX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                        mesh.HitMinY = (mesh.HitMinY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                        mesh.HitMinZ = (mesh.HitMinZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        mesh.HitMinX = (mesh.HitMinX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                        mesh.HitMinY = (mesh.HitMinY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                        mesh.HitMinZ = (mesh.HitMinZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
 
-                        mesh.HitMaxX = (mesh.HitMaxX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                        mesh.HitMaxY = (mesh.HitMaxY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                        mesh.HitMaxZ = (mesh.HitMaxZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        mesh.HitMaxX = (mesh.HitMaxX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                        mesh.HitMaxY = (mesh.HitMaxY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                        mesh.HitMaxZ = (mesh.HitMaxZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
 
                         mesh.HitSpanX = mesh.HitMaxX - mesh.HitMinX;
                         mesh.HitSpanY = mesh.HitMaxY - mesh.HitMinY;
                         mesh.HitSpanZ = mesh.HitMaxZ - mesh.HitMinZ;
 
-                        mesh.HitTargetX = (mesh.HitTargetX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                        mesh.HitTargetY = (mesh.HitTargetY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                        mesh.HitTargetZ = (mesh.HitTargetZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        mesh.HitTargetX = (mesh.HitTargetX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                        mesh.HitTargetY = (mesh.HitTargetY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                        mesh.HitTargetZ = (mesh.HitTargetZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
 
-                        mesh.RotPivotX = (mesh.RotPivotX - mesh.HitCenterX) * dialog.ScaleX + mesh.HitCenterX;
-                        mesh.RotPivotY = (mesh.RotPivotY - mesh.HitCenterY) * dialog.ScaleY + mesh.HitCenterY;
-                        mesh.RotPivotZ = (mesh.RotPivotZ - mesh.HitCenterZ) * dialog.ScaleZ + mesh.HitCenterZ;
+                        mesh.RotPivotX = (mesh.RotPivotX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
+                        mesh.RotPivotY = (mesh.RotPivotY - Global.OPT.CenterY) * dialog.ScaleY + Global.OPT.CenterY;
+                        mesh.RotPivotZ = (mesh.RotPivotZ - Global.OPT.CenterZ) * dialog.ScaleZ + Global.OPT.CenterZ;
                     }
                 }
             }
@@ -1256,18 +1256,25 @@ namespace OPTech
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
 
-            if (this.meshlist.SelectedIndex == -1)
-            {
-                Global.OrthoZoom = RememberZoom * dialog.ScaleFactor;
-            }
-            else
-            {
-                Global.OrthoZoom = RememberZoom;
-            }
+            //if (this.meshlist.SelectedIndex == -1)
+            //{
+            //    Global.OrthoZoom = RememberZoom * dialog.ScaleFactor;
+            //}
+            //else
+            //{
+            //    Global.OrthoZoom = RememberZoom;
+            //}
+
+            Global.OrthoZoom = RememberZoom * dialog.ScaleFactor;
+
+            Global.CX.InitCamera();
+            Global.NumberTrim();
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             //Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
             //Global.CX.VertexScreens(this.meshlist.SelectedIndex, whichLOD, -1, -1);
+            Global.CX.HardpointScreens(-1, -1);
+            Global.CX.EngineGlowScreens(-1, -1);
             Global.CX.CreateCall();
 
             UndoStack.Push("scale mesh");

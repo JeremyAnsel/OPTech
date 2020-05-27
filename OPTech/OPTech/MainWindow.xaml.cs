@@ -755,11 +755,10 @@ namespace OPTech
 
         private void modeldimmenu_Click(object sender, RoutedEventArgs e)
         {
-            const double factor = 20.51282;
             double value;
 
             string width;
-            value = Global.OPT.SpanX / factor / 2;
+            value = Global.OPT.SpanX * OptStruct.ScaleFactor;
             if (value < 1000)
             {
                 width = Global.Round(value, 2).ToString(CultureInfo.InvariantCulture) + " meters";
@@ -770,7 +769,7 @@ namespace OPTech
             }
 
             string length;
-            value = Global.OPT.SpanY / factor / 2;
+            value = Global.OPT.SpanY * OptStruct.ScaleFactor;
             if (value < 1000)
             {
                 length = Global.Round(value, 2).ToString(CultureInfo.InvariantCulture) + " meters";
@@ -781,7 +780,7 @@ namespace OPTech
             }
 
             string height;
-            value = Global.OPT.SpanZ / factor / 2;
+            value = Global.OPT.SpanZ * OptStruct.ScaleFactor;
             if (value < 1000)
             {
                 height = Global.Round(value, 2).ToString(CultureInfo.InvariantCulture) + " meters";

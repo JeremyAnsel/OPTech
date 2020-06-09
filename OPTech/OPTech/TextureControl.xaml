@@ -79,7 +79,7 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <ListBox x:Name="transtexturelist" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="10" Background="#8080FF" Foreground="Black" KeyUp="transtexturelist_KeyUp" MouseUp="transtexturelist_MouseUp" />
+                            <ListBox x:Name="transtexturelist" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="10" Background="White" Foreground="Black" KeyUp="transtexturelist_KeyUp" MouseUp="transtexturelist_MouseUp" />
                             <TextBox x:Name="transopacitytext" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="opacity" Background="#8080FF" Text="110" PreviewKeyDown="transopacitytext_PreviewKeyDown" LostFocus="transopacitytext_LostFocus" />
                             <ScrollBar x:Name="transopacitybar" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" ToolTip="opacity" Orientation="Horizontal" Minimum="0" Maximum="255" SmallChange="1" Value="110" ValueChanged="transopacitybar_ValueChanged" />
                             <Border x:Name="transopacitydisplay" Grid.Column="3" Grid.Row="2" Margin="10" ToolTip="opacity" BorderThickness="1" BorderBrush="Black" Background="#919191" />
@@ -178,7 +178,7 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <ListBox x:Name="illumtexturelist" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="10" Background="#8080FF" Foreground="Black" KeyUp="illumtexturelist_KeyUp" MouseUp="illumtexturelist_MouseUp" />
+                            <ListBox x:Name="illumtexturelist" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="10" Background="White" Foreground="Black" KeyUp="illumtexturelist_KeyUp" MouseUp="illumtexturelist_MouseUp" />
                             <TextBox x:Name="illumbrightnesstext" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="brightness" Background="#8080FF" Text="8" PreviewKeyDown="illumbrightnesstext_PreviewKeyDown" LostFocus="illumbrightnesstext_LostFocus" />
                             <ScrollBar x:Name="illumbrightnessbar" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" ToolTip="brightness" Orientation="Horizontal" Minimum="1" Maximum="16" SmallChange="1" Value="8" ValueChanged="illumbrightnessbar_ValueChanged" />
                             <Border x:Name="illumbrightnessdisplay" Grid.Column="3" Grid.Row="2" Margin="10" ToolTip="brightness" BorderThickness="1" BorderBrush="Black" Background="#777777" />

@@ -206,7 +206,9 @@ namespace OPTech
         {
             var textBlock = new ListBoxItem
             {
-                Content = newItem
+                Content = newItem,
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White
             };
 
             list.Items.Add(textBlock);
@@ -226,7 +228,9 @@ namespace OPTech
 
             var textBlock = new ListBoxItem
             {
-                Content = newItem
+                Content = newItem,
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White
             };
 
             list.Items[index] = textBlock;
@@ -240,7 +244,9 @@ namespace OPTech
                 {
                     Text = newItem
                 },
-                IsEnabled = false
+                IsEnabled = false,
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White
             };
 
             list.Items.Add(checkBox);
@@ -259,7 +265,9 @@ namespace OPTech
                 {
                     Text = newItem
                 },
-                IsEnabled = false
+                IsEnabled = false,
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White
             };
 
             list.Items[index] = checkBox;

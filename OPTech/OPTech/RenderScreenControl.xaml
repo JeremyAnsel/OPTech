@@ -45,6 +45,17 @@
                                 <Image Height="40" Width="40" Source="Images/view_back.ico" />
                             </Button>
                         </ToolBar>
+                        <ToolBar>
+                            <xctk:ColorPicker x:Name="backgroundColorPicker"
+                                              Height="40"
+                                              Width="60"
+                                              ToolTip="Background Color"
+                                              UsingAlphaChannel="False"
+                                              ShowStandardColors="False"
+                                              AvailableColorsSortingMode="HueSaturationBrightness"
+                                              SelectedColor="Black"
+                                              SelectedColorChanged="backgroundColorPicker_SelectedColorChanged"/>
+                        </ToolBar>
                     </ToolBarTray>
                 </DockPanel>
             </GroupBox>

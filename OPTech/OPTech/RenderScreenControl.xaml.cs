@@ -100,6 +100,7 @@ namespace OPTech
                 Global.CX.RotAnim();
 
                 gl.Enable(OpenGL.GL_DEPTH_TEST);
+                gl.ClearColor(Global.RenderScreenBackgroundColor.ScR, Global.RenderScreenBackgroundColor.ScG, Global.RenderScreenBackgroundColor.ScB, 0);
                 gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
                 Global.CX.InitCamera();
@@ -269,6 +270,14 @@ namespace OPTech
 
                 Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
                 Global.CX.CreateCall();
+            }
+        }
+
+        private void backgroundColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            if (e.NewValue != null)
+            {
+                Global.RenderScreenBackgroundColor = e.NewValue.Value;
             }
         }
     }

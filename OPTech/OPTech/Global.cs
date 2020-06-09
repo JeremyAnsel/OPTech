@@ -87,6 +87,8 @@ namespace OPTech
         public static OpenGL OpenGL;
         public static Camera Camera = new Camera();
 
+        public static System.Windows.Media.Color RenderScreenBackgroundColor = System.Windows.Media.Colors.Black;
+
         public static double Round(double value, int digits)
         {
             return Math.Round(value, digits);

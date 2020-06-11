@@ -86,10 +86,10 @@
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -97,14 +97,14 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="transcolortolerancetext" Grid.Column="0" Grid.Row="0" Margin="10" ToolTip="color tolerance" Background="#8080FF" Text="5" PreviewKeyDown="transcolortolerancetext_PreviewKeyDown" LostFocus="transcolortolerancetext_LostFocus" />
+                            <TextBox x:Name="transcolortolerancetext" Grid.Column="0" Grid.Row="0" Margin="5" ToolTip="color tolerance" Background="#8080FF" Text="5" PreviewKeyDown="transcolortolerancetext_PreviewKeyDown" LostFocus="transcolortolerancetext_LostFocus" />
                             <ScrollBar x:Name="transcolortolerancebar" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="10" ToolTip="color tolerance" Orientation="Horizontal" Minimum="0" Maximum="255" SmallChange="1" Value="5" ValueChanged="transcolortolerancebar_ValueChanged" />
-                            <Button x:Name="transprioritymoverUp" Grid.Column="0" Grid.Row="1" Content="▲" Margin="20 5" Click="transprioritymoverUp_Click" />
-                            <Button x:Name="transprioritymoverDown" Grid.Column="0" Grid.Row="2" Content="▼" Margin="20 5" Click="transprioritymoverDown_Click" />
+                            <Button x:Name="transprioritymoverUp" Grid.Column="0" Grid.Row="1" Content="▲" Margin="10 5" ToolTip="Move color up" Click="transprioritymoverUp_Click" />
+                            <Button x:Name="transprioritymoverDown" Grid.Column="0" Grid.Row="2" Content="▼" Margin="10 5" ToolTip="Move color down" Click="transprioritymoverDown_Click" />
                             <ListBox x:Name="transredtintlist" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Red" KeyUp="transredtintlist_KeyUp" MouseUp="transredtintlist_MouseUp" />
                             <ListBox x:Name="transgreentintlist" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Green" KeyUp="transgreentintlist_KeyUp" MouseUp="transgreentintlist_MouseUp" />
                             <ListBox x:Name="transbluetintlist" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Blue" KeyUp="transbluetintlist_KeyUp" MouseUp="transbluetintlist_MouseUp" />
-                            <Button x:Name="transremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="10" Content="Remove selected" Click="transremovecolor_Click" />
+                            <Button x:Name="transremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Margin="20 10" Content="Remove selected" Click="transremovecolor_Click" />
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -185,10 +185,10 @@
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="4" Grid.RowSpan="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -196,14 +196,14 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="illumcolortolerancetext" Grid.Column="0" Grid.Row="0" Margin="10" ToolTip="color tolerance" Background="#8080FF" Text="5" PreviewKeyDown="illumcolortolerancetext_PreviewKeyDown" LostFocus="illumcolortolerancetext_LostFocus" />
+                            <TextBox x:Name="illumcolortolerancetext" Grid.Column="0" Grid.Row="0" Margin="5" ToolTip="color tolerance" Background="#8080FF" Text="5" PreviewKeyDown="illumcolortolerancetext_PreviewKeyDown" LostFocus="illumcolortolerancetext_LostFocus" />
                             <ScrollBar x:Name="illumcolortolerancebar" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="10" ToolTip="color tolerance" Orientation="Horizontal" Minimum="0" Maximum="255" SmallChange="1" Value="5" ValueChanged="illumcolortolerancebar_ValueChanged" />
-                            <Button x:Name="illumprioritymoverUp" Grid.Column="0" Grid.Row="1" Content="▲" Margin="20 5" Click="illumprioritymoverUp_Click" />
-                            <Button x:Name="illumprioritymoverDown" Grid.Column="0" Grid.Row="2" Content="▼" Margin="20 5" Click="illumprioritymoverDown_Click" />
+                            <Button x:Name="illumprioritymoverUp" Grid.Column="0" Grid.Row="1" Content="▲" Margin="10 5" ToolTip="Move color up" Click="illumprioritymoverUp_Click" />
+                            <Button x:Name="illumprioritymoverDown" Grid.Column="0" Grid.Row="2" Content="▼" Margin="10 5" ToolTip="Move color down" Click="illumprioritymoverDown_Click" />
                             <ListBox x:Name="illumredtintlist" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Red" KeyUp="illumredtintlist_KeyUp" MouseUp="illumredtintlist_MouseUp" />
                             <ListBox x:Name="illumgreentintlist" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Green" KeyUp="illumgreentintlist_KeyUp" MouseUp="illumgreentintlist_MouseUp" />
                             <ListBox x:Name="illumbluetintlist" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Blue" KeyUp="illumbluetintlist_KeyUp" MouseUp="illumbluetintlist_MouseUp" />
-                            <Button x:Name="illumremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="10" Content="Remove selected" Click="illumremovecolor_Click" />
+                            <Button x:Name="illumremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Margin="20 10" Content="Remove selected" Click="illumremovecolor_Click" />
                         </Grid>
                     </Grid>
                 </GroupBox>

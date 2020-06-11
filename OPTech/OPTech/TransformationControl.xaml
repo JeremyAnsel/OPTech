@@ -14,10 +14,52 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <ListBox x:Name="meshlist"
+                     Grid.Column="0"
+                     Grid.Row="0"
+                         Grid.RowSpan="2"
+                     ToolTip="Mesh List"
+                     SelectionMode="Extended"
+                     KeyUp="meshlist_KeyUp"
+                     MouseUp="meshlist_MouseUp" />
+                <GroupBox x:Name="rotationanimframe" Grid.Column="1" Grid.Row="0">
+                    <GroupBox.Header>
+                        <Run Text="Animate" FontWeight="Bold" />
+                    </GroupBox.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <CheckBox x:Name="rotanimaxis" Grid.Column="0" Grid.Row="0" Height="26" Width="182" Content="Rotation" Click="rotanimaxis_Click" />
+                        <CheckBox x:Name="rotanimaim" Grid.Column="0" Grid.Row="1" Height="26" Width="182" Content="Translation" Click="rotanimaim_Click" />
+                        <CheckBox x:Name="rotanimdegree" Grid.Column="0" Grid.Row="2" Height="26" Width="182" Content="Scale" Click="rotanimdegree_Click" />
+                    </Grid>
+                </GroupBox>
+                <Button x:Name="resettransformation"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="Reset Transformation"
+                        Margin="20 10"
+                        Click="resettransformation_Click" />
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
@@ -107,24 +149,6 @@
                     <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="degreetextPaste_Click" />
                 </StackPanel>
             </Grid>
-            <GroupBox x:Name="rotationanimframe" Grid.Column="0" Grid.Row="1" Height="158" Width="206">
-                <GroupBox.Header>
-                    <Run Text="Animate" FontWeight="Bold" />
-                </GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <CheckBox x:Name="rotanimaxis" Grid.Column="0" Grid.Row="0" Height="26" Width="182" Content="Rotation" Click="rotanimaxis_Click" />
-                    <CheckBox x:Name="rotanimaim" Grid.Column="0" Grid.Row="1" Height="26" Width="182" Content="Translation" Click="rotanimaim_Click" />
-                    <CheckBox x:Name="rotanimdegree" Grid.Column="0" Grid.Row="2" Height="26" Width="182" Content="Scale" Click="rotanimdegree_Click" />
-                </Grid>
-            </GroupBox>
         </Grid>
     </GroupBox>
 </UserControl>

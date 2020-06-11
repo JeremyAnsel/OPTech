@@ -55,6 +55,7 @@
                 <MenuItem x:Name="tri2quadmenu" Header="Tri2Quad" Click="tri2quadmenu_Click" />
                 <MenuItem x:Name="coincidentvertexmenu" Header="Coincident Vertices" Click="coincidentvertexmenu_Click" />
                 <MenuItem x:Name="resethitzonesmenu" Header="Reset Hitzones" Click="resethitzonesmenu_Click" />
+                <MenuItem x:Name="namemeshesmenu" Header="Mesh Number Order" Click="namemeshesmenu_Click" />
             </MenuItem>
             <MenuItem x:Name="optionmenu" Header="Options">
                 <MenuItem x:Name="colormenu" Header="Colors">

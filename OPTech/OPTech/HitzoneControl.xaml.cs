@@ -52,12 +52,14 @@ namespace OPTech
         private void meshlist_KeyUp(object sender, KeyEventArgs e)
         {
             this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            this.meshlist.CopyItems(Global.frmtransformation.meshlist);
             Global.frmgeometry.meshlist_KeyUp(null, null);
         }
 
         private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
         {
             this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            this.meshlist.CopyItems(Global.frmtransformation.meshlist);
             Global.frmgeometry.meshlist_MouseUp(null, null);
         }
 

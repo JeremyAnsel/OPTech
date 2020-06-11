@@ -239,5 +239,28 @@ namespace OPTech
                 lod.Mirror();
             }
         }
+
+        public void ResetTransformation(int lodIndex)
+        {
+            if (lodIndex < 0 || lodIndex >= this.LODArray.Count)
+            {
+                return;
+            }
+
+            var lod = this.LODArray[lodIndex];
+
+            this.RotPivotX = lod.CenterX;
+            this.RotPivotY = lod.CenterY;
+            this.RotPivotZ = lod.CenterZ;
+            this.RotAxisX = 0;
+            this.RotAxisY = 0;
+            this.RotAxisZ = 32767;
+            this.RotAimX = 0;
+            this.RotAimY = 32767;
+            this.RotAimZ = 0;
+            this.RotDegreeX = 32767;
+            this.RotDegreeY = 0;
+            this.RotDegreeZ = 0;
+        }
     }
 }

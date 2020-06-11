@@ -139,6 +139,7 @@ namespace OPTech
             }
 
             Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
 
             foreach (var item in this.transtexturelist)
             {

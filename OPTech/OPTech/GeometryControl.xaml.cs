@@ -302,6 +302,7 @@ namespace OPTech
             if (sender != null)
             {
                 this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+                this.meshlist.CopyItems(Global.frmtransformation.meshlist);
             }
 
             this.meshlist_SelectionChanged(null, null);
@@ -387,6 +388,7 @@ namespace OPTech
             if (sender != null)
             {
                 this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+                this.meshlist.CopyItems(Global.frmtransformation.meshlist);
             }
 
             this.meshlist_SelectionChanged(null, null);
@@ -783,7 +785,11 @@ namespace OPTech
                 this.meshlist.AddToSelection(index - 1);
             }
 
+            this.meshlist.UpdateTextLineNumbers();
             Global.ModelChanged = true;
+
+            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            this.meshlist.CopyItems(Global.frmtransformation.meshlist);
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
@@ -843,7 +849,11 @@ namespace OPTech
                 this.meshlist.AddToSelection(index + 1);
             }
 
+            this.meshlist.UpdateTextLineNumbers();
             Global.ModelChanged = true;
+
+            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            this.meshlist.CopyItems(Global.frmtransformation.meshlist);
 
             Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
             Global.CX.FaceScreens(this.meshlist.SelectedIndex, whichLOD, -1);
@@ -888,6 +898,7 @@ namespace OPTech
                 string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
                 this.meshlist.AddText(meshName);
                 Global.frmhitzone.meshlist.AddText(meshName);
+                Global.frmtransformation.meshlist.AddText(meshName);
             }
 
             Global.ModelChanged = true;
@@ -939,6 +950,7 @@ namespace OPTech
                 string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
                 this.meshlist.AddText(meshName);
                 Global.frmhitzone.meshlist.AddText(meshName);
+                Global.frmtransformation.meshlist.AddText(meshName);
             }
 
             Global.ModelChanged = true;
@@ -1486,6 +1498,9 @@ namespace OPTech
                 Global.frmtexture.transtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
                 Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
             }
+
+            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            this.meshlist.CopyItems(Global.frmtransformation.meshlist);
 
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();

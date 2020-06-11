@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
@@ -156,7 +157,7 @@ namespace OPTech
             var textBlock = item as ListBoxItem;
             if (textBlock != null)
             {
-                return (string)textBlock.Content;
+                return RemoveTextLineNumber((string)textBlock.Content);
             }
 
             var checkBox = item as CheckBox;
@@ -206,7 +207,7 @@ namespace OPTech
         {
             var textBlock = new ListBoxItem
             {
-                Content = newItem,
+                Content = AddTextLineNumber(list.Items.Count, newItem),
                 Foreground = System.Windows.Media.Brushes.Black,
                 Background = System.Windows.Media.Brushes.White
             };
@@ -228,12 +229,21 @@ namespace OPTech
 
             var textBlock = new ListBoxItem
             {
-                Content = newItem,
+                Content = AddTextLineNumber(index, newItem),
                 Foreground = System.Windows.Media.Brushes.Black,
                 Background = System.Windows.Media.Brushes.White
             };
 
             list.Items[index] = textBlock;
+        }
+
+        public static void UpdateTextLineNumbers(this ListBox list)
+        {
+            for (int index = 0; index < list.Items.Count; index++)
+            {
+                var item = (ListBoxItem)list.Items[index];
+                item.Content = AddTextLineNumber(index, RemoveTextLineNumber((string)item.Content));
+            }
         }
 
         public static void AddCheck(this ListBox list, string newItem)
@@ -288,6 +298,16 @@ namespace OPTech
             }
 
             checkBox.IsChecked = selected;
+        }
+
+        private static string AddTextLineNumber(int index, string item)
+        {
+            return index.ToString(CultureInfo.InvariantCulture) + " - " + item;
+        }
+
+        private static string RemoveTextLineNumber(string text)
+        {
+            return text.Substring(text.IndexOf('-') + 2);
         }
     }
 }

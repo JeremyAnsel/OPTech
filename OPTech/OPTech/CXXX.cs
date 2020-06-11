@@ -827,7 +827,7 @@ namespace OPTech
             }
             else if (Global.ModeEditor == "hardpoint")
             {
-                gl.PointSize(10.0f);
+                gl.PointSize(8.0f);
 
                 for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
                 {
@@ -851,6 +851,8 @@ namespace OPTech
                     }
                 }
 
+                gl.PointSize(16.0f);
+
                 for (int hpIndex = 0; hpIndex < Global.frmhardpoint.hardpointlist.Items.Count; hpIndex++)
                 {
                     if (Global.frmhardpoint.hardpointlist.IsSelected(hpIndex))
@@ -864,49 +866,54 @@ namespace OPTech
                         var mesh = Global.OPT.MeshArray[thisMesh];
                         var hardpoint = mesh.HPArray[thisHardpoint];
 
-                        float span = 12.0f;
+                        //float span = 12.0f;
 
-                        gl.Color(1.0f, 1.0f, 1.0f);
-                        gl.LineWidth(1.0f);
-                        gl.Translate(hardpoint.HPCenterX, hardpoint.HPCenterY, hardpoint.HPCenterZ);
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(-span, -span, span);
-                        gl.Vertex(span, -span, span);
-                        gl.Vertex(span, span, span);
-                        gl.Vertex(-span, span, span);
+                        //gl.Color(1.0f, 1.0f, 1.0f);
+                        //gl.LineWidth(1.0f);
+                        //gl.Translate(hardpoint.HPCenterX, hardpoint.HPCenterY, hardpoint.HPCenterZ);
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(-span, -span, span);
+                        //gl.Vertex(span, -span, span);
+                        //gl.Vertex(span, span, span);
+                        //gl.Vertex(-span, span, span);
+                        //gl.End();
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(-span, span, -span);
+                        //gl.Vertex(span, span, -span);
+                        //gl.Vertex(span, -span, -span);
+                        //gl.Vertex(-span, -span, -span);
+                        //gl.End();
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(-span, span, -span);
+                        //gl.Vertex(-span, -span, -span);
+                        //gl.Vertex(-span, -span, span);
+                        //gl.Vertex(-span, span, span);
+                        //gl.End();
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(span, span, span);
+                        //gl.Vertex(span, -span, span);
+                        //gl.Vertex(span, -span, -span);
+                        //gl.Vertex(span, span, -span);
+                        //gl.End();
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(-span, -span, -span);
+                        //gl.Vertex(span, -span, -span);
+                        //gl.Vertex(span, -span, span);
+                        //gl.Vertex(-span, -span, span);
+                        //gl.End();
+                        //gl.Begin(BeginMode.LineLoop);
+                        //gl.Vertex(-span, span, span);
+                        //gl.Vertex(span, span, span);
+                        //gl.Vertex(span, span, -span);
+                        //gl.Vertex(-span, span, -span);
+                        //gl.End();
+                        //gl.Translate(-hardpoint.HPCenterX, -hardpoint.HPCenterY, -hardpoint.HPCenterZ);
+                        //gl.LineWidth(1.0f);
+
+                        gl.Color(1.0f, 0.5f, 0.0f);
+                        gl.Begin(BeginMode.Points);
+                        gl.Vertex(hardpoint.HPCenterX, hardpoint.HPCenterY, hardpoint.HPCenterZ);
                         gl.End();
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(-span, span, -span);
-                        gl.Vertex(span, span, -span);
-                        gl.Vertex(span, -span, -span);
-                        gl.Vertex(-span, -span, -span);
-                        gl.End();
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(-span, span, -span);
-                        gl.Vertex(-span, -span, -span);
-                        gl.Vertex(-span, -span, span);
-                        gl.Vertex(-span, span, span);
-                        gl.End();
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(span, span, span);
-                        gl.Vertex(span, -span, span);
-                        gl.Vertex(span, -span, -span);
-                        gl.Vertex(span, span, -span);
-                        gl.End();
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(-span, -span, -span);
-                        gl.Vertex(span, -span, -span);
-                        gl.Vertex(span, -span, span);
-                        gl.Vertex(-span, -span, span);
-                        gl.End();
-                        gl.Begin(BeginMode.LineLoop);
-                        gl.Vertex(-span, span, span);
-                        gl.Vertex(span, span, span);
-                        gl.Vertex(span, span, -span);
-                        gl.Vertex(-span, span, -span);
-                        gl.End();
-                        gl.Translate(-hardpoint.HPCenterX, -hardpoint.HPCenterY, -hardpoint.HPCenterZ);
-                        gl.LineWidth(1.0f);
                     }
                 }
 
@@ -1127,7 +1134,21 @@ namespace OPTech
                     Global.frmhitzone.Ytargettext.IsEnabled = true;
                     Global.frmhitzone.Ztargettext.IsEnabled = true;
 
-                    Global.frmtransformation.IsEnabled = true;
+                    //Global.frmtransformation.IsEnabled = true;
+                    Global.frmtransformation.rotationanimframe.IsEnabled = true;
+                    Global.frmtransformation.resettransformation.IsEnabled = true;
+                    Global.frmtransformation.Xpivottext.IsEnabled = true;
+                    Global.frmtransformation.Ypivottext.IsEnabled = true;
+                    Global.frmtransformation.Zpivottext.IsEnabled = true;
+                    Global.frmtransformation.Xaxistext.IsEnabled = true;
+                    Global.frmtransformation.Yaxistext.IsEnabled = true;
+                    Global.frmtransformation.Zaxistext.IsEnabled = true;
+                    Global.frmtransformation.Xaimtext.IsEnabled = true;
+                    Global.frmtransformation.Yaimtext.IsEnabled = true;
+                    Global.frmtransformation.Zaimtext.IsEnabled = true;
+                    Global.frmtransformation.Xdegreetext.IsEnabled = true;
+                    Global.frmtransformation.Ydegreetext.IsEnabled = true;
+                    Global.frmtransformation.Zdegreetext.IsEnabled = true;
 
                     Global.frmgeometry.Xmeshtext.Text = lod.CenterX.ToString(CultureInfo.InvariantCulture);
                     Global.frmgeometry.Ymeshtext.Text = lod.CenterY.ToString(CultureInfo.InvariantCulture);
@@ -1185,6 +1206,7 @@ namespace OPTech
 
                     Global.frmgeometry.meshlist.AddToSelection(meshIndex);
                     Global.frmhitzone.meshlist.AddToSelection(meshIndex);
+                    Global.frmtransformation.meshlist.AddToSelection(meshIndex);
 
                     Global.frmgeometry.facelist.Items.Clear();
                     Global.frmgeometry.Xvertexlist.Items.Clear();
@@ -1349,7 +1371,21 @@ namespace OPTech
                 Global.frmhitzone.Ytargettext.IsEnabled = false;
                 Global.frmhitzone.Ztargettext.IsEnabled = false;
 
-                Global.frmtransformation.IsEnabled = false;
+                //Global.frmtransformation.IsEnabled = false;
+                Global.frmtransformation.rotationanimframe.IsEnabled = false;
+                Global.frmtransformation.resettransformation.IsEnabled = false;
+                Global.frmtransformation.Xpivottext.IsEnabled = false;
+                Global.frmtransformation.Ypivottext.IsEnabled = false;
+                Global.frmtransformation.Zpivottext.IsEnabled = false;
+                Global.frmtransformation.Xaxistext.IsEnabled = false;
+                Global.frmtransformation.Yaxistext.IsEnabled = false;
+                Global.frmtransformation.Zaxistext.IsEnabled = false;
+                Global.frmtransformation.Xaimtext.IsEnabled = false;
+                Global.frmtransformation.Yaimtext.IsEnabled = false;
+                Global.frmtransformation.Zaimtext.IsEnabled = false;
+                Global.frmtransformation.Xdegreetext.IsEnabled = false;
+                Global.frmtransformation.Ydegreetext.IsEnabled = false;
+                Global.frmtransformation.Zdegreetext.IsEnabled = false;
 
                 Global.frmgeometry.Xmeshtext.Text = string.Empty;
                 Global.frmgeometry.Ymeshtext.Text = string.Empty;
@@ -1397,6 +1433,7 @@ namespace OPTech
 
                 Global.frmgeometry.meshlist.SelectedIndex = meshIndex;
                 Global.frmhitzone.meshlist.SelectedIndex = meshIndex;
+                Global.frmtransformation.meshlist.SelectedIndex = meshIndex;
                 Global.frmgeometry.facelist.Items.Clear();
                 Global.frmgeometry.Xvertexlist.Items.Clear();
                 Global.frmgeometry.Yvertexlist.Items.Clear();
@@ -1590,6 +1627,7 @@ namespace OPTech
 
                 //Global.frmgeometry.meshlist.SelectedIndex = meshIndex;
                 //Global.frmhitzone.meshlist.SelectedIndex = meshIndex;
+                //Global.frmtransformation.meshlist.SelectedIndex = meshIndex;
                 //Global.frmgeometry.facelist.SelectedIndex = faceIndex;
                 Global.frmgeometry.Xvertexlist.Items.Clear();
                 Global.frmgeometry.Yvertexlist.Items.Clear();
@@ -2762,6 +2800,7 @@ namespace OPTech
                             {
                                 Global.frmgeometry.meshlist.SetSelected(EachMesh, false);
                                 Global.frmhitzone.meshlist.SetSelected(EachMesh, false);
+                                Global.frmtransformation.meshlist.SetSelected(EachMesh, false);
                                 lod.Selected = false;
                             }
 
@@ -2789,6 +2828,7 @@ namespace OPTech
                     {
                         Global.frmgeometry.meshlist.SelectedIndex = -1;
                         Global.frmhitzone.meshlist.SelectedIndex = -1;
+                        Global.frmtransformation.meshlist.SelectedIndex = -1;
                         Global.frmgeometry.facelist.SelectedIndex = -1;
                         Global.frmgeometry.Xvertexlist.SelectedIndex = -1;
                         Global.frmgeometry.Yvertexlist.SelectedIndex = -1;
@@ -2857,6 +2897,7 @@ namespace OPTech
                                 lod.Selected = false;
                                 Global.frmgeometry.meshlist.SetSelected(EachMesh, false);
                                 Global.frmhitzone.meshlist.SetSelected(EachMesh, false);
+                                Global.frmtransformation.meshlist.SetSelected(EachMesh, false);
 
                                 for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                                 {
@@ -2892,6 +2933,7 @@ namespace OPTech
                                 {
                                     Global.frmgeometry.meshlist.AddToSelection(EachMesh);
                                     Global.frmhitzone.meshlist.AddToSelection(EachMesh);
+                                    Global.frmtransformation.meshlist.AddToSelection(EachMesh);
                                     lod.Selected = true;
                                 }
                             }
@@ -2954,6 +2996,7 @@ namespace OPTech
                                         {
                                             Global.frmgeometry.meshlist.AddToSelection(EachMesh);
                                             Global.frmhitzone.meshlist.AddToSelection(EachMesh);
+                                            Global.frmtransformation.meshlist.AddToSelection(EachMesh);
                                             face.Selected = true;
                                         }
 
@@ -3061,6 +3104,7 @@ namespace OPTech
                                             {
                                                 Global.frmgeometry.meshlist.AddToSelection(EachMesh);
                                                 Global.frmhitzone.meshlist.AddToSelection(EachMesh);
+                                                Global.frmtransformation.meshlist.AddToSelection(EachMesh);
 
                                                 for (int EachFaceList = 0; EachFaceList < Global.frmgeometry.facelist.Items.Count; EachFaceList++)
                                                 {

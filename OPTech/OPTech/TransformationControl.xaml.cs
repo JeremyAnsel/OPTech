@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,6 +28,11 @@ namespace OPTech
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.OriginalSource is Selector || e.OriginalSource is ListBoxItem)
+            {
+                return;
+            }
+
             switch (e.Key)
             {
                 case Key.Up:
@@ -41,6 +47,20 @@ namespace OPTech
                     e.Handled = true;
                     break;
             }
+        }
+
+        private void meshlist_KeyUp(object sender, KeyEventArgs e)
+        {
+            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist_KeyUp(null, null);
+        }
+
+        private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist_MouseUp(null, null);
         }
 
         private void rotanimaxis_Click(object sender, RoutedEventArgs e)
@@ -856,6 +876,39 @@ namespace OPTech
             this.Ydegreetext_LostFocus(null, null);
             this.Zdegreetext.Text = values[2];
             this.Zdegreetext_LostFocus(null, null);
+        }
+
+        private void resettransformation_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            for (int meshIndex = 0; meshIndex < this.meshlist.Items.Count; meshIndex++)
+            {
+                if (this.meshlist.IsSelected(meshIndex))
+                {
+                    var mesh = Global.OPT.MeshArray[meshIndex];
+                    mesh.ResetTransformation(0);
+                }
+            }
+
+            Global.ModelChanged = true;
+            Global.NumberTrim();
+            Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
+            Global.CX.CreateCall();
+            UndoStack.Push("reset transformation");
         }
     }
 }

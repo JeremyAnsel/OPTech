@@ -674,6 +674,7 @@ namespace OPTech
 
                     Global.frmgeometry.meshlist.SetSelected(meshIndex, false);
                     Global.frmhitzone.meshlist.SetSelected(meshIndex, false);
+                    Global.frmtransformation.meshlist.SetSelected(meshIndex, false);
                     lod.Selected = false;
 
                     for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
@@ -1555,6 +1556,22 @@ namespace OPTech
             Global.CX.CreateCall();
             Global.ModelChanged = true;
             UndoStack.Push("reset hitzones");
+        }
+
+        private void namemeshesmenu_Click(object sender, RoutedEventArgs e)
+        {
+            for (int meshIndex = 0; meshIndex < Global.frmgeometry.meshlist.Items.Count; meshIndex++)
+            {
+                bool selected = Global.frmgeometry.meshlist.IsSelected(meshIndex);
+                Global.frmgeometry.meshlist.SetText(meshIndex, string.Format(CultureInfo.InvariantCulture, "MESH {0}", meshIndex + 1));
+                Global.frmgeometry.meshlist.SetSelected(meshIndex, selected);
+            }
+
+            Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
+
+            Global.ModelChanged = true;
+            UndoStack.Push("name meshes");
         }
 
         private void facenormalmenu_Click(object sender, RoutedEventArgs e)
@@ -2692,6 +2709,7 @@ namespace OPTech
             }
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
+            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
 
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
@@ -3313,6 +3331,7 @@ namespace OPTech
             }
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
+            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
 
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
@@ -3605,6 +3624,7 @@ namespace OPTech
             }
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
+            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
 
             OptRead.CalcDomain();
             this.FaceNormalCalculator(MeshKeeper);
@@ -4069,6 +4089,7 @@ namespace OPTech
             }
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
+            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
 
             OptRead.CalcDomain();
             Global.NumberTrim();
@@ -7819,24 +7840,10 @@ namespace OPTech
             for (int meshIndex = startMesh; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
             {
                 var mesh = Global.OPT.MeshArray[meshIndex];
-                var lod = mesh.LODArray[0];
-
-                mesh.RotPivotX = lod.CenterX;
-                mesh.RotPivotY = lod.CenterY;
-                mesh.RotPivotZ = lod.CenterZ;
-                mesh.RotAxisX = 0;
-                mesh.RotAxisY = 0;
-                mesh.RotAxisZ = 32767;
-                mesh.RotAimX = 0;
-                mesh.RotAimY = 32767;
-                mesh.RotAimZ = 0;
-                mesh.RotDegreeX = 32767;
-                mesh.RotDegreeY = 0;
-                mesh.RotDegreeZ = 0;
-
-                Global.ModelChanged = true;
+                mesh.ResetTransformation(0);
             }
 
+            Global.ModelChanged = true;
             Global.NumberTrim();
             Global.CX.MeshScreens(this.frmgeometry.meshlist.SelectedIndex, whichLOD);
             Global.CX.CreateCall();

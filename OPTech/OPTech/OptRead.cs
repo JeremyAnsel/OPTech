@@ -1208,6 +1208,7 @@ namespace OPTech
             }
 
             Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
         }
 
         public static void WriteTexVertex(System.IO.BinaryReader file)

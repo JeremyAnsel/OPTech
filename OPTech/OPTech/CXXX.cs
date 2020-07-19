@@ -1907,6 +1907,7 @@ namespace OPTech
                 Global.frmhardpoint.Yhptext.IsEnabled = true;
                 Global.frmhardpoint.Zhptext.IsEnabled = true;
                 Global.frmhardpoint.hpdeletebut.IsEnabled = true;
+                Global.frmhardpoint.hpcopybut.IsEnabled = true;
                 Global.frmhardpoint.hpsetfacebut.IsEnabled = true;
                 Global.frmhardpoint.hpsetvertexbut.IsEnabled = true;
                 Global.frmhardpoint.hardpointtypetext.SelectedIndex = hardpoint.HPType;
@@ -1939,6 +1940,7 @@ namespace OPTech
                 Global.frmhardpoint.Yhptext.IsEnabled = false;
                 Global.frmhardpoint.Zhptext.IsEnabled = false;
                 Global.frmhardpoint.hpdeletebut.IsEnabled = false;
+                Global.frmhardpoint.hpcopybut.IsEnabled = false;
                 Global.frmhardpoint.hpsetfacebut.IsEnabled = false;
                 Global.frmhardpoint.hpsetvertexbut.IsEnabled = false;
                 Global.frmhardpoint.hardpointtypetext.SelectedIndex = -1;
@@ -1987,6 +1989,7 @@ namespace OPTech
                 Global.frmengineglow.Bdensity3egtext.IsEnabled = true;
                 Global.frmengineglow.Cdensity3egtext.IsEnabled = true;
                 Global.frmengineglow.egdeletebut.IsEnabled = true;
+                Global.frmengineglow.egcopybut.IsEnabled = true;
                 Global.frmengineglow.egsetfacebut.IsEnabled = true;
 
                 Global.frmengineglow.Reginnertext.Text = engineGlow.EGInnerR.ToString(CultureInfo.InvariantCulture);
@@ -2071,6 +2074,7 @@ namespace OPTech
                 Global.frmengineglow.Bdensity3egtext.IsEnabled = false;
                 Global.frmengineglow.Cdensity3egtext.IsEnabled = false;
                 Global.frmengineglow.egdeletebut.IsEnabled = false;
+                Global.frmengineglow.egcopybut.IsEnabled = false;
                 Global.frmengineglow.egsetfacebut.IsEnabled = false;
 
                 Global.frmengineglow.Reginnertext.Text = string.Empty;

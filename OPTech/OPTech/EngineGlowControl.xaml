@@ -21,15 +21,27 @@
                 <RowDefinition Height="6*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <ListBox x:Name="engineglowlist"
-                         Width="170"
+                         Grid.Column="0"
+                         Grid.Row="0"
                          ToolTip="Engine Glow List"
                          SelectionMode="Extended"
                          KeyUp="engineglowlist_KeyUp"
                          MouseUp="engineglowlist_MouseUp" />
-                <Button x:Name="egdeletebut" Margin="20 0" Height="40" Width="86" Content="Delete" Click="egdeletebut_Click" />
-            </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
+                    <Button x:Name="egdeletebut" Margin="20 5" Height="30" Content="Delete" Click="egdeletebut_Click" />
+                    <Button x:Name="egcopybut" Margin="20 5" Height="30" Content="Copy" Click="egcopybut_Click" />
+                    <Button x:Name="egpastebut" Margin="20 5" Height="30" Content="Paste" Click="egpastebut_Click" />
+                </StackPanel>
+            </Grid>
             <Grid Grid.Column="0" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />

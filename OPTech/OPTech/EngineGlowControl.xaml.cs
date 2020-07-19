@@ -21,6 +21,8 @@ namespace OPTech
     /// </summary>
     public partial class EngineGlowControl : UserControl
     {
+        private object clipboardObject;
+
         private string RememberVal;
 
         public EngineGlowControl()
@@ -127,6 +129,96 @@ namespace OPTech
             Global.CX.EngineGlowScreens(-1, -1);
             Global.CX.CreateCall();
             UndoStack.Push("delete EG");
+        }
+
+        private void egcopybut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.engineglowlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            var engineglows = new List<EngineGlowStruct>(this.engineglowlist.SelectedItems.Count);
+
+            for (int EachEngineGlow = 0; EachEngineGlow < this.engineglowlist.Items.Count; EachEngineGlow++)
+            {
+                if (!this.engineglowlist.IsSelected(EachEngineGlow))
+                {
+                    continue;
+                }
+
+                string wholeLine = this.engineglowlist.GetText(EachEngineGlow);
+
+                int thisMesh;
+                int thisEG;
+                StringHelpers.SplitEngineGlow(wholeLine, out thisMesh, out thisEG);
+
+                engineglows.Add(Global.OPT.MeshArray[thisMesh].EGArray[thisEG].Clone());
+            }
+
+            this.clipboardObject = engineglows;
+        }
+
+        private void egpastebut_Click(object sender, RoutedEventArgs e)
+        {
+            var clipboardEngineglows = this.clipboardObject as IList<EngineGlowStruct>;
+
+            if (clipboardEngineglows == null)
+            {
+                return;
+            }
+
+            if (Global.frmgeometry.meshlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            var selectedMesh = Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex];
+
+            if (selectedMesh.LODArray.Count <= whichLOD)
+            {
+                return;
+            }
+
+            var selectedLod = selectedMesh.LODArray[whichLOD];
+
+            foreach (EngineGlowStruct engineGlow in clipboardEngineglows)
+            {
+                selectedMesh.EGArray.Add(engineGlow.Clone());
+            }
+
+            this.engineglowlist.Items.Clear();
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count >= whichLOD + 1)
+                {
+                    if (mesh.LODArray[whichLOD].Selected)
+                    {
+                        for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
+                        {
+                            this.engineglowlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} EG:{1}", EachMesh + 1, EachEngineGlow + 1));
+                        }
+                    }
+                }
+            }
+
+            Global.CX.EngineGlowScreens(Global.frmgeometry.meshlist.SelectedIndex, selectedMesh.EGArray.Count - 1);
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("paste EGs");
         }
 
         private void Xegtext_PreviewKeyDown(object sender, KeyEventArgs e)

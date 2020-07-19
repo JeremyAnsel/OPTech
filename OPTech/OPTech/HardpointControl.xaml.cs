@@ -21,6 +21,8 @@ namespace OPTech
     /// </summary>
     public partial class HardpointControl : UserControl
     {
+        private object clipboardObject;
+
         public HardpointControl()
         {
             InitializeComponent();
@@ -121,6 +123,96 @@ namespace OPTech
             Global.CX.HardpointScreens(-1, -1);
             Global.CX.CreateCall();
             UndoStack.Push("delete HP");
+        }
+
+        private void hpcopybut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.hardpointlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            var hardpoints = new List<HardpointStruct>(this.hardpointlist.SelectedItems.Count);
+
+            for (int EachHardpoint = 0; EachHardpoint < this.hardpointlist.Items.Count; EachHardpoint++)
+            {
+                if (!this.hardpointlist.IsSelected(EachHardpoint))
+                {
+                    continue;
+                }
+
+                string wholeLine = this.hardpointlist.GetText(EachHardpoint);
+
+                int thisMesh;
+                int thisHP;
+                StringHelpers.SplitHardpoint(wholeLine, out thisMesh, out thisHP);
+
+                hardpoints.Add(Global.OPT.MeshArray[thisMesh].HPArray[thisHP].Clone());
+            }
+
+            this.clipboardObject = hardpoints;
+        }
+
+        private void hppastebut_Click(object sender, RoutedEventArgs e)
+        {
+            var clipboardHardpoints = this.clipboardObject as IList<HardpointStruct>;
+
+            if (clipboardHardpoints == null)
+            {
+                return;
+            }
+
+            if (Global.frmgeometry.meshlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            var selectedMesh = Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex];
+
+            if (selectedMesh.LODArray.Count <= whichLOD)
+            {
+                return;
+            }
+
+            var selectedLod = selectedMesh.LODArray[whichLOD];
+
+            foreach (HardpointStruct hardpoint in clipboardHardpoints)
+            {
+                selectedMesh.HPArray.Add(hardpoint.Clone());
+            }
+
+            this.hardpointlist.Items.Clear();
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count >= whichLOD + 1)
+                {
+                    if (mesh.LODArray[whichLOD].Selected)
+                    {
+                        for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
+                        {
+                            this.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1}", EachMesh + 1, EachHardpoint + 1));
+                        }
+                    }
+                }
+            }
+
+            Global.CX.HardpointScreens(Global.frmgeometry.meshlist.SelectedIndex, selectedMesh.HPArray.Count - 1);
+            Global.CX.CreateCall();
+            Global.ModelChanged = true;
+            UndoStack.Push("paste HPs");
         }
 
         private void hardpointtypetext_PreviewKeyDown(object sender, KeyEventArgs e)

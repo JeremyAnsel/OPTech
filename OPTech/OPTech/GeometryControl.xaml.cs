@@ -1158,7 +1158,7 @@ namespace OPTech
 
                         engineGlow.EGVectorX *= dialog.ScaleX;
                         engineGlow.EGVectorY *= dialog.ScaleY;
-                        engineGlow.EGVectorZ *= dialog.ScaleZ;
+                        //engineGlow.EGVectorZ *= dialog.ScaleZ;
                     }
 
                     mesh.HitCenterX *= dialog.ScaleX;
@@ -1237,7 +1237,7 @@ namespace OPTech
 
                             engineGlow.EGVectorX *= dialog.ScaleX;
                             engineGlow.EGVectorY *= dialog.ScaleY;
-                            engineGlow.EGVectorZ *= dialog.ScaleZ;
+                            //engineGlow.EGVectorZ *= dialog.ScaleZ;
                         }
 
                         mesh.HitMinX = (mesh.HitMinX - Global.OPT.CenterX) * dialog.ScaleX + Global.OPT.CenterX;
@@ -4186,7 +4186,7 @@ namespace OPTech
                                 var engineGlow = mesh.EGArray[EachEngineGlow];
 
                                 engineGlow.EGCenterZ = value / 100 * (engineGlow.EGCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                                engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
+                                //engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
                             }
 
                             mesh.HitMinZ = value / 100 * (mesh.HitMinZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
@@ -4269,7 +4269,7 @@ namespace OPTech
                             var engineGlow = mesh.EGArray[EachEngineGlow];
 
                             engineGlow.EGCenterZ = value / 100 * (engineGlow.EGCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                            engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
+                            //engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
                         }
 
                         mesh.HitMinZ = value / 100 * (mesh.HitMinZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;

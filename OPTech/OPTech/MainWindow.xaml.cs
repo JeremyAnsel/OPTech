@@ -2201,8 +2201,8 @@ namespace OPTech
             Global.frmgeometry.subgeometry_Click(null, null);
             this.dispbar_mesh_Click(null, null);
 
-            this.saveopzmenu.IsEnabled = false;
-            this.saveopzasmenu.IsEnabled = false;
+            this.saveopzmenu.IsEnabled = true;
+            this.saveopzasmenu.IsEnabled = true;
             this.optxwacreatemenu.IsEnabled = false;
             this.optxvtcreatemenu.IsEnabled = false;
             this.optimportmenu.IsEnabled = true;

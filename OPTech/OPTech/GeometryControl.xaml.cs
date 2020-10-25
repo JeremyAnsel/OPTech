@@ -12491,6 +12491,164 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
+        private Tuple<int, string, string>[] GetUVcoordlist()
+        {
+            var verticesU = this.Ucoordlist.GetAllText();
+            var verticesV = this.Vcoordlist.GetAllText();
+
+            var vertices = new Tuple<int, string, string>[verticesU.Length];
+
+            for (int i = 0; i < verticesU.Length; i++)
+            {
+                vertices[i] = Tuple.Create(i, verticesU[i], verticesV[i]);
+            }
+
+            return vertices;
+        }
+
+        private void UVcoordsortindexbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetUVcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex
+                    };
+                })
+                .OrderBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void UVcoordsortubut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetUVcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueU = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueV = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueU = valueU,
+                        ValueV = valueV
+                    };
+                })
+                .OrderBy(t => t.ValueU)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void UVcoordsortvbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetUVcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueU = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueV = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueU = valueU,
+                        ValueV = valueV
+                    };
+                })
+                .OrderBy(t => t.ValueV)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void UpdateVerticesLists(int[] indices)
+        {
+            var xlist = this.Xvertexlist.GetAllTextWithSelected();
+            var ylist = this.Yvertexlist.GetAllTextWithSelected();
+            var zlist = this.Zvertexlist.GetAllTextWithSelected();
+            var ilist = this.Ivertnormlist.GetAllTextWithSelected();
+            var jlist = this.Jvertnormlist.GetAllTextWithSelected();
+            var klist = this.Kvertnormlist.GetAllTextWithSelected();
+            var ulist = this.Ucoordlist.GetAllTextWithSelected();
+            var vlist = this.Vcoordlist.GetAllTextWithSelected();
+
+            this.Xvertexlist.Items.Clear();
+            this.Yvertexlist.Items.Clear();
+            this.Zvertexlist.Items.Clear();
+            this.Ivertnormlist.Items.Clear();
+            this.Jvertnormlist.Items.Clear();
+            this.Kvertnormlist.Items.Clear();
+            this.Ucoordlist.Items.Clear();
+            this.Vcoordlist.Items.Clear();
+
+            for (int eachIndex = 0; eachIndex < indices.Length; eachIndex++)
+            {
+                int index = indices[eachIndex];
+
+                this.Xvertexlist.AddText(xlist[index].Item1, xlist[index].Item2);
+                this.Yvertexlist.AddText(ylist[index].Item1, ylist[index].Item2);
+                this.Zvertexlist.AddText(zlist[index].Item1, zlist[index].Item2);
+                this.Ivertnormlist.AddText(ilist[index].Item1, ilist[index].Item2);
+                this.Jvertnormlist.AddText(jlist[index].Item1, jlist[index].Item2);
+                this.Kvertnormlist.AddText(klist[index].Item1, klist[index].Item2);
+                this.Ucoordlist.AddText(ulist[index].Item1, ulist[index].Item2);
+                this.Vcoordlist.AddText(vlist[index].Item1, vlist[index].Item2);
+            }
+
+            this.Xvertexlist.ScrollIntoView(this.Xvertexlist.SelectedItem);
+            this.Yvertexlist.ScrollIntoView(this.Yvertexlist.SelectedItem);
+            this.Zvertexlist.ScrollIntoView(this.Zvertexlist.SelectedItem);
+            this.Ivertnormlist.ScrollIntoView(this.Ivertnormlist.SelectedItem);
+            this.Jvertnormlist.ScrollIntoView(this.Jvertnormlist.SelectedItem);
+            this.Kvertnormlist.ScrollIntoView(this.Kvertnormlist.SelectedItem);
+            this.Ucoordlist.ScrollIntoView(this.Ucoordlist.SelectedItem);
+            this.Vcoordlist.ScrollIntoView(this.Vcoordlist.SelectedItem);
+        }
+
         private void meshtextCopy_Click(object sender, RoutedEventArgs e)
         {
             if (this.meshlist.SelectedIndex == -1)

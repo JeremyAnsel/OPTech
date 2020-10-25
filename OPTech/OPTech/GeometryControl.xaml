@@ -355,15 +355,18 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="2*" />
-                                        <RowDefinition Height="3*" />
                                         <RowDefinition Height="1*" />
-                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="4*" />
+                                        <RowDefinition Height="1*" />
                                     </Grid.RowDefinitions>
-                                    <ListBox x:Name="Ucoordlist" Grid.Column="0" Grid.Row="1" Margin="10" ToolTip="U texture vertex coords" SelectionMode="Extended" KeyUp="Ucoordlist_KeyUp" MouseUp="Ucoordlist_MouseUp" />
-                                    <ListBox x:Name="Vcoordlist" Grid.Column="1" Grid.Row="1" Margin="10" ToolTip="V texture vertex coords" SelectionMode="Extended" KeyUp="Vcoordlist_KeyUp" MouseUp="Vcoordlist_MouseUp" />
-                                    <TextBox x:Name="Ucoordtext" Grid.Column="0" Grid.Row="2" Margin="10" Background="#FFC0C0" PreviewKeyDown="Ucoordtext_PreviewKeyDown" LostFocus="Ucoordtext_LostFocus" />
-                                    <TextBox x:Name="Vcoordtext" Grid.Column="1" Grid.Row="2" Margin="10" Background="#FFC0C0" PreviewKeyDown="Vcoordtext_PreviewKeyDown" LostFocus="Vcoordtext_LostFocus" />
+                                    <Button x:Name="UVcoordsortindexbut" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="20 5" Content="Sort by Index" Click="UVcoordsortindexbut_Click" />
+                                    <Button x:Name="UVcoordsortubut" Grid.Column="0" Grid.Row="1" Margin="20 5" Content="Sort by U" Click="UVcoordsortubut_Click" />
+                                    <Button x:Name="UVcoordsortvbut" Grid.Column="1" Grid.Row="1" Margin="20 5" Content="Sort by V" Click="UVcoordsortvbut_Click" />
+                                    <ListBox x:Name="Ucoordlist" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="U texture vertex coords" SelectionMode="Extended" KeyUp="Ucoordlist_KeyUp" MouseUp="Ucoordlist_MouseUp" />
+                                    <ListBox x:Name="Vcoordlist" Grid.Column="1" Grid.Row="2" Margin="10" ToolTip="V texture vertex coords" SelectionMode="Extended" KeyUp="Vcoordlist_KeyUp" MouseUp="Vcoordlist_MouseUp" />
+                                    <TextBox x:Name="Ucoordtext" Grid.Column="0" Grid.Row="3" Margin="10" Background="#FFC0C0" PreviewKeyDown="Ucoordtext_PreviewKeyDown" LostFocus="Ucoordtext_LostFocus" />
+                                    <TextBox x:Name="Vcoordtext" Grid.Column="1" Grid.Row="3" Margin="10" Background="#FFC0C0" PreviewKeyDown="Vcoordtext_PreviewKeyDown" LostFocus="Vcoordtext_LostFocus" />
                                 </Grid>
                             </GroupBox>
                         </TabItem>

@@ -59,6 +59,27 @@ namespace OPTech
             return opt;
         }
 
+        public void UnselectAll()
+        {
+            foreach (var mesh in this.MeshArray)
+            {
+                foreach (var lod in mesh.LODArray)
+                {
+                    lod.Selected = false;
+
+                    foreach (var face in lod.FaceArray)
+                    {
+                        face.Selected = false;
+
+                        foreach (var vertex in face.VertexArray)
+                        {
+                            vertex.Selected = false;
+                        }
+                    }
+                }
+            }
+        }
+
         public void Move(float moveX, float moveY, float moveZ)
         {
             this.MinX += moveX;

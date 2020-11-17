@@ -19,7 +19,20 @@ namespace OPTech
         public OptStruct OPT;
         public Camera Camera;
 
-        public string[] meshlist;
+        public Tuple<string, bool>[] meshlist;
+        public Tuple<string, bool>[] facelist;
+        public Tuple<string, bool>[] Xvertexlist;
+        public Tuple<string, bool>[] Yvertexlist;
+        public Tuple<string, bool>[] Zvertexlist;
+        public Tuple<string, bool>[] Ivertnormlist;
+        public Tuple<string, bool>[] Jvertnormlist;
+        public Tuple<string, bool>[] Kvertnormlist;
+        public Tuple<string, bool>[] Ucoordlist;
+        public Tuple<string, bool>[] Vcoordlist;
+        public Tuple<string, bool>[] fgsellist;
+        public Tuple<string, bool>[] hardpointlist;
+        public Tuple<string, bool>[] engineglowlist;
+
         public string[] transtexturelist;
         public string[] illumtexturelist;
 
@@ -37,7 +50,19 @@ namespace OPTech
                 NormalLength = this.NormalLength,
                 OPT = this.OPT.Clone(),
                 Camera = this.Camera.Clone(),
-                meshlist = (string[])this.meshlist.Clone(),
+                meshlist = (Tuple<string, bool>[])this.meshlist.Clone(),
+                facelist = (Tuple<string, bool>[])this.facelist.Clone(),
+                Xvertexlist = (Tuple<string, bool>[])this.Xvertexlist.Clone(),
+                Yvertexlist = (Tuple<string, bool>[])this.Yvertexlist.Clone(),
+                Zvertexlist = (Tuple<string, bool>[])this.Zvertexlist.Clone(),
+                Ivertnormlist = (Tuple<string, bool>[])this.Ivertnormlist.Clone(),
+                Jvertnormlist = (Tuple<string, bool>[])this.Jvertnormlist.Clone(),
+                Kvertnormlist = (Tuple<string, bool>[])this.Kvertnormlist.Clone(),
+                Ucoordlist = (Tuple<string, bool>[])this.Ucoordlist.Clone(),
+                Vcoordlist = (Tuple<string, bool>[])this.Vcoordlist.Clone(),
+                fgsellist = (Tuple<string, bool>[])this.fgsellist.Clone(),
+                hardpointlist = (Tuple<string, bool>[])this.hardpointlist.Clone(),
+                engineglowlist = (Tuple<string, bool>[])this.engineglowlist.Clone(),
                 transtexturelist = (string[])this.transtexturelist.Clone(),
                 illumtexturelist = (string[])this.illumtexturelist.Clone()
             };
@@ -59,7 +84,19 @@ namespace OPTech
                 NormalLength = Global.NormalLength,
                 OPT = Global.OPT.Clone(),
                 Camera = Global.Camera.Clone(),
-                meshlist = Global.frmgeometry.meshlist.GetAllText(),
+                meshlist = Global.frmgeometry.meshlist.GetAllTextWithSelected(),
+                facelist = Global.frmgeometry.facelist.GetAllTextWithSelected(),
+                Xvertexlist = Global.frmgeometry.Xvertexlist.GetAllTextWithSelected(),
+                Yvertexlist = Global.frmgeometry.Yvertexlist.GetAllTextWithSelected(),
+                Zvertexlist = Global.frmgeometry.Zvertexlist.GetAllTextWithSelected(),
+                Ivertnormlist = Global.frmgeometry.Ivertnormlist.GetAllTextWithSelected(),
+                Jvertnormlist = Global.frmgeometry.Jvertnormlist.GetAllTextWithSelected(),
+                Kvertnormlist = Global.frmgeometry.Kvertnormlist.GetAllTextWithSelected(),
+                Ucoordlist = Global.frmgeometry.Ucoordlist.GetAllTextWithSelected(),
+                Vcoordlist = Global.frmgeometry.Vcoordlist.GetAllTextWithSelected(),
+                hardpointlist = Global.frmhardpoint.hardpointlist.GetAllTextWithSelected(),
+                engineglowlist = Global.frmengineglow.engineglowlist.GetAllTextWithSelected(),
+                fgsellist = Global.frmgeometry.fgsellist.GetAllTextWithSelected(),
                 transtexturelist = Global.frmtexture.transtexturelist.GetAllText(),
                 illumtexturelist = Global.frmtexture.illumtexturelist.GetAllText()
             };
@@ -119,36 +156,77 @@ namespace OPTech
                     .Select(t => System.IO.Path.GetFileName(t));
             }
 
-            Global.frmgeometry.meshlist.Items.Clear();
             Global.CX.MeshScreens(-1, whichLOD);
             Global.CX.FaceScreens(-1, whichLOD, -1);
             Global.CX.VertexScreens(-1, whichLOD, -1, -1);
             Global.CX.HardpointScreens(-1, -1);
             Global.CX.EngineGlowScreens(-1, -1);
-            Global.frmtexture.transtexturelist.Items.Clear();
-            Global.frmtexture.illumtexturelist.Items.Clear();
 
             Global.OrthoZoom = this.OrthoZoom;
             Global.NormalLength = this.NormalLength;
             Global.OPT = this.OPT;
             Global.Camera = this.Camera;
 
-            foreach (var mesh in this.meshlist)
-            {
-                Global.frmgeometry.meshlist.AddText(mesh);
-            }
+            Global.frmtexture.transtexturelist.SetAllText(this.transtexturelist);
+            Global.frmtexture.illumtexturelist.SetAllText(this.illumtexturelist);
+
+            Global.frmgeometry.meshlist.SetAllTextWithSelected(this.meshlist);
+            Global.frmgeometry.facelist.SetAllTextWithSelected(this.facelist);
+            Global.frmgeometry.Xvertexlist.SetAllTextWithSelected(this.Xvertexlist);
+            Global.frmgeometry.Yvertexlist.SetAllTextWithSelected(this.Yvertexlist);
+            Global.frmgeometry.Zvertexlist.SetAllTextWithSelected(this.Zvertexlist);
+            Global.frmgeometry.Ivertnormlist.SetAllTextWithSelected(this.Ivertnormlist);
+            Global.frmgeometry.Jvertnormlist.SetAllTextWithSelected(this.Jvertnormlist);
+            Global.frmgeometry.Kvertnormlist.SetAllTextWithSelected(this.Kvertnormlist);
+            Global.frmgeometry.Ucoordlist.SetAllTextWithSelected(this.Ucoordlist);
+            Global.frmgeometry.fgsellist.SetAllTextWithSelected(this.fgsellist);
+            Global.frmhardpoint.hardpointlist.SetAllTextWithSelected(this.hardpointlist);
+            Global.frmengineglow.engineglowlist.SetAllTextWithSelected(this.engineglowlist);
 
             Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
             Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
 
-            foreach (var item in this.transtexturelist)
+            if (Global.frmgeometry.meshlist.SelectedIndex != -1)
             {
-                Global.frmtexture.transtexturelist.AddCheck(item);
+                int meshIndex = Global.frmgeometry.meshlist.SelectedIndex;
+                Global.CX.MeshScreens(meshIndex, whichLOD);
             }
 
-            foreach (var item in this.illumtexturelist)
+            if (Global.frmgeometry.facelist.SelectedIndex != -1)
             {
-                Global.frmtexture.illumtexturelist.AddCheck(item);
+                string text = Global.frmgeometry.facelist.GetSelectedText();
+                int meshIndex;
+                int faceIndex;
+                StringHelpers.SplitFace(text, out meshIndex, out faceIndex);
+                Global.CX.FaceScreens(meshIndex, whichLOD, faceIndex);
+            }
+
+            if (Global.frmgeometry.Xvertexlist.SelectedIndex != -1)
+            {
+                string text = Global.frmgeometry.Xvertexlist.GetSelectedText();
+                int meshIndex;
+                int faceIndex;
+                int vertexIndex;
+                StringHelpers.SplitVertex(text, out meshIndex, out faceIndex, out vertexIndex);
+                Global.CX.VertexScreens(meshIndex, whichLOD, faceIndex, vertexIndex);
+            }
+
+            if (Global.frmhardpoint.hardpointlist.SelectedIndex != -1)
+            {
+                string text = Global.frmhardpoint.hardpointlist.GetSelectedText();
+                int meshIndex;
+                int hpIndex;
+                StringHelpers.SplitHardpoint(text, out meshIndex, out hpIndex);
+                Global.CX.HardpointScreens(meshIndex, hpIndex);
+            }
+
+            if (Global.frmengineglow.engineglowlist.SelectedIndex != -1)
+            {
+                string text = Global.frmengineglow.engineglowlist.GetSelectedText();
+                int meshIndex;
+                int egIndex;
+                StringHelpers.SplitEngineGlow(text, out meshIndex, out egIndex);
+                Global.CX.EngineGlowScreens(meshIndex, egIndex);
             }
 
             Global.frmtexture.transtexturelist.SelectedIndex = 0;

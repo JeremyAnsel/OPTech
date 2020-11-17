@@ -216,7 +216,32 @@ namespace OPTech
 
             if (selected)
             {
-                list.SelectedItems.Add(textBlock);
+                if (list.SelectionMode == SelectionMode.Single)
+                {
+                    list.SelectedItem = textBlock;
+                }
+                else
+                {
+                    list.SelectedItems.Add(textBlock);
+                }
+            }
+        }
+
+        public static void AddAllText(this ListBox list, string[] array)
+        {
+            for (int index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                list.AddText(item);
+            }
+        }
+
+        public static void AddAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array)
+        {
+            for (int index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                list.AddText(item.Item1, item.Item2);
             }
         }
 
@@ -235,6 +260,32 @@ namespace OPTech
             };
 
             list.Items[index] = textBlock;
+        }
+
+        public static void SetAllText(this ListBox list, string[] array)
+        {
+            list.Items.Clear();
+
+            for (int index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                list.AddText(item);
+            }
+
+            list.ScrollIntoView(list.SelectedItem);
+        }
+
+        public static void SetAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array)
+        {
+            list.Items.Clear();
+
+            for (int index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                list.AddText(item.Item1, item.Item2);
+            }
+
+            list.ScrollIntoView(list.SelectedItem);
         }
 
         public static void UpdateTextLineNumbers(this ListBox list)

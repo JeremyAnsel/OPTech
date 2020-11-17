@@ -12,9 +12,14 @@ namespace OPTech
 
         public static ObservableCollection<Tuple<string, UndoStackItem>> Stack { get; } = new ObservableCollection<Tuple<string, UndoStackItem>>();
 
+        private static int pushCount = 0;
+
         public static void Push(string label)
         {
-            Stack.Insert(0, Tuple.Create(label, UndoStackItem.Capture()));
+            pushCount++;
+            string name = pushCount + ": " + label;
+
+            Stack.Insert(0, Tuple.Create(name, UndoStackItem.Capture()));
 
             while (Stack.Count > MaxStackLength)
             {

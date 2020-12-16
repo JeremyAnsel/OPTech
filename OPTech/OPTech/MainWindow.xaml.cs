@@ -756,7 +756,7 @@ namespace OPTech
 
         private void modeldimmenu_Click(object sender, RoutedEventArgs e)
         {
-            double value;
+            float value;
 
             string width;
             value = Global.OPT.SpanX * OptStruct.ScaleFactor;

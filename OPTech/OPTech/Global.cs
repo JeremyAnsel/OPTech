@@ -89,19 +89,14 @@ namespace OPTech
 
         public static System.Windows.Media.Color RenderScreenBackgroundColor = System.Windows.Media.Colors.Black;
 
-        public static double Round(double value, int digits)
-        {
-            return Math.Round(value, digits);
-        }
-
         public static float Round(float value, int digits)
         {
-            return (float)Math.Round((double)value, digits);
+            return (float)Math.Round((decimal)value, digits, MidpointRounding.AwayFromZero);
         }
 
         public static float Round(float value)
         {
-            return (float)Math.Round((double)value, 4);
+            return (float)Math.Round((decimal)value, 4, MidpointRounding.AwayFromZero);
         }
 
         public static bool IsPowerOf2(int value)

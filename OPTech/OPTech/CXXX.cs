@@ -1091,6 +1091,7 @@ namespace OPTech
                 {
                     var lod = mesh.LODArray[lodIndex];
 
+                    Global.frmgeometry.applyalllodcheck.IsEnabled = true;
                     Global.frmgeometry.Xmeshtext.IsEnabled = true;
                     Global.frmgeometry.Ymeshtext.IsEnabled = true;
                     Global.frmgeometry.Zmeshtext.IsEnabled = true;
@@ -1313,6 +1314,7 @@ namespace OPTech
                 }
                 else
                 {
+                    Global.frmgeometry.applyalllodcheck.IsEnabled = false;
                     Global.frmgeometry.Xmeshtext.IsEnabled = false;
                     Global.frmgeometry.Ymeshtext.IsEnabled = false;
                     Global.frmgeometry.Zmeshtext.IsEnabled = false;
@@ -1328,6 +1330,7 @@ namespace OPTech
             }
             else
             {
+                Global.frmgeometry.applyalllodcheck.IsEnabled = false;
                 Global.frmgeometry.Xmeshtext.IsEnabled = false;
                 Global.frmgeometry.Ymeshtext.IsEnabled = false;
                 Global.frmgeometry.Zmeshtext.IsEnabled = false;

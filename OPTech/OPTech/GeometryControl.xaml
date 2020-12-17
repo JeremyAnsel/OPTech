@@ -67,7 +67,8 @@
                                             </UniformGrid>
                                         </DockPanel>
                                     </UniformGrid>
-                                    <CheckBox x:Name="meshvisiblecheck" Grid.Column="1" Grid.Row="1" Margin="20 10" Content="Visible" Click="meshvisiblecheck_Click" />
+                                    <CheckBox x:Name="applyalllodcheck" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Margin="10" Content="Apply to all LODs" IsChecked="True" />
+                                    <CheckBox x:Name="meshvisiblecheck" Grid.Column="0" Grid.Row="1" Margin="10" Content="Visible" Click="meshvisiblecheck_Click" />
                                     <TextBox x:Name="Xmeshtext" Grid.Column="0" Grid.Row="2" Margin="10" ToolTip="mesh position X" Background="#FFFFC0" PreviewKeyDown="Xmeshtext_PreviewKeyDown" LostFocus="Xmeshtext_LostFocus" />
                                     <TextBox x:Name="Ymeshtext" Grid.Column="1" Grid.Row="2" Margin="10" ToolTip="mesh position Y" Background="#FFFFC0" PreviewKeyDown="Ymeshtext_PreviewKeyDown" LostFocus="Ymeshtext_LostFocus" />
                                     <TextBox x:Name="Zmeshtext" Grid.Column="2" Grid.Row="2" Margin="10" ToolTip="mesh position Z" Background="#FFFFC0" PreviewKeyDown="Zmeshtext_PreviewKeyDown" LostFocus="Zmeshtext_LostFocus" />

@@ -2195,17 +2195,36 @@ namespace OPTech
 
                 for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
                 {
+                    if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                    {
+                        break;
+                    }
+
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterX;
 
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2218,7 +2237,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -2275,17 +2294,36 @@ namespace OPTech
 
             for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
             {
+                if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                {
+                    break;
+                }
+
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterX;
 
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2298,7 +2336,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -2377,17 +2415,36 @@ namespace OPTech
 
                 for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
                 {
+                    if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                    {
+                        break;
+                    }
+
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterY;
 
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2400,7 +2457,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -2457,17 +2514,36 @@ namespace OPTech
 
             for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
             {
+                if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                {
+                    break;
+                }
+
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterY;
 
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2480,7 +2556,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -2559,17 +2635,36 @@ namespace OPTech
 
                 for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
                 {
+                    if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                    {
+                        break;
+                    }
+
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterZ;
 
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2582,7 +2677,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -2639,17 +2734,36 @@ namespace OPTech
 
             for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
             {
+                if (Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count <= whichLOD)
+                {
+                    break;
+                }
+
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected && Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray.Count > whichLOD)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     float add = value - Global.OPT.MeshArray[this.meshlist.SelectedIndex].LODArray[whichLOD].CenterZ;
 
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
@@ -2662,7 +2776,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -2791,16 +2905,30 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
-                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
 
                         float XCoord;
                         float YCoord;
@@ -2864,7 +2992,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -2953,16 +3081,30 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
 
                     float XCoord;
                     float YCoord;
@@ -3026,7 +3168,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -3127,16 +3269,30 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
-                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
 
                         float XCoord;
                         float YCoord;
@@ -3200,7 +3356,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -3289,16 +3445,30 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
 
                     float XCoord;
                     float YCoord;
@@ -3362,7 +3532,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -3463,16 +3633,30 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
-                        RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
 
                         float XCoord;
                         float YCoord;
@@ -3536,7 +3720,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -3625,16 +3809,30 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                RotateMesh(mesh, RadianX, RadianY, RadianZ);
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
 
                     float XCoord;
                     float YCoord;
@@ -3698,7 +3896,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -3795,15 +3993,29 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                         {
                             var face = lod.FaceArray[EachFace];
@@ -3816,7 +4028,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -3878,15 +4090,29 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                     {
                         var face = lod.FaceArray[EachFace];
@@ -3899,7 +4125,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -3973,15 +4199,29 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                         {
                             var face = lod.FaceArray[EachFace];
@@ -3994,7 +4234,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -4056,15 +4296,29 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                     {
                         var face = lod.FaceArray[EachFace];
@@ -4077,7 +4331,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -4151,15 +4405,29 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                         {
                             var face = lod.FaceArray[EachFace];
@@ -4172,7 +4440,7 @@ namespace OPTech
                             }
                         }
 
-                        if (whichLOD == 0)
+                        if (lodIndex == 0)
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
@@ -4234,15 +4502,29 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                     {
                         var face = lod.FaceArray[EachFace];
@@ -4255,7 +4537,7 @@ namespace OPTech
                         }
                     }
 
-                    if (whichLOD == 0)
+                    if (lodIndex == 0)
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
@@ -4334,15 +4616,29 @@ namespace OPTech
                 {
                     var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                    if (mesh.LODArray.Count <= whichLOD)
+                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                     {
                         continue;
                     }
 
-                    var lod = mesh.LODArray[whichLOD];
+                    int lodStart;
+                    int lodEnd;
 
-                    if (lod.Selected)
+                    if (this.applyalllodcheck.IsChecked == true)
                     {
+                        lodStart = 0;
+                        lodEnd = mesh.LODArray.Count;
+                    }
+                    else
+                    {
+                        lodStart = whichLOD;
+                        lodEnd = whichLOD + 1;
+                    }
+
+                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                    {
+                        var lod = mesh.LODArray[lodIndex];
+
                         lod.CloakDist = value;
                     }
                 }
@@ -4381,15 +4677,29 @@ namespace OPTech
             {
                 var mesh = Global.OPT.MeshArray[EachSelMesh];
 
-                if (mesh.LODArray.Count <= whichLOD)
+                if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
                 {
                     continue;
                 }
 
-                var lod = mesh.LODArray[whichLOD];
+                int lodStart;
+                int lodEnd;
 
-                if (lod.Selected)
+                if (this.applyalllodcheck.IsChecked == true)
                 {
+                    lodStart = 0;
+                    lodEnd = mesh.LODArray.Count;
+                }
+                else
+                {
+                    lodStart = whichLOD;
+                    lodEnd = whichLOD + 1;
+                }
+
+                for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
+                {
+                    var lod = mesh.LODArray[lodIndex];
+
                     lod.CloakDist = value;
                 }
             }

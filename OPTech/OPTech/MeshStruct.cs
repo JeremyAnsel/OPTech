@@ -114,6 +114,19 @@ namespace OPTech
             return mesh;
         }
 
+        public bool IsSelected()
+        {
+            foreach (var lod in this.LODArray)
+            {
+                if (lod.Selected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public MeshStruct Duplicate()
         {
             var newMesh = this.Clone();

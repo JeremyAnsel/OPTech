@@ -59,6 +59,22 @@ namespace OPTech
             return opt;
         }
 
+        public bool HasSelection()
+        {
+            foreach (var mesh in this.MeshArray)
+            {
+                foreach (var lod in mesh.LODArray)
+                {
+                    if (lod.Selected)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void UnselectAll()
         {
             foreach (var mesh in this.MeshArray)

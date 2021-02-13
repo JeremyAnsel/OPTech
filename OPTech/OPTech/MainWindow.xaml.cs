@@ -1139,13 +1139,27 @@ namespace OPTech
                 whichLOD = 1;
             }
 
+            bool optHasSelection = Global.OPT.HasSelection();
+
             foreach (var mesh in Global.OPT.MeshArray)
             {
                 foreach (var lod in mesh.LODArray)
                 {
+                    if (optHasSelection && !lod.Selected)
+                    {
+                        continue;
+                    }
+
+                    bool lodHasSelection = lod.HasSelection();
+
                     for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
                     {
                         var face = lod.FaceArray[faceIndex];
+
+                        if (optHasSelection && lodHasSelection && !face.Selected)
+                        {
+                            continue;
+                        }
 
                         int polyVerts;
                         if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
@@ -1213,13 +1227,27 @@ namespace OPTech
 
             var vertexHolder = new VertexStruct[3];
 
+            bool optHasSelection = Global.OPT.HasSelection();
+
             foreach (var mesh in Global.OPT.MeshArray)
             {
                 foreach (var lod in mesh.LODArray)
                 {
+                    if (optHasSelection && !lod.Selected)
+                    {
+                        continue;
+                    }
+
+                    bool lodHasSelection = lod.HasSelection();
+
                     for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
                     {
                         var face = lod.FaceArray[faceIndex];
+
+                        if (optHasSelection && lodHasSelection && !face.Selected)
+                        {
+                            continue;
+                        }
 
                         int polyVerts;
                         if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
@@ -7861,14 +7889,28 @@ namespace OPTech
                 whichLOD = 1;
             }
 
+            bool optHasSelection = Global.OPT.HasSelection();
+
             for (int meshIndex = startMesh; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
             {
                 var mesh = Global.OPT.MeshArray[meshIndex];
 
                 foreach (var lod in mesh.LODArray)
                 {
+                    if (optHasSelection && !lod.Selected)
+                    {
+                        continue;
+                    }
+
+                    bool lodHasSelection = lod.HasSelection();
+
                     foreach (var face in lod.FaceArray)
                     {
+                        if (optHasSelection && lodHasSelection && !face.Selected)
+                        {
+                            continue;
+                        }
+
                         int polyVerts;
                         if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
                             && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord

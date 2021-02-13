@@ -52,6 +52,19 @@ namespace OPTech
             return lod;
         }
 
+        public bool HasSelection()
+        {
+            foreach (var face in this.FaceArray)
+            {
+                if (face.Selected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void Move(float moveX, float moveY, float moveZ)
         {
             this.MinX += moveX;

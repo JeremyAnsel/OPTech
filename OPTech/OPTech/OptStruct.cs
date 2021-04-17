@@ -138,5 +138,23 @@ namespace OPTech
 
             return version;
         }
+
+        public TextureStruct GetTextureByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            foreach (var texture in this.TextureArray)
+            {
+                if (string.Equals(texture.TextureName, name))
+                {
+                    return texture;
+                }
+            }
+
+            return null;
+        }
     }
 }

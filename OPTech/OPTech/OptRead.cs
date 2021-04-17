@@ -21,6 +21,19 @@ namespace OPTech
             blueColor = (byte)(b * 256 / 32);
         }
 
+        internal static void BufferColorRound(byte[] paletteData, int rgbIndex, out byte redColor, out byte greenColor, out byte blueColor)
+        {
+            ushort c = BitConverter.ToUInt16(paletteData, rgbIndex);
+
+            byte r = (byte)((c & 0xF800) >> 11);
+            byte g = (byte)((c & 0x7E0) >> 5);
+            byte b = (byte)(c & 0x1F);
+
+            redColor = (byte)((r * (0xffU * 2) + 0x1fU) / (0x1fU * 2));
+            greenColor = (byte)((g * (0xffU * 2) + 0x3fU) / (0x3fU * 2));
+            blueColor = (byte)((b * (0xffU * 2) + 0x1fU) / (0x1fU * 2));
+        }
+
         private static void BMPWriter(byte[] PaletteData, byte[] TextureData, int ImageSize, int ImageWidth, int ImageHeight, string TextureEntry)
         {
             System.IO.FileStream filestream = null;
@@ -54,7 +67,9 @@ namespace OPTech
                         byte RedColor;
                         byte GreenColor;
                         byte BlueColor;
-                        OptRead.BufferColorTrunc(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
+
+                        //OptRead.BufferColorTrunc(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
+                        OptRead.BufferColorRound(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
 
                         file.Write(BlueColor);
                         file.Write(GreenColor);

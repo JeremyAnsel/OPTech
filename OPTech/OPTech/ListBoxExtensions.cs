@@ -49,6 +49,18 @@ namespace OPTech
             list.AddToSelection(list.Items.IndexOf(list.SelectedItems.Cast<object>().Last()));
         }
 
+        public static void AddToSelection(this ListBox list, string text)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return;
+            }
+
+            list.AddToSelection(index);
+        }
+
         public static void AddToSelection(this ListBox list, int index)
         {
             //if (list.SelectionMode == SelectionMode.Single)
@@ -83,6 +95,18 @@ namespace OPTech
             //list.ScrollIntoView(list.SelectedItem);
         }
 
+        public static bool IsSelected(this ListBox list, string text)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return false;
+            }
+
+            return list.IsSelected(index);
+        }
+
         public static bool IsSelected(this ListBox list, int index)
         {
             if (index == -1)
@@ -101,6 +125,18 @@ namespace OPTech
             }
 
             return list.SelectedItems.Contains(list.Items[index]);
+        }
+
+        public static void SetSelected(this ListBox list, string text, bool selected)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return;
+            }
+
+            list.SetSelected(index, selected);
         }
 
         public static void SetSelected(this ListBox list, int index, bool selected)
@@ -131,6 +167,26 @@ namespace OPTech
             {
                 list.ScrollIntoView(item);
             }
+        }
+
+        public static int GetTextIndex(this ListBox list, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < list.Items.Count; i++)
+            {
+                string currentText = list.GetText(i);
+
+                if (string.Equals(currentText, text))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         public static string GetText(this ListBox list, int index)
@@ -245,6 +301,18 @@ namespace OPTech
             }
         }
 
+        public static void SetText(this ListBox list, string text, string newItem)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return;
+            }
+
+            list.SetText(index, newItem);
+        }
+
         public static void SetText(this ListBox list, int index, string newItem)
         {
             if (index == -1)
@@ -313,6 +381,18 @@ namespace OPTech
             list.Items.Add(checkBox);
         }
 
+        public static void SetCheck(this ListBox list, string text, string newItem)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return;
+            }
+
+            list.SetCheck(index, newItem);
+        }
+
         public static void SetCheck(this ListBox list, int index, string newItem)
         {
             if (index == -1)
@@ -332,6 +412,18 @@ namespace OPTech
             };
 
             list.Items[index] = checkBox;
+        }
+
+        public static void SelectCheck(this ListBox list, string text, bool selected)
+        {
+            int index = list.GetTextIndex(text);
+
+            if (index == -1)
+            {
+                return;
+            }
+
+            list.SelectCheck(index, selected);
         }
 
         public static void SelectCheck(this ListBox list, int index, bool selected)

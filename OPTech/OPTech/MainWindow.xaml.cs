@@ -2652,9 +2652,9 @@ namespace OPTech
                     if (addTexture)
                     {
                         Global.OPT.TextureArray.Add(texture);
-                        string textureAmountString = this.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                        this.frmtexture.transtexturelist.AddCheck("TEX" + textureAmountString);
-                        this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
+
+                        this.frmtexture.transtexturelist.AddCheck(texture.BaseName);
+                        this.frmtexture.illumtexturelist.AddCheck(texture.BaseName);
                     }
 
                     int numTransFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
@@ -2738,6 +2738,11 @@ namespace OPTech
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
             this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+
+            // TODO
+            Global.OPT.SortTextures();
+            this.frmtexture.transtexturelist.SortCheck();
+            this.frmtexture.illumtexturelist.SortCheck();
 
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
@@ -3089,11 +3094,10 @@ namespace OPTech
                 System.IO.File.Copy("default.bmp", System.IO.Path.Combine(Global.opzpath, "default.bmp"), true);
                 var texture = new TextureStruct();
                 Global.OPT.TextureArray.Add(texture);
-                string textureAmountString = this.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                this.frmtexture.transtexturelist.AddCheck("TEX" + textureAmountString);
-                this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
                 texture.TextureName = "default.bmp";
                 texture.CreateTexture(Global.OpenGL);
+                this.frmtexture.transtexturelist.AddCheck(texture.BaseName);
+                this.frmtexture.illumtexturelist.AddCheck(texture.BaseName);
             }
 
             using (var file = new System.IO.StreamReader(dialog.FileName, Encoding.ASCII))
@@ -3361,6 +3365,11 @@ namespace OPTech
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
             this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
 
+            // TODO
+            Global.OPT.SortTextures();
+            this.frmtexture.transtexturelist.SortCheck();
+            this.frmtexture.illumtexturelist.SortCheck();
+
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
             Global.CX.TextureScreens(0);
@@ -3470,11 +3479,10 @@ namespace OPTech
                 System.IO.File.Copy("default.bmp", System.IO.Path.Combine(Global.opzpath, "default.bmp"), true);
                 var texture = new TextureStruct();
                 Global.OPT.TextureArray.Add(texture);
-                string textureAmountString = this.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                this.frmtexture.transtexturelist.AddCheck("TEX" + textureAmountString);
-                this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
                 texture.TextureName = "default.bmp";
                 texture.CreateTexture(Global.OpenGL);
+                this.frmtexture.transtexturelist.AddCheck(texture.BaseName);
+                this.frmtexture.illumtexturelist.AddCheck(texture.BaseName);
             }
 
             using (var file = new System.IO.StreamReader(dialog.FileName, Encoding.ASCII))
@@ -3653,6 +3661,11 @@ namespace OPTech
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
             this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+
+            // TODO
+            Global.OPT.SortTextures();
+            this.frmtexture.transtexturelist.SortCheck();
+            this.frmtexture.illumtexturelist.SortCheck();
 
             OptRead.CalcDomain();
             this.FaceNormalCalculator(MeshKeeper);
@@ -4020,9 +4033,8 @@ namespace OPTech
                     if (addTexture)
                     {
                         Global.OPT.TextureArray.Add(texture);
-                        string textureAmountString = this.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                        this.frmtexture.transtexturelist.AddCheck("TEX" + textureAmountString);
-                        this.frmtexture.illumtexturelist.AddCheck("TEX" + textureAmountString);
+                        this.frmtexture.transtexturelist.AddCheck(texture.BaseName);
+                        this.frmtexture.illumtexturelist.AddCheck(texture.BaseName);
                     }
 
                     int numTransFilters = int.Parse(currentLine, CultureInfo.InvariantCulture);
@@ -4118,6 +4130,11 @@ namespace OPTech
 
             this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
             this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+
+            // TODO
+            Global.OPT.SortTextures();
+            this.frmtexture.transtexturelist.SortCheck();
+            this.frmtexture.illumtexturelist.SortCheck();
 
             OptRead.CalcDomain();
             Global.NumberTrim();

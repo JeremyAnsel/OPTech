@@ -294,11 +294,14 @@ namespace OPTech
                     }
                 }
 
+                Global.OPT.SortTextures();
+
                 for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                 {
-                    string textureAmountString = EachTexture.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                    Global.frmtexture.transtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
-                    Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
+                    var texture = Global.OPT.TextureArray[EachTexture];
+
+                    Global.frmtexture.transtexturelist.SetCheck(EachTexture, texture.BaseName);
+                    Global.frmtexture.illumtexturelist.SetCheck(EachTexture, texture.BaseName);
                 }
 
                 double RememberZoom = Global.OrthoZoom;

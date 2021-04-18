@@ -592,8 +592,9 @@ namespace OPTech
                                         TexEntryStruct.Add(new TextureStruct());
                                         OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                        Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                        Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                        string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                        Global.frmtexture.transtexturelist.AddCheck(name);
+                                        Global.frmtexture.illumtexturelist.AddCheck(name);
                                     }
                                     else // if type A texture block(20)
                                     {
@@ -621,8 +622,9 @@ namespace OPTech
                                         TexEntryStruct.Add(new TextureStruct());
                                         OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                        Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                        Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                        string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                        Global.frmtexture.transtexturelist.AddCheck(name);
+                                        Global.frmtexture.illumtexturelist.AddCheck(name);
                                     }
                                 }
                                 else if (ZFaceGroupType == 1) // if type AA texture block(20)
@@ -656,8 +658,9 @@ namespace OPTech
                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
                                     OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
-                                    Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                    Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                    string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                    Global.frmtexture.transtexturelist.AddCheck(name);
+                                    Global.frmtexture.illumtexturelist.AddCheck(name);
                                 }
                             }
                             else if (ZFaceGroupType == 24) // if texture block(24)
@@ -729,8 +732,9 @@ namespace OPTech
                                                         TexEntryStruct.Add(new TextureStruct());
                                                         OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                                        Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                                        Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                                        string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                                        Global.frmtexture.transtexturelist.AddCheck(name);
+                                                        Global.frmtexture.illumtexturelist.AddCheck(name);
                                                     }
                                                     else // if type A texture block(20)
                                                     {
@@ -758,8 +762,9 @@ namespace OPTech
                                                         TexEntryStruct.Add(new TextureStruct());
                                                         OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                                        Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                                        Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                                        string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                                        Global.frmtexture.transtexturelist.AddCheck(name);
+                                                        Global.frmtexture.illumtexturelist.AddCheck(name);
                                                     }
                                                 }
                                                 else if (ZFaceFaceGroupType == 1) // if type AA texture block(20)
@@ -793,8 +798,9 @@ namespace OPTech
                                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
                                                     OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
-                                                    Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                                    Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                                    string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                                    Global.frmtexture.transtexturelist.AddCheck(name);
+                                                    Global.frmtexture.illumtexturelist.AddCheck(name);
                                                 }
                                             }
                                         }
@@ -853,8 +859,9 @@ namespace OPTech
                                                     TexEntryStruct.Add(new TextureStruct());
                                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                                    Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                                    Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                                    string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                                    Global.frmtexture.transtexturelist.AddCheck(name);
+                                                    Global.frmtexture.illumtexturelist.AddCheck(name);
                                                 }
                                                 else // if type AA texture block(20)
                                                 {
@@ -887,8 +894,9 @@ namespace OPTech
                                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
                                                     OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
 
-                                                    Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                                    Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                                    string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                                    Global.frmtexture.transtexturelist.AddCheck(name);
+                                                    Global.frmtexture.illumtexturelist.AddCheck(name);
                                                 }
                                             }
                                         }
@@ -933,8 +941,9 @@ namespace OPTech
                                     TexEntryStruct.Add(new TextureStruct());
                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
 
-                                    Global.frmtexture.transtexturelist.AddCheck("TEX" + Global.frmtexture.transtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
-                                    Global.frmtexture.illumtexturelist.AddCheck("TEX" + Global.frmtexture.illumtexturelist.Items.Count.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0'));
+                                    string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
+                                    Global.frmtexture.transtexturelist.AddCheck(name);
+                                    Global.frmtexture.illumtexturelist.AddCheck(name);
                                 }
                             }
                             else if (ZFaceGroupType == 1 /*&& !string.IsNullOrEmpty(TexEntry[0])*/)

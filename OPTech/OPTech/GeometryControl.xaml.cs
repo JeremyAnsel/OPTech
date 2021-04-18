@@ -1492,11 +1492,14 @@ namespace OPTech
                 }
             }
 
+            Global.OPT.SortTextures();
+
             for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
             {
-                string textureAmountString = EachTexture.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                Global.frmtexture.transtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
-                Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
+                var texture = Global.OPT.TextureArray[EachTexture];
+
+                Global.frmtexture.transtexturelist.SetCheck(EachTexture, texture.BaseName);
+                Global.frmtexture.illumtexturelist.SetCheck(EachTexture, texture.BaseName);
             }
 
             this.meshlist.CopyItems(Global.frmhitzone.meshlist);
@@ -1649,11 +1652,14 @@ namespace OPTech
                 }
             }
 
+            Global.OPT.SortTextures();
+
             for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
             {
-                string textureAmountString = EachTexture.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                Global.frmtexture.transtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
-                Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
+                var texture = Global.OPT.TextureArray[EachTexture];
+
+                Global.frmtexture.transtexturelist.SetCheck(EachTexture, texture.BaseName);
+                Global.frmtexture.illumtexturelist.SetCheck(EachTexture, texture.BaseName);
             }
 
             double RememberZoom = Global.OrthoZoom;
@@ -12002,19 +12008,22 @@ namespace OPTech
 
                             if (!TexFound)
                             {
-                                var texture = new TextureStruct();
-                                Global.OPT.TextureArray.Add(texture);
-                                texture.TextureName = textureName;
-                                texture.CreateTexture(Global.OpenGL);
+                                var newTexture = new TextureStruct();
+                                Global.OPT.TextureArray.Add(newTexture);
+                                newTexture.TextureName = textureName;
+                                newTexture.CreateTexture(Global.OpenGL);
 
-                                Global.frmtexture.transtexturelist.AddCheck("TEX");
-                                Global.frmtexture.illumtexturelist.AddCheck("TEX");
+                                Global.frmtexture.transtexturelist.AddCheck(string.Empty);
+                                Global.frmtexture.illumtexturelist.AddCheck(string.Empty);
+
+                                Global.OPT.SortTextures();
 
                                 for (int EachTexture = 0; EachTexture < Global.OPT.TextureArray.Count; EachTexture++)
                                 {
-                                    string textureAmountString = EachTexture.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0');
-                                    Global.frmtexture.transtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
-                                    Global.frmtexture.illumtexturelist.SetCheck(EachTexture, "TEX" + textureAmountString);
+                                    var texture = Global.OPT.TextureArray[EachTexture];
+
+                                    Global.frmtexture.transtexturelist.SetCheck(EachTexture, texture.BaseName);
+                                    Global.frmtexture.illumtexturelist.SetCheck(EachTexture, texture.BaseName);
                                 }
                             }
                         }

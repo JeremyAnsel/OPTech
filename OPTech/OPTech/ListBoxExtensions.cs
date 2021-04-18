@@ -365,6 +365,46 @@ namespace OPTech
             }
         }
 
+        public static bool IsChecked(this ListBox list, int index)
+        {
+            if (index == -1)
+            {
+                return false;
+            }
+
+            var checkBox = list.Items[index] as CheckBox;
+
+            if (checkBox == null)
+            {
+                return false;
+            }
+
+            return checkBox.IsChecked.Value;
+        }
+
+        public static Tuple<string, bool>[] GetAllCheck(this ListBox list)
+        {
+            var array = new Tuple<string, bool>[list.Items.Count];
+
+            for (int i = 0; i < list.Items.Count; i++)
+            {
+                array[i] = Tuple.Create(list.GetText(i), list.IsChecked(i));
+            }
+
+            return array;
+        }
+
+        public static void SetAllCheck(this ListBox list, Tuple<string, bool>[] array)
+        {
+            list.Items.Clear();
+
+            for (int index = 0; index < array.Length; index++)
+            {
+                var item = array[index];
+                list.AddCheck(item.Item1, item.Item2);
+            }
+        }
+
         public static void AddCheck(this ListBox list, string newItem)
         {
             var checkBox = new CheckBox
@@ -376,6 +416,23 @@ namespace OPTech
                 IsEnabled = false,
                 Foreground = System.Windows.Media.Brushes.Black,
                 Background = System.Windows.Media.Brushes.White
+            };
+
+            list.Items.Add(checkBox);
+        }
+
+        public static void AddCheck(this ListBox list, string newItem, bool isChecked)
+        {
+            var checkBox = new CheckBox
+            {
+                Content = new TextBlock
+                {
+                    Text = newItem
+                },
+                IsEnabled = false,
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White,
+                IsChecked = isChecked
             };
 
             list.Items.Add(checkBox);
@@ -441,6 +498,20 @@ namespace OPTech
             }
 
             checkBox.IsChecked = selected;
+        }
+
+        public static void SortText(this ListBox list)
+        {
+            Tuple<string, bool>[] allText = list.GetAllTextWithSelected();
+            var sortedText = allText.OrderBy(t => t.Item1).ToArray();
+            list.SetAllTextWithSelected(sortedText);
+        }
+
+        public static void SortCheck(this ListBox list)
+        {
+            Tuple<string, bool>[] all = list.GetAllCheck();
+            var sorted = all.OrderBy(t => t.Item1).ToArray();
+            list.SetAllCheck(sorted);
         }
 
         private static string AddTextLineNumber(int index, string item)

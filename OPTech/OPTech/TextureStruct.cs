@@ -17,6 +17,14 @@ namespace OPTech
         public List<FilterStruct> TransValues { get; } = new List<FilterStruct>();
         public List<FilterStruct> IllumValues { get; } = new List<FilterStruct>();
 
+        public string BaseName
+        {
+            get
+            {
+                return System.IO.Path.GetFileNameWithoutExtension(this.TextureName);
+            }
+        }
+
         public string FullTexturePath
         {
             get

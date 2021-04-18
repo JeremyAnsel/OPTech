@@ -156,5 +156,10 @@ namespace OPTech
 
             return null;
         }
+
+        public void SortTextures()
+        {
+            this.TextureArray.Sort((t1, t2) => t1.BaseName.CompareTo(t2.BaseName));
+        }
     }
 }

@@ -9051,65 +9051,69 @@ namespace OPTech
                 whichLOD = 1;
             }
 
+            Global.OPT.UnselectAll();
             Global.frmgeometry.meshlist.SelectedIndex = -1;
 
-            for (int EachMesh = 0; EachMesh < Global.frmgeometry.meshlist.Items.Count; EachMesh++)
-            {
-                if (whichLOD == 0)
-                {
-                    if (Global.OPT.MeshArray[EachMesh].LODArray[whichLOD].Selected)
-                    {
-                        Global.frmgeometry.meshlist.AddToSelection(EachMesh);
-                    }
-                }
-                else
-                {
-                    if (Global.OPT.MeshArray[EachMesh].LODArray.Count == 2)
-                    {
-                        if (Global.OPT.MeshArray[EachMesh].LODArray[whichLOD].Selected)
-                        {
-                            Global.frmgeometry.meshlist.AddToSelection(EachMesh);
-                        }
-                    }
-                }
-            }
+            //for (int EachMesh = 0; EachMesh < Global.frmgeometry.meshlist.Items.Count; EachMesh++)
+            //{
+            //    if (whichLOD == 0)
+            //    {
+            //        if (Global.OPT.MeshArray[EachMesh].LODArray[whichLOD].Selected)
+            //        {
+            //            Global.frmgeometry.meshlist.AddToSelection(EachMesh);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (Global.OPT.MeshArray[EachMesh].LODArray.Count == 2)
+            //        {
+            //            if (Global.OPT.MeshArray[EachMesh].LODArray[whichLOD].Selected)
+            //            {
+            //                Global.frmgeometry.meshlist.AddToSelection(EachMesh);
+            //            }
+            //        }
+            //    }
+            //}
 
-            for (int EachMesh = 0; EachMesh < Global.frmgeometry.meshlist.Items.Count; EachMesh++)
-            {
-                if (Global.frmgeometry.meshlist.IsSelected(EachMesh))
-                {
-                    Global.frmgeometry.meshlist.SelectedIndex = EachMesh;
-                    break;
-                }
-            }
+            //for (int EachMesh = 0; EachMesh < Global.frmgeometry.meshlist.Items.Count; EachMesh++)
+            //{
+            //    if (Global.frmgeometry.meshlist.IsSelected(EachMesh))
+            //    {
+            //        Global.frmgeometry.meshlist.SelectedIndex = EachMesh;
+            //        break;
+            //    }
+            //}
 
-            Global.CX.MeshScreens(Global.frmgeometry.meshlist.SelectedIndex, whichLOD);
+            //Global.CX.MeshScreens(Global.frmgeometry.meshlist.SelectedIndex, whichLOD);
+            Global.CX.MeshScreens(-1, whichLOD);
 
             Global.frmgeometry.facelist.SelectedIndex = -1;
 
-            for (int EachFace = 0; EachFace < Global.frmgeometry.facelist.Items.Count; EachFace++)
-            {
-                if (Global.frmgeometry.facelist.IsSelected(EachFace))
-                {
-                    Global.frmgeometry.facelist.SelectedIndex = EachFace;
-                    break;
-                }
-            }
+            //for (int EachFace = 0; EachFace < Global.frmgeometry.facelist.Items.Count; EachFace++)
+            //{
+            //    if (Global.frmgeometry.facelist.IsSelected(EachFace))
+            //    {
+            //        Global.frmgeometry.facelist.SelectedIndex = EachFace;
+            //        break;
+            //    }
+            //}
 
-            if (Global.frmgeometry.facelist.SelectedIndex == -1)
-            {
-                Global.CX.FaceScreens(-1, whichLOD, -1);
-            }
-            else
-            {
-                string text = Global.frmgeometry.facelist.GetSelectedText();
+            Global.CX.FaceScreens(-1, whichLOD, -1);
 
-                int thisMesh;
-                int thisFace;
-                StringHelpers.SplitFace(text, out thisMesh, out thisFace);
+            //if (Global.frmgeometry.facelist.SelectedIndex == -1)
+            //{
+            //    Global.CX.FaceScreens(-1, whichLOD, -1);
+            //}
+            //else
+            //{
+            //    string text = Global.frmgeometry.facelist.GetSelectedText();
 
-                Global.CX.FaceScreens(thisMesh, whichLOD, thisFace);
-            }
+            //    int thisMesh;
+            //    int thisFace;
+            //    StringHelpers.SplitFace(text, out thisMesh, out thisFace);
+
+            //    Global.CX.FaceScreens(thisMesh, whichLOD, thisFace);
+            //}
 
             Global.frmgeometry.Xvertexlist.SelectedIndex = -1;
             Global.frmgeometry.Yvertexlist.SelectedIndex = -1;
@@ -9120,37 +9124,39 @@ namespace OPTech
             Global.frmgeometry.Ucoordlist.SelectedIndex = -1;
             Global.frmgeometry.Vcoordlist.SelectedIndex = -1;
 
-            for (int EachVertex = 0; EachVertex < Global.frmgeometry.Xvertexlist.Items.Count; EachVertex++)
-            {
-                if (Global.frmgeometry.Xvertexlist.IsSelected(EachVertex))
-                {
-                    Global.frmgeometry.Xvertexlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Yvertexlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Zvertexlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Ivertnormlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Jvertnormlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Kvertnormlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Ucoordlist.SelectedIndex = EachVertex;
-                    Global.frmgeometry.Vcoordlist.SelectedIndex = EachVertex;
-                    break;
-                }
-            }
+            //for (int EachVertex = 0; EachVertex < Global.frmgeometry.Xvertexlist.Items.Count; EachVertex++)
+            //{
+            //    if (Global.frmgeometry.Xvertexlist.IsSelected(EachVertex))
+            //    {
+            //        Global.frmgeometry.Xvertexlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Yvertexlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Zvertexlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Ivertnormlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Jvertnormlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Kvertnormlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Ucoordlist.SelectedIndex = EachVertex;
+            //        Global.frmgeometry.Vcoordlist.SelectedIndex = EachVertex;
+            //        break;
+            //    }
+            //}
 
-            if (Global.frmgeometry.Xvertexlist.SelectedIndex == -1)
-            {
-                Global.CX.VertexScreens(-1, whichLOD, -1, -1);
-            }
-            else
-            {
-                string text = Global.frmgeometry.Xvertexlist.GetSelectedText();
+            Global.CX.VertexScreens(-1, whichLOD, -1, -1);
 
-                int thisMesh;
-                int thisFace;
-                int thisVertex;
-                StringHelpers.SplitVertex(text, out thisMesh, out thisFace, out thisVertex);
+            //if (Global.frmgeometry.Xvertexlist.SelectedIndex == -1)
+            //{
+            //    Global.CX.VertexScreens(-1, whichLOD, -1, -1);
+            //}
+            //else
+            //{
+            //    string text = Global.frmgeometry.Xvertexlist.GetSelectedText();
 
-                Global.CX.VertexScreens(thisMesh, whichLOD, thisFace, thisVertex);
-            }
+            //    int thisMesh;
+            //    int thisFace;
+            //    int thisVertex;
+            //    StringHelpers.SplitVertex(text, out thisMesh, out thisFace, out thisVertex);
+
+            //    Global.CX.VertexScreens(thisMesh, whichLOD, thisFace, thisVertex);
+            //}
         }
 
         public void dispbar_meshzoomoff_Click(object sender, RoutedEventArgs e)

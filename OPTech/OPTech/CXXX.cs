@@ -1281,7 +1281,19 @@ namespace OPTech
                             {
                                 for (int eachHardpoint = 0; eachHardpoint < eachMesh.HPArray.Count; eachHardpoint++)
                                 {
-                                    Global.frmhardpoint.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1}", eachMeshIndex + 1, eachHardpoint + 1));
+                                    var hardpoint = eachMesh.HPArray[eachHardpoint];
+                                    string hpType;
+
+                                    if (hardpoint.HPType >= 0 && hardpoint.HPType < Global.frmhardpoint.hardpointtypetext.Items.Count)
+                                    {
+                                        hpType = (string)((ComboBoxItem)Global.frmhardpoint.hardpointtypetext.Items[hardpoint.HPType]).Content;
+                                    }
+                                    else
+                                    {
+                                        hpType = hardpoint.HPType.ToString(CultureInfo.InvariantCulture) + "-Unknown";
+                                    }
+
+                                    Global.frmhardpoint.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1} {2}", eachMeshIndex + 1, eachHardpoint + 1, hpType));
                                 }
                             }
                         }

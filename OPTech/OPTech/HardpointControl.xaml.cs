@@ -203,7 +203,19 @@ namespace OPTech
                     {
                         for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                         {
-                            this.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1}", EachMesh + 1, EachHardpoint + 1));
+                            var hardpoint = mesh.HPArray[EachHardpoint];
+                            string hpType;
+
+                            if (hardpoint.HPType >= 0 && hardpoint.HPType < this.hardpointtypetext.Items.Count)
+                            {
+                                hpType = (string)((ComboBoxItem)this.hardpointtypetext.Items[hardpoint.HPType]).Content;
+                            }
+                            else
+                            {
+                                hpType = hardpoint.HPType.ToString(CultureInfo.InvariantCulture) + "-Unknown";
+                            }
+
+                            this.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1} {2}", EachMesh + 1, EachHardpoint + 1, hpType));
                         }
                     }
                 }
@@ -238,7 +250,22 @@ namespace OPTech
                         int thisHardpoint;
                         StringHelpers.SplitHardpoint(wholeLine, out thisMesh, out thisHardpoint);
 
-                        Global.OPT.MeshArray[thisMesh].HPArray[thisHardpoint].HPType = this.hardpointtypetext.SelectedIndex;
+                        var hardpoint = Global.OPT.MeshArray[thisMesh].HPArray[thisHardpoint];
+                        hardpoint.HPType = this.hardpointtypetext.SelectedIndex;
+
+                        string hpType;
+
+                        if (hardpoint.HPType >= 0 && hardpoint.HPType < this.hardpointtypetext.Items.Count)
+                        {
+                            hpType = (string)((ComboBoxItem)this.hardpointtypetext.Items[hardpoint.HPType]).Content;
+                        }
+                        else
+                        {
+                            hpType = hardpoint.HPType.ToString(CultureInfo.InvariantCulture) + "-Unknown";
+                        }
+
+                        this.hardpointlist.SetText(EachHardpoint, string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1} {2}", thisMesh + 1, thisHardpoint + 1, hpType));
+                        this.hardpointlist.SetSelected(EachHardpoint, true);
                     }
                 }
 
@@ -278,7 +305,22 @@ namespace OPTech
                     int thisHardpoint;
                     StringHelpers.SplitHardpoint(wholeLine, out thisMesh, out thisHardpoint);
 
-                    Global.OPT.MeshArray[thisMesh].HPArray[thisHardpoint].HPType = this.hardpointtypetext.SelectedIndex;
+                    var hardpoint = Global.OPT.MeshArray[thisMesh].HPArray[thisHardpoint];
+                    hardpoint.HPType = this.hardpointtypetext.SelectedIndex;
+
+                    string hpType;
+
+                    if (hardpoint.HPType >= 0 && hardpoint.HPType < this.hardpointtypetext.Items.Count)
+                    {
+                        hpType = (string)((ComboBoxItem)this.hardpointtypetext.Items[hardpoint.HPType]).Content;
+                    }
+                    else
+                    {
+                        hpType = hardpoint.HPType.ToString(CultureInfo.InvariantCulture) + "-Unknown";
+                    }
+
+                    this.hardpointlist.SetText(EachHardpoint, string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1} {2}", thisMesh + 1, thisHardpoint + 1, hpType));
+                    this.hardpointlist.SetSelected(EachHardpoint, true);
                 }
             }
 
@@ -650,7 +692,19 @@ namespace OPTech
                         {
                             for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
                             {
-                                this.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1}", EachMesh + 1, EachHardpoint + 1));
+                                var hp = mesh.HPArray[EachHardpoint];
+                                string hpType;
+
+                                if (hp.HPType >= 0 && hp.HPType < this.hardpointtypetext.Items.Count)
+                                {
+                                    hpType = (string)((ComboBoxItem)this.hardpointtypetext.Items[hp.HPType]).Content;
+                                }
+                                else
+                                {
+                                    hpType = hp.HPType.ToString(CultureInfo.InvariantCulture) + "-Unknown";
+                                }
+
+                                this.hardpointlist.AddText(string.Format(CultureInfo.InvariantCulture, "M:{0} HP:{1} {2}", EachMesh + 1, EachHardpoint + 1, hpType));
                             }
                         }
                     }

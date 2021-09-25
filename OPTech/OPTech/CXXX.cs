@@ -1081,6 +1081,50 @@ namespace OPTech
             //'CheckError
         }
 
+        public void MeshListReplicateCopyItems()
+        {
+            Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmhardpoint.meshlist);
+            Global.frmgeometry.meshlist.CopyItems(Global.frmengineglow.meshlist);
+        }
+
+        public void MeshListReplicateSelectedIndex(int meshIndex)
+        {
+            Global.frmgeometry.meshlist.SelectedIndex = meshIndex;
+            Global.frmhitzone.meshlist.SelectedIndex = meshIndex;
+            Global.frmtransformation.meshlist.SelectedIndex = meshIndex;
+            Global.frmhardpoint.meshlist.SelectedIndex = meshIndex;
+            Global.frmengineglow.meshlist.SelectedIndex = meshIndex;
+        }
+
+        public void MeshListReplicateSetSelected(int meshIndex, bool selected)
+        {
+            Global.frmgeometry.meshlist.SetSelected(meshIndex, selected);
+            Global.frmhitzone.meshlist.SetSelected(meshIndex, selected);
+            Global.frmtransformation.meshlist.SetSelected(meshIndex, selected);
+            Global.frmhardpoint.meshlist.SetSelected(meshIndex, selected);
+            Global.frmengineglow.meshlist.SetSelected(meshIndex, selected);
+        }
+
+        public void MeshListReplicateAddToSelection(int meshIndex)
+        {
+            Global.frmgeometry.meshlist.AddToSelection(meshIndex);
+            Global.frmhitzone.meshlist.AddToSelection(meshIndex);
+            Global.frmtransformation.meshlist.AddToSelection(meshIndex);
+            Global.frmhardpoint.meshlist.AddToSelection(meshIndex);
+            Global.frmengineglow.meshlist.AddToSelection(meshIndex);
+        }
+
+        public void MeshListReplicateAddDrawableCheck(string meshName, IDrawableItem newMesh)
+        {
+            Global.frmgeometry.meshlist.AddDrawableCheck(meshName, newMesh, newMesh.Drawable);
+            Global.frmhitzone.meshlist.AddDrawableCheck(meshName, newMesh, newMesh.Drawable);
+            Global.frmtransformation.meshlist.AddDrawableCheck(meshName, newMesh, newMesh.Drawable);
+            Global.frmhardpoint.meshlist.AddDrawableCheck(meshName, newMesh, newMesh.Drawable);
+            Global.frmengineglow.meshlist.AddDrawableCheck(meshName, newMesh, newMesh.Drawable);
+        }
+
         public void MeshScreens(int meshIndex, int lodIndex)
         {
             if (meshIndex != -1)
@@ -1205,9 +1249,7 @@ namespace OPTech
                     Global.frmtransformation.Ydegreetext.Text = mesh.RotDegreeY.ToString(CultureInfo.InvariantCulture);
                     Global.frmtransformation.Zdegreetext.Text = mesh.RotDegreeZ.ToString(CultureInfo.InvariantCulture);
 
-                    Global.frmgeometry.meshlist.AddToSelection(meshIndex);
-                    Global.frmhitzone.meshlist.AddToSelection(meshIndex);
-                    Global.frmtransformation.meshlist.AddToSelection(meshIndex);
+                    Global.CX.MeshListReplicateAddToSelection(meshIndex);
 
                     Global.frmgeometry.facelist.Items.Clear();
                     Global.frmgeometry.Xvertexlist.Items.Clear();
@@ -1446,9 +1488,7 @@ namespace OPTech
                 Global.frmtransformation.Ydegreetext.Text = string.Empty;
                 Global.frmtransformation.Zdegreetext.Text = string.Empty;
 
-                Global.frmgeometry.meshlist.SelectedIndex = meshIndex;
-                Global.frmhitzone.meshlist.SelectedIndex = meshIndex;
-                Global.frmtransformation.meshlist.SelectedIndex = meshIndex;
+                Global.CX.MeshListReplicateSelectedIndex(meshIndex);
                 Global.frmgeometry.facelist.Items.Clear();
                 Global.frmgeometry.Xvertexlist.Items.Clear();
                 Global.frmgeometry.Yvertexlist.Items.Clear();
@@ -1640,9 +1680,7 @@ namespace OPTech
                     }
                 }
 
-                //Global.frmgeometry.meshlist.SelectedIndex = meshIndex;
-                //Global.frmhitzone.meshlist.SelectedIndex = meshIndex;
-                //Global.frmtransformation.meshlist.SelectedIndex = meshIndex;
+                //Global.CX.MeshListReplicateSelectedIndex(meshIndex);
                 //Global.frmgeometry.facelist.SelectedIndex = faceIndex;
                 Global.frmgeometry.Xvertexlist.Items.Clear();
                 Global.frmgeometry.Yvertexlist.Items.Clear();
@@ -2817,9 +2855,7 @@ namespace OPTech
 
                             if (Global.ViewMode == "mesh")
                             {
-                                Global.frmgeometry.meshlist.SetSelected(EachMesh, false);
-                                Global.frmhitzone.meshlist.SetSelected(EachMesh, false);
-                                Global.frmtransformation.meshlist.SetSelected(EachMesh, false);
+                                Global.CX.MeshListReplicateSetSelected(EachMesh, false);
                                 lod.Selected = false;
                             }
 
@@ -2845,9 +2881,7 @@ namespace OPTech
 
                     if (Global.ViewMode == "mesh")
                     {
-                        Global.frmgeometry.meshlist.SelectedIndex = -1;
-                        Global.frmhitzone.meshlist.SelectedIndex = -1;
-                        Global.frmtransformation.meshlist.SelectedIndex = -1;
+                        Global.CX.MeshListReplicateSelectedIndex(-1);
                         Global.frmgeometry.facelist.SelectedIndex = -1;
                         Global.frmgeometry.Xvertexlist.SelectedIndex = -1;
                         Global.frmgeometry.Yvertexlist.SelectedIndex = -1;
@@ -2914,9 +2948,7 @@ namespace OPTech
                             if ((!shift && !control) || (control && CheckID == Picked))
                             {
                                 lod.Selected = false;
-                                Global.frmgeometry.meshlist.SetSelected(EachMesh, false);
-                                Global.frmhitzone.meshlist.SetSelected(EachMesh, false);
-                                Global.frmtransformation.meshlist.SetSelected(EachMesh, false);
+                                Global.CX.MeshListReplicateSetSelected(EachMesh, false);
 
                                 for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
                                 {
@@ -2950,9 +2982,7 @@ namespace OPTech
 
                                 if (!control)
                                 {
-                                    Global.frmgeometry.meshlist.AddToSelection(EachMesh);
-                                    Global.frmhitzone.meshlist.AddToSelection(EachMesh);
-                                    Global.frmtransformation.meshlist.AddToSelection(EachMesh);
+                                    Global.CX.MeshListReplicateAddToSelection(EachMesh);
                                     lod.Selected = true;
                                 }
                             }
@@ -3013,9 +3043,7 @@ namespace OPTech
                                     {
                                         if (!control)
                                         {
-                                            Global.frmgeometry.meshlist.AddToSelection(EachMesh);
-                                            Global.frmhitzone.meshlist.AddToSelection(EachMesh);
-                                            Global.frmtransformation.meshlist.AddToSelection(EachMesh);
+                                            Global.CX.MeshListReplicateAddToSelection(EachMesh);
                                             face.Selected = true;
                                         }
 
@@ -3121,9 +3149,7 @@ namespace OPTech
                                         {
                                             if (!control)
                                             {
-                                                Global.frmgeometry.meshlist.AddToSelection(EachMesh);
-                                                Global.frmhitzone.meshlist.AddToSelection(EachMesh);
-                                                Global.frmtransformation.meshlist.AddToSelection(EachMesh);
+                                                Global.CX.MeshListReplicateAddToSelection(EachMesh);
 
                                                 for (int EachFaceList = 0; EachFaceList < Global.frmgeometry.facelist.Items.Count; EachFaceList++)
                                                 {

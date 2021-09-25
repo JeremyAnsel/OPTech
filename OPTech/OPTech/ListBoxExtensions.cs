@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace OPTech
@@ -13,9 +14,30 @@ namespace OPTech
         {
             right.Items.Clear();
 
-            foreach (string item in list.GetAllText())
+            for (int i = 0; i < list.Items.Count; i++)
             {
-                right.AddText(item);
+                string text = list.GetText(i);
+                bool isChecked = list.IsChecked(i);
+
+                var checkBox = GetCheckBox(list.Items[i]);
+
+                if (checkBox != null)
+                {
+                    IDrawableItem tag = checkBox.Item1.Tag as IDrawableItem;
+
+                    if (tag == null)
+                    {
+                        right.AddCheck(text, isChecked);
+                    }
+                    else
+                    {
+                        right.AddDrawableCheck(text, tag, isChecked);
+                    }
+                }
+                else
+                {
+                    right.AddText(text);
+                }
             }
 
             if (list.SelectedItems.Count == 0)
@@ -139,7 +161,7 @@ namespace OPTech
             list.SetSelected(index, selected);
         }
 
-        public static void SetSelected(this ListBox list, int index, bool selected)
+        public static void SetSelected(this ListBox list, int index, bool selected, bool scrollIntoView = true)
         {
             if (index == -1)
             {
@@ -163,7 +185,7 @@ namespace OPTech
                 }
             }
 
-            if (selected)
+            if (scrollIntoView && selected)
             {
                 list.ScrollIntoView(item);
             }
@@ -205,24 +227,31 @@ namespace OPTech
 
             var text = item as string;
 
-            if (text != null)
+            if (text == null)
             {
-                return text;
+                var textBlock = item as ListBoxItem;
+                if (textBlock != null)
+                {
+                    text = (string)textBlock.Content;
+                }
             }
 
-            var textBlock = item as ListBoxItem;
-            if (textBlock != null)
+            if (text == null)
             {
-                return RemoveTextLineNumber((string)textBlock.Content);
+                var checkBox = GetCheckBox(item);
+
+                if (checkBox != null)
+                {
+                    text = checkBox.Item2;
+                }
             }
 
-            var checkBox = item as CheckBox;
-            if (checkBox != null)
+            if (text == null)
             {
-                return ((TextBlock)checkBox.Content).Text;
+                throw new NotSupportedException();
             }
 
-            throw new NotSupportedException();
+            return RemoveTextLineNumber(text);
         }
 
         public static string[] GetAllText(this ListBox list)
@@ -261,13 +290,7 @@ namespace OPTech
 
         public static void AddText(this ListBox list, string newItem, bool selected = false)
         {
-            var textBlock = new ListBoxItem
-            {
-                Content = AddTextLineNumber(list.Items.Count, newItem),
-                Foreground = System.Windows.Media.Brushes.Black,
-                Background = System.Windows.Media.Brushes.White
-            };
-
+            var textBlock = list.CreateTextItem(list.Items.Count, newItem);
             list.Items.Add(textBlock);
 
             if (selected)
@@ -320,14 +343,29 @@ namespace OPTech
                 return;
             }
 
-            var textBlock = new ListBoxItem
-            {
-                Content = AddTextLineNumber(index, newItem),
-                Foreground = System.Windows.Media.Brushes.Black,
-                Background = System.Windows.Media.Brushes.White
-            };
+            var checkBox = GetCheckBox(list.Items[index]);
 
-            list.Items[index] = textBlock;
+            if (checkBox == null)
+            {
+                var newTextBlock = list.CreateTextItem(index, newItem);
+                list.Items[index] = newTextBlock;
+            }
+            else
+            {
+                bool isChecked = list.IsChecked(index);
+                IDrawableItem drawableItem = checkBox.Item1.Tag as IDrawableItem;
+
+                if (drawableItem == null)
+                {
+                    var newCheckBox = list.CreateCheckItem(index, newItem, isChecked, true);
+                    list.Items[index] = newCheckBox;
+                }
+                else
+                {
+                    var newCheckBox = list.CreateDrawableCheckItem(index, newItem, drawableItem, isChecked);
+                    list.Items[index] = newCheckBox;
+                }
+            }
         }
 
         public static void SetAllText(this ListBox list, string[] array)
@@ -360,8 +398,12 @@ namespace OPTech
         {
             for (int index = 0; index < list.Items.Count; index++)
             {
-                var item = (ListBoxItem)list.Items[index];
-                item.Content = AddTextLineNumber(index, RemoveTextLineNumber((string)item.Content));
+                string text = list.GetText(index);
+                bool selected = list.IsSelected(index);
+                //text = RemoveTextLineNumber(text);
+                //text = AddTextLineNumber(index, text);
+                list.SetText(index, text);
+                list.SetSelected(index, selected);
             }
         }
 
@@ -372,14 +414,14 @@ namespace OPTech
                 return false;
             }
 
-            var checkBox = list.Items[index] as CheckBox;
+            var checkBox = GetCheckBox(list.Items[index]);
 
             if (checkBox == null)
             {
                 return false;
             }
 
-            return checkBox.IsChecked.Value;
+            return checkBox.Item1.IsChecked.Value;
         }
 
         public static Tuple<string, bool>[] GetAllCheck(this ListBox list)
@@ -407,33 +449,21 @@ namespace OPTech
 
         public static void AddCheck(this ListBox list, string newItem)
         {
-            var checkBox = new CheckBox
-            {
-                Content = new TextBlock
-                {
-                    Text = newItem
-                },
-                IsEnabled = false,
-                Foreground = System.Windows.Media.Brushes.Black,
-                Background = System.Windows.Media.Brushes.White
-            };
+            var checkBox = list.CreateCheckItem(list.Items.Count, newItem, false, true);
 
             list.Items.Add(checkBox);
         }
 
-        public static void AddCheck(this ListBox list, string newItem, bool isChecked)
+        public static void AddCheck(this ListBox list, string newItem, bool isChecked, bool isReadOnly = true)
         {
-            var checkBox = new CheckBox
-            {
-                Content = new TextBlock
-                {
-                    Text = newItem
-                },
-                IsEnabled = false,
-                Foreground = System.Windows.Media.Brushes.Black,
-                Background = System.Windows.Media.Brushes.White,
-                IsChecked = isChecked
-            };
+            var checkBox = list.CreateCheckItem(list.Items.Count, newItem, isChecked, isReadOnly);
+
+            list.Items.Add(checkBox);
+        }
+
+        public static void AddDrawableCheck(this ListBox list, string newItem, IDrawableItem drawableItem, bool isChecked = true)
+        {
+            var checkBox = list.CreateDrawableCheckItem(list.Items.Count, newItem, drawableItem, isChecked);
 
             list.Items.Add(checkBox);
         }
@@ -457,17 +487,7 @@ namespace OPTech
                 return;
             }
 
-            var checkBox = new CheckBox
-            {
-                Content = new TextBlock
-                {
-                    Text = newItem
-                },
-                IsEnabled = false,
-                Foreground = System.Windows.Media.Brushes.Black,
-                Background = System.Windows.Media.Brushes.White
-            };
-
+            var checkBox = list.CreateCheckItem(index, newItem, false, true);
             list.Items[index] = checkBox;
         }
 
@@ -490,14 +510,14 @@ namespace OPTech
                 return;
             }
 
-            var checkBox = list.Items[index] as CheckBox;
+            var checkBox = GetCheckBox(list.Items[index]);
 
             if (checkBox == null)
             {
                 return;
             }
 
-            checkBox.IsChecked = selected;
+            checkBox.Item1.IsChecked = selected;
         }
 
         public static void SortText(this ListBox list)
@@ -522,6 +542,85 @@ namespace OPTech
         private static string RemoveTextLineNumber(string text)
         {
             return text.Substring(text.IndexOf('-') + 2);
+        }
+
+        private static FrameworkElement CreateTextItem(this ListBox list, int index, string newItem)
+        {
+            var textBlock = new ListBoxItem
+            {
+                Content = AddTextLineNumber(index, newItem),
+                Foreground = System.Windows.Media.Brushes.Black,
+                Background = System.Windows.Media.Brushes.White
+            };
+
+            return textBlock;
+        }
+
+        private static FrameworkElement CreateCheckItem(this ListBox list, int index, string newItem, bool isChecked, bool isReadOnly)
+        {
+            var panel = new DockPanel();
+
+            var checkBox = new CheckBox
+            {
+                IsEnabled = !isReadOnly,
+                IsChecked = isChecked,
+                Content = " "
+            };
+
+            var textBlock = new TextBlock
+            {
+                Text = AddTextLineNumber(index, newItem)
+            };
+
+            checkBox.SetValue(DockPanel.DockProperty, Dock.Left);
+            panel.Children.Add(checkBox);
+            panel.Children.Add(textBlock);
+
+            return panel;
+        }
+
+        private static FrameworkElement CreateDrawableCheckItem(this ListBox list, int index, string newItem, IDrawableItem drawableItem, bool isChecked)
+        {
+            var item = list.CreateCheckItem(index, newItem, isChecked, false);
+            var checkBox = GetCheckBox(item).Item1;
+
+            checkBox.Tag = drawableItem;
+            checkBox.Checked += CheckBox_Checked;
+            checkBox.Unchecked += CheckBox_Checked;
+
+            return item;
+        }
+
+        private static void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var drawableItem = checkBox.Tag as IDrawableItem;
+
+            if (drawableItem == null)
+            {
+                return;
+            }
+
+            drawableItem.Drawable = checkBox.IsChecked.Value;
+        }
+
+        private static Tuple<CheckBox, string> GetCheckBox(object item)
+        {
+            var panel = item as DockPanel;
+
+            if (panel == null)
+            {
+                return null;
+            }
+
+            if (panel.Children.Count < 2)
+            {
+                return null;
+            }
+
+            var checkBox = panel.Children[0] as CheckBox;
+            string text = ((TextBlock)panel.Children[1]).Text;
+            return Tuple.Create(checkBox, text);
         }
     }
 }

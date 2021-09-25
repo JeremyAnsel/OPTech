@@ -52,14 +52,14 @@ namespace OPTech
         private void meshlist_KeyUp(object sender, KeyEventArgs e)
         {
             this.meshlist.CopyItems(Global.frmgeometry.meshlist);
-            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
             Global.frmgeometry.meshlist_KeyUp(null, null);
         }
 
         private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
         {
             this.meshlist.CopyItems(Global.frmgeometry.meshlist);
-            this.meshlist.CopyItems(Global.frmhitzone.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
             Global.frmgeometry.meshlist_MouseUp(null, null);
         }
 
@@ -780,6 +780,87 @@ namespace OPTech
             this.Ypivottext_LostFocus(null, null);
             this.Zpivottext.Text = values[2];
             this.Zpivottext_LostFocus(null, null);
+        }
+
+        private void pivottextSetVertex_Click(object sender, RoutedEventArgs e)
+        {
+            if (Global.frmgeometry.meshlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            bool updateCoords = false;
+            float xCoord = 0;
+            float yCoord = 0;
+            float zCoord = 0;
+
+            for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachSelMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    for (int EachSelFace = 0; EachSelFace < lod.FaceArray.Count; EachSelFace++)
+                    {
+                        var face = lod.FaceArray[EachSelFace];
+
+                        if (face.Selected)
+                        {
+                            int polyVerts;
+                            if (face.VertexArray[0].XCoord == face.VertexArray[3].XCoord
+                                && face.VertexArray[0].YCoord == face.VertexArray[3].YCoord
+                                && face.VertexArray[0].ZCoord == face.VertexArray[3].ZCoord)
+                            {
+                                polyVerts = 2;
+                            }
+                            else
+                            {
+                                polyVerts = 3;
+                            }
+
+                            for (int EachSelVertex = 0; EachSelVertex <= polyVerts; EachSelVertex++)
+                            {
+                                var vertex = face.VertexArray[EachSelVertex];
+
+                                if (vertex.Selected)
+                                {
+                                    updateCoords = true;
+                                    xCoord = vertex.XCoord;
+                                    yCoord = vertex.YCoord;
+                                    zCoord = vertex.ZCoord;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (updateCoords)
+            {
+                this.Xpivottext.Text = xCoord.ToString(CultureInfo.InvariantCulture);
+                this.Xpivottext_LostFocus(null, null);
+                this.Ypivottext.Text = yCoord.ToString(CultureInfo.InvariantCulture);
+                this.Ypivottext_LostFocus(null, null);
+                this.Zpivottext.Text = zCoord.ToString(CultureInfo.InvariantCulture);
+                this.Zpivottext_LostFocus(null, null);
+            }
         }
 
         private void axistextCopy_Click(object sender, RoutedEventArgs e)

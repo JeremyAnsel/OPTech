@@ -53,6 +53,20 @@ namespace OPTech
             }
         }
 
+        private void meshlist_KeyUp(object sender, KeyEventArgs e)
+        {
+            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
+            Global.frmgeometry.meshlist_KeyUp(null, null);
+        }
+
+        private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
+            Global.frmgeometry.meshlist_MouseUp(null, null);
+        }
+
         private void engineglowlist_KeyUp(object sender, KeyEventArgs e)
         {
             if (this.engineglowlist.SelectedIndex != -1)

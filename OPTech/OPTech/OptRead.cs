@@ -277,7 +277,7 @@ namespace OPTech
             }
 
             Global.NormalLength = HighestSpan / 16;
-            Global.OrthoZoom = HighestSpan;
+            Global.OrthoZoom = HighestSpan * 0.6f;
 
             Global.Camera.Near = -HighestSpan * 2;
             Global.Camera.Far = HighestSpan * 2;
@@ -994,7 +994,7 @@ namespace OPTech
                 var mesh = new MeshStruct();
                 Global.OPT.MeshArray.Add(mesh);
                 mesh.Drawable = true;
-                Global.frmgeometry.meshlist.AddText(string.Format(CultureInfo.InvariantCulture, "MESH {0}", Global.OPT.MeshArray.Count));
+                Global.frmgeometry.meshlist.AddDrawableCheck(string.Format(CultureInfo.InvariantCulture, "MESH {0}", Global.OPT.MeshArray.Count), mesh, true);
                 ScrollFile = 18;
                 int ZJJMesh = file.ReadInt32(ScrollFile);
                 ScrollFile = ZJJMesh - GlobalOffset;
@@ -1231,8 +1231,7 @@ namespace OPTech
                 }
             }
 
-            Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
-            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
         }
 
         public static void WriteTexVertex(System.IO.BinaryReader file)

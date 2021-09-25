@@ -87,9 +87,12 @@
                     <Label Content="z" FontWeight="Bold" Height="24" Target="{Binding ElementName=Zpivottext}" />
                     <TextBox x:Name="Zpivottext" Height="29" ToolTip="Z pivot" PreviewKeyDown="Zpivottext_PreviewKeyDown" LostFocus="Zpivottext_LostFocus" />
                 </StackPanel>
-                <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="pivottextCopy_Click" />
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="pivottextPaste_Click" />
+                <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="pivottextCopy_Click" />
+                        <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="pivottextPaste_Click" />
+                    </StackPanel>
+                    <Button Width="55" Height="24" Margin="0 5" Content="Set point" ToolTip="Set selected point/vertex to pivot" Click="pivottextSetVertex_Click" />
                 </StackPanel>
                 <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Width="130">
                     <TextBlock Text="Rotation:" FontWeight="Bold" Height="24" />

@@ -5,9 +5,10 @@ using System.Text;
 
 namespace OPTech
 {
-    public class MeshStruct
+    public class MeshStruct : IDrawableItem
     {
-        public bool Drawable;
+        public bool Drawable { get; set; }
+
         public int HitType;
         public int HitExp;
 

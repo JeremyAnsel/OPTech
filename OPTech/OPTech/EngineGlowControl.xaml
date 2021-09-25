@@ -23,20 +23,28 @@
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>
+                <ListBox x:Name="meshlist"
+                     Grid.Column="0"
+                     Grid.Row="0"
+                     ToolTip="Mesh List"
+                     SelectionMode="Extended"
+                     KeyUp="meshlist_KeyUp"
+                     MouseUp="meshlist_MouseUp" />
                 <ListBox x:Name="engineglowlist"
-                         Grid.Column="0"
+                         Grid.Column="1"
                          Grid.Row="0"
                          ToolTip="Engine Glow List"
                          SelectionMode="Extended"
                          KeyUp="engineglowlist_KeyUp"
                          MouseUp="engineglowlist_MouseUp" />
-                <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
+                <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
                     <Button x:Name="egdeletebut" Margin="20 5" Height="30" Content="Delete" Click="egdeletebut_Click" />
                     <Button x:Name="egcopybut" Margin="20 5" Height="30" Content="Copy" Click="egcopybut_Click" />
                     <Button x:Name="egpastebut" Margin="20 5" Height="30" Content="Paste" Click="egpastebut_Click" />

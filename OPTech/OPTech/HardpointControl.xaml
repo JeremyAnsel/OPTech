@@ -25,20 +25,28 @@
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>
+                <ListBox x:Name="meshlist"
+                     Grid.Column="0"
+                     Grid.Row="0"
+                     ToolTip="Mesh List"
+                     SelectionMode="Extended"
+                     KeyUp="meshlist_KeyUp"
+                     MouseUp="meshlist_MouseUp" />
                 <ListBox x:Name="hardpointlist"
-                         Grid.Column="0"
+                         Grid.Column="1"
                          Grid.Row="0"
                          ToolTip="Hardpoint List"
                          SelectionMode="Extended"
                          KeyUp="hardpointlist_KeyUp"
                          MouseUp="hardpointlist_MouseUp" />
-                <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">
+                <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
                     <Button x:Name="hpdeletebut" Margin="20 5" Height="30" Content="Delete" Click="hpdeletebut_Click" />
                     <Button x:Name="hpcopybut" Margin="20 5" Height="30" Content="Copy" Click="hpcopybut_Click" />
                     <Button x:Name="hppastebut" Margin="20 5" Height="30" Content="Paste" Click="hppastebut_Click" />

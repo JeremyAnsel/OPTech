@@ -97,6 +97,7 @@
     <Compile Include="HitzoneControl.xaml.cs">
       <DependentUpon>HitzoneControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IDrawableItem.cs" />
     <Compile Include="ImageHelpers.cs" />
     <Compile Include="ListBoxExtensions.cs" />
     <Compile Include="LODStruct.cs" />

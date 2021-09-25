@@ -170,7 +170,16 @@ namespace OPTech
             Global.frmtexture.transtexturelist.SetAllText(this.transtexturelist);
             Global.frmtexture.illumtexturelist.SetAllText(this.illumtexturelist);
 
-            Global.frmgeometry.meshlist.SetAllTextWithSelected(this.meshlist);
+            //Global.frmgeometry.meshlist.SetAllTextWithSelected(this.meshlist);
+            Global.frmgeometry.meshlist.Items.Clear();
+
+            for (int index = 0; index < this.OPT.MeshArray.Count; index++)
+            {
+                var mesh = this.OPT.MeshArray[index];
+                Global.frmgeometry.meshlist.AddDrawableCheck(this.meshlist[index].Item1, mesh, mesh.Drawable);
+                Global.frmgeometry.meshlist.SetSelected(index, this.meshlist[index].Item2, false);
+            }
+
             Global.frmgeometry.facelist.SetAllTextWithSelected(this.facelist);
             Global.frmgeometry.Xvertexlist.SetAllTextWithSelected(this.Xvertexlist);
             Global.frmgeometry.Yvertexlist.SetAllTextWithSelected(this.Yvertexlist);
@@ -183,8 +192,7 @@ namespace OPTech
             Global.frmhardpoint.hardpointlist.SetAllTextWithSelected(this.hardpointlist);
             Global.frmengineglow.engineglowlist.SetAllTextWithSelected(this.engineglowlist);
 
-            Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
-            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             if (Global.frmgeometry.meshlist.SelectedIndex != -1)
             {

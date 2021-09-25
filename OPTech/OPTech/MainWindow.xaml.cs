@@ -672,9 +672,7 @@ namespace OPTech
                 {
                     var lod = mesh.LODArray[whichLOD];
 
-                    Global.frmgeometry.meshlist.SetSelected(meshIndex, false);
-                    Global.frmhitzone.meshlist.SetSelected(meshIndex, false);
-                    Global.frmtransformation.meshlist.SetSelected(meshIndex, false);
+                    Global.CX.MeshListReplicateSetSelected(meshIndex, false);
                     lod.Selected = false;
 
                     for (int faceIndex = 0; faceIndex < lod.FaceArray.Count; faceIndex++)
@@ -1194,7 +1192,9 @@ namespace OPTech
                 Global.ModelChanged = true;
             }
 
+            double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
             Global.CX.MeshScreens(this.frmgeometry.meshlist.SelectedIndex, whichLOD);
 
             if (this.frmgeometry.facelist.SelectedIndex != -1)
@@ -1478,7 +1478,9 @@ namespace OPTech
                 Global.ModelChanged = true;
             }
 
+            double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
             Global.CX.MeshScreens(this.frmgeometry.meshlist.SelectedIndex, whichLOD);
 
             if (this.frmgeometry.facelist.SelectedIndex != -1)
@@ -1595,8 +1597,7 @@ namespace OPTech
                 Global.frmgeometry.meshlist.SetSelected(meshIndex, selected);
             }
 
-            Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
-            Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             Global.ModelChanged = true;
             UndoStack.Push("name meshes");
@@ -2368,7 +2369,7 @@ namespace OPTech
                     mesh.Drawable = true;
                     string meshNum = currentLine;
                     currentLine = file.ReadLine();
-                    this.frmgeometry.meshlist.AddText(meshNum);
+                    this.frmgeometry.meshlist.AddDrawableCheck(meshNum, mesh);
                     int numLods = int.Parse(currentLine, CultureInfo.InvariantCulture);
                     currentLine = file.ReadLine();
                     mesh.LODArray.Capacity = numLods;
@@ -2736,8 +2737,7 @@ namespace OPTech
                 }
             }
 
-            this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
-            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             // TODO
             Global.OPT.SortTextures();
@@ -3173,7 +3173,7 @@ namespace OPTech
                         lod.CloakDist = 1000;
                         var face = new FaceStruct();
                         lod.FaceArray.Add(face);
-                        this.frmgeometry.meshlist.AddText(MeshName);
+                        this.frmgeometry.meshlist.AddDrawableCheck(MeshName, mesh, true);
 
                         while (Dummy != "10")
                         {
@@ -3362,8 +3362,7 @@ namespace OPTech
                 while (Dummy == "0");
             }
 
-            this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
-            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             // TODO
             Global.OPT.SortTextures();
@@ -3508,7 +3507,7 @@ namespace OPTech
                         Global.MeshIDQueue++;
                         lod.ID = Global.MeshIDQueue;
                         lod.CloakDist = 1000;
-                        this.frmgeometry.meshlist.AddText(string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.frmgeometry.meshlist.Items.Count + 1));
+                        this.frmgeometry.meshlist.AddDrawableCheck(string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.frmgeometry.meshlist.Items.Count + 1), mesh, true);
                         SType = GetWord(file);
                     }
 
@@ -3659,8 +3658,7 @@ namespace OPTech
                 }
             }
 
-            this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
-            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             // TODO
             Global.OPT.SortTextures();
@@ -3768,7 +3766,7 @@ namespace OPTech
                     mesh.Drawable = true;
                     string MeshNum = currentLine;
                     currentLine = file.ReadLine();
-                    this.frmgeometry.meshlist.AddText(MeshNum);
+                    this.frmgeometry.meshlist.AddDrawableCheck(MeshNum, mesh, true);
                     int numLods = int.Parse(currentLine, CultureInfo.InvariantCulture);
                     currentLine = file.ReadLine();
                     mesh.LODArray.Capacity = numLods;
@@ -4128,8 +4126,7 @@ namespace OPTech
                 }
             }
 
-            this.frmgeometry.meshlist.CopyItems(this.frmhitzone.meshlist);
-            this.frmgeometry.meshlist.CopyItems(this.frmtransformation.meshlist);
+            Global.CX.MeshListReplicateCopyItems();
 
             // TODO
             Global.OPT.SortTextures();

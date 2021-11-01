@@ -11834,7 +11834,7 @@ namespace OPTech
             if (!System.IO.File.Exists(fileName))
             {
                 this.texturepreview.Source = null;
-                Xceed.Wpf.Toolkit.MessageBox.Show(Global.frmoptech, string.Format(CultureInfo.InvariantCulture, "The texture \"{0}\" is mising.", textureName));
+                Xceed.Wpf.Toolkit.MessageBox.Show(Global.frmoptech, string.Format(CultureInfo.InvariantCulture, "The texture \"{0}\" is missing.", textureName));
                 return;
             }
 

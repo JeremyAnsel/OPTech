@@ -10,13 +10,13 @@ namespace OPTech
 {
     static class ListBoxExtensions
     {
-        public static void CopyItems(this ListBox list, ListBox right)
+        public static void CopyItems(this ListBox list, ListBox right, bool useIndex = true)
         {
             right.Items.Clear();
 
             for (int i = 0; i < list.Items.Count; i++)
             {
-                string text = list.GetText(i);
+                string text = list.GetText(i, useIndex);
                 bool isChecked = list.IsChecked(i);
 
                 var checkBox = GetCheckBox(list.Items[i]);
@@ -27,7 +27,7 @@ namespace OPTech
 
                     if (tag == null)
                     {
-                        right.AddCheck(text, isChecked);
+                        right.AddCheck(text, isChecked, true, useIndex);
                     }
                     else
                     {
@@ -36,7 +36,7 @@ namespace OPTech
                 }
                 else
                 {
-                    right.AddText(text);
+                    right.AddText(text, false, useIndex);
                 }
             }
 
@@ -71,9 +71,9 @@ namespace OPTech
             list.AddToSelection(list.Items.IndexOf(list.SelectedItems.Cast<object>().Last()));
         }
 
-        public static void AddToSelection(this ListBox list, string text)
+        public static void AddToSelection(this ListBox list, string text, bool useIndex = true)
         {
-            int index = list.GetTextIndex(text);
+            int index = list.GetTextIndex(text, useIndex);
 
             if (index == -1)
             {
@@ -117,9 +117,9 @@ namespace OPTech
             //list.ScrollIntoView(list.SelectedItem);
         }
 
-        public static bool IsSelected(this ListBox list, string text)
+        public static bool IsSelected(this ListBox list, string text, bool useIndex = true)
         {
-            int index = list.GetTextIndex(text);
+            int index = list.GetTextIndex(text, useIndex);
 
             if (index == -1)
             {
@@ -149,9 +149,9 @@ namespace OPTech
             return list.SelectedItems.Contains(list.Items[index]);
         }
 
-        public static void SetSelected(this ListBox list, string text, bool selected)
+        public static void SetSelected(this ListBox list, string text, bool selected, bool useIndex = true)
         {
-            int index = list.GetTextIndex(text);
+            int index = list.GetTextIndex(text, useIndex);
 
             if (index == -1)
             {
@@ -191,7 +191,7 @@ namespace OPTech
             }
         }
 
-        public static int GetTextIndex(this ListBox list, string text)
+        public static int GetTextIndex(this ListBox list, string text, bool useIndex = true)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -200,7 +200,7 @@ namespace OPTech
 
             for (int i = 0; i < list.Items.Count; i++)
             {
-                string currentText = list.GetText(i);
+                string currentText = list.GetText(i, useIndex);
 
                 if (string.Equals(currentText, text))
                 {
@@ -211,7 +211,7 @@ namespace OPTech
             return -1;
         }
 
-        public static string GetText(this ListBox list, int index)
+        public static string GetText(this ListBox list, int index, bool useIndex = true)
         {
             if (index == -1)
             {
@@ -251,46 +251,51 @@ namespace OPTech
                 throw new NotSupportedException();
             }
 
-            return RemoveTextLineNumber(text);
+            if (list.ItemsSource != null)
+            {
+                useIndex = false;
+            }
+
+            return useIndex ? RemoveTextLineNumber(text) : text;
         }
 
-        public static string[] GetAllText(this ListBox list)
+        public static string[] GetAllText(this ListBox list, bool useIndex = true)
         {
             var array = new string[list.Items.Count];
 
             for (int i = 0; i < list.Items.Count; i++)
             {
-                array[i] = list.GetText(i);
+                array[i] = list.GetText(i, useIndex);
             }
 
             return array;
         }
 
-        public static Tuple<string, bool>[] GetAllTextWithSelected(this ListBox list)
+        public static Tuple<string, bool>[] GetAllTextWithSelected(this ListBox list, bool useIndex = true)
         {
             var array = new Tuple<string, bool>[list.Items.Count];
 
             for (int i = 0; i < list.Items.Count; i++)
             {
-                array[i] = Tuple.Create(list.GetText(i), list.IsSelected(i));
+                array[i] = Tuple.Create(list.GetText(i, useIndex), list.IsSelected(i));
             }
 
             return array;
         }
 
-        public static string GetSelectedText(this ListBox list)
+        public static string GetSelectedText(this ListBox list, bool useIndex = true)
         {
             if (list.SelectedIndex == -1)
             {
                 return null;
             }
 
-            return list.GetText(list.SelectedIndex);
+            return list.GetText(list.SelectedIndex, useIndex);
         }
 
-        public static void AddText(this ListBox list, string newItem, bool selected = false)
+        public static void AddText(this ListBox list, string newItem, bool selected = false, bool useIndex = true)
         {
-            var textBlock = list.CreateTextItem(list.Items.Count, newItem);
+            var textBlock = list.CreateTextItem(list.Items.Count, newItem, useIndex);
             list.Items.Add(textBlock);
 
             if (selected)
@@ -306,37 +311,37 @@ namespace OPTech
             }
         }
 
-        public static void AddAllText(this ListBox list, string[] array)
+        public static void AddAllText(this ListBox list, string[] array, bool useIndex = true)
         {
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item);
+                list.AddText(item, useIndex);
             }
         }
 
-        public static void AddAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array)
+        public static void AddAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array, bool useIndex = true)
         {
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item.Item1, item.Item2);
+                list.AddText(item.Item1, item.Item2, useIndex);
             }
         }
 
-        public static void SetText(this ListBox list, string text, string newItem)
+        public static void SetText(this ListBox list, string text, string newItem, bool useIndex = true)
         {
-            int index = list.GetTextIndex(text);
+            int index = list.GetTextIndex(text, useIndex);
 
             if (index == -1)
             {
                 return;
             }
 
-            list.SetText(index, newItem);
+            list.SetText(index, newItem, useIndex);
         }
 
-        public static void SetText(this ListBox list, int index, string newItem)
+        public static void SetText(this ListBox list, int index, string newItem, bool useIndex = true)
         {
             if (index == -1)
             {
@@ -347,7 +352,7 @@ namespace OPTech
 
             if (checkBox == null)
             {
-                var newTextBlock = list.CreateTextItem(index, newItem);
+                var newTextBlock = list.CreateTextItem(index, newItem, useIndex);
                 list.Items[index] = newTextBlock;
             }
             else
@@ -357,7 +362,7 @@ namespace OPTech
 
                 if (drawableItem == null)
                 {
-                    var newCheckBox = list.CreateCheckItem(index, newItem, isChecked, true);
+                    var newCheckBox = list.CreateCheckItem(index, newItem, isChecked, true, useIndex);
                     list.Items[index] = newCheckBox;
                 }
                 else
@@ -368,41 +373,39 @@ namespace OPTech
             }
         }
 
-        public static void SetAllText(this ListBox list, string[] array)
+        public static void SetAllText(this ListBox list, string[] array, bool useIndex = true)
         {
             list.Items.Clear();
 
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item);
+                list.AddText(item, useIndex);
             }
 
             list.ScrollIntoView(list.SelectedItem);
         }
 
-        public static void SetAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array)
+        public static void SetAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array, bool useIndex = true)
         {
             list.Items.Clear();
 
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item.Item1, item.Item2);
+                list.AddText(item.Item1, item.Item2, useIndex);
             }
 
             list.ScrollIntoView(list.SelectedItem);
         }
 
-        public static void UpdateTextLineNumbers(this ListBox list)
+        public static void UpdateTextLineNumbers(this ListBox list, bool useIndex = true)
         {
             for (int index = 0; index < list.Items.Count; index++)
             {
-                string text = list.GetText(index);
+                string text = list.GetText(index, useIndex);
                 bool selected = list.IsSelected(index);
-                //text = RemoveTextLineNumber(text);
-                //text = AddTextLineNumber(index, text);
-                list.SetText(index, text);
+                list.SetText(index, text, useIndex);
                 list.SetSelected(index, selected);
             }
         }
@@ -424,39 +427,32 @@ namespace OPTech
             return checkBox.Item1.IsChecked.Value;
         }
 
-        public static Tuple<string, bool>[] GetAllCheck(this ListBox list)
+        public static Tuple<string, bool>[] GetAllCheck(this ListBox list, bool useIndex = true)
         {
             var array = new Tuple<string, bool>[list.Items.Count];
 
             for (int i = 0; i < list.Items.Count; i++)
             {
-                array[i] = Tuple.Create(list.GetText(i), list.IsChecked(i));
+                array[i] = Tuple.Create(list.GetText(i, useIndex), list.IsChecked(i));
             }
 
             return array;
         }
 
-        public static void SetAllCheck(this ListBox list, Tuple<string, bool>[] array)
+        public static void SetAllCheck(this ListBox list, Tuple<string, bool>[] array, bool isReadOnly = true, bool useIndex = true)
         {
             list.Items.Clear();
 
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddCheck(item.Item1, item.Item2);
+                list.AddCheck(item.Item1, item.Item2, isReadOnly, useIndex);
             }
         }
 
-        public static void AddCheck(this ListBox list, string newItem)
+        public static void AddCheck(this ListBox list, string newItem, bool isChecked = false, bool isReadOnly = true, bool useIndex = true)
         {
-            var checkBox = list.CreateCheckItem(list.Items.Count, newItem, false, true);
-
-            list.Items.Add(checkBox);
-        }
-
-        public static void AddCheck(this ListBox list, string newItem, bool isChecked, bool isReadOnly = true)
-        {
-            var checkBox = list.CreateCheckItem(list.Items.Count, newItem, isChecked, isReadOnly);
+            var checkBox = list.CreateCheckItem(list.Items.Count, newItem, isChecked, isReadOnly, useIndex);
 
             list.Items.Add(checkBox);
         }
@@ -468,26 +464,26 @@ namespace OPTech
             list.Items.Add(checkBox);
         }
 
-        public static void SetCheck(this ListBox list, string text, string newItem)
+        public static void SetCheck(this ListBox list, string text, string newItem, bool useIndex = true)
         {
-            int index = list.GetTextIndex(text);
+            int index = list.GetTextIndex(text, useIndex);
 
             if (index == -1)
             {
                 return;
             }
 
-            list.SetCheck(index, newItem);
+            list.SetCheck(index, newItem, useIndex);
         }
 
-        public static void SetCheck(this ListBox list, int index, string newItem)
+        public static void SetCheck(this ListBox list, int index, string newItem, bool useIndex = true)
         {
             if (index == -1)
             {
                 return;
             }
 
-            var checkBox = list.CreateCheckItem(index, newItem, false, true);
+            var checkBox = list.CreateCheckItem(index, newItem, false, true, useIndex);
             list.Items[index] = checkBox;
         }
 
@@ -544,11 +540,11 @@ namespace OPTech
             return text.Substring(text.IndexOf('-') + 2);
         }
 
-        private static FrameworkElement CreateTextItem(this ListBox list, int index, string newItem)
+        private static FrameworkElement CreateTextItem(this ListBox list, int index, string newItem, bool useIndex)
         {
             var textBlock = new ListBoxItem
             {
-                Content = AddTextLineNumber(index, newItem),
+                Content = useIndex ? AddTextLineNumber(index, newItem) : newItem,
                 Foreground = System.Windows.Media.Brushes.Black,
                 Background = System.Windows.Media.Brushes.White
             };
@@ -556,7 +552,7 @@ namespace OPTech
             return textBlock;
         }
 
-        private static FrameworkElement CreateCheckItem(this ListBox list, int index, string newItem, bool isChecked, bool isReadOnly)
+        private static FrameworkElement CreateCheckItem(this ListBox list, int index, string newItem, bool isChecked, bool isReadOnly, bool useIndex)
         {
             var panel = new DockPanel();
 
@@ -569,7 +565,7 @@ namespace OPTech
 
             var textBlock = new TextBlock
             {
-                Text = AddTextLineNumber(index, newItem)
+                Text = useIndex ? AddTextLineNumber(index, newItem) : newItem
             };
 
             checkBox.SetValue(DockPanel.DockProperty, Dock.Left);
@@ -581,7 +577,7 @@ namespace OPTech
 
         private static FrameworkElement CreateDrawableCheckItem(this ListBox list, int index, string newItem, IDrawableItem drawableItem, bool isChecked)
         {
-            var item = list.CreateCheckItem(index, newItem, isChecked, false);
+            var item = list.CreateCheckItem(index, newItem, isChecked, false, true);
             var checkBox = GetCheckBox(item).Item1;
 
             checkBox.Tag = drawableItem;

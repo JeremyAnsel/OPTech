@@ -67,6 +67,11 @@ namespace OPTech
             }
         }
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Global.CX.MeshListReplicateCopyItems(this.meshlist);
+        }
+
         private void meshlist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (this.meshlist.SelectedIndex == -1)
@@ -98,9 +103,9 @@ namespace OPTech
             }
         }
 
-        private void meshlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        internal static void MeshlistSelectionChanged(ListBox meshlist)
         {
-            if (this.meshlist.SelectedIndex == -1)
+            if (meshlist.SelectedIndex == -1)
             {
                 return;
             }
@@ -126,7 +131,7 @@ namespace OPTech
 
                 for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
                 {
-                    if (!this.meshlist.IsSelected(meshIndex))
+                    if (!meshlist.IsSelected(meshIndex))
                     {
                         continue;
                     }
@@ -220,9 +225,11 @@ namespace OPTech
                 Global.Camera.ObjectTranslate(-centerX, -centerY, -centerZ);
                 Global.CX.CreateCall();
             }
+
+            meshlist.ScrollIntoView(meshlist.SelectedItem);
         }
 
-        internal void meshlist_KeyUp(object sender, KeyEventArgs e)
+        internal static void MeshlistKeyUp(ListBox meshlist)
         {
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
 
@@ -236,9 +243,9 @@ namespace OPTech
                 whichLOD = 1;
             }
 
-            if (this.meshlist.SelectedIndex != -1)
+            if (meshlist.SelectedIndex != -1)
             {
-                this.meshlist.UpdateSelectedItems();
+                meshlist.UpdateSelectedItems();
 
                 int indexMesh = -1;
 
@@ -250,7 +257,7 @@ namespace OPTech
                     {
                         var lod = mesh.LODArray[whichLOD];
 
-                        if (this.meshlist.SelectedItems.Count == 1 && !shift)
+                        if (meshlist.SelectedItems.Count == 1 && !shift)
                         {
                             lod.Selected = false;
 
@@ -279,9 +286,9 @@ namespace OPTech
                             }
                         }
 
-                        lod.Selected = this.meshlist.IsSelected(EachMesh);
+                        lod.Selected = meshlist.IsSelected(EachMesh);
 
-                        if (EachMesh == this.meshlist.SelectedIndex)
+                        if (EachMesh == meshlist.SelectedIndex)
                         {
                             indexMesh = EachMesh;
                         }
@@ -290,7 +297,7 @@ namespace OPTech
 
                 Global.CX.MeshScreens(indexMesh, whichLOD);
 
-                if (this.meshlist.SelectedItems.Count == 1)
+                if (meshlist.SelectedItems.Count == 1)
                 {
                     Global.CX.FaceScreens(indexMesh, whichLOD, -1);
                     Global.CX.VertexScreens(indexMesh, whichLOD, -1, -1);
@@ -299,15 +306,11 @@ namespace OPTech
                 Global.CX.CreateCall();
             }
 
-            if (sender != null)
-            {
-                Global.CX.MeshListReplicateCopyItems();
-            }
-
-            this.meshlist_SelectionChanged(null, null);
+            Global.CX.MeshListReplicateCopyItems(meshlist);
+            MeshlistSelectionChanged(meshlist);
         }
 
-        internal void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
+        internal static void MeshlistMouseUp(ListBox meshlist)
         {
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
 
@@ -321,9 +324,9 @@ namespace OPTech
                 whichLOD = 1;
             }
 
-            if (this.meshlist.SelectedIndex != -1)
+            if (meshlist.SelectedIndex != -1)
             {
-                this.meshlist.UpdateSelectedItems();
+                meshlist.UpdateSelectedItems();
 
                 int indexMesh = -1;
 
@@ -335,7 +338,7 @@ namespace OPTech
                     {
                         var lod = mesh.LODArray[whichLOD];
 
-                        if (this.meshlist.SelectedItems.Count == 1 && !shift)
+                        if (meshlist.SelectedItems.Count == 1 && !shift)
                         {
                             lod.Selected = false;
 
@@ -364,9 +367,9 @@ namespace OPTech
                             }
                         }
 
-                        lod.Selected = this.meshlist.IsSelected(EachMesh);
+                        lod.Selected = meshlist.IsSelected(EachMesh);
 
-                        if (EachMesh == this.meshlist.SelectedIndex)
+                        if (EachMesh == meshlist.SelectedIndex)
                         {
                             indexMesh = EachMesh;
                         }
@@ -375,7 +378,7 @@ namespace OPTech
 
                 Global.CX.MeshScreens(indexMesh, whichLOD);
 
-                if (this.meshlist.SelectedItems.Count == 1)
+                if (meshlist.SelectedItems.Count == 1)
                 {
                     Global.CX.FaceScreens(indexMesh, whichLOD, -1);
                     Global.CX.VertexScreens(indexMesh, whichLOD, -1, -1);
@@ -384,12 +387,23 @@ namespace OPTech
                 Global.CX.CreateCall();
             }
 
-            if (sender != null)
-            {
-                Global.CX.MeshListReplicateCopyItems();
-            }
+            Global.CX.MeshListReplicateCopyItems(meshlist);
+            MeshlistSelectionChanged(meshlist);
+        }
 
-            this.meshlist_SelectionChanged(null, null);
+        private void meshlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MeshlistSelectionChanged(this.meshlist);
+        }
+
+        private void meshlist_KeyUp(object sender, KeyEventArgs e)
+        {
+            MeshlistKeyUp(this.meshlist);
+        }
+
+        private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MeshlistMouseUp(this.meshlist);
         }
 
         private void facelist_SelectionChanged(object sender, SelectionChangedEventArgs e)

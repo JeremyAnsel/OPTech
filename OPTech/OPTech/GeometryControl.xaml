@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500"
              UseLayoutRounding="True"
-             PreviewKeyDown="UserControl_PreviewKeyDown">
+             PreviewKeyDown="UserControl_PreviewKeyDown"
+             Unloaded="UserControl_Unloaded">
     <GroupBox Header="Geometry">
         <TabControl x:Name="geometrytab" TabStripPlacement="Bottom">
             <TabItem x:Name="geometrysubframe" Tag="subgeometry" ToolTip="Geometry">

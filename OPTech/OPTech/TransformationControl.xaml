@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500"
              UseLayoutRounding="True"
-             PreviewKeyDown="UserControl_PreviewKeyDown">
+             PreviewKeyDown="UserControl_PreviewKeyDown"
+             Unloaded="UserControl_Unloaded">
     <GroupBox Header="Transformation">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -15,7 +16,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -29,11 +30,12 @@
                 <ListBox x:Name="meshlist"
                      Grid.Column="0"
                      Grid.Row="0"
-                         Grid.RowSpan="2"
+                     Grid.RowSpan="2"
                      ToolTip="Mesh List"
                      SelectionMode="Extended"
                      KeyUp="meshlist_KeyUp"
-                     MouseUp="meshlist_MouseUp" />
+                     MouseUp="meshlist_MouseUp"
+                     SelectionChanged="meshlist_SelectionChanged" />
                 <GroupBox x:Name="rotationanimframe" Grid.Column="1" Grid.Row="0">
                     <GroupBox.Header>
                         <Run Text="Animate" FontWeight="Bold" />

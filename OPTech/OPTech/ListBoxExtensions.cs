@@ -598,6 +598,10 @@ namespace OPTech
             }
 
             drawableItem.Drawable = checkBox.IsChecked.Value;
+
+            var dockPanel = (DockPanel)checkBox.Parent;
+            var list = (ListBox)dockPanel.Parent;
+            GeometryControl.MeshlistMouseUp(list);
         }
 
         private static Tuple<CheckBox, string> GetCheckBox(object item)

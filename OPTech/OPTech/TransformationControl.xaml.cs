@@ -49,18 +49,24 @@ namespace OPTech
             }
         }
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Global.CX.MeshListReplicateCopyItems(this.meshlist);
+        }
+
         private void meshlist_KeyUp(object sender, KeyEventArgs e)
         {
-            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
-            Global.CX.MeshListReplicateCopyItems();
-            Global.frmgeometry.meshlist_KeyUp(null, null);
+            GeometryControl.MeshlistKeyUp(this.meshlist);
         }
 
         private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.meshlist.CopyItems(Global.frmgeometry.meshlist);
-            Global.CX.MeshListReplicateCopyItems();
-            Global.frmgeometry.meshlist_MouseUp(null, null);
+            GeometryControl.MeshlistMouseUp(this.meshlist);
+        }
+
+        private void meshlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GeometryControl.MeshlistSelectionChanged(this.meshlist);
         }
 
         private void rotanimaxis_Click(object sender, RoutedEventArgs e)

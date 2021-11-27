@@ -8,7 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500"
              UseLayoutRounding="True"
-             PreviewKeyDown="UserControl_PreviewKeyDown">
+             PreviewKeyDown="UserControl_PreviewKeyDown"
+             Unloaded="UserControl_Unloaded">
     <GroupBox Header="Engine Glow">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -36,7 +37,8 @@
                      ToolTip="Mesh List"
                      SelectionMode="Extended"
                      KeyUp="meshlist_KeyUp"
-                     MouseUp="meshlist_MouseUp" />
+                     MouseUp="meshlist_MouseUp"
+                     SelectionChanged="meshlist_SelectionChanged" />
                 <ListBox x:Name="engineglowlist"
                          Grid.Column="1"
                          Grid.Row="0"

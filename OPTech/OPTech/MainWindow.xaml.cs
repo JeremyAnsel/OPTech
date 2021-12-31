@@ -1626,16 +1626,26 @@ namespace OPTech
 
         private void rotationmenu_Click(object sender, RoutedEventArgs e)
         {
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you want to continue?", "Reset Transformations", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+            {
+                return;
+            }
+
             this.RotationCalculator(0);
-            UndoStack.Push("transformations");
-            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Transformations");
+            UndoStack.Push("reset transformations");
+            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Reset Transformations");
         }
 
         private void texturecoordinatemenu_Click(object sender, RoutedEventArgs e)
         {
+            if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you want to continue?", "Reset Texture Coordinates", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+            {
+                return;
+            }
+
             this.TextureCoordCalculator(0);
-            UndoStack.Push("texture coordinates");
-            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Texture Coordinates");
+            UndoStack.Push("reset texture coordinates");
+            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Reset Texture Coordinates");
         }
 
         private void softwarevectorresmenu_Click(object sender, RoutedEventArgs e)

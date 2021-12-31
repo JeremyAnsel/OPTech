@@ -44,8 +44,8 @@
                 <MenuItem x:Name="facenormalmenu" Header="Face Normals" Click="facenormalmenu_Click" />
                 <MenuItem x:Name="vertexnormalmenu" Header="Vertex Normals" Click="vertexnormalmenu_Click" />
                 <MenuItem x:Name="hitzonemenu" Header="Hitzones" Click="hitzonemenu_Click" />
-                <MenuItem x:Name="rotationmenu" Header="Transformations" Click="rotationmenu_Click" />
-                <MenuItem x:Name="texturecoordinatemenu" Header="Texture Coordinates" Click="texturecoordinatemenu_Click" />
+                <MenuItem x:Name="rotationmenu" Header="Reset Transformations" Click="rotationmenu_Click" />
+                <MenuItem x:Name="texturecoordinatemenu" Header="Reset Texture Coordinates" Click="texturecoordinatemenu_Click" />
                 <MenuItem x:Name="softwarevectorresmenu" Header="Software Vectors (resolution)" Click="softwarevectorresmenu_Click" />
                 <MenuItem x:Name="softwarevectorcompmenu" Header="Software Vectors (compatibility)" Visibility="Collapsed"  Click="softwarevectorcompmenu_Click" />
             </MenuItem>

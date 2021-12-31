@@ -724,8 +724,12 @@ namespace OPTech
                 if (this.meshlist.IsSelected(EachMesh))
                 {
                     Global.OPT.MeshArray[EachMesh].Drawable = this.meshvisiblecheck.IsChecked == true;
-                    this.meshlist.SelectCheck(EachMesh, Global.OPT.MeshArray[EachMesh].Drawable);
                 }
+            }
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                this.meshlist.SelectCheck(EachMesh, Global.OPT.MeshArray[EachMesh].Drawable);
             }
 
             Global.CX.MeshListReplicateCopyItems();

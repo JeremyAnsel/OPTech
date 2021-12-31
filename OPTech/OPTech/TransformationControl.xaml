@@ -49,9 +49,27 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <CheckBox x:Name="rotanimaxis" Grid.Column="0" Grid.Row="0" Height="26" Width="182" Content="Rotation" Click="rotanimaxis_Click" />
-                        <CheckBox x:Name="rotanimaim" Grid.Column="0" Grid.Row="1" Height="26" Width="182" Content="Translation" Click="rotanimaim_Click" />
-                        <CheckBox x:Name="rotanimdegree" Grid.Column="0" Grid.Row="2" Height="26" Width="182" Content="Scale" Click="rotanimdegree_Click" />
+                        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="rotanimaxis" Height="20" Width="120" Content="Rotation" Click="rotanimaxis_Click" />
+                                <TextBlock Text="Red Axis:" Foreground="Red" />
+                            </StackPanel>
+                            <TextBlock Text="must point straight UP from the rotating mesh's plane" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="rotanimaim" Height="26" Width="120" Content="Translation" Click="rotanimaim_Click" />
+                                <TextBlock Text="Green Axis:" Foreground="Green" />
+                            </StackPanel>
+                            <TextBlock Text="must point the way the mesh is facing" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="rotanimdegree" Height="26" Width="120" Content="Scale" Click="rotanimdegree_Click" />
+                                <TextBlock Text="Blue Axis:" Foreground="Blue" />
+                            </StackPanel>
+                            <TextBlock Text="must point straight LEFT from where the mesh is facing" TextWrapping="Wrap" />
+                        </StackPanel>
                     </Grid>
                 </GroupBox>
                 <Button x:Name="resettransformation"
@@ -102,7 +120,7 @@
                     <TextBox x:Name="Xaxistext" Height="29" ToolTip="X rotation" PreviewKeyDown="Xaxistext_PreviewKeyDown" LostFocus="Xaxistext_LostFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Width="130">
-                    <TextBlock Text="" FontWeight="Bold" Height="24" />
+                    <TextBlock Text="Red Axis:" Foreground="Red" Height="24" />
                     <Label Content="y" FontWeight="Bold" Height="24" Target="{Binding ElementName=Yaxistext}" />
                     <TextBox x:Name="Yaxistext" Height="29" ToolTip="Y rotation" PreviewKeyDown="Yaxistext_PreviewKeyDown" LostFocus="Yaxistext_LostFocus" />
                 </StackPanel>
@@ -121,7 +139,7 @@
                     <TextBox x:Name="Xaimtext" Height="29" ToolTip="X translation" PreviewKeyDown="Xaimtext_PreviewKeyDown" LostFocus="Xaimtext_LostFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Width="130">
-                    <TextBlock Text="" FontWeight="Bold" Height="24" />
+                    <TextBlock Text="Green Axis:" Foreground="Green" Height="24" />
                     <Label Content="y" FontWeight="Bold" Height="24" Target="{Binding ElementName=Yaimtext}" />
                     <TextBox x:Name="Yaimtext" Height="29" ToolTip="Y translation" PreviewKeyDown="Yaimtext_PreviewKeyDown" LostFocus="Yaimtext_LostFocus" />
                 </StackPanel>
@@ -140,7 +158,7 @@
                     <TextBox x:Name="Xdegreetext" Height="29" ToolTip="X scale" PreviewKeyDown="Xdegreetext_PreviewKeyDown" LostFocus="Xdegreetext_LostFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Width="130">
-                    <TextBlock Text="" FontWeight="Bold" Height="24" />
+                    <TextBlock Text="Blue Axis:" Foreground="Blue" Height="24" />
                     <Label Content="y" FontWeight="Bold" Height="24" Target="{Binding ElementName=Ydegreetext}" />
                     <TextBox x:Name="Ydegreetext" Height="29" ToolTip="Y scale" PreviewKeyDown="Ydegreetext_PreviewKeyDown" LostFocus="Ydegreetext_LostFocus" />
                 </StackPanel>

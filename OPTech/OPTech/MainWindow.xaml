@@ -189,10 +189,10 @@
                             <Image Width="40" Height="40" Source="Images/frmoptech_1A36.ico" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
-                        <CheckBox x:Name="dispbar_wireframe" Tag="wireframe" ToolTip="Wireframe" IsChecked="True" Click="dispbar_wireframe_Click">
+                        <CheckBox x:Name="dispbar_wireframe" Tag="wireframe" ToolTip="Wireframe" IsChecked="False" Click="dispbar_wireframe_Click">
                             <Image Width="40" Height="40" Source="Images/display_wireframe.ico" />
                         </CheckBox>
-                        <CheckBox x:Name="dispbar_texture" Tag="texture" ToolTip="Texture" Click="dispbar_texture_Click">
+                        <CheckBox x:Name="dispbar_texture" Tag="texture" ToolTip="Texture" IsChecked="True" Click="dispbar_texture_Click">
                             <Image Width="40" Height="40" Source="Images/display_textured.ico" />
                         </CheckBox>
                         <Separator Width="10" Background="Transparent" />

@@ -1518,6 +1518,50 @@ namespace OPTech
             UndoStack.Push("remove trans");
         }
 
+        private void transremoveallcolor_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.transtexturelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var texture = Global.OPT.TextureArray[this.transtexturelist.SelectedIndex];
+
+            texture.TransValues.Clear();
+            this.transredtintlist.Items.Clear();
+            this.transgreentintlist.Items.Clear();
+            this.transbluetintlist.Items.Clear();
+            Global.ModelChanged = true;
+
+            this.transopacitybar.IsEnabled = false;
+            this.transopacitytext.IsEnabled = false;
+            this.transcolortolerancebar.IsEnabled = false;
+            this.transcolortolerancetext.IsEnabled = false;
+            this.transopacitybar.Value = 110;
+            this.transopacitytext.Text = "110";
+            this.transopacitydisplay.Background = new SolidColorBrush(Color.FromRgb(0x91, 0x91, 0x91));
+            this.transcolortolerancebar.Value = 5;
+            this.transcolortolerancetext.Text = "5";
+
+            this.transtintdisplay.Background = new SolidColorBrush(Color.FromRgb(0x80, 0x80, 0x80));
+            this.transtintdisplay.ToolTip = string.Empty;
+            this.transtextureviewer.Source = ImageHelpers.LoadImage(texture.FullTexturePath);
+
+            texture.CreateTexture(Global.OpenGL);
+
+            if (texture.TransValues.Count > 0)
+            {
+                this.transtexturelist.SelectCheck(this.transtexturelist.SelectedIndex, true);
+            }
+            else
+            {
+                this.transtexturelist.SelectCheck(this.transtexturelist.SelectedIndex, false);
+            }
+
+            Global.CX.CreateCall();
+            UndoStack.Push("remove all trans");
+        }
+
         private void illumselectallcolor_Click(object sender, RoutedEventArgs e)
         {
             if (this.illumtexturelist.SelectedIndex == -1)
@@ -2986,6 +3030,50 @@ namespace OPTech
 
             Global.CX.CreateCall();
             UndoStack.Push("remove illum");
+        }
+
+        private void illumremoveallcolor_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.illumtexturelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var texture = Global.OPT.TextureArray[this.illumtexturelist.SelectedIndex];
+
+            texture.IllumValues.Clear();
+            this.illumredtintlist.Items.Clear();
+            this.illumgreentintlist.Items.Clear();
+            this.illumbluetintlist.Items.Clear();
+            Global.ModelChanged = true;
+
+            this.illumbrightnessbar.IsEnabled = false;
+            this.illumbrightnesstext.IsEnabled = false;
+            this.illumcolortolerancebar.IsEnabled = false;
+            this.illumcolortolerancetext.IsEnabled = false;
+            this.illumbrightnessbar.Value = 8;
+            this.illumbrightnesstext.Text = "8";
+            this.illumbrightnessdisplay.Background = new SolidColorBrush(Color.FromRgb(0x77, 0x77, 0x77));
+            this.illumcolortolerancebar.Value = 5;
+            this.illumcolortolerancetext.Text = "5";
+
+            this.illumtintdisplay.Background = new SolidColorBrush(Color.FromRgb(0x80, 0x80, 0x80));
+            this.illumtintdisplay.ToolTip = string.Empty;
+            this.illumtextureviewer.Source = ImageHelpers.LoadImage(texture.FullTexturePath);
+
+            texture.CreateTexture(Global.OpenGL);
+
+            if (texture.IllumValues.Count > 0)
+            {
+                this.illumtexturelist.SelectCheck(this.illumtexturelist.SelectedIndex, true);
+            }
+            else
+            {
+                this.illumtexturelist.SelectCheck(this.illumtexturelist.SelectedIndex, false);
+            }
+
+            Global.CX.CreateCall();
+            UndoStack.Push("remove all illum");
         }
 
         private void transtextureviewerZoombox_Loaded(object sender, RoutedEventArgs e)

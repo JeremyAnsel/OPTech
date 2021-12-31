@@ -104,7 +104,11 @@
                             <ListBox x:Name="transredtintlist" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Red" KeyUp="transredtintlist_KeyUp" MouseUp="transredtintlist_MouseUp" />
                             <ListBox x:Name="transgreentintlist" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Green" KeyUp="transgreentintlist_KeyUp" MouseUp="transgreentintlist_MouseUp" />
                             <ListBox x:Name="transbluetintlist" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Blue" KeyUp="transbluetintlist_KeyUp" MouseUp="transbluetintlist_MouseUp" />
-                            <Button x:Name="transremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Margin="20 10" Content="Remove selected" Click="transremovecolor_Click" />
+                            <UniformGrid Rows="1" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4">
+                                <Label Content="Remove..." Margin="10" />
+                                <Button x:Name="transremovecolor" Margin="10" Content="...Selected" Click="transremovecolor_Click" />
+                                <Button x:Name="transremoveallcolor" Margin="10" Content="...All" Click="transremoveallcolor_Click" />
+                            </UniformGrid>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -203,7 +207,11 @@
                             <ListBox x:Name="illumredtintlist" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Red" KeyUp="illumredtintlist_KeyUp" MouseUp="illumredtintlist_MouseUp" />
                             <ListBox x:Name="illumgreentintlist" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Green" KeyUp="illumgreentintlist_KeyUp" MouseUp="illumgreentintlist_MouseUp" />
                             <ListBox x:Name="illumbluetintlist" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" SelectionMode="Extended" Background="Blue" KeyUp="illumbluetintlist_KeyUp" MouseUp="illumbluetintlist_MouseUp" />
-                            <Button x:Name="illumremovecolor" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Margin="20 10" Content="Remove selected" Click="illumremovecolor_Click" />
+                            <UniformGrid Rows="1" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4">
+                                <Label Content="Remove..." Margin="10" />
+                                <Button x:Name="illumremovecolor" Margin="10" Content="...Selected" Click="illumremovecolor_Click" />
+                                <Button x:Name="illumremoveallcolor" Margin="10" Content="...All" Click="illumremoveallcolor_Click" />
+                            </UniformGrid>
                         </Grid>
                     </Grid>
                 </GroupBox>

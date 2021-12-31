@@ -2290,9 +2290,9 @@ namespace OPTech
             }
 
             var dialog = new OpenFileDialog();
-            dialog.Title = "open .OPZ file";
+            dialog.Title = "open Project";
             dialog.DefaultExt = "*.opz";
-            dialog.Filter = "OPZ file (*.opz)|*.opz";
+            dialog.Filter = "Project file (*.opz)|*.opz";
 
             if (dialog.ShowDialog(this) != true)
             {
@@ -2949,15 +2949,15 @@ namespace OPTech
             Global.ModelChanged = false;
             this.saveopz(fileName);
             UndoStack.Push("save " + System.IO.Path.GetFileName(fileName));
-            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "save .OPZ");
+            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "save Project");
         }
 
         private void saveopzasmenu_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new SaveFileDialog();
-            dialog.Title = "save .OPZ file";
+            dialog.Title = "save Project";
             dialog.DefaultExt = "*.opz";
-            dialog.Filter = "OPZ file (*.opz)|*.opz";
+            dialog.Filter = "Project file (*.opz)|*.opz";
             dialog.InitialDirectory = Global.opzpath;
             dialog.FileName = System.IO.Path.GetFileName(Global.opzpath) + ".opz";
 
@@ -2969,7 +2969,7 @@ namespace OPTech
             Global.ModelChanged = false;
             this.saveopz(dialog.FileName);
             UndoStack.Push("save " + System.IO.Path.GetFileName(dialog.FileName));
-            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "save .OPZ as");
+            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "save Project as");
         }
 
         private void optimportmenu_Click(object sender, RoutedEventArgs e)
@@ -3691,9 +3691,9 @@ namespace OPTech
         private void opzimportmenu_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
-            dialog.Title = "open .OPZ file";
+            dialog.Title = "import Project";
             dialog.DefaultExt = "*.opz";
-            dialog.Filter = "OPZ file (*.opz)|*.opz";
+            dialog.Filter = "Project file (*.opz)|*.opz";
 
             if (dialog.ShowDialog(this) != true)
             {
@@ -4143,7 +4143,7 @@ namespace OPTech
                 .Select(t => System.IO.Path.GetFileName(t));
             Global.CX.CreateCall();
             UndoStack.Push("import " + System.IO.Path.GetFileName(dialog.FileName));
-            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import .OPZ");
+            Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import Project");
         }
 
         private static void DxfInvertVertexOrder(FaceStruct face)

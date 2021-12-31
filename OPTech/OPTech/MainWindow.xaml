@@ -28,14 +28,14 @@
         </StatusBar>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="filemenu" Header="File">
-                <MenuItem x:Name="opznewmenu" Header="new .OPZ" Click="opznewmenu_Click" />
-                <MenuItem x:Name="opzopenmenu" Header="open .OPZ" Click="opzopenmenu_Click" />
-                <MenuItem x:Name="saveopzmenu" Header="save .OPZ" Click="saveopzmenu_Click" />
-                <MenuItem x:Name="saveopzasmenu" Header="save .OPZ as" Click="saveopzasmenu_Click" />
+                <MenuItem x:Name="opznewmenu" Header="new Project" Click="opznewmenu_Click" />
+                <MenuItem x:Name="opzopenmenu" Header="open Project" Click="opzopenmenu_Click" />
+                <MenuItem x:Name="saveopzmenu" Header="save Project" Click="saveopzmenu_Click" />
+                <MenuItem x:Name="saveopzasmenu" Header="save Project as" Click="saveopzasmenu_Click" />
                 <MenuItem x:Name="optimportmenu" Header="import .OPT" Click="optimportmenu_Click" />
                 <MenuItem x:Name="dxfimportmenu" Header="import .DXF" Click="dxfimportmenu_Click" />
                 <MenuItem x:Name="objimportmenu" Header="import .OBJ" Click="objimportmenu_Click" />
-                <MenuItem x:Name="opzimportmenu" Header="import .OPZ" Click="opzimportmenu_Click" />
+                <MenuItem x:Name="opzimportmenu" Header="import Project" Click="opzimportmenu_Click" />
                 <MenuItem x:Name="dxfexportmenu" Header="export .DXF" Click="dxfexportmenu_Click" />
                 <MenuItem x:Name="optxwacreatemenu" Header="create .OPT (XWA)" Click="optxwacreatemenu_Click" />
                 <MenuItem x:Name="optxvtcreatemenu" Header="create .OPT (XvT)" Click="optxvtcreatemenu_Click" />

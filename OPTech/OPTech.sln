@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPTech", "OPTech\OPTech.csproj", "{EA3301F3-A2F4-4C74-BE5F-8164365936FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPTech", "OPTech\OPTech.csproj", "{9E79076C-82C6-4349-B90A-8272E8609CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA3301F3-A2F4-4C74-BE5F-8164365936FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA3301F3-A2F4-4C74-BE5F-8164365936FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA3301F3-A2F4-4C74-BE5F-8164365936FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA3301F3-A2F4-4C74-BE5F-8164365936FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E79076C-82C6-4349-B90A-8272E8609CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E79076C-82C6-4349-B90A-8272E8609CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E79076C-82C6-4349-B90A-8272E8609CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E79076C-82C6-4349-B90A-8272E8609CBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BC332B1-650B-484A-9AE3-23435B340309}
 	EndGlobalSection
 EndGlobal

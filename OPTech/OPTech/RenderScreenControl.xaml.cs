@@ -1,5 +1,5 @@
 ﻿using SharpGL;
-using SharpGL.SceneGraph;
+using SharpGL.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,12 +79,12 @@ namespace OPTech
             //Global.CX.InitGL();
         }
 
-        private void renderscreen_OpenGLInitialized(object sender, OpenGLEventArgs args)
+        private void renderscreen_OpenGLInitialized(object sender, OpenGLRoutedEventArgs args)
         {
             //Global.CX.InitGL();
         }
 
-        private void renderscreen_OpenGLDraw(object sender, OpenGLEventArgs args)
+        private void renderscreen_OpenGLDraw(object sender, OpenGLRoutedEventArgs args)
         {
             //Global.CX.Draw();
 

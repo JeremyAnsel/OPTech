@@ -316,7 +316,7 @@ namespace OPTech
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item, useIndex);
+                list.AddText(item, false, useIndex);
             }
         }
 
@@ -380,10 +380,10 @@ namespace OPTech
             for (int index = 0; index < array.Length; index++)
             {
                 var item = array[index];
-                list.AddText(item, useIndex);
+                list.AddText(item, false, useIndex);
             }
 
-            list.ScrollIntoView(list.SelectedItem);
+            //list.ScrollIntoView(list.SelectedItem);
         }
 
         public static void SetAllTextWithSelected(this ListBox list, Tuple<string, bool>[] array, bool useIndex = true)
@@ -513,7 +513,21 @@ namespace OPTech
                 return;
             }
 
+            var drawableItem = checkBox.Item1.Tag as IDrawableItem;
+
+            if (drawableItem != null)
+            {
+                checkBox.Item1.Checked -= CheckBox_Checked;
+                checkBox.Item1.Unchecked -= CheckBox_Checked;
+            }
+
             checkBox.Item1.IsChecked = selected;
+
+            if (drawableItem != null)
+            {
+                checkBox.Item1.Checked += CheckBox_Checked;
+                checkBox.Item1.Unchecked += CheckBox_Checked;
+            }
         }
 
         public static void SortText(this ListBox list)

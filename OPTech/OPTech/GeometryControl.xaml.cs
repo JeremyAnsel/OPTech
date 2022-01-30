@@ -732,7 +732,8 @@ namespace OPTech
                 this.meshlist.SelectCheck(EachMesh, Global.OPT.MeshArray[EachMesh].Drawable);
             }
 
-            Global.CX.MeshListReplicateCopyItems();
+            MeshlistMouseUp(this.meshlist);
+            //Global.CX.MeshListReplicateCopyItems();
             Global.CX.CreateCall();
         }
 

@@ -2,20 +2,19 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <LangVersion>10.0</LangVersion>
-    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Version>2.0.0</Version>
     <Company>Derek del Rio, Jérémy Ansel</Company>
-    <Copyright>Copyright ©  2000-2005 Derek del Rio, 2018-2022 Jérémy Ansel</Copyright>
+    <Copyright>Copyright © 2000-2005 Derek del Rio, 2018-2022 Jérémy Ansel</Copyright>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="4.6.97" />
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
     <PackageReference Include="SharpGL.WPF" Version="3.1.1" />
   </ItemGroup>
 

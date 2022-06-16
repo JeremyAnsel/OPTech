@@ -167,9 +167,27 @@
                                     <ListBox x:Name="Xvertexlist" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" ToolTip="X vertex coords" SelectionMode="Extended" KeyUp="Xvertexlist_KeyUp" MouseUp="Xvertexlist_MouseUp" SelectionChanged="Xvertexlist_SelectionChanged" />
                                     <ListBox x:Name="Yvertexlist" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" ToolTip="Y vertex coords" SelectionMode="Extended" KeyUp="Yvertexlist_KeyUp" MouseUp="Yvertexlist_MouseUp" />
                                     <ListBox x:Name="Zvertexlist" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" ToolTip="Z vertex coords" SelectionMode="Extended" KeyUp="Zvertexlist_KeyUp" MouseUp="Zvertexlist_MouseUp" />
-                                    <TextBox x:Name="Xvertextext" Grid.Column="0" Grid.Row="3" Margin="10" ToolTip="vertex position X" Background="#FFFFC0" PreviewKeyDown="Xvertextext_PreviewKeyDown" LostFocus="Xvertextext_LostFocus" />
-                                    <TextBox x:Name="Yvertextext" Grid.Column="1" Grid.Row="3" Margin="10" ToolTip="vertex position Y" Background="#FFFFC0" PreviewKeyDown="Yvertextext_PreviewKeyDown" LostFocus="Yvertextext_LostFocus" />
-                                    <TextBox x:Name="Zvertextext" Grid.Column="2" Grid.Row="3" Margin="10" ToolTip="vertex position Z" Background="#FFFFC0" PreviewKeyDown="Zvertextext_PreviewKeyDown" LostFocus="Zvertextext_LostFocus" />
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="0"
+                                                 Grid.Row="3"
+                                                 Margin="10">
+                                        <TextBox x:Name="Xvertextext" ToolTip="vertex position X" Background="#FFFFC0" PreviewKeyDown="Xvertextext_PreviewKeyDown" LostFocus="Xvertextext_LostFocus" />
+                                        <Button x:Name="Xvertexsortbut" Content="Sort by X" Click="Xvertexsortbut_Click" />
+                                    </UniformGrid>
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="1"
+                                                 Grid.Row="3"
+                                                 Margin="10">
+                                        <TextBox x:Name="Yvertextext" ToolTip="vertex position Y" Background="#FFFFC0" PreviewKeyDown="Yvertextext_PreviewKeyDown" LostFocus="Yvertextext_LostFocus" />
+                                        <Button x:Name="Yvertexsortbut" Content="Sort by Y" Click="Yvertexsortbut_Click" />
+                                    </UniformGrid>
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="2"
+                                                 Grid.Row="3"
+                                                 Margin="10">
+                                        <TextBox x:Name="Zvertextext" ToolTip="vertex position Z" Background="#FFFFC0" PreviewKeyDown="Zvertextext_PreviewKeyDown" LostFocus="Zvertextext_LostFocus" />
+                                        <Button x:Name="Zvertexsortbut" Content="Sort by Z" Click="Zvertexsortbut_Click" />
+                                    </UniformGrid>
                                     <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="vertextextCopy_Click" />
                                         <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="vertextextPaste_Click" />
@@ -177,9 +195,27 @@
                                     <ListBox x:Name="Ivertnormlist" Grid.Column="0" Grid.Row="4" Grid.RowSpan="3" ToolTip="I vertex normal coords" SelectionMode="Extended" KeyUp="Ivertnormlist_KeyUp" MouseUp="Ivertnormlist_MouseUp" />
                                     <ListBox x:Name="Jvertnormlist" Grid.Column="1" Grid.Row="4" Grid.RowSpan="3" ToolTip="J vertex normal coords" SelectionMode="Extended" KeyUp="Jvertnormlist_KeyUp" MouseUp="Jvertnormlist_MouseUp" />
                                     <ListBox x:Name="Kvertnormlist" Grid.Column="2" Grid.Row="4" Grid.RowSpan="3" ToolTip="K vertex normal coords" SelectionMode="Extended" KeyUp="Kvertnormlist_KeyUp" MouseUp="Kvertnormlist_MouseUp" />
-                                    <TextBox x:Name="Ivertnormtext" Grid.Column="0" Grid.Row="7" Margin="10" ToolTip="vertex normal I" Background="#FFC0FF" IsReadOnly="True" />
-                                    <TextBox x:Name="Jvertnormtext" Grid.Column="1" Grid.Row="7" Margin="10" ToolTip="vertex normal J" Background="#FFC0FF" IsReadOnly="True" />
-                                    <TextBox x:Name="Kvertnormtext" Grid.Column="2" Grid.Row="7" Margin="10" ToolTip="vertex normal K" Background="#FFC0FF" IsReadOnly="True" />
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="0"
+                                                 Grid.Row="7"
+                                                 Margin="10">
+                                        <TextBox x:Name="Ivertnormtext" ToolTip="vertex normal I" Background="#FFC0FF" IsReadOnly="True" />
+                                        <Button x:Name="Ivertnormsortbut" Content="Sort by I" Click="Ivertnormsortbut_Click" />
+                                    </UniformGrid>
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="1"
+                                                 Grid.Row="7"
+                                                 Margin="10">
+                                        <TextBox x:Name="Jvertnormtext" ToolTip="vertex normal J" Background="#FFC0FF" IsReadOnly="True" />
+                                        <Button x:Name="Jvertnormsortbut" Content="Sort by J" Click="Jvertnormsortbut_Click" />
+                                    </UniformGrid>
+                                    <UniformGrid Columns="1"
+                                                 Grid.Column="2"
+                                                 Grid.Row="7"
+                                                 Margin="10">
+                                        <TextBox x:Name="Kvertnormtext" ToolTip="vertex normal K" Background="#FFC0FF" IsReadOnly="True" />
+                                        <Button x:Name="Kvertnormsortbut" Content="Sort by K" Click="Kvertnormsortbut_Click" />
+                                    </UniformGrid>
                                 </Grid>
                             </GroupBox>
                         </TabItem>

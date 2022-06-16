@@ -12936,6 +12936,260 @@ namespace OPTech
             this.UpdateVerticesLists(indices);
         }
 
+        private Tuple<int, string, string, string>[] GetXYZcoordlist()
+        {
+            var verticesX = this.Xvertexlist.GetAllText();
+            var verticesY = this.Yvertexlist.GetAllText();
+            var verticesZ = this.Zvertexlist.GetAllText();
+
+            var vertices = new Tuple<int, string, string, string>[verticesX.Length];
+
+            for (int i = 0; i < verticesX.Length; i++)
+            {
+                vertices[i] = Tuple.Create(i, verticesX[i], verticesY[i], verticesZ[i]);
+            }
+
+            return vertices;
+        }
+
+        private Tuple<int, string, string, string>[] GetIJKcoordlist()
+        {
+            var verticesI = this.Ivertnormlist.GetAllText();
+            var verticesJ = this.Jvertnormlist.GetAllText();
+            var verticesK = this.Kvertnormlist.GetAllText();
+
+            var vertices = new Tuple<int, string, string, string>[verticesI.Length];
+
+            for (int i = 0; i < verticesI.Length; i++)
+            {
+                vertices[i] = Tuple.Create(i, verticesI[i], verticesJ[i], verticesK[i]);
+            }
+
+            return vertices;
+        }
+
+        private void Xvertexsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetXYZcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueX = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueY = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueZ = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueX = valueX,
+                        ValueY = valueY,
+                        ValueZ = valueZ
+                    };
+                })
+                .OrderBy(t => t.ValueX)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void Yvertexsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetXYZcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueX = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueY = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueZ = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueX = valueX,
+                        ValueY = valueY,
+                        ValueZ = valueZ
+                    };
+                })
+                .OrderBy(t => t.ValueY)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void Zvertexsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetXYZcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueX = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueY = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueZ = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueX = valueX,
+                        ValueY = valueY,
+                        ValueZ = valueZ
+                    };
+                })
+                .OrderBy(t => t.ValueZ)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void Ivertnormsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetIJKcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueI = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueJ = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueK = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueI = valueI,
+                        ValueJ = valueJ,
+                        ValueK = valueK
+                    };
+                })
+                .OrderBy(t => t.ValueI)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void Jvertnormsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetIJKcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueI = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueJ = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueK = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueI = valueI,
+                        ValueJ = valueJ,
+                        ValueK = valueK
+                    };
+                })
+                .OrderBy(t => t.ValueJ)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
+        private void Kvertnormsortbut_Click(object sender, RoutedEventArgs e)
+        {
+            var vertices = this.GetIJKcoordlist();
+
+            int[] indices = vertices
+                .Select(t =>
+                {
+                    int mesh;
+                    int face;
+                    int vertex;
+                    StringHelpers.SplitVertex(t.Item2, out mesh, out face, out vertex);
+
+                    float valueI = float.Parse(t.Item2.Substring(t.Item2.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueJ = float.Parse(t.Item3.Substring(t.Item3.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+                    float valueK = float.Parse(t.Item4.Substring(t.Item4.LastIndexOf(' ')), CultureInfo.InvariantCulture);
+
+                    return new
+                    {
+                        Index = t.Item1,
+                        Mesh = mesh,
+                        Face = face,
+                        Vertex = vertex,
+                        ValueI = valueI,
+                        ValueJ = valueJ,
+                        ValueK = valueK
+                    };
+                })
+                .OrderBy(t => t.ValueK)
+                .ThenBy(t => t.Mesh)
+                .ThenBy(t => t.Face)
+                .ThenBy(t => t.Vertex)
+                .Select(t => t.Index)
+                .ToArray();
+
+            this.UpdateVerticesLists(indices);
+        }
+
         private void UpdateVerticesLists(int[] indices)
         {
             var xlist = this.Xvertexlist.GetAllTextWithSelected();

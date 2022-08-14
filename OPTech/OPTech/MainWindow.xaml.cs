@@ -4199,6 +4199,14 @@ namespace OPTech
 
                 for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
                 {
+                    bool isSelected = Global.frmgeometry.meshlist.SelectedIndex == -1
+                        || Global.frmgeometry.meshlist.IsSelected(meshIndex);
+
+                    if (!isSelected)
+                    {
+                        continue;
+                    }
+
                     var mesh = Global.OPT.MeshArray[meshIndex];
                     string meshName = Global.frmgeometry.meshlist.GetText(meshIndex);
 
@@ -4412,23 +4420,39 @@ namespace OPTech
                     {
                         filestream = null;
 
+                        int meshesCount = Global.frmgeometry.meshlist.SelectedIndex == -1
+                            ? Global.frmgeometry.meshlist.Items.Count
+                            : Global.frmgeometry.meshlist.SelectedItems.Count;
+
                         file.Write(-5);
                         file.Write(0);
                         file.Write(108);
                         file.Write((byte)2);
                         file.Write((byte)0);
-                        file.Write(Global.OPT.MeshArray.Count);
+                        file.Write(meshesCount);
                         file.Write(100 + 22);
 
                         int MeshRefPos = 22;
 
-                        for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
+                        for (int meshIndex = 0; meshIndex < meshesCount; meshIndex++)
                         {
                             file.Write(0);
                         }
 
+                        int currentMeshIndex = -1;
+
                         for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
                         {
+                            bool isSelected = Global.frmgeometry.meshlist.SelectedIndex == -1
+                                || Global.frmgeometry.meshlist.IsSelected(meshIndex);
+
+                            if (!isSelected)
+                            {
+                                continue;
+                            }
+
+                            currentMeshIndex++;
+
                             var mesh = Global.OPT.MeshArray[meshIndex];
                             VertArray[0].Clear();
                             VertArray[1].Clear();
@@ -4439,7 +4463,7 @@ namespace OPTech
                             VertNormArray[1].Clear();
                             VertNormArray[2].Clear();
 
-                            file.Write(MeshRefPos + (4 * meshIndex), 100 + (int)file.BaseStream.Length);
+                            file.Write(MeshRefPos + (4 * currentMeshIndex), 100 + (int)file.BaseStream.Length);
                             file.Seek(0, System.IO.SeekOrigin.End);
                             file.Write(0);
                             file.Write(0);
@@ -6197,23 +6221,39 @@ namespace OPTech
                     {
                         filestream = null;
 
+                        int meshesCount = Global.frmgeometry.meshlist.SelectedIndex == -1
+                            ? Global.frmgeometry.meshlist.Items.Count
+                            : Global.frmgeometry.meshlist.SelectedItems.Count;
+
                         file.Write(-1);
                         file.Write(0);
                         file.Write(108);
                         file.Write((byte)2);
                         file.Write((byte)0);
-                        file.Write(Global.OPT.MeshArray.Count);
+                        file.Write(meshesCount);
                         file.Write(100 + 22);
 
                         int MeshRefPos = 22;
 
-                        for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
+                        for (int meshIndex = 0; meshIndex < meshesCount; meshIndex++)
                         {
                             file.Write(0);
                         }
 
+                        int currentMeshIndex = -1;
+
                         for (int meshIndex = 0; meshIndex < Global.OPT.MeshArray.Count; meshIndex++)
                         {
+                            bool isSelected = Global.frmgeometry.meshlist.SelectedIndex == -1
+                                || Global.frmgeometry.meshlist.IsSelected(meshIndex);
+
+                            if (!isSelected)
+                            {
+                                continue;
+                            }
+
+                            currentMeshIndex++;
+
                             var mesh = Global.OPT.MeshArray[meshIndex];
                             VertArray[0].Clear();
                             VertArray[1].Clear();
@@ -6224,7 +6264,7 @@ namespace OPTech
                             VertNormArray[1].Clear();
                             VertNormArray[2].Clear();
 
-                            file.Write(MeshRefPos + (4 * meshIndex), 100 + (int)file.BaseStream.Length);
+                            file.Write(MeshRefPos + (4 * currentMeshIndex), 100 + (int)file.BaseStream.Length);
                             file.Seek(0, System.IO.SeekOrigin.End);
                             file.Write(0);
                             file.Write(0);

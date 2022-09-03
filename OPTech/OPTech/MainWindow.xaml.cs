@@ -4959,6 +4959,8 @@ namespace OPTech
                                                         }
                                                     }
 
+                                                    byte[] HoldTexLocBytes = Encoding.ASCII.GetBytes(Global.OPT.TextureArray[HoldTexLoc].BaseName);
+
                                                     if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                     {
                                                         Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
@@ -4982,8 +4984,8 @@ namespace OPTech
                                                             file.Write(0);
                                                             file.Write(0);
                                                             file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                            file.Write(100 + (int)file.BaseStream.Length + 13);
-                                                            file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                            file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                                                            file.Write(HoldTexLocBytes);
                                                             file.Write((byte)0);
 
                                                             filestreamTexture = null;
@@ -5036,10 +5038,10 @@ namespace OPTech
                                                         else
                                                         {
                                                             file.Write(1);
-                                                            file.Write(100 + (int)file.BaseStream.Length + 21);
+                                                            file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
                                                             file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                            file.Write(100 + (int)file.BaseStream.Length + 17);
-                                                            file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                            file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
+                                                            file.Write(HoldTexLocBytes);
                                                             file.Write((byte)0);
 
                                                             filestreamTexture = null;
@@ -5443,7 +5445,7 @@ namespace OPTech
                                                         file.Write(0);
                                                         file.Write(1);
                                                         file.Write(100 + (int)file.BaseStream.Length + 4);
-                                                        file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                        file.Write(HoldTexLocBytes);
                                                         file.Write((byte)0);
                                                     }
                                                 }
@@ -5481,21 +5483,14 @@ namespace OPTech
                                                             }
                                                         }
 
+                                                        byte[] HoldTexLocBytes = Encoding.ASCII.GetBytes(Global.OPT.TextureArray[HoldTexLoc].BaseName);
+
                                                         if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                         {
                                                             Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
                                                             file.Seek(0, System.IO.SeekOrigin.End);
                                                             file.Write(100 + (int)file.BaseStream.Length + 24);
                                                             file.Write(20);
-
-                                                            for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
-                                                            {
-                                                                if (TextureArray[faceGroupIndex / 2][fgTexIndex] == Global.OPT.TextureArray[textureIndex].TextureName)
-                                                                {
-                                                                    HoldTexLoc = textureIndex;
-                                                                    break;
-                                                                }
-                                                            }
 
                                                             System.IO.FileStream filestreamTexture;
 
@@ -5513,8 +5508,8 @@ namespace OPTech
                                                                 file.Write(0);
                                                                 file.Write(0);
                                                                 file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                                file.Write(100 + (int)file.BaseStream.Length + 13);
-                                                                file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                                                                file.Write(HoldTexLocBytes);
                                                                 file.Write((byte)0);
 
                                                                 filestreamTexture = null;
@@ -5567,10 +5562,10 @@ namespace OPTech
                                                             else
                                                             {
                                                                 file.Write(1);
-                                                                file.Write(100 + (int)file.BaseStream.Length + 21);
+                                                                file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
                                                                 file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                                file.Write(100 + (int)file.BaseStream.Length + 17);
-                                                                file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
+                                                                file.Write(HoldTexLocBytes);
                                                                 file.Write((byte)0);
 
                                                                 filestreamTexture = null;
@@ -5974,7 +5969,7 @@ namespace OPTech
                                                             file.Write(0);
                                                             file.Write(1);
                                                             file.Write(100 + (int)file.BaseStream.Length + 4);
-                                                            file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                            file.Write(HoldTexLocBytes);
                                                             file.Write((byte)0);
                                                         }
                                                     }
@@ -6732,6 +6727,8 @@ namespace OPTech
                                                                 }
                                                             }
 
+                                                            byte[] HoldTexLocBytes = Encoding.ASCII.GetBytes(Global.OPT.TextureArray[HoldTexLoc].BaseName);
+
                                                             if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                             {
                                                                 Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
@@ -6741,8 +6738,8 @@ namespace OPTech
                                                                 file.Write(0);
                                                                 file.Write(0);
                                                                 file.Write(1);
-                                                                file.Write(100 + (int)file.BaseStream.Length + 13);
-                                                                file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                                                                file.Write(HoldTexLocBytes);
                                                                 file.Write((byte)0);
 
                                                                 System.IO.FileStream filestreamTexture;
@@ -7088,7 +7085,7 @@ namespace OPTech
                                                                 file.Write(0);
                                                                 file.Write(1);
                                                                 file.Write(100 + (int)file.BaseStream.Length + 4);
-                                                                file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                file.Write(HoldTexLocBytes);
                                                                 file.Write((byte)0);
                                                             }
                                                         }
@@ -7126,6 +7123,8 @@ namespace OPTech
                                                                     }
                                                                 }
 
+                                                                byte[] HoldTexLocBytes = Encoding.ASCII.GetBytes(Global.OPT.TextureArray[HoldTexLoc].BaseName);
+
                                                                 if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                                 {
                                                                     Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
@@ -7135,8 +7134,8 @@ namespace OPTech
                                                                     file.Write(0);
                                                                     file.Write(0);
                                                                     file.Write(1);
-                                                                    file.Write(100 + (int)file.BaseStream.Length + 13);
-                                                                    file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                    file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                                                                    file.Write(HoldTexLocBytes);
                                                                     file.Write((byte)0);
 
                                                                     System.IO.FileStream filestreamTexture;
@@ -7480,7 +7479,7 @@ namespace OPTech
                                                                     file.Write(0);
                                                                     file.Write(1);
                                                                     file.Write(100 + (int)file.BaseStream.Length + 4);
-                                                                    file.Write(Encoding.ASCII.GetBytes("TEX" + HoldTexLoc.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0')));
+                                                                    file.Write(HoldTexLocBytes);
                                                                     file.Write((byte)0);
                                                                 }
                                                             }

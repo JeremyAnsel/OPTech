@@ -47,9 +47,10 @@
                          KeyUp="engineglowlist_KeyUp"
                          MouseUp="engineglowlist_MouseUp" />
                 <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
-                    <Button x:Name="egdeletebut" Margin="20 5" Height="30" Content="Delete" Click="egdeletebut_Click" />
-                    <Button x:Name="egcopybut" Margin="20 5" Height="30" Content="Copy" Click="egcopybut_Click" />
-                    <Button x:Name="egpastebut" Margin="20 5" Height="30" Content="Paste" Click="egpastebut_Click" />
+                    <Button x:Name="egdeletebut" Margin="20 2" Height="25" Content="Delete" Click="egdeletebut_Click" />
+                    <Button x:Name="egcutbut" Margin="20 2" Height="25" Content="Cut" Click="egcutbut_Click" />
+                    <Button x:Name="egcopybut" Margin="20 2" Height="25" Content="Copy" Click="egcopybut_Click" />
+                    <Button x:Name="egpastebut" Margin="20 2" Height="25" Content="Paste" Click="egpastebut_Click" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="0" Grid.Row="1">

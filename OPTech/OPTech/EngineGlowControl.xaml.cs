@@ -151,14 +151,14 @@ namespace OPTech
             UndoStack.Push("delete EG");
         }
 
-        private void egcopybut_Click(object sender, RoutedEventArgs e)
+        private void egcutbut_Click(object sender, RoutedEventArgs e)
         {
             if (this.engineglowlist.SelectedItem == null)
             {
                 return;
             }
 
-            var engineglows = new List<EngineGlowStruct>(this.engineglowlist.SelectedItems.Count);
+            var engineglows = new List<(int, EngineGlowStruct)>(this.engineglowlist.SelectedItems.Count);
 
             for (int EachEngineGlow = 0; EachEngineGlow < this.engineglowlist.Items.Count; EachEngineGlow++)
             {
@@ -173,7 +173,35 @@ namespace OPTech
                 int thisEG;
                 StringHelpers.SplitEngineGlow(wholeLine, out thisMesh, out thisEG);
 
-                engineglows.Add(Global.OPT.MeshArray[thisMesh].EGArray[thisEG].Clone());
+                engineglows.Add((thisMesh, Global.OPT.MeshArray[thisMesh].EGArray[thisEG]));
+            }
+
+            this.clipboardObject = engineglows;
+        }
+
+        private void egcopybut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.engineglowlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            var engineglows = new List<(int, EngineGlowStruct)>(this.engineglowlist.SelectedItems.Count);
+
+            for (int EachEngineGlow = 0; EachEngineGlow < this.engineglowlist.Items.Count; EachEngineGlow++)
+            {
+                if (!this.engineglowlist.IsSelected(EachEngineGlow))
+                {
+                    continue;
+                }
+
+                string wholeLine = this.engineglowlist.GetText(EachEngineGlow);
+
+                int thisMesh;
+                int thisEG;
+                StringHelpers.SplitEngineGlow(wholeLine, out thisMesh, out thisEG);
+
+                engineglows.Add((-1, Global.OPT.MeshArray[thisMesh].EGArray[thisEG]));
             }
 
             this.clipboardObject = engineglows;
@@ -181,7 +209,7 @@ namespace OPTech
 
         private void egpastebut_Click(object sender, RoutedEventArgs e)
         {
-            var clipboardEngineglows = this.clipboardObject as IList<EngineGlowStruct>;
+            var clipboardEngineglows = this.clipboardObject as IList<(int, EngineGlowStruct)>;
 
             if (clipboardEngineglows == null)
             {
@@ -212,9 +240,14 @@ namespace OPTech
 
             var selectedLod = selectedMesh.LODArray[whichLOD];
 
-            foreach (EngineGlowStruct engineGlow in clipboardEngineglows)
+            foreach (var engineGlow in clipboardEngineglows)
             {
-                selectedMesh.EGArray.Add(engineGlow.Clone());
+                selectedMesh.EGArray.Add(engineGlow.Item2.Clone());
+
+                if (engineGlow.Item1 != -1)
+                {
+                    Global.OPT.MeshArray[engineGlow.Item1].EGArray.Remove(engineGlow.Item2);
+                }
             }
 
             this.engineglowlist.Items.Clear();

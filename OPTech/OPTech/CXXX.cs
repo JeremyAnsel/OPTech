@@ -2075,6 +2075,7 @@ namespace OPTech
                 Global.frmengineglow.Bdensity3egtext.IsEnabled = true;
                 Global.frmengineglow.Cdensity3egtext.IsEnabled = true;
                 Global.frmengineglow.egdeletebut.IsEnabled = true;
+                Global.frmengineglow.egcutbut.IsEnabled = true;
                 Global.frmengineglow.egcopybut.IsEnabled = true;
                 Global.frmengineglow.egsetfacebut.IsEnabled = true;
 
@@ -2160,6 +2161,7 @@ namespace OPTech
                 Global.frmengineglow.Bdensity3egtext.IsEnabled = false;
                 Global.frmengineglow.Cdensity3egtext.IsEnabled = false;
                 Global.frmengineglow.egdeletebut.IsEnabled = false;
+                Global.frmengineglow.egcutbut.IsEnabled = false;
                 Global.frmengineglow.egcopybut.IsEnabled = false;
                 Global.frmengineglow.egsetfacebut.IsEnabled = false;
 

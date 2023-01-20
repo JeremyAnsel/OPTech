@@ -145,14 +145,14 @@ namespace OPTech
             UndoStack.Push("delete HP");
         }
 
-        private void hpcopybut_Click(object sender, RoutedEventArgs e)
+        private void hpcutbut_Click(object sender, RoutedEventArgs e)
         {
             if (this.hardpointlist.SelectedItem == null)
             {
                 return;
             }
 
-            var hardpoints = new List<HardpointStruct>(this.hardpointlist.SelectedItems.Count);
+            var hardpoints = new List<(int, HardpointStruct)>(this.hardpointlist.SelectedItems.Count);
 
             for (int EachHardpoint = 0; EachHardpoint < this.hardpointlist.Items.Count; EachHardpoint++)
             {
@@ -167,7 +167,35 @@ namespace OPTech
                 int thisHP;
                 StringHelpers.SplitHardpoint(wholeLine, out thisMesh, out thisHP);
 
-                hardpoints.Add(Global.OPT.MeshArray[thisMesh].HPArray[thisHP].Clone());
+                hardpoints.Add((thisMesh, Global.OPT.MeshArray[thisMesh].HPArray[thisHP]));
+            }
+
+            this.clipboardObject = hardpoints;
+        }
+
+        private void hpcopybut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.hardpointlist.SelectedItem == null)
+            {
+                return;
+            }
+
+            var hardpoints = new List<(int, HardpointStruct)>(this.hardpointlist.SelectedItems.Count);
+
+            for (int EachHardpoint = 0; EachHardpoint < this.hardpointlist.Items.Count; EachHardpoint++)
+            {
+                if (!this.hardpointlist.IsSelected(EachHardpoint))
+                {
+                    continue;
+                }
+
+                string wholeLine = this.hardpointlist.GetText(EachHardpoint);
+
+                int thisMesh;
+                int thisHP;
+                StringHelpers.SplitHardpoint(wholeLine, out thisMesh, out thisHP);
+
+                hardpoints.Add((-1, Global.OPT.MeshArray[thisMesh].HPArray[thisHP]));
             }
 
             this.clipboardObject = hardpoints;
@@ -175,7 +203,7 @@ namespace OPTech
 
         private void hppastebut_Click(object sender, RoutedEventArgs e)
         {
-            var clipboardHardpoints = this.clipboardObject as IList<HardpointStruct>;
+            var clipboardHardpoints = this.clipboardObject as IList<(int, HardpointStruct)>;
 
             if (clipboardHardpoints == null)
             {
@@ -206,9 +234,14 @@ namespace OPTech
 
             var selectedLod = selectedMesh.LODArray[whichLOD];
 
-            foreach (HardpointStruct hardpoint in clipboardHardpoints)
+            foreach (var hardpoint in clipboardHardpoints)
             {
-                selectedMesh.HPArray.Add(hardpoint.Clone());
+                selectedMesh.HPArray.Add(hardpoint.Item2.Clone());
+
+                if (hardpoint.Item1 != -1)
+                {
+                    Global.OPT.MeshArray[hardpoint.Item1].HPArray.Remove(hardpoint.Item2);
+                }
             }
 
             this.hardpointlist.Items.Clear();

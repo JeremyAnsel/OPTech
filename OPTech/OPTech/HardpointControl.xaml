@@ -50,6 +50,7 @@
                          MouseUp="hardpointlist_MouseUp" />
                 <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
                     <Button x:Name="hpdeletebut" Margin="20 5" Height="30" Content="Delete" Click="hpdeletebut_Click" />
+                    <Button x:Name="hpcutbut" Margin="20 5" Height="30" Content="Cut" Click="hpcutbut_Click" />
                     <Button x:Name="hpcopybut" Margin="20 5" Height="30" Content="Copy" Click="hpcopybut_Click" />
                     <Button x:Name="hppastebut" Margin="20 5" Height="30" Content="Paste" Click="hppastebut_Click" />
                 </StackPanel>

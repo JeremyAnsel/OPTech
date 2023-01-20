@@ -1991,6 +1991,7 @@ namespace OPTech
                 Global.frmhardpoint.Yhptext.IsEnabled = true;
                 Global.frmhardpoint.Zhptext.IsEnabled = true;
                 Global.frmhardpoint.hpdeletebut.IsEnabled = true;
+                Global.frmhardpoint.hpcutbut.IsEnabled = true;
                 Global.frmhardpoint.hpcopybut.IsEnabled = true;
                 Global.frmhardpoint.hpsetfacebut.IsEnabled = true;
                 Global.frmhardpoint.hpsetvertexbut.IsEnabled = true;
@@ -2024,6 +2025,7 @@ namespace OPTech
                 Global.frmhardpoint.Yhptext.IsEnabled = false;
                 Global.frmhardpoint.Zhptext.IsEnabled = false;
                 Global.frmhardpoint.hpdeletebut.IsEnabled = false;
+                Global.frmhardpoint.hpcutbut.IsEnabled = false;
                 Global.frmhardpoint.hpcopybut.IsEnabled = false;
                 Global.frmhardpoint.hpsetfacebut.IsEnabled = false;
                 Global.frmhardpoint.hpsetvertexbut.IsEnabled = false;

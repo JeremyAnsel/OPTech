@@ -353,7 +353,7 @@ namespace OPTech
             bool zeroedSoftVec = false;
             int clockWiseCount = 0;
 
-            if (Global.OPT.MeshArray.Count > 50)
+            if (Global.OPT.MeshArray.Count > 254)
             {
                 // too many meshes in OPT
                 text.AppendLine("* There are too many meshes in the model.");

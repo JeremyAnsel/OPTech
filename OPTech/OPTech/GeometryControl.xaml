@@ -98,7 +98,7 @@
                                         <ColumnDefinition Width="1*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="6*" />
+                                        <RowDefinition Height="7*" />
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
@@ -121,6 +121,7 @@
                                             <Button Margin="2 2 20 2" Content="Paste" ToolTip="Paste Texture Coordinates" Click="texturecoordinatepastebut_Click" />
                                         </UniformGrid>
                                         <Button x:Name="faceassignbut" Margin="20 2" Content="Assign..." Click="faceassignbut_Click" />
+                                        <Button x:Name="facesplitbut" Margin="20 2" Content="Split" Click="facesplitbut_Click" />
                                         <Button x:Name="facedeletebut" Margin="20 2" Content="Delete" Click="facedeletebut_Click" />
                                         <Button x:Name="faceduplicatebut" Margin="20 2" Content="Duplicate" Click="faceduplicatebut_Click" />
                                         <Button x:Name="facesortindexbut" Margin="20 2" Content="Sort by Index" Click="facesortindexbut_Click" />

@@ -758,6 +758,174 @@ namespace OPTech
             UndoStack.Push("face assign");
         }
 
+        private void facesplitbut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.facelist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            var newMesh = new MeshStruct();
+
+            var newLod0 = new LODStruct
+            {
+                Selected = false,
+                CloakDist = 1
+            };
+
+            newMesh.LODArray.Add(newLod0);
+
+            var newLod1 = new LODStruct
+            {
+                Selected = false,
+                CloakDist = 1000
+            };
+
+            newMesh.LODArray.Add(newLod1);
+
+            Global.MeshIDQueue++;
+            newMesh.LODArray[0].ID = Global.MeshIDQueue;
+
+            Global.MeshIDQueue++;
+            newMesh.LODArray[1].ID = Global.MeshIDQueue;
+
+            Global.OPT.MeshArray.Add(newMesh);
+
+            string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+            Global.CX.MeshListReplicateAddDrawableCheck(meshName, newMesh);
+
+            var selected = new List<Tuple<int, int>>(this.facelist.SelectedItems.Count);
+
+            for (int i = 0; i < this.facelist.Items.Count; i++)
+            {
+                if (this.facelist.IsSelected(i))
+                {
+                    string line = this.facelist.GetText(i);
+
+                    int thisMesh;
+                    int thisFace;
+                    StringHelpers.SplitFace(line, out thisMesh, out thisFace);
+
+                    selected.Add(Tuple.Create(thisMesh, thisFace));
+                }
+            }
+
+            foreach (var index in selected)
+            {
+                var lod = Global.OPT.MeshArray[index.Item1].LODArray[whichLOD];
+
+                var newFace = lod.FaceArray[index.Item2].Duplicate(false);
+
+                newMesh.LODArray[whichLOD].FaceArray.Add(newFace);
+            }
+
+            Global.ModelChanged = true;
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count - 1; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count <= whichLOD)
+                {
+                    continue;
+                }
+
+                var lod = mesh.LODArray[whichLOD];
+
+                if (lod.Selected)
+                {
+                    int EachFace = -1;
+
+                    while (EachFace != lod.FaceArray.Count - 1)
+                    {
+                        EachFace++;
+                        var face = lod.FaceArray[EachFace];
+
+                        if (face.Selected)
+                        {
+                            for (int EachFaceAfter = EachFace; EachFaceAfter < lod.FaceArray.Count; EachFaceAfter++)
+                            {
+                                if (EachFaceAfter != lod.FaceArray.Count - 1)
+                                {
+                                    lod.FaceArray[EachFaceAfter] = lod.FaceArray[EachFaceAfter + 1];
+                                }
+                            }
+
+                            lod.FaceArray.RemoveAt(lod.FaceArray.Count - 1);
+                            EachFace--;
+                        }
+                    }
+                }
+            }
+
+            {
+                int EachMesh = -1;
+
+                while (EachMesh != Global.OPT.MeshArray.Count - 2)
+                {
+                    EachMesh++;
+                    var mesh = Global.OPT.MeshArray[EachMesh];
+
+                    if (mesh.LODArray.Count == 2 && mesh.LODArray[1].FaceArray.Count == 0)
+                    {
+                        mesh.LODArray.RemoveAt(1);
+                    }
+
+                    if (mesh.LODArray[0].FaceArray.Count == 0)
+                    {
+                        for (int EachMeshAfter = EachMesh; EachMeshAfter < Global.OPT.MeshArray.Count - 1; EachMeshAfter++)
+                        {
+                            if (EachMeshAfter != Global.OPT.MeshArray.Count - 2)
+                            {
+                                Global.OPT.MeshArray[EachMeshAfter] = Global.OPT.MeshArray[EachMeshAfter + 1];
+                                this.meshlist.SetSelected(EachMeshAfter, false);
+                                this.meshlist.SetText(EachMeshAfter, this.meshlist.GetText(EachMeshAfter + 1));
+                            }
+                        }
+
+                        Global.OPT.MeshArray.RemoveAt(Global.OPT.MeshArray.Count - 2);
+                        this.meshlist.Items.RemoveAt(this.meshlist.Items.Count - 2);
+                        EachMesh--;
+                    }
+                }
+            }
+
+            Global.ModelChanged = true;
+
+            double RememberZoom = Global.OrthoZoom;
+            OptRead.CalcDomain();
+            Global.OrthoZoom = RememberZoom;
+
+            Global.CX.InitCamera();
+            Global.NumberTrim();
+            Global.CX.TextureScreens(Global.frmtexture.transtexturelist.SelectedIndex);
+
+            if (Global.OPT.MeshArray.Count > 0 && whichLOD == 0)
+            {
+                Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
+            }
+            else
+            {
+                Global.CX.MeshScreens(-1, whichLOD);
+            }
+
+            Global.CX.FaceScreens(-1, whichLOD, -1);
+            Global.CX.VertexScreens(-1, whichLOD, -1, -1);
+            Global.CX.CreateCall();
+
+            UndoStack.Push("face split");
+        }
+
         private void meshmoverUp_Click(object sender, RoutedEventArgs e)
         {
             if (this.meshlist.SelectedIndex == -1)

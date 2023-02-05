@@ -1550,6 +1550,7 @@ namespace OPTech
 
                 Global.frmgeometry.facedeletebut.IsEnabled = true;
                 Global.frmgeometry.faceassignbut.IsEnabled = true;
+                Global.frmgeometry.facesplitbut.IsEnabled = true;
                 Global.frmgeometry.normalflipbut.IsEnabled = true;
                 Global.frmgeometry.texturecoordinatebut.IsEnabled = true;
                 Global.frmgeometry.faceduplicatebut.IsEnabled = true;
@@ -1809,6 +1810,7 @@ namespace OPTech
             {
                 Global.frmgeometry.facedeletebut.IsEnabled = false;
                 Global.frmgeometry.faceassignbut.IsEnabled = false;
+                Global.frmgeometry.facesplitbut.IsEnabled = false;
                 Global.frmgeometry.normalflipbut.IsEnabled = false;
                 Global.frmgeometry.texturecoordinatebut.IsEnabled = false;
                 Global.frmgeometry.faceduplicatebut.IsEnabled = false;

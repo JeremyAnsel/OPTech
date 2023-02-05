@@ -80,11 +80,14 @@ namespace OPTech
             return newFace;
         }
 
-        public FaceStruct Duplicate()
+        public FaceStruct Duplicate(bool move = true)
         {
             var newFace = this.Clone();
 
-            newFace.Move(-this.CenterX, -this.CenterY, -this.CenterZ);
+            if (move)
+            {
+                newFace.Move(-this.CenterX, -this.CenterY, -this.CenterZ);
+            }
 
             Global.FaceIDQueue++;
             newFace.ID = Global.FaceIDQueue;

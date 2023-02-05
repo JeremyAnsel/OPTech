@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,8 +57,19 @@ namespace OPTech
 
         public MeshStruct()
         {
+            this.Drawable = true;
             this.HitType = 1;
             this.HitExp = 0;
+
+            this.RotAxisX = 0;
+            this.RotAxisY = 0;
+            this.RotAxisZ = 32767;
+            this.RotAimX = 0;
+            this.RotAimY = 32767;
+            this.RotAimZ = 0;
+            this.RotDegreeX = 32767;
+            this.RotDegreeY = 0;
+            this.RotDegreeZ = 0;
         }
 
         public MeshStruct Clone()
@@ -128,11 +140,14 @@ namespace OPTech
             return false;
         }
 
-        public MeshStruct Duplicate()
+        public MeshStruct Duplicate(bool move = true)
         {
             var newMesh = this.Clone();
 
-            newMesh.Move(-this.HitCenterX, -this.HitCenterY, -this.HitCenterZ);
+            if (move)
+            {
+                newMesh.Move(-this.HitCenterX, -this.HitCenterY, -this.HitCenterZ);
+            }
 
             foreach (var lod in newMesh.LODArray)
             {
@@ -275,6 +290,59 @@ namespace OPTech
             this.RotDegreeX = 32767;
             this.RotDegreeY = 0;
             this.RotDegreeZ = 0;
+        }
+
+        public static MeshStruct Merge(List<MeshStruct> meshes)
+        {
+            var newMesh = new MeshStruct();
+
+            var newLod0 = new LODStruct
+            {
+                Selected = false,
+                CloakDist = 1
+            };
+
+            newMesh.LODArray.Add(newLod0);
+
+            var newLod1 = new LODStruct
+            {
+                Selected = false,
+                CloakDist = 1000
+            };
+
+            newMesh.LODArray.Add(newLod1);
+
+            Global.MeshIDQueue++;
+            newMesh.LODArray[0].ID = Global.MeshIDQueue;
+
+            Global.MeshIDQueue++;
+            newMesh.LODArray[1].ID = Global.MeshIDQueue;
+
+            foreach (var mesh in meshes)
+            {
+                newMesh.HPArray.AddRange(mesh.HPArray);
+                newMesh.EGArray.AddRange(mesh.EGArray);
+
+                for (int lodIndex = 0; lodIndex < mesh.LODArray.Count; lodIndex++)
+                {
+                    LODStruct newLod = lodIndex switch
+                    {
+                        0 => newMesh.LODArray[0],
+                        1 => newMesh.LODArray[1],
+                        _ => null
+                    };
+
+                    if (newLod is null)
+                    {
+                        break;
+                    }
+
+                    var lod = mesh.LODArray[lodIndex];
+                    newLod.FaceArray.AddRange(lod.FaceArray);
+                }
+            }
+
+            return newMesh;
         }
     }
 }

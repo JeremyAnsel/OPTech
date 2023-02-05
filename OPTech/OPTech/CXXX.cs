@@ -1180,6 +1180,7 @@ namespace OPTech
                     Global.frmgeometry.meshvisiblecheck.IsEnabled = true;
                     Global.frmgeometry.meshdeletebut.IsEnabled = true;
                     Global.frmgeometry.meshassignbut.IsEnabled = true;
+                    Global.frmgeometry.meshmergebut.IsEnabled = true;
                     Global.frmgeometry.meshmoverUp.IsEnabled = true;
                     Global.frmgeometry.meshmoverDown.IsEnabled = true;
                     Global.frmgeometry.meshduplicatebut.IsEnabled = true;
@@ -1429,6 +1430,7 @@ namespace OPTech
                 Global.frmgeometry.meshvisiblecheck.IsEnabled = false;
                 Global.frmgeometry.meshdeletebut.IsEnabled = false;
                 Global.frmgeometry.meshassignbut.IsEnabled = false;
+                Global.frmgeometry.meshmergebut.IsEnabled = false;
                 Global.frmgeometry.meshmoverUp.IsEnabled = false;
                 Global.frmgeometry.meshmoverDown.IsEnabled = false;
                 Global.frmgeometry.meshduplicatebut.IsEnabled = false;

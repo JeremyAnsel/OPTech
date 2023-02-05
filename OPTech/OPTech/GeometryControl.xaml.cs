@@ -1326,6 +1326,99 @@ namespace OPTech
             UndoStack.Push("mesh assign");
         }
 
+        private void meshmergebut_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.meshlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            var selectedMeshes = new List<MeshStruct>(this.meshlist.SelectedItems.Count);
+
+            for (int i = 0; i < this.meshlist.Items.Count; i++)
+            {
+                if (this.meshlist.IsSelected(i))
+                {
+                    selectedMeshes.Add(Global.OPT.MeshArray[i].Duplicate(false));
+                }
+            }
+
+            var newMesh = MeshStruct.Merge(selectedMeshes);
+            Global.OPT.MeshArray.Add(newMesh);
+
+            string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+            Global.CX.MeshListReplicateAddDrawableCheck(meshName, newMesh);
+
+            if (whichLOD == 0)
+            {
+                int EachMesh = -1;
+
+                while (EachMesh != Global.OPT.MeshArray.Count - 2)
+                {
+                    EachMesh++;
+                    var mesh = Global.OPT.MeshArray[EachMesh];
+
+                    if (mesh.LODArray[whichLOD].Selected)
+                    {
+                        for (int EachMeshAfter = EachMesh; EachMeshAfter < Global.OPT.MeshArray.Count - 1; EachMeshAfter++)
+                        {
+                            if (EachMeshAfter != Global.OPT.MeshArray.Count - 2)
+                            {
+                                Global.OPT.MeshArray[EachMeshAfter] = Global.OPT.MeshArray[EachMeshAfter + 1];
+                                this.meshlist.SetSelected(EachMeshAfter, false);
+                                this.meshlist.SetText(EachMeshAfter, this.meshlist.GetText(EachMeshAfter + 1));
+                            }
+                        }
+
+                        Global.OPT.MeshArray.RemoveAt(Global.OPT.MeshArray.Count - 2);
+                        this.meshlist.Items.RemoveAt(this.meshlist.Items.Count - 2);
+                        EachMesh--;
+                    }
+                }
+            }
+            else
+            {
+                for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count - 1; EachMesh++)
+                {
+                    var mesh = Global.OPT.MeshArray[EachMesh];
+
+                    if (mesh.LODArray.Count <= whichLOD)
+                    {
+                        continue;
+                    }
+
+                    var lod = mesh.LODArray[whichLOD];
+
+                    if (lod.Selected)
+                    {
+                        mesh.LODArray.RemoveAt(1);
+                        this.meshlist.SetSelected(EachMesh, false);
+                    }
+                }
+            }
+
+            Global.ModelChanged = true;
+
+            Global.CX.MeshListReplicateCopyItems();
+
+            Global.CX.MeshScreens(-1, whichLOD);
+            Global.CX.FaceScreens(-1, whichLOD, -1);
+            Global.CX.VertexScreens(-1, whichLOD, -1, -1);
+            Global.CX.CreateCall();
+
+            UndoStack.Push("mesh merge");
+        }
+
         private void meshdeletebut_Click(object sender, RoutedEventArgs e)
         {
             int whichLOD;

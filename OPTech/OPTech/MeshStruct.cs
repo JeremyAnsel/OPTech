@@ -299,7 +299,7 @@ namespace OPTech
             var newLod0 = new LODStruct
             {
                 Selected = false,
-                CloakDist = 1
+                CloakDist = 1000
             };
 
             newMesh.LODArray.Add(newLod0);

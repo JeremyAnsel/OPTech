@@ -471,11 +471,11 @@ namespace OPTech
                 {
                     text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is less than 8 pixels in size.");
                 }
-                // not a power of 2
-                else if (!Global.IsPowerOf2(width) || !Global.IsPowerOf2(height))
-                {
-                    text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is not a power of 2.");
-                }
+                //// not a power of 2
+                //else if (!Global.IsPowerOf2(width) || !Global.IsPowerOf2(height))
+                //{
+                //    text.AppendLine("* TEX" + textureIndex.ToString(CultureInfo.InvariantCulture).PadLeft(5, '0') + " contains dimension(s) that is not a power of 2.");
+                //}
                 //// greater than 256 dimension
                 //else if (width > 256 || height > 256)
                 //{
@@ -483,7 +483,8 @@ namespace OPTech
                 //}
             }
 
-            if (Global.OPT.TextureArray.Count > 200)
+            //if (Global.OPT.TextureArray.Count > 200)
+            if (Global.OPT.TextureArray.Count > 1024)
             {
                 // too many textures in OPT
                 text.AppendLine("* There are too many textures in the model.");

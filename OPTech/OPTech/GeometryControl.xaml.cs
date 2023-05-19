@@ -1077,7 +1077,7 @@ namespace OPTech
 
             foreach (int index in selected)
             {
-                var newMesh = Global.OPT.MeshArray[index].Duplicate();
+                var newMesh = Global.OPT.MeshArray[index].Duplicate(false);
                 Global.OPT.MeshArray.Add(newMesh);
 
                 string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);

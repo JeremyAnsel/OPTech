@@ -293,6 +293,33 @@ namespace OPTech
             return list.GetText(list.SelectedIndex, useIndex);
         }
 
+        public static string GetDuplicateText(this ListBox list, int index, bool useIndex = true)
+        {
+            string baseText = list.GetText(index, useIndex);
+            int baseTextIndex = baseText.IndexOf(" - Copy");
+
+            if (baseTextIndex != -1)
+            {
+                baseText = baseText.Substring(0, baseTextIndex);
+            }
+
+            baseText += " - Copy";
+
+            int copyIndex = 1;
+            string newText = baseText;
+
+            while (true)
+            {
+                if (list.GetTextIndex(newText, useIndex) == -1)
+                {
+                    return newText;
+                }
+
+                copyIndex++;
+                newText = baseText + " (" + copyIndex.ToString(CultureInfo.InvariantCulture) + ")";
+            }
+        }
+
         public static void AddText(this ListBox list, string newItem, bool selected = false, bool useIndex = true)
         {
             var textBlock = list.CreateTextItem(list.Items.Count, newItem, useIndex);

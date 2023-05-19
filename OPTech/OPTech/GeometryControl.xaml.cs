@@ -1080,7 +1080,9 @@ namespace OPTech
                 var newMesh = Global.OPT.MeshArray[index].Duplicate(false);
                 Global.OPT.MeshArray.Add(newMesh);
 
-                string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+                //string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+                string meshName = this.meshlist.GetDuplicateText(index);
+
                 Global.CX.MeshListReplicateAddDrawableCheck(meshName, newMesh);
             }
 
@@ -1130,7 +1132,9 @@ namespace OPTech
                 var newMesh = Global.OPT.MeshArray[index].MirrorDuplicate();
                 Global.OPT.MeshArray.Add(newMesh);
 
-                string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+                //string meshName = string.Format(CultureInfo.InvariantCulture, "MESH {0}", this.meshlist.Items.Count + 1);
+                string meshName = this.meshlist.GetDuplicateText(index);
+
                 Global.CX.MeshListReplicateAddDrawableCheck(meshName, newMesh);
             }
 

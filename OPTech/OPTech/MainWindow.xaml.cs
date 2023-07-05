@@ -302,11 +302,13 @@ namespace OPTech
             }
         }
 
-        private void facecountmenu_Click(object sender, RoutedEventArgs e)
+        private void optinfomenu_Click(object sender, RoutedEventArgs e)
         {
             int vertexCount = 0;
             int triCount = 0;
             int quadCount = 0;
+            int hardpointCount = 0;
+            int engineGlowCount = 0;
 
             foreach (var mesh in Global.OPT.MeshArray)
             {
@@ -328,21 +330,26 @@ namespace OPTech
                         }
                     }
                 }
+
+                hardpointCount += mesh.HPArray.Count;
+                engineGlowCount += mesh.EGArray.Count;
             }
 
             int total = triCount + quadCount;
             int meshCount = Global.OPT.MeshArray.Count;
             int versionCount = Global.OPT.GetVersionCount();
 
+            RetrieveModelDimensions(out string width, out string length, out string height);
+
             Xceed.Wpf.Toolkit.MessageBox.Show(
                 this,
-                "Meshes: " + meshCount.ToString(CultureInfo.InvariantCulture)
-                + "\nVertex: " + vertexCount.ToString(CultureInfo.InvariantCulture)
-                + "\nTris: " + triCount.ToString(CultureInfo.InvariantCulture)
-                + "\nQuads: " + quadCount.ToString(CultureInfo.InvariantCulture)
-                + "\nTotal Faces: " + total.ToString(CultureInfo.InvariantCulture)
-                + "\nFlight Groups: " + versionCount.ToString(CultureInfo.InvariantCulture),
-                "Face Count");
+                "Width: " + width + "\nLength: " + length + "\nHeight: " + height
+                + "\nMeshes: " + meshCount.ToString(CultureInfo.InvariantCulture) + ", Vertices: " + vertexCount.ToString(CultureInfo.InvariantCulture)
+                + "\nTris: " + triCount.ToString(CultureInfo.InvariantCulture) + ", Quads: " + quadCount.ToString(CultureInfo.InvariantCulture) + ", Total Faces: " + total.ToString(CultureInfo.InvariantCulture)
+                + "\nFlight Groups: " + versionCount.ToString(CultureInfo.InvariantCulture)
+                + "\nHardpoints: " + hardpointCount.ToString(CultureInfo.InvariantCulture)
+                + "\nEngine Glows: " + engineGlowCount.ToString(CultureInfo.InvariantCulture),
+                "OPT Info");
         }
 
         private void errorcheckmenu_Click(object sender, RoutedEventArgs e)
@@ -753,11 +760,10 @@ namespace OPTech
             }
         }
 
-        private void modeldimmenu_Click(object sender, RoutedEventArgs e)
+        private void RetrieveModelDimensions(out string width, out string length, out string height)
         {
             float value;
 
-            string width;
             value = Global.OPT.SpanX * OptStruct.ScaleFactor;
             if (value < 1000)
             {
@@ -768,7 +774,6 @@ namespace OPTech
                 width = Global.Round(value / 1000, 2).ToString(CultureInfo.InvariantCulture) + " kilometers";
             }
 
-            string length;
             value = Global.OPT.SpanY * OptStruct.ScaleFactor;
             if (value < 1000)
             {
@@ -779,7 +784,6 @@ namespace OPTech
                 length = Global.Round(value / 1000, 2).ToString(CultureInfo.InvariantCulture) + " kilometers";
             }
 
-            string height;
             value = Global.OPT.SpanZ * OptStruct.ScaleFactor;
             if (value < 1000)
             {
@@ -789,13 +793,6 @@ namespace OPTech
             {
                 height = Global.Round(value / 1000, 2).ToString(CultureInfo.InvariantCulture) + " kilometers";
             }
-
-            Xceed.Wpf.Toolkit.MessageBox.Show(
-                this,
-                "Width: " + width
-                + "\nLength: " + length
-                + "\nHeight: " + height,
-                "Model Dimensions");
         }
 
         private void aaonmenu_Click(object sender, RoutedEventArgs e)

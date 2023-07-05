@@ -78,11 +78,10 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem x:Name="infomenu" Header="Info">
-                <MenuItem x:Name="facecountmenu" Header="Face Count" Click="facecountmenu_Click" />
+                <MenuItem x:Name="optinfomenu" Header="OPT Info" Click="optinfomenu_Click" />
                 <MenuItem x:Name="errorcheckmenu" Header="Error Check" Click="errorcheckmenu_Click" />
                 <MenuItem x:Name="flattexturescheckmenu" Header="Check for Flat Textures" Click="flattexturescheckmenu_Click" />
                 <MenuItem x:Name="flattexturesselectmenu" Header="Select Flat Textures" Click="flattexturesselectmenu_Click" />
-                <MenuItem x:Name="modeldimmenu" Header="Model Dimensions" Click="modeldimmenu_Click" />
             </MenuItem>
             <MenuItem x:Name="helpmenu" Header="Help..." Click="helpmenu_Click" />
         </Menu>

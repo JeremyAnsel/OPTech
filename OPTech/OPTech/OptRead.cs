@@ -248,7 +248,7 @@ namespace OPTech
                         Global.OPT.MaxY = OMaxPointY;
                     }
 
-                    if (OMaxPointZ == 999999 || lod.MaxX > OMaxPointZ)
+                    if (OMaxPointZ == 999999 || lod.MaxZ > OMaxPointZ)
                     {
                         OMaxPointZ = lod.MaxZ;
                         Global.OPT.MaxZ = OMaxPointZ;

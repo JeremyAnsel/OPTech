@@ -37,6 +37,37 @@ text boxes:
   return key: validate the value
 
 
+Keyboard shorcuts:
+
+Ctrl+S: quick save
+Ctrl+N: new project
+Ctrl+O: open project
+Ctrl+I: import OPT
+Ctrl+D: import DXF
+Ctrl+P: create OPT
+Ctrl+H: compute hitzones
+Ctrl+Q: Tri to Quad
+Ctrl+T: Quad to Tri
+Ctrl+PgUp: select hight version
+Ctrl+PgDow: select low version
+Ctrl+Home: mesh zoom off
+Ctrl+End: mesh zoom on
+Alt+W: wireframe
+Alt+T: textures
+Alt+N: normals
+Alt+M: mesh view
+Alt+F: face view
+Alt+V: vertex view
+Alt+P: rotate or pan view
+Ctrl+NumPad1: perspective view
+Ctrl+NumPad2: bottom view
+Ctrl+NumPad3: back view
+Ctrl+NumPad4: left view
+Ctrl+NumPad5: front view
+Ctrl+NumPad6: right view
+Ctrl+NumPad8: top view
+
+
 Credits:
 
 Derek del Rio (Jedi Hunter/Com Trooper) for OPTech v1

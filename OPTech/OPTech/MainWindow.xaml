@@ -28,22 +28,22 @@
         </StatusBar>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="filemenu" Header="File">
-                <MenuItem x:Name="opznewmenu" Header="new Project" Click="opznewmenu_Click" />
-                <MenuItem x:Name="opzopenmenu" Header="open Project" Click="opzopenmenu_Click" />
-                <MenuItem x:Name="saveopzmenu" Header="save Project" Click="saveopzmenu_Click" />
+                <MenuItem x:Name="opznewmenu" Header="new Project" Click="opznewmenu_Click" ToolTip="Ctrl+N" />
+                <MenuItem x:Name="opzopenmenu" Header="open Project" Click="opzopenmenu_Click" ToolTip="Ctrl+O" />
+                <MenuItem x:Name="saveopzmenu" Header="save Project" Click="saveopzmenu_Click" ToolTip="Ctrl+S" />
                 <MenuItem x:Name="saveopzasmenu" Header="save Project as" Click="saveopzasmenu_Click" />
-                <MenuItem x:Name="optimportmenu" Header="import .OPT" Click="optimportmenu_Click" />
-                <MenuItem x:Name="dxfimportmenu" Header="import .DXF" Click="dxfimportmenu_Click" />
+                <MenuItem x:Name="optimportmenu" Header="import .OPT" Click="optimportmenu_Click" ToolTip="Ctrl+I" />
+                <MenuItem x:Name="dxfimportmenu" Header="import .DXF" Click="dxfimportmenu_Click" ToolTip="Ctrl+D" />
                 <MenuItem x:Name="objimportmenu" Header="import .OBJ" Click="objimportmenu_Click" />
                 <MenuItem x:Name="opzimportmenu" Header="import Project" Click="opzimportmenu_Click" />
                 <MenuItem x:Name="dxfexportmenu" Header="export .DXF" Click="dxfexportmenu_Click" />
-                <MenuItem x:Name="optxwacreatemenu" Header="create .OPT (XWA)" Click="optxwacreatemenu_Click" />
+                <MenuItem x:Name="optxwacreatemenu" Header="create .OPT (XWA)" Click="optxwacreatemenu_Click" ToolTip="Ctrl+P" />
                 <MenuItem x:Name="optxvtcreatemenu" Header="create .OPT (XvT)" Click="optxvtcreatemenu_Click" />
             </MenuItem>
             <MenuItem x:Name="calculatemenu" Header="Calculate">
                 <MenuItem x:Name="facenormalmenu" Header="Face Normals" Click="facenormalmenu_Click" />
                 <MenuItem x:Name="vertexnormalmenu" Header="Vertex Normals" Click="vertexnormalmenu_Click" />
-                <MenuItem x:Name="hitzonemenu" Header="Hitzones" Click="hitzonemenu_Click" />
+                <MenuItem x:Name="hitzonemenu" Header="Hitzones" Click="hitzonemenu_Click" ToolTip="Ctrl+H" />
                 <MenuItem x:Name="rotationmenu" Header="Reset Transformations" Click="rotationmenu_Click" />
                 <MenuItem x:Name="texturecoordinatemenu" Header="Reset Texture Coordinates" Click="texturecoordinatemenu_Click" />
                 <MenuItem x:Name="softwarevectorresmenu" Header="Software Vectors (resolution)" Click="softwarevectorresmenu_Click" />
@@ -51,8 +51,8 @@
             </MenuItem>
             <MenuItem x:Name="fixmenu" Header="Fix">
                 <MenuItem x:Name="vertexordermenu" Header="Vertex Order" Click="vertexordermenu_Click" />
-                <MenuItem x:Name="quad2trimenu" Header="Quad2Tri" Click="quad2trimenu_Click" />
-                <MenuItem x:Name="tri2quadmenu" Header="Tri2Quad" Click="tri2quadmenu_Click" />
+                <MenuItem x:Name="quad2trimenu" Header="Quad2Tri" Click="quad2trimenu_Click" ToolTip="Ctrl+T" />
+                <MenuItem x:Name="tri2quadmenu" Header="Tri2Quad" Click="tri2quadmenu_Click" ToolTip="Ctrl+Q" />
                 <MenuItem x:Name="coincidentvertexmenu" Header="Coincident Vertices" Click="coincidentvertexmenu_Click" />
                 <MenuItem x:Name="resethitzonesmenu" Header="Reset Hitzones" Click="resethitzonesmenu_Click" />
                 <MenuItem x:Name="namemeshesmenu" Header="Mesh Number Order" Click="namemeshesmenu_Click" />
@@ -164,41 +164,41 @@
             <DockPanel>
                 <ToolBarTray DockPanel.Dock="Top" IsLocked="True">
                     <ToolBar x:Name="dispbar">
-                        <RadioButton x:Name="dispbar_highlevel" GroupName="dispbar_lodgroup" Tag="high level" ToolTip="High Level" IsChecked="True" Click="dispbar_highlevel_Click">
+                        <RadioButton x:Name="dispbar_highlevel" GroupName="dispbar_lodgroup" Tag="high level" ToolTip="High Level: Ctrl+PgUp" IsChecked="True" Click="dispbar_highlevel_Click">
                             <Image Width="40" Height="40" Source="Images/lod_high.ico" />
                         </RadioButton>
-                        <RadioButton x:Name="dispbar_lowlevel" GroupName="dispbar_lodgroup" Tag="low level" ToolTip="Low Level" Click="dispbar_lowlevel_Click">
+                        <RadioButton x:Name="dispbar_lowlevel" GroupName="dispbar_lodgroup" Tag="low level" ToolTip="Low Level: Ctrl+PgDn" Click="dispbar_lowlevel_Click">
                             <Image Width="40" Height="40" Source="Images/lod_low.ico" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
-                        <RadioButton x:Name="dispbar_meshzoomoff" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom off" ToolTip="Mesh Zoom Off" IsChecked="True"  Click="dispbar_meshzoomoff_Click">
+                        <RadioButton x:Name="dispbar_meshzoomoff" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom off" ToolTip="Mesh Zoom Off: Ctrl+Home" IsChecked="True"  Click="dispbar_meshzoomoff_Click">
                             <Image Width="40" Height="40" Source="Images/MeshZoomOff.png" />
                         </RadioButton>
-                        <RadioButton x:Name="dispbar_meshzoomon" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom on" ToolTip="Mesh Zoom On" Click="dispbar_meshzoomon_Click">
+                        <RadioButton x:Name="dispbar_meshzoomon" GroupName="dispbar_meshzoomgroup" Tag="mesh zoom on" ToolTip="Mesh Zoom On: Ctrl+End" Click="dispbar_meshzoomon_Click">
                             <Image Width="40" Height="40" Source="Images/MeshZoomOn.png" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
-                        <RadioButton x:Name="dispbar_mesh" GroupName="dispbar_geogroup" Tag="mesh" ToolTip="Mesh" IsChecked="True" Click="dispbar_mesh_Click">
+                        <RadioButton x:Name="dispbar_mesh" GroupName="dispbar_geogroup" Tag="mesh" ToolTip="Mesh: Alt+M" IsChecked="True" Click="dispbar_mesh_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_13FE.ico" />
                         </RadioButton>
-                        <RadioButton x:Name="dispbar_face" GroupName="dispbar_geogroup" Tag="face" ToolTip="Face" Click="dispbar_face_Click">
+                        <RadioButton x:Name="dispbar_face" GroupName="dispbar_geogroup" Tag="face" ToolTip="Face: Alt+F" Click="dispbar_face_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_171A.ico" />
                         </RadioButton>
-                        <RadioButton x:Name="dispbar_vertex" GroupName="dispbar_geogroup" Tag="vertex" ToolTip="Vertex" Click="dispbar_vertex_Click">
+                        <RadioButton x:Name="dispbar_vertex" GroupName="dispbar_geogroup" Tag="vertex" ToolTip="Vertex: Alt+V" Click="dispbar_vertex_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_1A36.ico" />
                         </RadioButton>
                         <Separator Width="10" Background="Transparent" />
-                        <CheckBox x:Name="dispbar_wireframe" Tag="wireframe" ToolTip="Wireframe" IsChecked="False" Click="dispbar_wireframe_Click">
+                        <CheckBox x:Name="dispbar_wireframe" Tag="wireframe" ToolTip="Wireframe: Alt+W" IsChecked="False" Click="dispbar_wireframe_Click">
                             <Image Width="40" Height="40" Source="Images/display_wireframe.ico" />
                         </CheckBox>
-                        <CheckBox x:Name="dispbar_texture" Tag="texture" ToolTip="Texture" IsChecked="True" Click="dispbar_texture_Click">
+                        <CheckBox x:Name="dispbar_texture" Tag="texture" ToolTip="Texture: Alt+T" IsChecked="True" Click="dispbar_texture_Click">
                             <Image Width="40" Height="40" Source="Images/display_textured.ico" />
                         </CheckBox>
                         <Separator Width="10" Background="Transparent" />
-                        <RadioButton x:Name="dispbar_nonorm" GroupName="dispbar_normalgroup" Tag="no norm" ToolTip="Hide Normals" IsChecked="True" Click="dispbar_nonorm_Click">
+                        <RadioButton x:Name="dispbar_nonorm" GroupName="dispbar_normalgroup" Tag="no norm" ToolTip="Hide Normals: Alt+N" IsChecked="True" Click="dispbar_nonorm_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_206E.ico" />
                         </RadioButton>
-                        <RadioButton x:Name="dispbar_norm" GroupName="dispbar_normalgroup" Tag="norm" ToolTip="Show Normals" Click="dispbar_norm_Click">
+                        <RadioButton x:Name="dispbar_norm" GroupName="dispbar_normalgroup" Tag="norm" ToolTip="Show Normals: Alt+N" Click="dispbar_norm_Click">
                             <Image Width="40" Height="40" Source="Images/frmoptech_2396.ico" />
                         </RadioButton>
                     </ToolBar>

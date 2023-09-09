@@ -131,7 +131,7 @@ namespace OPTech
             }
         }
 
-        private void viewbar_Click(object sender, RoutedEventArgs e)
+        public void viewbar_Click(object sender, RoutedEventArgs e)
         {
             if (Global.IsMeshZoomOn)
             {

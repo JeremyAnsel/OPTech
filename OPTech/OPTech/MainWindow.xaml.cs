@@ -67,6 +67,178 @@ namespace OPTech
             this.rotationdegreecolormenu.Icon = CreateMenuIcon(Global.RRotationDegreeColor, Global.GRotationDegreeColor, Global.BRotationDegreeColor);
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                e.Handled = true;
+
+                switch (e.Key)
+                {
+                    case Key.S:
+                        saveopzmenu_Click(null, null);
+                        return;
+
+                    case Key.N:
+                        opznewmenu_Click(null, null);
+                        return;
+
+                    case Key.O:
+                        opzopenmenu_Click(null, null);
+                        return;
+
+                    case Key.I:
+                        optimportmenu_Click(null, null);
+                        return;
+
+                    case Key.D:
+                        dxfimportmenu_Click(null, null);
+                        return;
+
+                    case Key.P:
+                        optxwacreatemenu_Click(null, null);
+                        return;
+
+                    case Key.H:
+                        hitzonemenu_Click(null, null);
+                        return;
+
+                    case Key.Q:
+                        tri2quadmenu_Click(null, null);
+                        return;
+
+                    case Key.T:
+                        quad2trimenu_Click(null, null);
+                        return;
+
+                    case Key.PageUp:
+                        dispbar_highlevel.IsChecked = true;
+                        dispbar_highlevel_Click(null, null);
+                        return;
+
+                    case Key.PageDown:
+                        dispbar_lowlevel.IsChecked = true;
+                        dispbar_lowlevel_Click(null, null);
+                        return;
+
+                    case Key.Home:
+                        dispbar_meshzoomoff.IsChecked = true;
+                        dispbar_meshzoomoff_Click(null, null);
+                        return;
+
+                    case Key.End:
+                        dispbar_meshzoomon.IsChecked = true;
+                        dispbar_meshzoomon_Click(null, null);
+                        return;
+
+                    case Key.NumPad1:
+                        // perspective
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[0], null);
+                        return;
+
+                    case Key.NumPad2:
+                        // bottom
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[2], null);
+                        return;
+
+                    case Key.NumPad3:
+                        // back
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[6], null);
+                        return;
+
+                    case Key.NumPad4:
+                        // left
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[4], null);
+                        return;
+
+                    case Key.NumPad5:
+                        // front
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[5], null);
+                        return;
+
+                    case Key.NumPad6:
+                        // right
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[3], null);
+                        return;
+
+                    case Key.NumPad8:
+                        // top
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[1], null);
+                        return;
+
+                    default:
+                        e.Handled = false;
+                        break;
+                }
+            }
+
+            if (Keyboard.Modifiers == ModifierKeys.Alt)
+            {
+                e.Handled = true;
+
+                switch (e.SystemKey)
+                {
+                    case Key.W:
+                        dispbar_wireframe.IsChecked = !dispbar_wireframe.IsChecked;
+                        dispbar_wireframe_Click(null, null);
+                        return;
+
+                    case Key.T:
+                        dispbar_texture.IsChecked = !dispbar_texture.IsChecked;
+                        dispbar_texture_Click(null, null);
+                        return;
+
+                    case Key.N:
+                        dispbar_nonorm.IsChecked = !dispbar_nonorm.IsChecked;
+                        dispbar_norm.IsChecked = !dispbar_norm.IsChecked;
+
+                        if (dispbar_norm.IsChecked == true)
+                        {
+                            dispbar_norm_Click(null, null);
+                        }
+                        else
+                        {
+                            dispbar_nonorm_Click(null, null);
+                        }
+                        return;
+
+                    case Key.M:
+                        dispbar_mesh.IsChecked = true;
+                        dispbar_mesh_Click(null, null);
+                        return;
+
+                    case Key.F:
+                        dispbar_face.IsChecked = true;
+                        dispbar_face_Click(null, null);
+                        return;
+
+                    case Key.V:
+                        dispbar_vertex.IsChecked = true;
+                        dispbar_vertex_Click(null, null);
+                        return;
+
+                    case Key.P:
+                        if (this.frmrenderscreen.cameraop0.IsChecked == true)
+                        {
+                            this.frmrenderscreen.cameraop0.IsChecked = false;
+                            this.frmrenderscreen.cameraop1.IsChecked = true;
+                        }
+                        else
+                        {
+                            this.frmrenderscreen.cameraop0.IsChecked = true;
+                            this.frmrenderscreen.cameraop1.IsChecked = false;
+                        }
+                        return;
+
+                    default:
+                        e.Handled = false;
+                        break;
+                }
+            }
+
+            base.OnKeyDown(e);
+        }
+
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
@@ -1208,6 +1380,12 @@ namespace OPTech
 
             Global.CX.CreateCall();
             UndoStack.Push("quad2tri");
+
+            if (sender is null)
+            {
+                return;
+            }
+
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Quad2Tri");
         }
 
@@ -1494,6 +1672,12 @@ namespace OPTech
 
             Global.CX.CreateCall();
             UndoStack.Push("tri2quad");
+
+            if (sender is null)
+            {
+                return;
+            }
+
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Tri2Quad");
         }
 
@@ -1619,6 +1803,12 @@ namespace OPTech
         {
             this.HitzoneCalculator(0);
             UndoStack.Push("hitzones");
+
+            if (sender is null)
+            {
+                return;
+            }
+
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "Hitzones");
         }
 
@@ -2919,6 +3109,11 @@ namespace OPTech
 
         private void backupopz()
         {
+            if (string.IsNullOrEmpty(Global.opzpath))
+            {
+                return;
+            }
+
             string name = System.IO.Path.GetFileName(Global.opzpath);
             string fileName = System.IO.Path.Combine(Global.opzpath, name + ".opz");
 
@@ -2951,12 +3146,23 @@ namespace OPTech
 
         private void saveopzmenu_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(Global.opzpath))
+            {
+                return;
+            }
+
             this.backupopz();
 
             string fileName = System.IO.Path.Combine(Global.opzpath, System.IO.Path.GetFileName(Global.opzpath) + ".opz");
             Global.ModelChanged = false;
             this.saveopz(fileName);
             UndoStack.Push("save " + System.IO.Path.GetFileName(fileName));
+
+            if (sender is null)
+            {
+                return;
+            }
+
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "save Project");
         }
 
@@ -4361,6 +4567,11 @@ namespace OPTech
 
         private void optxwacreatemenu_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(Global.opzpath))
+            {
+                return;
+            }
+
             if (!this.checkopttextures())
             {
                 return;

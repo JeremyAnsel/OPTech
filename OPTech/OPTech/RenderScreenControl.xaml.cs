@@ -59,13 +59,21 @@ namespace OPTech
         private void renderscreen_KeyUp(object sender, KeyEventArgs e)
         {
             var modifiers = Keyboard.Modifiers;
-            e.Handled = Global.CX.KeyUp(e.Key, modifiers);
+            bool shift = (modifiers & ModifierKeys.Shift) != 0;
+            bool control = (modifiers & ModifierKeys.Control) != 0;
+            bool alt = (modifiers & ModifierKeys.Alt) != 0;
+            Key key = alt ? e.SystemKey : e.Key;
+            e.Handled = Global.CX.KeyUp(key, modifiers);
         }
 
         private void renderscreen_KeyDown(object sender, KeyEventArgs e)
         {
             var modifiers = Keyboard.Modifiers;
-            e.Handled = Global.CX.KeyDown(e.Key, modifiers);
+            bool shift = (modifiers & ModifierKeys.Shift) != 0;
+            bool control = (modifiers & ModifierKeys.Control) != 0;
+            bool alt = (modifiers & ModifierKeys.Alt) != 0;
+            Key key = alt ? e.SystemKey : e.Key;
+            e.Handled = Global.CX.KeyDown(key, modifiers);
         }
 
         private void renderscreen_Initialized(object sender, EventArgs e)

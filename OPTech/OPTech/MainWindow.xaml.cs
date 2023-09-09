@@ -69,6 +69,48 @@ namespace OPTech
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (Keyboard.Modifiers == ModifierKeys.None)
+            {
+                e.Handled = true;
+
+                switch (e.Key)
+                {
+                    case Key.F1:
+                        geometry_Click(null, null);
+                        frmgeometry.subgeometry_Click(null, null);
+                        return;
+
+                    case Key.F2:
+                        geometry_Click(null, null);
+                        frmgeometry.subtexture_Click(null, null);
+                        return;
+
+                    case Key.F3:
+                        texture_Click(null, null);
+                        return;
+
+                    case Key.F4:
+                        hitzone_Click(null, null);
+                        return;
+
+                    case Key.F5:
+                        rotation_Click(null, null);
+                        return;
+
+                    case Key.F6:
+                        hardpoint_Click(null, null);
+                        return;
+
+                    case Key.F7:
+                        engineglow_Click(null, null);
+                        return;
+
+                    default:
+                        e.Handled = false;
+                        break;
+                }
+            }
+
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
                 e.Handled = true;
@@ -218,16 +260,54 @@ namespace OPTech
                         return;
 
                     case Key.P:
-                        if (this.frmrenderscreen.cameraop0.IsChecked == true)
-                        {
-                            this.frmrenderscreen.cameraop0.IsChecked = false;
-                            this.frmrenderscreen.cameraop1.IsChecked = true;
-                        }
-                        else
-                        {
-                            this.frmrenderscreen.cameraop0.IsChecked = true;
-                            this.frmrenderscreen.cameraop1.IsChecked = false;
-                        }
+                        //if (this.frmrenderscreen.cameraop0.IsChecked == true)
+                        //{
+                        //    this.frmrenderscreen.cameraop0.IsChecked = false;
+                        //    this.frmrenderscreen.cameraop1.IsChecked = true;
+                        //}
+                        //else
+                        //{
+                        //    this.frmrenderscreen.cameraop0.IsChecked = true;
+                        //    this.frmrenderscreen.cameraop1.IsChecked = false;
+                        //}
+
+                        this.frmrenderscreen.cameraop0.IsChecked = true;
+                        this.frmrenderscreen.cameraop1.IsChecked = false;
+                        return;
+
+                    case Key.D1:
+                        // perspective
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[0], null);
+                        return;
+
+                    case Key.D3:
+                        // bottom
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[2], null);
+                        return;
+
+                    case Key.D7:
+                        // back
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[6], null);
+                        return;
+
+                    case Key.D5:
+                        // left
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[4], null);
+                        return;
+
+                    case Key.D6:
+                        // front
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[5], null);
+                        return;
+
+                    case Key.D4:
+                        // right
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[3], null);
+                        return;
+
+                    case Key.D2:
+                        // top
+                        this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[1], null);
                         return;
 
                     default:

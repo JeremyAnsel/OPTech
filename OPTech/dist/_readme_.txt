@@ -19,7 +19,7 @@ Camera rotation and panning:
 
 holding mouse right:
   when Rotate is selected: if shift key pressed, then rotate Z axis, else rotate X and Y axis
-  when Pan is selected: if shift is pressed, then zoom camera, else move camera
+  when Pan is selected or Ctrl is pressed: if shift is pressed, then zoom camera, else move camera
 
 left and right key:
   when Rotate is selected: if shift is pressed, then rotate Z axis, else rotate Y axis
@@ -59,6 +59,9 @@ Alt+M: mesh view
 Alt+F: face view
 Alt+V: vertex view
 Alt+P: rotate or pan view
+Alt+Arrows: move camera
+Plus: zoom in
+Minus: zoom out
 Ctrl+NumPad1: perspective view
 Ctrl+NumPad2: bottom view
 Ctrl+NumPad3: back view
@@ -66,6 +69,14 @@ Ctrl+NumPad4: left view
 Ctrl+NumPad5: front view
 Ctrl+NumPad6: right view
 Ctrl+NumPad8: top view
+Alt+Num: change view
+F1: Geometry Editor > Geonetry Tab
+F2: Geometry Editor > Textures Tab (Only in Face/Vertex mode)
+F3: Texture Editor
+F4: Hitzone Editor
+F5: Transformation Editor
+F6: Hardpoints Editor
+F7: Engine Glow Editor 
 
 
 Credits:

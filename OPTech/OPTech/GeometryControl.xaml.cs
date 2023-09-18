@@ -120,7 +120,7 @@ namespace OPTech
                 whichLOD = 1;
             }
 
-            if (Global.IsMeshZoomOn)
+            if (Global.IsMeshZoomOn && meshlist.Items.Count >= Global.OPT.MeshArray.Count)
             {
                 float minX = float.MaxValue;
                 float minY = float.MaxValue;

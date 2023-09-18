@@ -66,6 +66,8 @@ namespace OPTech
                 return;
             }
 
+            //Shapes.Axies(gl, (int)(1 + Global.OrthoZoom) * 2);
+
             //gl.NewList(3, OpenGL.GL_COMPILE);
 
             if (Global.DisplayMode == "wire")

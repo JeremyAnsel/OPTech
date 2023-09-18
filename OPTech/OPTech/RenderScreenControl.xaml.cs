@@ -48,11 +48,20 @@ namespace OPTech
             Global.CX.MouseUp(e.ChangedButton, modifiers, (float)position.X, (float)position.Y);
         }
 
+        private void renderscreen_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            Global.CX.MouseWheel(e.Delta);
+        }
+
         private void renderscreen_MouseMove(object sender, MouseEventArgs e)
         {
             var modifiers = Keyboard.Modifiers;
             Point position = e.GetPosition(this.renderscreen);
-            MouseButton button = e.LeftButton == MouseButtonState.Pressed ? MouseButton.Left : e.RightButton == MouseButtonState.Pressed ? MouseButton.Right : (MouseButton)(-1);
+            MouseButton button =
+                e.LeftButton == MouseButtonState.Pressed ? MouseButton.Left
+                : e.RightButton == MouseButtonState.Pressed ? MouseButton.Right
+                : e.MiddleButton == MouseButtonState.Pressed ? MouseButton.Middle
+                : (MouseButton)(-1);
             Global.CX.MouseMove(button, modifiers, (float)position.X, (float)position.Y);
         }
 
@@ -214,10 +223,7 @@ namespace OPTech
             }
 
             //OptRead.CalcDomain();
-        }
 
-        private void cameraop_Click(object sender, RoutedEventArgs e)
-        {
             this.renderscreen.Focus();
         }
 

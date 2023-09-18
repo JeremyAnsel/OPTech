@@ -18,16 +18,30 @@ Mesh/face/vertice selection:
 Camera rotation and panning:
 
 holding mouse right:
-  when Rotate is selected: if shift key pressed, then rotate Z axis, else rotate X and Y axis
-  when Pan is selected or Ctrl is pressed: if shift is pressed, then zoom camera, else move camera
+  when Ctrl is not pressed: if shift is pressed, then rotate Y axis, else rotate X and Z axis
+  when Ctrl is pressed: if shift is pressed, then zoom camera, else move camera
 
+holding mouse middle:
+  move camera
+
+mouse wheel:
+  zoom
+
+when Alt is pressed:
+arrow keys:
+  move camera
+
+when Alt is not pressed:
 left and right key:
-  when Rotate is selected: if shift is pressed, then rotate Z axis, else rotate Y axis
-  when Pan is selected: if shift is not pressed, then move camera
+  if shift is pressed, then rotate Y axis, else rotate Z axis
 
+when Alt is not pressed:
 up and down key:
-  when Rotate is selected: if shift is not pressed, then rotate X axis
-  when Pan is selected: if shift is pressed, then zoom camera, else move camera
+  if shift is not pressed, then rotate X axis
+
+when Alt is not pressed:
+plus and minus key:
+  zoom in and out
 
 text boxes:
   up key: increate Page Rate
@@ -58,7 +72,6 @@ Alt+N: normals
 Alt+M: mesh view
 Alt+F: face view
 Alt+V: vertex view
-Alt+P: rotate or pan view
 Alt+Arrows: move camera
 Plus: zoom in
 Minus: zoom out

@@ -2529,7 +2529,7 @@ namespace OPTech
             bool shift = (modifiers & ModifierKeys.Shift) != 0;
             bool control = (modifiers & ModifierKeys.Control) != 0;
 
-            if (button == MouseButton.Right)
+            if (button == MouseButton.Right || button == MouseButton.Middle)
             {
                 this.m_bMoving = true;
                 this.m_StartX = x;
@@ -2543,6 +2543,51 @@ namespace OPTech
             bool control = (modifiers & ModifierKeys.Control) != 0;
 
             this.m_bMoving = false;
+        }
+
+        public void MouseWheel(int delta)
+        {
+            int whichLOD;
+            if (Global.DetailMode == "high")
+            {
+                whichLOD = 0;
+            }
+            else
+            {
+                whichLOD = 1;
+            }
+
+            double RememberZoom = Global.OrthoZoom;
+
+            if (delta != 0)
+            {
+                if (delta < 0)
+                {
+                    Global.OrthoZoom *= 1.05;
+                }
+                else
+                {
+                    Global.OrthoZoom *= 0.95;
+                }
+            }
+
+            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
+            {
+                var mesh = Global.OPT.MeshArray[EachMesh];
+
+                if (mesh.LODArray.Count >= whichLOD + 1)
+                {
+                    var lod = mesh.LODArray[whichLOD];
+
+                    if (Global.OrthoZoom / 20.51282 / 1000 <= lod.CloakDist && !(RememberZoom / 20.51282 / 1000 <= lod.CloakDist))
+                    {
+                        this.CreateCall();
+                        break;
+                    }
+                }
+            }
+
+            this.InitCamera();
         }
 
         public void MouseMove(MouseButton button, ModifierKeys modifiers, float x, float y)
@@ -2568,36 +2613,48 @@ namespace OPTech
                 return;
             }
 
+            if (button == MouseButton.Middle)
+            {
+                if (this.m_bMoving)
+                {
+                    if (!control && !shift)
+                    {
+                        Global.Camera.PositionX += (float)Global.OrthoZoom / 5000 * (this.m_MouseX - this.m_StartX) * 0.1f;
+                        Global.Camera.PositionY -= (float)Global.OrthoZoom / 5000 * (this.m_MouseY - this.m_StartY) * 0.1f;
+                    }
+                }
+            }
+
             if (button == MouseButton.Right)
             {
                 if (this.m_bMoving)
                 {
-                    if (Global.frmrenderscreen.cameraop0.IsChecked == true && !control)
+                    if (!control)
                     {
                         if (!shift)
                         {
-                            Global.Camera.AngleY += 0.05f * (this.m_MouseX - this.m_StartX);
-                            Global.Camera.AngleX += 0.05f * (this.m_MouseY - this.m_StartY);
+                            Global.Camera.AngleZ -= 0.05f * (this.m_MouseX - this.m_StartX) * 0.1f;
+                            Global.Camera.AngleX -= 0.05f * (this.m_MouseY - this.m_StartY) * 0.1f;
                         }
                         else
                         {
-                            Global.Camera.AngleZ += 0.05f * (this.m_MouseX - this.m_StartX);
+                            Global.Camera.AngleY -= 0.05f * (this.m_MouseX - this.m_StartX) * 0.1f;
                         }
                     }
 
-                    if (Global.frmrenderscreen.cameraop1.IsChecked == true || control)
+                    if (control)
                     {
                         if (!shift)
                         {
-                            Global.Camera.PositionX += (float)Global.OrthoZoom / 5000 * (this.m_MouseX - this.m_StartX);
-                            Global.Camera.PositionY -= (float)Global.OrthoZoom / 5000 * (this.m_MouseY - this.m_StartY);
+                            Global.Camera.PositionX += (float)Global.OrthoZoom / 5000 * (this.m_MouseX - this.m_StartX) * 0.1f;
+                            Global.Camera.PositionY -= (float)Global.OrthoZoom / 5000 * (this.m_MouseY - this.m_StartY) * 0.1f;
                         }
                         else
                         {
                             if (this.m_MouseY - this.m_StartY < 0)
                             {
                                 double RememberZoom = Global.OrthoZoom;
-                                Global.OrthoZoom *= 1 - Math.Abs((this.m_MouseY - this.m_StartY)) / 10000;
+                                Global.OrthoZoom *= 1 - Math.Abs(this.m_MouseY - this.m_StartY) / 10000 * 0.5f;
 
                                 for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
                                 {
@@ -2618,7 +2675,7 @@ namespace OPTech
                             else
                             {
                                 double RememberZoom = Global.OrthoZoom;
-                                Global.OrthoZoom *= 1 + (this.m_MouseY - this.m_StartY) / 10000;
+                                Global.OrthoZoom *= 1 + Math.Abs(this.m_MouseY - this.m_StartY) / 10000 * 0.5f;
 
                                 for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
                                 {
@@ -2687,25 +2744,17 @@ namespace OPTech
                 case Key.Left:
                     if (alt)
                     {
-                        Global.Camera.PositionX += (float)Global.OrthoZoom / 5;
-                    }
-                    else if (!shift)
-                    {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
-                        {
-                            Global.Camera.AngleZ += 3;
-                        }
-
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
-                        {
-                            Global.Camera.PositionX += (float)Global.OrthoZoom / 5;
-                        }
+                        Global.Camera.PositionX += (float)Global.OrthoZoom / 5 * 0.1f;
                     }
                     else
                     {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
+                        if (!shift)
                         {
-                            Global.Camera.AngleY += 3;
+                            Global.Camera.AngleZ += 3 * 0.1f;
+                        }
+                        else
+                        {
+                            Global.Camera.AngleY += 3 * 0.1f;
                         }
                     }
 
@@ -2715,25 +2764,17 @@ namespace OPTech
                 case Key.Right:
                     if (alt)
                     {
-                        Global.Camera.PositionX -= (float)Global.OrthoZoom / 5;
-                    }
-                    else if (!shift)
-                    {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
-                        {
-                            Global.Camera.AngleZ -= 3;
-                        }
-
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
-                        {
-                            Global.Camera.PositionX -= (float)Global.OrthoZoom / 5;
-                        }
+                        Global.Camera.PositionX -= (float)Global.OrthoZoom / 5 * 0.1f;
                     }
                     else
                     {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
+                        if (!shift)
                         {
-                            Global.Camera.AngleY -= 3;
+                            Global.Camera.AngleZ -= 3 * 0.1f;
+                        }
+                        else
+                        {
+                            Global.Camera.AngleY -= 3 * 0.1f;
                         }
                     }
 
@@ -2743,44 +2784,16 @@ namespace OPTech
                 case Key.Up:
                     if (alt)
                     {
-                        Global.Camera.PositionY -= (float)Global.OrthoZoom / 5;
-                    }
-                    else if (!shift)
-                    {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
-                        {
-                            Global.Camera.AngleX -= 3;
-                        }
-
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
-                        {
-                            Global.Camera.PositionY -= (float)Global.OrthoZoom / 5;
-                        }
+                        Global.Camera.PositionY -= (float)Global.OrthoZoom / 5 * 0.1f;
                     }
                     else
                     {
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
+                        if (!shift)
                         {
-                            double RememberZoom = Global.OrthoZoom;
-                            Global.OrthoZoom *= 0.9;
-
-                            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
-                            {
-                                var mesh = Global.OPT.MeshArray[EachMesh];
-
-                                if (mesh.LODArray.Count >= whichLOD + 1)
-                                {
-                                    var lod = mesh.LODArray[whichLOD];
-
-                                    if (Global.OrthoZoom / 20.51282 / 1000 <= lod.CloakDist && !(RememberZoom / 20.51282 / 1000 <= lod.CloakDist))
-                                    {
-                                        this.CreateCall();
-                                        break;
-                                    }
-                                }
-                            }
-
-                            this.InitCamera();
+                            Global.Camera.AngleX += 3 * 0.1f;
+                        }
+                        else
+                        {
                         }
                     }
 
@@ -2790,44 +2803,16 @@ namespace OPTech
                 case Key.Down:
                     if (alt)
                     {
-                        Global.Camera.PositionY += (float)Global.OrthoZoom / 5;
-                    }
-                    else if (!shift)
-                    {
-                        if (Global.frmrenderscreen.cameraop0.IsChecked == true)
-                        {
-                            Global.Camera.AngleX += 3;
-                        }
-
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
-                        {
-                            Global.Camera.PositionY += (float)Global.OrthoZoom / 5;
-                        }
+                        Global.Camera.PositionY += (float)Global.OrthoZoom / 5 * 0.1f;
                     }
                     else
                     {
-                        if (Global.frmrenderscreen.cameraop1.IsChecked == true)
+                        if (!shift)
                         {
-                            double RememberZoom = Global.OrthoZoom;
-                            Global.OrthoZoom *= 1.1;
-
-                            for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
-                            {
-                                var mesh = Global.OPT.MeshArray[EachMesh];
-
-                                if (mesh.LODArray.Count >= whichLOD + 1)
-                                {
-                                    var lod = mesh.LODArray[whichLOD];
-
-                                    if (!(Global.OrthoZoom / 20.51282 / 1000 <= lod.CloakDist) && RememberZoom / 20.51282 / 1000 <= lod.CloakDist)
-                                    {
-                                        this.CreateCall();
-                                        break;
-                                    }
-                                }
-                            }
-
-                            this.InitCamera();
+                            Global.Camera.AngleX -= 3 * 0.1f;
+                        }
+                        else
+                        {
                         }
                     }
 
@@ -2837,7 +2822,7 @@ namespace OPTech
                 case Key.Add:
                     {
                         double RememberZoom = Global.OrthoZoom;
-                        Global.OrthoZoom *= 0.9;
+                        Global.OrthoZoom *= 0.99;
 
                         for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
                         {
@@ -2864,7 +2849,7 @@ namespace OPTech
                 case Key.Subtract:
                     {
                         double RememberZoom = Global.OrthoZoom;
-                        Global.OrthoZoom *= 1.1;
+                        Global.OrthoZoom *= 1.01;
 
                         for (int EachMesh = 0; EachMesh < Global.OPT.MeshArray.Count; EachMesh++)
                         {

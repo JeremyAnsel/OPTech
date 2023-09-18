@@ -259,22 +259,6 @@ namespace OPTech
                         dispbar_vertex_Click(null, null);
                         return;
 
-                    case Key.P:
-                        //if (this.frmrenderscreen.cameraop0.IsChecked == true)
-                        //{
-                        //    this.frmrenderscreen.cameraop0.IsChecked = false;
-                        //    this.frmrenderscreen.cameraop1.IsChecked = true;
-                        //}
-                        //else
-                        //{
-                        //    this.frmrenderscreen.cameraop0.IsChecked = true;
-                        //    this.frmrenderscreen.cameraop1.IsChecked = false;
-                        //}
-
-                        this.frmrenderscreen.cameraop0.IsChecked = true;
-                        this.frmrenderscreen.cameraop1.IsChecked = false;
-                        return;
-
                     case Key.D1:
                         // perspective
                         this.frmrenderscreen.viewbar_Click(this.frmrenderscreen.viewbar.Items[0], null);

@@ -34,8 +34,32 @@ namespace OPTech
             blueColor = (byte)((b * (0xffU * 2) + 0x1fU) / (0x1fU * 2));
         }
 
-        private static void BMPWriter(byte[] PaletteData, byte[] TextureData, int ImageSize, int ImageWidth, int ImageHeight, string TextureEntry)
+        private static int GetImageBpp(int dataLength, int width, int height)
         {
+            int length = width * height;
+
+            if (dataLength >= length && dataLength < length * 2)
+            {
+                return 8;
+            }
+
+            if (dataLength >= length * 4 && dataLength < length * 8)
+            {
+                return 32;
+            }
+
+            return 0;
+        }
+
+        private static void BMPWriter(byte[] PaletteData, byte[] TextureData, int ImageWidth, int ImageHeight, string TextureEntry)
+        {
+            int bpp = GetImageBpp(TextureData.Length, ImageWidth, ImageHeight);
+
+            if (bpp == 0)
+            {
+                return;
+            }
+
             System.IO.FileStream filestream = null;
 
             try
@@ -50,34 +74,76 @@ namespace OPTech
                     file.Write(-1234);
                     file.Write((short)0);
                     file.Write((short)0);
-                    file.Write(1078);
+                    file.Write(bpp == 8 ? 1078 : 54);
                     file.Write(40);
                     file.Write(ImageWidth);
                     file.Write(ImageHeight);
                     file.Write((short)1);
-                    file.Write(8);
+                    file.Write(bpp == 8 ? 8 : 24);
 
                     for (int i = 0; i < 11; i++)
                     {
                         file.Write((short)0);
                     }
 
-                    for (int i = 0; i < 511; i += 2)
+                    if (bpp == 8)
                     {
-                        byte RedColor;
-                        byte GreenColor;
-                        byte BlueColor;
+                        for (int i = 0; i < 512; i += 2)
+                        {
+                            byte RedColor;
+                            byte GreenColor;
+                            byte BlueColor;
 
-                        //OptRead.BufferColorTrunc(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
-                        OptRead.BufferColorRound(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
+                            //OptRead.BufferColorTrunc(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
+                            OptRead.BufferColorRound(PaletteData, i, out RedColor, out GreenColor, out BlueColor);
 
-                        file.Write(BlueColor);
-                        file.Write(GreenColor);
-                        file.Write(RedColor);
-                        file.Write((byte)0);
+                            file.Write(BlueColor);
+                            file.Write(GreenColor);
+                            file.Write(RedColor);
+                            file.Write((byte)0);
+                        }
+
+                        int index = 0;
+                        int padding = ((ImageWidth + 3) & ~0x03) - ImageWidth;
+
+                        for (int y = 0; y < ImageHeight; y++)
+                        {
+                            file.Write(TextureData, index, ImageWidth);
+                            index += ImageWidth;
+
+                            for (int p = 0; p < padding; p++)
+                            {
+                                file.Write((byte)0);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int index = 0;
+                        int padding = ((ImageWidth + 3) & ~0x03) * 3 - ImageWidth * 3;
+
+                        for (int y = 0; y < ImageHeight; y++)
+                        {
+                            for (int x = 0; x < ImageWidth; x++)
+                            {
+                                byte BlueColor = TextureData[index * 4 + 0];
+                                byte GreenColor = TextureData[index * 4 + 1];
+                                byte RedColor = TextureData[index * 4 + 2];
+
+                                file.Write(BlueColor);
+                                file.Write(GreenColor);
+                                file.Write(RedColor);
+
+                                index++;
+                            }
+
+                            for (int p = 0; p < padding; p++)
+                            {
+                                file.Write((byte)0);
+                            }
+                        }
                     }
 
-                    file.Write(TextureData);
                     file.Seek(2, System.IO.SeekOrigin.Begin);
                     file.Write((int)file.BaseStream.Length);
                 }
@@ -299,149 +365,303 @@ namespace OPTech
             return false;
         }
 
-        private static void AddTextureIllum(TextureStruct texture, byte[] palData, byte[] texData)
+        private static void AddTextureIllum(TextureStruct texture, byte[] palData, byte[] texData, int imageWidth, int imageHeight)
         {
-            int colorCount = 0;
-            int colorIlluminated = 0;
+            int imageLength = imageWidth * imageHeight;
+            int bpp = GetImageBpp(texData.Length, imageWidth, imageHeight);
 
-            for (int c = 0; c < 256; c++)
+            if (bpp == 8)
             {
-                if (!OptRead.IsColorUsed(c, texData))
-                {
-                    continue;
-                }
-
-                byte color0 = palData[8 * 512 + c * 2];
-                byte color1 = palData[8 * 512 + c * 2 + 1];
-
-                if (color0 == 0 && color1 == 0)
-                {
-                    continue;
-                }
-
-                ushort color = BitConverter.ToUInt16(palData, 8 * 512 + c * 2);
-                byte r = (byte)((color & 0xF800U) >> 11);
-                byte g = (byte)((color & 0x7E0U) >> 5);
-                byte b = (byte)(color & 0x1FU);
-
-                if (r <= 8 && g <= 16 && b <= 8)
-                {
-                    continue;
-                }
-
-                colorCount++;
-
-                bool isIlluminated = true;
-
-                for (int i = 0; i < 8; i++)
-                {
-                    byte c0 = palData[i * 512 + c * 2];
-                    byte c1 = palData[i * 512 + c * 2 + 1];
-
-                    if (c0 != color0 || c1 != color1)
-                    {
-                        isIlluminated = false;
-                        break;
-                    }
-                }
-
-                if (isIlluminated)
-                {
-                    var filter = new FilterStruct
-                    {
-                        RValue = (byte)(r << 3),
-                        GValue = (byte)(g << 2),
-                        BValue = (byte)(b << 3),
-                        Characteristic = 8,
-                        Tolerance = 0
-                    };
-
-                    texture.IllumValues.Add(filter);
-                    colorIlluminated++;
-                }
+                var buffer = new byte[imageLength];
+                Array.Copy(texData, 0, buffer, 0, imageLength);
+                texData = buffer;
             }
-
-            if (colorCount > 0 && colorCount == colorIlluminated)
+            else if (bpp == 32)
             {
-                texture.IllumValues.Clear();
-
-                var filter = new FilterStruct
-                {
-                    RValue = 0,
-                    GValue = 0,
-                    BValue = 0,
-                    Characteristic = 8,
-                    Tolerance = 255
-                };
-
-                texture.IllumValues.Add(filter);
+                var buffer = new byte[imageLength * 4];
+                Array.Copy(texData, 0, buffer, 0, imageLength * 4);
+                texData = buffer;
             }
-        }
-
-        private static void AddTextureTrans(TextureStruct texture, byte[] palData, byte[] texData, byte[] alphaData)
-        {
-            bool areAllTransparent = true;
-
-            for (int i = 0; i < alphaData.Length; i++)
+            else
             {
-                if (alphaData[i] == 0xff || alphaData[i] != alphaData[0])
-                {
-                    areAllTransparent = false;
-                    break;
-                }
-            }
-
-            if (areAllTransparent)
-            {
-                var filter = new FilterStruct
-                {
-                    RValue = 0,
-                    GValue = 0,
-                    BValue = 0,
-                    Characteristic = alphaData[0],
-                    Tolerance = 255
-                };
-
-                texture.TransValues.Add(filter);
                 return;
             }
 
-            for (int c = 0; c < 256; c++)
+            if (bpp == 8)
             {
-                bool found = false;
-                byte a = 0;
+                int colorCount = 0;
+                int colorIlluminated = 0;
 
-                for (int i = 0; i < texData.Length; i++)
+                for (int c = 0; c < 256; c++)
                 {
-                    if (texData[i] == c)
+                    if (!OptRead.IsColorUsed(c, texData))
                     {
-                        a = alphaData[i];
-
-                        if (a != 0xff)
-                        {
-                            found = true;
-                            break;
-                        }
+                        continue;
                     }
-                }
 
-                if (found)
-                {
+                    byte color0 = palData[8 * 512 + c * 2];
+                    byte color1 = palData[8 * 512 + c * 2 + 1];
+
+                    if (color0 == 0 && color1 == 0)
+                    {
+                        continue;
+                    }
+
                     ushort color = BitConverter.ToUInt16(palData, 8 * 512 + c * 2);
                     byte r = (byte)((color & 0xF800U) >> 11);
                     byte g = (byte)((color & 0x7E0U) >> 5);
                     byte b = (byte)(color & 0x1FU);
 
+                    if (r <= 8 && g <= 16 && b <= 8)
+                    {
+                        continue;
+                    }
+
+                    colorCount++;
+
+                    bool isIlluminated = true;
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        byte c0 = palData[i * 512 + c * 2];
+                        byte c1 = palData[i * 512 + c * 2 + 1];
+
+                        if (c0 != color0 || c1 != color1)
+                        {
+                            isIlluminated = false;
+                            break;
+                        }
+                    }
+
+                    if (isIlluminated)
+                    {
+                        var filter = new FilterStruct
+                        {
+                            RValue = (byte)(r << 3),
+                            GValue = (byte)(g << 2),
+                            BValue = (byte)(b << 3),
+                            Characteristic = 8,
+                            Tolerance = 0
+                        };
+
+                        texture.IllumValues.Add(filter);
+                        colorIlluminated++;
+                    }
+                }
+
+                if (colorCount > 0 && colorCount == colorIlluminated)
+                {
+                    texture.IllumValues.Clear();
+
                     var filter = new FilterStruct
                     {
-                        RValue = (byte)(r << 3),
-                        GValue = (byte)(g << 2),
-                        BValue = (byte)(b << 3),
-                        Characteristic = a,
-                        Tolerance = 0
+                        RValue = 0,
+                        GValue = 0,
+                        BValue = 0,
+                        Characteristic = 8,
+                        Tolerance = 255
+                    };
+
+                    texture.IllumValues.Add(filter);
+                }
+            }
+            else
+            {
+                bool areAllTransparent = true;
+
+                for (int i = 0; i < imageLength; i++)
+                {
+                    if (texData[i * 4 + 3] == 0xff || texData[i * 4 + 3] != texData[0 * 4 + 3])
+                    {
+                        areAllTransparent = false;
+                        break;
+                    }
+                }
+
+                if (areAllTransparent)
+                {
+                    var filter = new FilterStruct
+                    {
+                        RValue = 0,
+                        GValue = 0,
+                        BValue = 0,
+                        Characteristic = texData[0 * 4 + 3],
+                        Tolerance = 255
                     };
 
                     texture.TransValues.Add(filter);
+                }
+                else
+                {
+                    for (int i = 0; i < imageLength; i++)
+                    {
+                        byte b = texData[i * 4 + 0];
+                        byte g = texData[i * 4 + 1];
+                        byte r = texData[i * 4 + 2];
+                        byte a = texData[i * 4 + 3];
+
+                        if (a == 0xff)
+                        {
+                            continue;
+                        }
+
+                        bool found = false;
+
+                        foreach (var transValue in texture.TransValues)
+                        {
+                            if (transValue.RValue == r && transValue.GValue == g && transValue.BValue == b)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            var filter = new FilterStruct
+                            {
+                                RValue = r,
+                                GValue = g,
+                                BValue = b,
+                                Characteristic = a,
+                                Tolerance = 0
+                            };
+
+                            texture.TransValues.Add(filter);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void AddTextureTrans(TextureStruct texture, byte[] palData, byte[] texData, byte[] alphaData, int imageWidth, int imageHeight)
+        {
+            int imageLength = imageWidth * imageHeight;
+            int bpp = GetImageBpp(texData.Length, imageWidth, imageHeight);
+
+            if (bpp == 8)
+            {
+                var buffer = new byte[imageLength];
+                Array.Copy(texData, 0, buffer, 0, imageLength);
+                texData = buffer;
+            }
+            else if (bpp == 32)
+            {
+                var buffer = new byte[imageLength * 4];
+                Array.Copy(texData, 0, buffer, 0, imageLength * 4);
+                texData = buffer;
+            }
+            else
+            {
+                return;
+            }
+
+            if (bpp == 8)
+            {
+                bool areAllTransparent = true;
+
+                for (int i = 0; i < alphaData.Length; i++)
+                {
+                    if (alphaData[i] == 0xff || alphaData[i] != alphaData[0])
+                    {
+                        areAllTransparent = false;
+                        break;
+                    }
+                }
+
+                if (areAllTransparent)
+                {
+                    var filter = new FilterStruct
+                    {
+                        RValue = 0,
+                        GValue = 0,
+                        BValue = 0,
+                        Characteristic = alphaData[0],
+                        Tolerance = 255
+                    };
+
+                    texture.TransValues.Add(filter);
+                }
+                else
+                {
+                    for (int c = 0; c < 256; c++)
+                    {
+                        bool found = false;
+                        byte a = 0;
+
+                        for (int i = 0; i < texData.Length; i++)
+                        {
+                            if (texData[i] == c)
+                            {
+                                a = alphaData[i];
+
+                                if (a != 0xff)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (found)
+                        {
+                            ushort color = BitConverter.ToUInt16(palData, 8 * 512 + c * 2);
+                            byte r = (byte)((color & 0xF800U) >> 11);
+                            byte g = (byte)((color & 0x7E0U) >> 5);
+                            byte b = (byte)(color & 0x1FU);
+
+                            var filter = new FilterStruct
+                            {
+                                RValue = (byte)(r << 3),
+                                GValue = (byte)(g << 2),
+                                BValue = (byte)(b << 3),
+                                Characteristic = a,
+                                Tolerance = 0
+                            };
+
+                            texture.TransValues.Add(filter);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < imageLength; i++)
+                {
+                    byte b = texData[i * 4 + 0];
+                    byte g = texData[i * 4 + 1];
+                    byte r = texData[i * 4 + 2];
+                    byte a = texData[i * 4 + 3];
+
+                    if (a == 0)
+                    {
+                        continue;
+                    }
+
+                    bool found = false;
+
+                    foreach (var illumValue in texture.IllumValues)
+                    {
+                        if (illumValue.RValue == r && illumValue.GValue == g && illumValue.BValue == b)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        var filter = new FilterStruct
+                        {
+                            RValue = r,
+                            GValue = g,
+                            BValue = b,
+                            Characteristic = 8,
+                            Tolerance = 0
+                        };
+
+                        texture.IllumValues.Add(filter);
+                    }
                 }
             }
         }
@@ -573,24 +793,27 @@ namespace OPTech
                                         int JBPalette = file.ReadInt32(ScrollOPT);
                                         ScrollOPT += 8;
                                         int ImgSize = file.ReadInt32(ScrollOPT);
-                                        ScrollOPT += 8;
+                                        ScrollOPT += 4;
+                                        int DataSize = file.ReadInt32(ScrollOPT);
+                                        ScrollOPT += 4;
                                         int ImgWidth = file.ReadInt32(ScrollOPT);
                                         ScrollOPT += 4;
                                         int ImgHeight = file.ReadInt32(ScrollOPT);
                                         ScrollOPT += 4;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                        byte[] TexData = file.ReadBytes(ImgSize);
+                                        int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                        byte[] TexData = file.ReadBytes(BytesSize);
                                         ScrollOPT = JBPalette - GlobalOffset + 3584;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] PalData = file.ReadBytes(256 * 2);
-                                        OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                        OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                         ScrollOPT = JBPalette - GlobalOffset;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                         TexEntryStruct.Add(new TextureStruct());
-                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                         string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                         Global.frmtexture.transtexturelist.AddCheck(name);
@@ -603,24 +826,27 @@ namespace OPTech
                                         JBPalette += 4096;
                                         ScrollOPT += 8;
                                         int ImgSize = file.ReadInt32(ScrollOPT);
-                                        ScrollOPT += 8;
+                                        ScrollOPT += 4;
+                                        int DataSize = file.ReadInt32(ScrollOPT);
+                                        ScrollOPT += 4;
                                         int ImgWidth = file.ReadInt32(ScrollOPT);
                                         ScrollOPT += 4;
                                         int ImgHeight = file.ReadInt32(ScrollOPT);
                                         ScrollOPT += 4;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                        byte[] TexData = file.ReadBytes(ImgSize);
+                                        int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                        byte[] TexData = file.ReadBytes(BytesSize);
                                         ScrollOPT = JBPalette - GlobalOffset + 3584;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] PalData = file.ReadBytes(256 * 2);
-                                        OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                        OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                         ScrollOPT = JBPalette - GlobalOffset;
                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                         TexEntryStruct.Add(new TextureStruct());
-                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                         string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                         Global.frmtexture.transtexturelist.AddCheck(name);
@@ -635,17 +861,20 @@ namespace OPTech
                                     int JBPalette = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 8;
                                     int ImgSize = file.ReadInt32(ScrollOPT);
-                                    ScrollOPT += 8;
+                                    ScrollOPT += 4;
+                                    int DataSize = file.ReadInt32(ScrollOPT);
+                                    ScrollOPT += 4;
                                     int ImgWidth = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 4;
                                     int ImgHeight = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 4;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                    byte[] TexData = file.ReadBytes(ImgSize);
+                                    int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                    byte[] TexData = file.ReadBytes(BytesSize);
                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                    OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                     ScrollOPT = JBPalette - GlobalOffset;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
@@ -655,8 +884,8 @@ namespace OPTech
                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
                                     TexEntryStruct.Add(new TextureStruct());
-                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
-                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
+                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
+                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData, ImgWidth, ImgHeight);
 
                                     string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                     Global.frmtexture.transtexturelist.AddCheck(name);
@@ -713,24 +942,27 @@ namespace OPTech
                                                         int JBPalette = file.ReadInt32(ScrollOPT);
                                                         ScrollOPT += 8;
                                                         int ImgSize = file.ReadInt32(ScrollOPT);
-                                                        ScrollOPT += 8;
+                                                        ScrollOPT += 4;
+                                                        int DataSize = file.ReadInt32(ScrollOPT);
+                                                        ScrollOPT += 4;
                                                         int ImgWidth = file.ReadInt32(ScrollOPT);
                                                         ScrollOPT += 4;
                                                         int ImgHeight = file.ReadInt32(ScrollOPT);
                                                         ScrollOPT += 4;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                        byte[] TexData = file.ReadBytes(ImgSize);
+                                                        int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                                        byte[] TexData = file.ReadBytes(BytesSize);
                                                         ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] PalData = file.ReadBytes(256 * 2);
-                                                        OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                                        OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                                         ScrollOPT = JBPalette - GlobalOffset;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                                         TexEntryStruct.Add(new TextureStruct());
-                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                                         string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                                         Global.frmtexture.transtexturelist.AddCheck(name);
@@ -743,24 +975,27 @@ namespace OPTech
                                                         JBPalette += 4096;
                                                         ScrollOPT += 8;
                                                         int ImgSize = file.ReadInt32(ScrollOPT);
-                                                        ScrollOPT += 8;
+                                                        ScrollOPT += 4;
+                                                        int DataSize = file.ReadInt32(ScrollOPT);
+                                                        ScrollOPT += 4;
                                                         int ImgWidth = file.ReadInt32(ScrollOPT);
                                                         ScrollOPT += 4;
                                                         int ImgHeight = file.ReadInt32(ScrollOPT);
                                                         ScrollOPT += 4;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                        byte[] TexData = file.ReadBytes(ImgSize);
+                                                        int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                                        byte[] TexData = file.ReadBytes(BytesSize);
                                                         ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] PalData = file.ReadBytes(256 * 2);
-                                                        OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                                        OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                                         ScrollOPT = JBPalette - GlobalOffset;
                                                         file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                         byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                                         TexEntryStruct.Add(new TextureStruct());
-                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                                        OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                                         string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                                         Global.frmtexture.transtexturelist.AddCheck(name);
@@ -775,17 +1010,20 @@ namespace OPTech
                                                     int JBPalette = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 8;
                                                     int ImgSize = file.ReadInt32(ScrollOPT);
-                                                    ScrollOPT += 8;
+                                                    ScrollOPT += 4;
+                                                    int DataSize = file.ReadInt32(ScrollOPT);
+                                                    ScrollOPT += 4;
                                                     int ImgWidth = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     int ImgHeight = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                    byte[] TexData = file.ReadBytes(ImgSize);
+                                                    int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                                    byte[] TexData = file.ReadBytes(BytesSize);
                                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgHeight, textureName);
 
                                                     ScrollOPT = JBPalette - GlobalOffset;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
@@ -795,8 +1033,8 @@ namespace OPTech
                                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
                                                     TexEntryStruct.Add(new TextureStruct());
-                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
-                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
+                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData, ImgWidth, ImgHeight);
 
                                                     string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                                     Global.frmtexture.transtexturelist.AddCheck(name);
@@ -840,24 +1078,27 @@ namespace OPTech
                                                     int JBPalette = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 8;
                                                     int ImgSize = file.ReadInt32(ScrollOPT);
-                                                    ScrollOPT += 8;
+                                                    ScrollOPT += 4;
+                                                    int DataSize = file.ReadInt32(ScrollOPT);
+                                                    ScrollOPT += 4;
                                                     int ImgWidth = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     int ImgHeight = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                    byte[] TexData = file.ReadBytes(ImgSize);
+                                                    int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                                    byte[] TexData = file.ReadBytes(BytesSize);
                                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                                    OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                                     ScrollOPT = JBPalette - GlobalOffset;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                                     TexEntryStruct.Add(new TextureStruct());
-                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                                     string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                                     Global.frmtexture.transtexturelist.AddCheck(name);
@@ -871,17 +1112,20 @@ namespace OPTech
                                                     int JBPalette = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 8;
                                                     int ImgSize = file.ReadInt32(ScrollOPT);
-                                                    ScrollOPT += 8;
+                                                    ScrollOPT += 4;
+                                                    int DataSize = file.ReadInt32(ScrollOPT);
+                                                    ScrollOPT += 4;
                                                     int ImgWidth = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     int ImgHeight = file.ReadInt32(ScrollOPT);
                                                     ScrollOPT += 4;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                    byte[] TexData = file.ReadBytes(ImgSize);
+                                                    int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                                    byte[] TexData = file.ReadBytes(BytesSize);
                                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgHeight, textureName);
 
                                                     ScrollOPT = JBPalette - GlobalOffset;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
@@ -891,8 +1135,8 @@ namespace OPTech
                                                     byte[] AlphaData = file.ReadBytes(ImgSize);
 
                                                     TexEntryStruct.Add(new TextureStruct());
-                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
-                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData);
+                                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
+                                                    OptRead.AddTextureTrans(TexEntryStruct.Last(), fullPalData, TexData, AlphaData, ImgWidth, ImgHeight);
 
                                                     string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                                     Global.frmtexture.transtexturelist.AddCheck(name);
@@ -922,24 +1166,27 @@ namespace OPTech
                                     int JBPalette = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 8;
                                     int ImgSize = file.ReadInt32(ScrollOPT);
-                                    ScrollOPT += 8;
+                                    ScrollOPT += 4;
+                                    int DataSize = file.ReadInt32(ScrollOPT);
+                                    ScrollOPT += 4;
                                     int ImgWidth = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 4;
                                     int ImgHeight = file.ReadInt32(ScrollOPT);
                                     ScrollOPT += 4;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                    byte[] TexData = file.ReadBytes(ImgSize);
+                                    int BytesSize = (ImgWidth * ImgHeight) == ImgSize ? DataSize : (ImgWidth * ImgHeight);
+                                    byte[] TexData = file.ReadBytes(BytesSize);
                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgWidth, ImgHeight, textureName);
+                                    OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                     ScrollOPT = JBPalette - GlobalOffset;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
 
                                     TexEntryStruct.Add(new TextureStruct());
-                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData);
+                                    OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
 
                                     string name = System.IO.Path.GetFileNameWithoutExtension(textureName);
                                     Global.frmtexture.transtexturelist.AddCheck(name);

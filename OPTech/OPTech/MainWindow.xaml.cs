@@ -5419,9 +5419,11 @@ namespace OPTech
                                                             MipTemp.AddRange(MipString);
                                                             MipString.Clear();
 
+                                                            var bytes = new byte[ImageMipWidth * 2];
                                                             for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
                                                             {
-                                                                MipString.AddRange(MipTemp.Skip(rowIndex * ImageMipWidth * 2).Take(ImageMipWidth * 2));
+                                                                MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
+                                                                MipString.AddRange(bytes);
                                                             }
 
                                                             MipTemp.Clear();
@@ -5943,9 +5945,11 @@ namespace OPTech
                                                                 MipTemp.AddRange(MipString);
                                                                 MipString.Clear();
 
+                                                                var bytes = new byte[ImageMipWidth * 2];
                                                                 for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
                                                                 {
-                                                                    MipString.AddRange(MipTemp.Skip(rowIndex * ImageMipWidth * 2).Take(ImageMipWidth * 2));
+                                                                    MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
+                                                                    MipString.AddRange(bytes);
                                                                 }
 
                                                                 MipTemp.Clear();
@@ -7122,9 +7126,11 @@ namespace OPTech
                                                                     MipTemp.AddRange(MipString);
                                                                     MipString.Clear();
 
+                                                                    var bytes = new byte[ImageMipWidth * 2];
                                                                     for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
                                                                     {
-                                                                        MipString.AddRange(MipTemp.Skip(rowIndex * ImageMipWidth * 2).Take(ImageMipWidth * 2));
+                                                                        MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
+                                                                        MipString.AddRange(bytes);
                                                                     }
 
                                                                     MipTemp.Clear();
@@ -7518,9 +7524,11 @@ namespace OPTech
                                                                         MipTemp.AddRange(MipString);
                                                                         MipString.Clear();
 
+                                                                        var bytes = new byte[ImageMipWidth * 2];
                                                                         for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
                                                                         {
-                                                                            MipString.AddRange(MipTemp.Skip(rowIndex * ImageMipWidth * 2).Take(ImageMipWidth * 2));
+                                                                            MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
+                                                                            MipString.AddRange(bytes);
                                                                         }
 
                                                                         MipTemp.Clear();

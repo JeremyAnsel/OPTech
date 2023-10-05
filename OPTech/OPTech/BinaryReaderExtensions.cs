@@ -49,5 +49,37 @@ namespace OPTech
             length = len;
             return Encoding.ASCII.GetString(bytes.ToArray());
         }
+
+        public static byte[] ReadTextureData8Bpp(this System.IO.BinaryReader file, int width, int height)
+        {
+            int index = 0;
+            int padding = ((width + 3) & ~0x03) - width;
+            int imageSize = (width + padding) * height;
+            var bytes = new byte[width * height];
+
+            file.BaseStream.Seek((int)file.BaseStream.Length - imageSize, System.IO.SeekOrigin.Begin);
+
+            for (int y = 0; y < height; y++)
+            {
+                file.Read(bytes, index, width);
+                file.BaseStream.Seek(padding, System.IO.SeekOrigin.Current);
+                index += width;
+            }
+
+            return bytes;
+        }
+
+        public static byte[] ReadTexturePalette(this System.IO.BinaryReader file, int width, int height, int colorsCount)
+        {
+            int padding = ((width + 3) & ~0x03) - width;
+            int imageSize = (width + padding) * height;
+            int paletteSize = colorsCount * 4;
+            var bytes = new byte[1024];
+
+            file.BaseStream.Seek((int)file.BaseStream.Length - imageSize - paletteSize, System.IO.SeekOrigin.Begin);
+            file.Read(bytes, 0, paletteSize);
+
+            return bytes;
+        }
     }
 }

@@ -5390,8 +5390,7 @@ namespace OPTech
                                                             {
                                                                 filestreamTexture = null;
 
-                                                                fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize, System.IO.SeekOrigin.Begin);
-                                                                TextureBytes = fileTexture.ReadBytes(ImageWidth * ImageHeight);
+                                                                TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
                                                             }
                                                         }
                                                         finally
@@ -5438,7 +5437,7 @@ namespace OPTech
                                                             file.Write(MipString.ToArray());
                                                         }
 
-                                                        byte[] PaletteBytes = new byte[1024];
+                                                        byte[] PaletteBytes;
 
                                                         filestreamTexture = null;
 
@@ -5450,8 +5449,7 @@ namespace OPTech
                                                             {
                                                                 filestreamTexture = null;
 
-                                                                fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
-                                                                fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
+                                                                PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
                                                             }
                                                         }
                                                         finally
@@ -5916,8 +5914,7 @@ namespace OPTech
                                                                 {
                                                                     filestreamTexture = null;
 
-                                                                    fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize, System.IO.SeekOrigin.Begin);
-                                                                    TextureBytes = fileTexture.ReadBytes(ImageWidth * ImageHeight);
+                                                                    TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
                                                                 }
                                                             }
                                                             finally
@@ -5964,7 +5961,7 @@ namespace OPTech
                                                                 file.Write(MipString.ToArray());
                                                             }
 
-                                                            byte[] PaletteBytes = new byte[1024];
+                                                            byte[] PaletteBytes;
 
                                                             filestreamTexture = null;
 
@@ -5976,8 +5973,7 @@ namespace OPTech
                                                                 {
                                                                     filestreamTexture = null;
 
-                                                                    fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
-                                                                    fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
+                                                                    PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
                                                                 }
                                                             }
                                                             finally
@@ -7097,8 +7093,7 @@ namespace OPTech
                                                                     {
                                                                         filestreamTexture = null;
 
-                                                                        fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize, System.IO.SeekOrigin.Begin);
-                                                                        TextureBytes = fileTexture.ReadBytes(ImageWidth * ImageHeight);
+                                                                        TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
                                                                     }
                                                                 }
                                                                 finally
@@ -7145,7 +7140,7 @@ namespace OPTech
                                                                     file.Write(MipString.ToArray());
                                                                 }
 
-                                                                byte[] PaletteBytes = new byte[1024];
+                                                                byte[] PaletteBytes;
 
                                                                 filestreamTexture = null;
 
@@ -7157,8 +7152,7 @@ namespace OPTech
                                                                     {
                                                                         filestreamTexture = null;
 
-                                                                        fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
-                                                                        fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
+                                                                        PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
                                                                     }
                                                                 }
                                                                 finally
@@ -7495,8 +7489,7 @@ namespace OPTech
                                                                         {
                                                                             filestreamTexture = null;
 
-                                                                            fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize, System.IO.SeekOrigin.Begin);
-                                                                            TextureBytes = fileTexture.ReadBytes(ImageWidth * ImageHeight);
+                                                                            TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
                                                                         }
                                                                     }
                                                                     finally
@@ -7543,7 +7536,7 @@ namespace OPTech
                                                                         file.Write(MipString.ToArray());
                                                                     }
 
-                                                                    byte[] PaletteBytes = new byte[1024];
+                                                                    byte[] PaletteBytes;
 
                                                                     filestreamTexture = null;
 
@@ -7555,8 +7548,7 @@ namespace OPTech
                                                                         {
                                                                             filestreamTexture = null;
 
-                                                                            fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - ImageSize - (ImageColorsCount * 4), System.IO.SeekOrigin.Begin);
-                                                                            fileTexture.Read(PaletteBytes, 0, ImageColorsCount * 4);
+                                                                            PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
                                                                         }
                                                                     }
                                                                     finally

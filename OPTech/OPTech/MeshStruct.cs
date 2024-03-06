@@ -342,6 +342,11 @@ namespace OPTech
                 }
             }
 
+            if (newMesh.LODArray[1].FaceArray.Count == 0)
+            {
+                newMesh.LODArray.RemoveAt(1);
+            }
+
             return newMesh;
         }
     }

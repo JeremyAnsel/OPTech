@@ -5403,38 +5403,36 @@ namespace OPTech
 
                                                         int TexRefPos = (int)file.BaseStream.Length;
 
-                                                        var MipString = new List<byte>(TextureBytes);
-                                                        var MipTemp = new List<byte>();
-                                                        ImageMipWidth = ImageWidth;
-                                                        ImageMipHeight = ImageHeight;
-                                                        file.Write(MipString.ToArray());
+                                                        file.Write(TextureBytes);
 
-                                                        while (ImageMipWidth > 1 && ImageMipHeight > 1)
+                                                        int xLength = 1;
+                                                        int yLength = 1;
+                                                        int width = ImageWidth;
+                                                        int height = ImageHeight;
+
+                                                        while (width > 1 || height > 1)
                                                         {
-                                                            ImageMipWidth /= 2;
-                                                            ImageMipHeight /= 2;
-
-                                                            MipTemp.Clear();
-                                                            MipTemp.AddRange(MipString);
-                                                            MipString.Clear();
-
-                                                            var bytes = new byte[ImageMipWidth * 2];
-                                                            for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
+                                                            if (width > 1)
                                                             {
-                                                                MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
-                                                                MipString.AddRange(bytes);
+                                                                width /= 2;
+                                                                xLength *= 2;
                                                             }
 
-                                                            MipTemp.Clear();
-                                                            MipTemp.AddRange(MipString);
-                                                            MipString.Clear();
-
-                                                            for (int pixelIndex = 0; pixelIndex < ImageMipWidth * 2 * ImageMipHeight; pixelIndex += 2)
+                                                            if (height > 1)
                                                             {
-                                                                MipString.Add(MipTemp[pixelIndex]);
+                                                                height /= 2;
+                                                                yLength *= 2;
                                                             }
 
-                                                            file.Write(MipString.ToArray());
+                                                            for (int h = 0; h < height; h++)
+                                                            {
+                                                                for (int w = 0; w < width; w++)
+                                                                {
+                                                                    int i = h * yLength * ImageWidth + w * xLength;
+                                                                    byte p = TextureBytes[i];
+                                                                    file.Write(p);
+                                                                }
+                                                            }
                                                         }
 
                                                         byte[] PaletteBytes;
@@ -5927,38 +5925,36 @@ namespace OPTech
 
                                                             int TexRefPos = (int)file.BaseStream.Length;
 
-                                                            var MipString = new List<byte>(TextureBytes);
-                                                            var MipTemp = new List<byte>();
-                                                            ImageMipWidth = ImageWidth;
-                                                            ImageMipHeight = ImageHeight;
-                                                            file.Write(MipString.ToArray());
+                                                            file.Write(TextureBytes);
 
-                                                            while (ImageMipWidth > 1 && ImageMipHeight > 1)
+                                                            int xLength = 1;
+                                                            int yLength = 1;
+                                                            int width = ImageWidth;
+                                                            int height = ImageHeight;
+
+                                                            while (width > 1 || height > 1)
                                                             {
-                                                                ImageMipWidth /= 2;
-                                                                ImageMipHeight /= 2;
-
-                                                                MipTemp.Clear();
-                                                                MipTemp.AddRange(MipString);
-                                                                MipString.Clear();
-
-                                                                var bytes = new byte[ImageMipWidth * 2];
-                                                                for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
+                                                                if (width > 1)
                                                                 {
-                                                                    MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
-                                                                    MipString.AddRange(bytes);
+                                                                    width /= 2;
+                                                                    xLength *= 2;
                                                                 }
 
-                                                                MipTemp.Clear();
-                                                                MipTemp.AddRange(MipString);
-                                                                MipString.Clear();
-
-                                                                for (int pixelIndex = 0; pixelIndex < ImageMipWidth * 2 * ImageMipHeight; pixelIndex += 2)
+                                                                if (height > 1)
                                                                 {
-                                                                    MipString.Add(MipTemp[pixelIndex]);
+                                                                    height /= 2;
+                                                                    yLength *= 2;
                                                                 }
 
-                                                                file.Write(MipString.ToArray());
+                                                                for (int h = 0; h < height; h++)
+                                                                {
+                                                                    for (int w = 0; w < width; w++)
+                                                                    {
+                                                                        int i = h * yLength * ImageWidth + w * xLength;
+                                                                        byte p = TextureBytes[i];
+                                                                        file.Write(p);
+                                                                    }
+                                                                }
                                                             }
 
                                                             byte[] PaletteBytes;
@@ -7106,38 +7102,36 @@ namespace OPTech
 
                                                                 int TexRefPos = (int)file.BaseStream.Length;
 
-                                                                var MipString = new List<byte>(TextureBytes);
-                                                                var MipTemp = new List<byte>();
-                                                                ImageMipWidth = ImageWidth;
-                                                                ImageMipHeight = ImageHeight;
-                                                                file.Write(MipString.ToArray());
+                                                                file.Write(TextureBytes);
 
-                                                                while (ImageMipWidth > 1 && ImageMipHeight > 1)
+                                                                int xLength = 1;
+                                                                int yLength = 1;
+                                                                int width = ImageWidth;
+                                                                int height = ImageHeight;
+
+                                                                while (width > 1 || height > 1)
                                                                 {
-                                                                    ImageMipWidth /= 2;
-                                                                    ImageMipHeight /= 2;
-
-                                                                    MipTemp.Clear();
-                                                                    MipTemp.AddRange(MipString);
-                                                                    MipString.Clear();
-
-                                                                    var bytes = new byte[ImageMipWidth * 2];
-                                                                    for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
+                                                                    if (width > 1)
                                                                     {
-                                                                        MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
-                                                                        MipString.AddRange(bytes);
+                                                                        width /= 2;
+                                                                        xLength *= 2;
                                                                     }
 
-                                                                    MipTemp.Clear();
-                                                                    MipTemp.AddRange(MipString);
-                                                                    MipString.Clear();
-
-                                                                    for (int pixelIndex = 0; pixelIndex < ImageMipWidth * 2 * ImageMipHeight; pixelIndex += 2)
+                                                                    if (height > 1)
                                                                     {
-                                                                        MipString.Add(MipTemp[pixelIndex]);
+                                                                        height /= 2;
+                                                                        yLength *= 2;
                                                                     }
 
-                                                                    file.Write(MipString.ToArray());
+                                                                    for (int h = 0; h < height; h++)
+                                                                    {
+                                                                        for (int w = 0; w < width; w++)
+                                                                        {
+                                                                            int i = h * yLength * ImageWidth + w * xLength;
+                                                                            byte p = TextureBytes[i];
+                                                                            file.Write(p);
+                                                                        }
+                                                                    }
                                                                 }
 
                                                                 byte[] PaletteBytes;
@@ -7502,38 +7496,36 @@ namespace OPTech
 
                                                                     int TexRefPos = (int)file.BaseStream.Length;
 
-                                                                    var MipString = new List<byte>(TextureBytes);
-                                                                    var MipTemp = new List<byte>();
-                                                                    ImageMipWidth = ImageWidth;
-                                                                    ImageMipHeight = ImageHeight;
-                                                                    file.Write(MipString.ToArray());
+                                                                    file.Write(TextureBytes);
 
-                                                                    while (ImageMipWidth > 1 && ImageMipHeight > 1)
+                                                                    int xLength = 1;
+                                                                    int yLength = 1;
+                                                                    int width = ImageWidth;
+                                                                    int height = ImageHeight;
+
+                                                                    while (width > 1 || height > 1)
                                                                     {
-                                                                        ImageMipWidth /= 2;
-                                                                        ImageMipHeight /= 2;
-
-                                                                        MipTemp.Clear();
-                                                                        MipTemp.AddRange(MipString);
-                                                                        MipString.Clear();
-
-                                                                        var bytes = new byte[ImageMipWidth * 2];
-                                                                        for (int rowIndex = 0; rowIndex < ImageMipHeight * 2; rowIndex += 2)
+                                                                        if (width > 1)
                                                                         {
-                                                                            MipTemp.CopyTo(rowIndex * bytes.Length, bytes, 0, bytes.Length);
-                                                                            MipString.AddRange(bytes);
+                                                                            width /= 2;
+                                                                            xLength *= 2;
                                                                         }
 
-                                                                        MipTemp.Clear();
-                                                                        MipTemp.AddRange(MipString);
-                                                                        MipString.Clear();
-
-                                                                        for (int pixelIndex = 0; pixelIndex < ImageMipWidth * 2 * ImageMipHeight; pixelIndex += 2)
+                                                                        if (height > 1)
                                                                         {
-                                                                            MipString.Add(MipTemp[pixelIndex]);
+                                                                            height /= 2;
+                                                                            yLength *= 2;
                                                                         }
 
-                                                                        file.Write(MipString.ToArray());
+                                                                        for (int h = 0; h < height; h++)
+                                                                        {
+                                                                            for (int w = 0; w < width; w++)
+                                                                            {
+                                                                                int i = h * yLength * ImageWidth + w * xLength;
+                                                                                byte p = TextureBytes[i];
+                                                                                file.Write(p);
+                                                                            }
+                                                                        }
                                                                     }
 
                                                                     byte[] PaletteBytes;

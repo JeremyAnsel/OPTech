@@ -611,7 +611,7 @@ namespace OPTech
                     continue;
                 }
 
-                string meshName = "MESH " + (meshIndex + 1).ToString(CultureInfo.InvariantCulture) + " (" + Global.frmgeometry.meshlist.GetText(meshIndex) + ")";
+                string meshName = "MESH " + meshIndex.ToString(CultureInfo.InvariantCulture) + " (" + Global.frmgeometry.meshlist.GetText(meshIndex) + ")";
 
                 // improper hitzone
                 if (Global.Round(mesh.HitSpanX, 1) != Global.Round(mesh.LODArray[0].MaxX - mesh.LODArray[0].MinX, 1)
@@ -630,8 +630,8 @@ namespace OPTech
                         var face = lod.FaceArray[faceIndex];
 
                         string faceName = meshName
-                            + ", LOD " + (lodIndex + 1).ToString(CultureInfo.InvariantCulture)
-                            + ", Face " + (faceIndex + 1).ToString(CultureInfo.InvariantCulture);
+                            + ", LOD " + lodIndex.ToString(CultureInfo.InvariantCulture)
+                            + ", Face " + faceIndex.ToString(CultureInfo.InvariantCulture);
 
                         faceCount++;
 

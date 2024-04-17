@@ -2478,6 +2478,19 @@ namespace OPTech
                 System.IO.Directory.CreateDirectory(folderName);
             }
 
+            var subFolderNames = new string[]
+            {
+                "Meshes",
+                "Textures"
+            };
+
+            foreach (string folder in subFolderNames)
+            {
+                string path = System.IO.Path.Combine(folderName, folder);
+
+                System.IO.Directory.CreateDirectory(path);
+            }
+
             Global.ModelChanged = false;
             this.Title = "OPTech v2.0 <" + folderName + ".opz>";
             Global.MeshIDQueue = Global.MeshIDMinimumValue;

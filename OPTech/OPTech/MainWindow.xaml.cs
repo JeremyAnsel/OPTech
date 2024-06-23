@@ -9481,6 +9481,8 @@ namespace OPTech
 
             //    Global.CX.VertexScreens(thisMesh, whichLOD, thisFace, thisVertex);
             //}
+
+            Global.CX.MeshListReplicateCopyItems(null);
         }
 
         public void dispbar_meshzoomoff_Click(object sender, RoutedEventArgs e)

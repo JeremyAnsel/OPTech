@@ -19,7 +19,8 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
@@ -30,27 +31,21 @@
             <ListBox x:Name="meshlist"
                      Grid.Column="0"
                      Grid.Row="0"
-                     Grid.ColumnSpan="2"
+                     Grid.ColumnSpan="4"
                      ToolTip="Mesh List"
                      SelectionMode="Extended"
                      KeyUp="meshlist_KeyUp"
                      MouseUp="meshlist_MouseUp"
                      SelectionChanged="meshlist_SelectionChanged" />
-            <StackPanel Grid.Column="2"
-                        Grid.Row="0"
-                        Grid.ColumnSpan="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <StackPanel VerticalAlignment="Center"
-                            Width="200">
+            <UniformGrid Rows="1"
+                         Grid.Column="0"
+                         Grid.Row="1"
+                         Grid.ColumnSpan="4">
+                <DockPanel VerticalAlignment="Center">
                     <Label Content="Mesh type:"
                            FontWeight="Bold"
-                           Margin="20 0 0 0"
-                           Height="30"
                            Target="{Binding ElementName=meshtypetext}" />
                     <ComboBox x:Name="meshtypetext"
-                              Margin="10 0 10 0"
-                              Height="30"
                               ToolTip="mesh type"
                               PreviewKeyDown="meshtypetext_PreviewKeyDown"
                               LostFocus="meshtypetext_LostFocus">
@@ -88,17 +83,12 @@
                         <ComboBoxItem Content="30-PowerReg" />
                         <ComboBoxItem Content="31-Reactor" />
                     </ComboBox>
-                </StackPanel>
-                <StackPanel VerticalAlignment="Center"
-                            Width="200">
+                </DockPanel>
+                <DockPanel VerticalAlignment="Center">
                     <Label Content="Explosion type:"
                            FontWeight="Bold"
-                           Margin="20 0 0 0"
-                           Height="30"
                            Target="{Binding ElementName=exptypetext}" />
                     <ComboBox x:Name="exptypetext"
-                              Margin="10 0 10 0"
-                              Height="30"
                               ToolTip="explosion type"
                               PreviewKeyDown="exptypetext_PreviewKeyDown"
                               LostFocus="exptypetext_LostFocus">
@@ -115,365 +105,337 @@
                         <ComboBoxItem Content="9-MoveLine6" />
                         <ComboBoxItem Content="10-BreakAndExplode4" />
                     </ComboBox>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="1"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Center:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+                </DockPanel>
+            </UniformGrid>
+            <DockPanel Grid.Column="0"
+                       Grid.Row="2"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Center:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xcentertext}" />
                 <TextBox x:Name="Xcentertext"
-                         Height="29"
                          ToolTip="X center"
                          PreviewKeyDown="Xcentertext_PreviewKeyDown"
                          LostFocus="Xcentertext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="1"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="2"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Ycentertext}" />
                 <TextBox x:Name="Ycentertext"
-                         Height="29"
                          ToolTip="Y center"
                          PreviewKeyDown="Ycentertext_PreviewKeyDown"
                          LostFocus="Ycentertext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="1"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="2"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Zcentertext}" />
                 <TextBox x:Name="Zcentertext"
-                         Height="29"
                          ToolTip="Z center"
                          PreviewKeyDown="Zcentertext_PreviewKeyDown"
                          LostFocus="Zcentertext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Center"
                         Click="centertextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Center"
                         Click="centertextPaste_Click" />
             </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Span:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+            <DockPanel Grid.Column="0"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Span:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xspantext}" />
                 <TextBox x:Name="Xspantext"
-                         Height="29"
                          ToolTip="X span"
                          PreviewKeyDown="Xspantext_PreviewKeyDown"
                          LostFocus="Xspantext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Yspantext}" />
                 <TextBox x:Name="Yspantext"
-                         Height="29"
                          ToolTip="Y span"
                          PreviewKeyDown="Yspantext_PreviewKeyDown"
                          LostFocus="Yspantext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Zspantext}" />
                 <TextBox x:Name="Zspantext"
-                         Height="29"
                          ToolTip="Z span"
                          PreviewKeyDown="Zspantext_PreviewKeyDown"
                          LostFocus="Zspantext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Span"
                         Click="spantextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Span"
                         Click="spantextPaste_Click" />
             </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="3"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Minimum:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+            <DockPanel Grid.Column="0"
+                       Grid.Row="4"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Minimum:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xmintext}" />
                 <TextBox x:Name="Xmintext"
-                         Height="29"
                          ToolTip="X minimum"
                          PreviewKeyDown="Xmintext_PreviewKeyDown"
                          LostFocus="Xmintext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="3"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="4"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Ymintext}" />
                 <TextBox x:Name="Ymintext"
-                         Height="29"
                          ToolTip="Y minimum"
                          PreviewKeyDown="Ymintext_PreviewKeyDown"
                          LostFocus="Ymintext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="3"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="4"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Zmintext}" />
                 <TextBox x:Name="Zmintext"
-                         Height="29"
                          ToolTip="Z minimum"
                          PreviewKeyDown="Zmintext_PreviewKeyDown"
                          LostFocus="Zmintext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="3"
+                        Grid.Row="4"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Minimum"
                         Click="mintextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Minimum"
                         Click="mintextPaste_Click" />
             </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="4"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Maximum:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+            <DockPanel Grid.Column="0"
+                       Grid.Row="5"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Maximum:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xmaxtext}" />
                 <TextBox x:Name="Xmaxtext"
-                         Height="29"
                          ToolTip="X maximum"
                          PreviewKeyDown="Xmaxtext_PreviewKeyDown"
                          LostFocus="Xmaxtext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="4"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="5"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Ymaxtext}" />
                 <TextBox x:Name="Ymaxtext"
-                         Height="29"
                          ToolTip="Y maximum"
                          PreviewKeyDown="Ymaxtext_PreviewKeyDown"
                          LostFocus="Ymaxtext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="4"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="5"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Zmaxtext}" />
                 <TextBox x:Name="Zmaxtext"
-                         Height="29"
                          ToolTip="Z maximum"
                          PreviewKeyDown="Zmaxtext_PreviewKeyDown"
                          LostFocus="Zmaxtext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Maximum"
                         Click="maxtextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Maximum"
                         Click="maxtextPaste_Click" />
             </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="5"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <Label Content="Target ID:"
+            <DockPanel Grid.Column="1"
+                       Grid.Row="6"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           HorizontalAlignment="Center"
+                           Text="Target ID:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content=""
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=targetidtext}" />
                 <TextBox x:Name="targetidtext"
-                         Height="29"
                          ToolTip="target ID"
                          PreviewKeyDown="targetidtext_PreviewKeyDown"
                          LostFocus="targetidtext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="6"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Target:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+            </DockPanel>
+            <DockPanel Grid.Column="0"
+                       Grid.Row="7"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Target:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xtargettext}" />
                 <TextBox x:Name="Xtargettext"
-                         Height="29"
                          ToolTip="X target"
                          PreviewKeyDown="Xtargettext_PreviewKeyDown"
                          LostFocus="Xtargettext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="6"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="7"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Ytargettext}" />
                 <TextBox x:Name="Ytargettext"
-                         Height="29"
                          ToolTip="Y target"
                          PreviewKeyDown="Ytargettext_PreviewKeyDown"
                          LostFocus="Ytargettext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="6"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="7"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Ztargettext}" />
                 <TextBox x:Name="Ztargettext"
-                         Height="29"
                          ToolTip="Z target"
                          PreviewKeyDown="Ztargettext_PreviewKeyDown"
                          LostFocus="Ztargettext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="6"
+                        Grid.Row="7"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom">
+                        VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Target"
                         Click="targettextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Target"
                         Click="targettextPaste_Click" />
             </StackPanel>
         </Grid>

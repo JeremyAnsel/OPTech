@@ -1087,14 +1087,35 @@ namespace OPTech
         {
             if (meshlist == null || meshlist == Global.frmgeometry.meshlist)
             {
+                if (meshlist == null)
+                {
+                    var meshes = new ListBox
+                    {
+                        SelectionMode = SelectionMode.Extended
+                    };
+
+                    Global.frmgeometry.meshlist.CopyItems(meshes);
+                    meshes.CopyItems(Global.frmgeometry.meshlist);
+                }
+
+                Global.frmgeometry.meshlist.CopyItems(Global.frmgeometry.meshlistFace);
                 Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 Global.frmgeometry.meshlist.CopyItems(Global.frmtransformation.meshlist);
                 Global.frmgeometry.meshlist.CopyItems(Global.frmhardpoint.meshlist);
                 Global.frmgeometry.meshlist.CopyItems(Global.frmengineglow.meshlist);
             }
+            else if (meshlist == Global.frmgeometry.meshlistFace)
+            {
+                Global.frmgeometry.meshlistFace.CopyItems(Global.frmgeometry.meshlist);
+                Global.frmgeometry.meshlistFace.CopyItems(Global.frmhitzone.meshlist);
+                Global.frmgeometry.meshlistFace.CopyItems(Global.frmtransformation.meshlist);
+                Global.frmgeometry.meshlistFace.CopyItems(Global.frmhardpoint.meshlist);
+                Global.frmgeometry.meshlistFace.CopyItems(Global.frmengineglow.meshlist);
+            }
             else if (meshlist == Global.frmhitzone.meshlist)
             {
                 Global.frmhitzone.meshlist.CopyItems(Global.frmgeometry.meshlist);
+                Global.frmhitzone.meshlist.CopyItems(Global.frmgeometry.meshlistFace);
                 Global.frmhitzone.meshlist.CopyItems(Global.frmtransformation.meshlist);
                 Global.frmhitzone.meshlist.CopyItems(Global.frmhardpoint.meshlist);
                 Global.frmhitzone.meshlist.CopyItems(Global.frmengineglow.meshlist);
@@ -1102,6 +1123,7 @@ namespace OPTech
             else if (meshlist == Global.frmtransformation.meshlist)
             {
                 Global.frmtransformation.meshlist.CopyItems(Global.frmgeometry.meshlist);
+                Global.frmtransformation.meshlist.CopyItems(Global.frmgeometry.meshlistFace);
                 Global.frmtransformation.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 Global.frmtransformation.meshlist.CopyItems(Global.frmhardpoint.meshlist);
                 Global.frmtransformation.meshlist.CopyItems(Global.frmengineglow.meshlist);
@@ -1109,6 +1131,7 @@ namespace OPTech
             else if (meshlist == Global.frmhardpoint.meshlist)
             {
                 Global.frmhardpoint.meshlist.CopyItems(Global.frmgeometry.meshlist);
+                Global.frmhardpoint.meshlist.CopyItems(Global.frmgeometry.meshlistFace);
                 Global.frmhardpoint.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 Global.frmhardpoint.meshlist.CopyItems(Global.frmtransformation.meshlist);
                 Global.frmhardpoint.meshlist.CopyItems(Global.frmengineglow.meshlist);
@@ -1116,6 +1139,7 @@ namespace OPTech
             else if (meshlist == Global.frmengineglow.meshlist)
             {
                 Global.frmengineglow.meshlist.CopyItems(Global.frmgeometry.meshlist);
+                Global.frmengineglow.meshlist.CopyItems(Global.frmgeometry.meshlistFace);
                 Global.frmengineglow.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 Global.frmengineglow.meshlist.CopyItems(Global.frmtransformation.meshlist);
                 Global.frmengineglow.meshlist.CopyItems(Global.frmhardpoint.meshlist);

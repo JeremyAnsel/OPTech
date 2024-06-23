@@ -84,7 +84,17 @@ namespace OPTech
             {
                 if (Global.frmgeometry.meshlist.SelectedIndex != -1)
                 {
-                    Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex].HitType = this.meshtypetext.SelectedIndex;
+                    for (int index = 0; index < Global.frmgeometry.meshlist.Items.Count; index++)
+                    {
+                        if (!Global.frmgeometry.meshlist.IsSelected(index))
+                        {
+                            continue;
+                        }
+
+                        Global.OPT.MeshArray[index].HitType = this.meshtypetext.SelectedIndex;
+                    }
+
+                    Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 }
 
                 Global.NumberTrim();
@@ -97,7 +107,17 @@ namespace OPTech
         {
             if (Global.frmgeometry.meshlist.SelectedIndex != -1)
             {
-                Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex].HitType = this.meshtypetext.SelectedIndex;
+                for (int index = 0; index < Global.frmgeometry.meshlist.Items.Count; index++)
+                {
+                    if (!Global.frmgeometry.meshlist.IsSelected(index))
+                    {
+                        continue;
+                    }
+
+                    Global.OPT.MeshArray[index].HitType = this.meshtypetext.SelectedIndex;
+                }
+
+                Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
             }
 
             Global.NumberTrim();
@@ -120,7 +140,17 @@ namespace OPTech
             {
                 if (Global.frmgeometry.meshlist.SelectedIndex != -1)
                 {
-                    Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex].HitExp = this.exptypetext.SelectedIndex;
+                    for (int index = 0; index < Global.frmgeometry.meshlist.Items.Count; index++)
+                    {
+                        if (!Global.frmgeometry.meshlist.IsSelected(index))
+                        {
+                            continue;
+                        }
+
+                        Global.OPT.MeshArray[index].HitExp = this.exptypetext.SelectedIndex;
+                    }
+
+                    Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
                 }
 
                 Global.NumberTrim();
@@ -133,7 +163,17 @@ namespace OPTech
         {
             if (Global.frmgeometry.meshlist.SelectedIndex != -1)
             {
-                Global.OPT.MeshArray[Global.frmgeometry.meshlist.SelectedIndex].HitExp = this.exptypetext.SelectedIndex;
+                for (int index = 0; index < Global.frmgeometry.meshlist.Items.Count; index++)
+                {
+                    if (!Global.frmgeometry.meshlist.IsSelected(index))
+                    {
+                        continue;
+                    }
+
+                    Global.OPT.MeshArray[index].HitExp = this.exptypetext.SelectedIndex;
+                }
+
+                Global.frmgeometry.meshlist.CopyItems(Global.frmhitzone.meshlist);
             }
 
             Global.NumberTrim();

@@ -17,6 +17,8 @@ namespace OPTech
             for (int i = 0; i < list.Items.Count; i++)
             {
                 string text = list.GetText(i, useIndex);
+                text = ListBoxUtils.GetMeshText(list, right, i, text);
+
                 bool isChecked = list.IsChecked(i);
 
                 var checkBox = GetCheckBox(list.Items[i]);

@@ -139,6 +139,8 @@ namespace OPTech
                 Global.ModelChanged = true;
             }
 
+            Global.frmgeometry.meshlist.CopyItems(Global.frmhardpoint.meshlist);
+
             Global.CX.MeshScreens(Global.frmgeometry.meshlist.SelectedIndex, whichLOD);
             Global.CX.HardpointScreens(-1, -1);
             Global.CX.CreateCall();
@@ -273,6 +275,8 @@ namespace OPTech
                     }
                 }
             }
+
+            Global.frmgeometry.meshlist.CopyItems(Global.frmhardpoint.meshlist);
 
             Global.CX.HardpointScreens(Global.frmgeometry.meshlist.SelectedIndex, selectedMesh.HPArray.Count - 1);
             Global.CX.CreateCall();
@@ -762,6 +766,8 @@ namespace OPTech
                         }
                     }
                 }
+
+                Global.frmgeometry.meshlist.CopyItems(Global.frmhardpoint.meshlist);
 
                 Global.CX.HardpointScreens(Global.frmgeometry.meshlist.SelectedIndex, selectedMesh.HPArray.Count - 1);
                 Global.CX.CreateCall();

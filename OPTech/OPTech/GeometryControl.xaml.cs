@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpGL.SceneGraph;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -92,6 +93,7 @@ namespace OPTech
             if (whichLOD == 0)
             {
                 string defaultName = this.meshlist.GetSelectedText();
+                defaultName = ListBoxUtils.RemoveTextExtraTag(defaultName);
                 string meshRename = Microsoft.VisualBasic.Interaction.InputBox("Rename mesh to:", "Rename mesh", defaultName);
                 if (!string.IsNullOrEmpty(meshRename))
                 {
@@ -99,6 +101,8 @@ namespace OPTech
                     this.meshlist.SetText(index, meshRename);
                     this.meshlist.SetSelected(index, true);
                     Global.ModelChanged = true;
+
+                    Global.CX.MeshListReplicateCopyItems(null);
                 }
             }
         }
@@ -404,6 +408,21 @@ namespace OPTech
         private void meshlist_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MeshlistMouseUp(this.meshlist);
+        }
+
+        private void meshlistFace_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MeshlistSelectionChanged(this.meshlistFace);
+        }
+
+        private void meshlistFace_KeyUp(object sender, KeyEventArgs e)
+        {
+            MeshlistKeyUp(this.meshlistFace);
+        }
+
+        private void meshlistFace_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MeshlistMouseUp(this.meshlistFace);
         }
 
         private void facelist_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -901,6 +920,8 @@ namespace OPTech
             }
 
             Global.ModelChanged = true;
+
+            Global.CX.MeshListReplicateCopyItems();
 
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
@@ -1489,8 +1510,14 @@ namespace OPTech
             for (int EachMesh = 0; EachMesh < this.meshlist.Items.Count; EachMesh++)
             {
                 string meshName = this.meshlist.GetText(EachMesh);
-                frmmeshchoice.meshlist.Items.Add(meshName + ": HIGH LOD");
-                frmmeshchoice.meshlist.Items.Add(meshName + ": LOW LOD");
+                meshName = ListBoxUtils.RemoveTextExtraTag(meshName);
+
+                MeshStruct mesh = Global.OPT.MeshArray[EachMesh];
+                string highFacesCount = mesh.LODArray.Count > 0 ? mesh.LODArray[0].FaceArray.Count.ToString() : "-";
+                string lowFacesCount = mesh.LODArray.Count > 1 ? mesh.LODArray[1].FaceArray.Count.ToString() : "-";
+
+                frmmeshchoice.meshlist.Items.Add($"{meshName} - ({highFacesCount}) : HIGH LOD");
+                frmmeshchoice.meshlist.Items.Add($"{meshName} - ({lowFacesCount}) : LOW LOD");
             }
 
             frmmeshchoice.meshlist.SelectedIndex = 0;
@@ -1939,6 +1966,8 @@ namespace OPTech
                 Global.frmtexture.illumtexturelist.SetCheck(EachTexture, texture.BaseName);
             }
 
+            Global.CX.MeshListReplicateCopyItems();
+
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();
             Global.OrthoZoom = RememberZoom;
@@ -2293,6 +2322,8 @@ namespace OPTech
             }
 
             Global.ModelChanged = true;
+
+            Global.CX.MeshListReplicateCopyItems();
 
             double RememberZoom = Global.OrthoZoom;
             OptRead.CalcDomain();

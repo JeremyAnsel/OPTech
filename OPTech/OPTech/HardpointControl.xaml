@@ -19,7 +19,8 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
@@ -29,7 +30,6 @@
                   Grid.Row="0"
                   Grid.ColumnSpan="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -51,42 +51,40 @@
                          SelectionMode="Extended"
                          KeyUp="hardpointlist_KeyUp"
                          MouseUp="hardpointlist_MouseUp" />
-                <StackPanel Grid.Column="2"
-                            Grid.Row="0"
-                            VerticalAlignment="Center">
-                    <Button x:Name="hpdeletebut"
-                            Margin="20 5"
-                            Height="30"
-                            Content="Delete"
-                            Click="hpdeletebut_Click" />
-                    <Button x:Name="hpcutbut"
-                            Margin="20 5"
-                            Height="30"
-                            Content="Cut"
-                            Click="hpcutbut_Click" />
-                    <Button x:Name="hpcopybut"
-                            Margin="20 5"
-                            Height="30"
-                            Content="Copy"
-                            Click="hpcopybut_Click" />
-                    <Button x:Name="hppastebut"
-                            Margin="20 5"
-                            Height="30"
-                            Content="Paste"
-                            Click="hppastebut_Click" />
-                </StackPanel>
             </Grid>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="1"
-                        Grid.ColumnSpan="4"
-                        VerticalAlignment="Center"
-                        Width="200">
-                <Label Content="Hardpoint type:"
+            <Button x:Name="hpaddbut"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Add HP"
+                    Click="hpaddbut_Click" />
+            <Button x:Name="hpsetfacebut"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Set to Face"
+                    Click="hpsetfacebut_Click" />
+            <Button x:Name="hpsetvertexbut"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Set to Vertex"
+                    Click="hpsetvertexbut_Click" />
+            <DockPanel Grid.Column="0"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="2"
+                       VerticalAlignment="Center">
+                <Label DockPanel.Dock="Top"
+                       Content="Hardpoint type:"
                        FontWeight="Bold"
-                       Height="30"
                        Target="{Binding ElementName=hardpointtypetext}" />
                 <ComboBox x:Name="hardpointtypetext"
-                          Height="32"
                           ToolTip="hardpoint type"
                           PreviewKeyDown="hardpointtypetext_PreviewKeyDown"
                           LostFocus="hardpointtypetext_LostFocus">
@@ -172,103 +170,103 @@
                     <ComboBoxItem Tag="7A7A82"
                                   Content="39-AIHanger" />
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Grid.Column="0"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text="Position:"
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="x"
+            </DockPanel>
+            <DockPanel Grid.Column="0"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Position:"
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="x"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Xhptext}" />
                 <TextBox x:Name="Xhptext"
-                         Height="29"
                          ToolTip="X position"
                          PreviewKeyDown="Xhptext_PreviewKeyDown"
                          LostFocus="Xhptext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="y"
+            </DockPanel>
+            <DockPanel Grid.Column="1"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="y"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Yhptext}" />
                 <TextBox x:Name="Yhptext"
-                         Height="29"
                          ToolTip="Y position"
                          PreviewKeyDown="Yhptext_PreviewKeyDown"
                          LostFocus="Yhptext_LostFocus" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Grid.Row="2"
-                        VerticalAlignment="Center"
-                        Width="130">
-                <TextBlock Text=""
-                           FontWeight="Bold"
-                           Height="24" />
-                <Label Content="z"
+            </DockPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="3"
+                       VerticalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top"
+                           Text=""
+                           FontWeight="Bold" />
+                <Label DockPanel.Dock="Left"
+                       Content="z"
                        FontWeight="Bold"
-                       Height="24"
                        Target="{Binding ElementName=Zhptext}" />
                 <TextBox x:Name="Zhptext"
-                         Height="29"
                          ToolTip="Z position"
                          PreviewKeyDown="Zhptext_PreviewKeyDown"
                          LostFocus="Zhptext_LostFocus" />
-            </StackPanel>
+            </DockPanel>
             <StackPanel Grid.Column="3"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource copyIcon}"
-                        ToolTip="Copy"
+                        ToolTip="Copy Position"
                         Click="hptextCopy_Click" />
                 <Button Width="24"
                         Height="24"
-                        Margin="5"
+                        Margin="2"
                         ContentTemplate="{StaticResource pasteIcon}"
-                        ToolTip="Paste"
+                        ToolTip="Paste Position"
                         Click="hptextPaste_Click" />
             </StackPanel>
-            <Button x:Name="hpaddbut"
+            <Button x:Name="hpcutbut"
                     Grid.Column="0"
-                    Grid.Row="3"
-                    Grid.ColumnSpan="4"
+                    Grid.Row="4"
                     Margin="10 0"
-                    Height="40"
+                    Height="30"
                     Width="110"
-                    Content="Add HP"
-                    Click="hpaddbut_Click" />
-            <StackPanel Grid.Column="0"
-                        Grid.Row="4"
-                        Grid.ColumnSpan="4"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                <Button x:Name="hpsetfacebut"
-                        Margin="10 0"
-                        Height="40"
-                        Width="110"
-                        Content="Set to Face"
-                        Click="hpsetfacebut_Click" />
-                <Button x:Name="hpsetvertexbut"
-                        Margin="10 0"
-                        Height="40"
-                        Width="110"
-                        Content="Set to Vertex"
-                        Click="hpsetvertexbut_Click" />
-            </StackPanel>
+                    Content="Cut HP"
+                    Click="hpcutbut_Click" />
+            <Button x:Name="hpcopybut"
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Copy HP"
+                    Click="hpcopybut_Click" />
+            <Button x:Name="hppastebut"
+                    Grid.Column="2"
+                    Grid.Row="4"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Paste HP"
+                    Click="hppastebut_Click" />
+            <Button x:Name="hpdeletebut"
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Margin="10 0"
+                    Height="30"
+                    Width="110"
+                    Content="Delete HP"
+                    Foreground="Red"
+                    Click="hpdeletebut_Click" />
         </Grid>
     </GroupBox>
 </UserControl>

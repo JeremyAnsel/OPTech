@@ -1,44 +1,83 @@
 ﻿<UserControl x:Class="OPTech.RenderScreenControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:gl="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
              xmlns:local="clr-namespace:OPTech"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="600"
              UseLayoutRounding="True">
-    <GroupBox x:Name="renderframe" Header="Display">
+    <GroupBox x:Name="renderframe"
+              Header="Display">
         <DockPanel>
-            <GroupBox x:Name="viewopframe" DockPanel.Dock="Bottom">
+            <GroupBox x:Name="viewopframe"
+                      DockPanel.Dock="Bottom">
                 <DockPanel>
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="10 5 0 0">
+                    <StackPanel DockPanel.Dock="Right"
+                                Orientation="Horizontal"
+                                Margin="10 5 0 0">
                         <TextBlock Text="FG: " />
-                        <xctk:IntegerUpDown x:Name="fgversionctrl" ToolTip="Version" Minimum="0" DefaultValue="0" Value="0" ValueChanged="fgversionctrl_ValueChanged" />
+                        <xctk:IntegerUpDown x:Name="fgversionctrl"
+                                            ToolTip="Version"
+                                            Minimum="0"
+                                            DefaultValue="0"
+                                            Value="0"
+                                            ValueChanged="fgversionctrl_ValueChanged" />
                     </StackPanel>
-                    <ToolBarTray IsLocked="True" Margin="10 5 10 0">
+                    <ToolBarTray IsLocked="True"
+                                 Margin="10 5 10 0">
                         <ToolBar x:Name="viewbar">
-                            <Button Tag="perspective" ToolTip="Perspective: Ctrl+Num1" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_perspective.ico" />
+                            <Button Tag="perspective"
+                                    ToolTip="Perspective: Ctrl+Num1"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_perspective.ico" />
                             </Button>
-                            <Button Tag="top" ToolTip="Top: Ctrl+Num8" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_top.ico" />
+                            <Button Tag="top"
+                                    ToolTip="Top: Ctrl+Num8"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_top.ico" />
                             </Button>
-                            <Button Tag="bottom" ToolTip="Bottom: Ctrl+Num2" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_bottom.ico" />
+                            <Button Tag="bottom"
+                                    ToolTip="Bottom: Ctrl+Num2"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_bottom.ico" />
                             </Button>
-                            <Button Tag="right" ToolTip="Right: Ctrl+Num6" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_right.ico" />
+                            <Button Tag="right"
+                                    ToolTip="Right: Ctrl+Num6"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_right.ico" />
                             </Button>
-                            <Button Tag="left" ToolTip="Left: Ctrl+Num4" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_left.ico" />
+                            <Button Tag="left"
+                                    ToolTip="Left: Ctrl+Num4"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_left.ico" />
                             </Button>
-                            <Button Tag="front" ToolTip="Front: Ctrl+Num5" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_front.ico" />
+                            <Button Tag="front"
+                                    ToolTip="Front: Ctrl+Num5"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_front.ico" />
                             </Button>
-                            <Button Tag="back" ToolTip="Back: Ctrl+Num3" Click="viewbar_Click">
-                                <Image Height="40" Width="40" Source="Images/view_back.ico" />
+                            <Button Tag="back"
+                                    ToolTip="Back: Ctrl+Num3"
+                                    Click="viewbar_Click">
+                                <Image Height="40"
+                                       Width="40"
+                                       Source="Images/view_back.ico" />
                             </Button>
                         </ToolBar>
                         <ToolBar>
@@ -50,7 +89,7 @@
                                               ShowStandardColors="False"
                                               AvailableColorsSortingMode="HueSaturationBrightness"
                                               SelectedColor="Black"
-                                              SelectedColorChanged="backgroundColorPicker_SelectedColorChanged"/>
+                                              SelectedColorChanged="backgroundColorPicker_SelectedColorChanged" />
                         </ToolBar>
                     </ToolBarTray>
                 </DockPanel>

@@ -5,15 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPTech"
         mc:Ignorable="d"
-        Title="Assign to Mesh" Height="140" Width="440"
+        Title="Assign to Mesh"
+        Height="140"
+        Width="440"
         UseLayoutRounding="True"
         ResizeMode="NoResize"
         WindowStyle="ToolWindow"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner">
     <Canvas>
-        <ComboBox x:Name="meshlist" Canvas.Left="12" Canvas.Top="36" Height="32" Width="254" />
-        <Button x:Name="CancelButton" Canvas.Left="300" Canvas.Top="60" Height="38" Width="122" Content="Cancel" Click="CancelButton_Click" />
-        <Button x:Name="OKButton" Canvas.Left="300" Canvas.Top="12" Height="38" Width="122" Content="OK" Click="OKButton_Click" />
+        <ComboBox x:Name="meshlist"
+                  Canvas.Left="12"
+                  Canvas.Top="36"
+                  Height="32"
+                  Width="254" />
+        <Button x:Name="CancelButton"
+                Canvas.Left="300"
+                Canvas.Top="60"
+                Height="38"
+                Width="122"
+                Content="Cancel"
+                Click="CancelButton_Click" />
+        <Button x:Name="OKButton"
+                Canvas.Left="300"
+                Canvas.Top="12"
+                Height="38"
+                Width="122"
+                Content="OK"
+                Click="OKButton_Click" />
     </Canvas>
 </Window>

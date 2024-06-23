@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="OPTech.EngineGlowControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:OPTech"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="500"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="500"
              UseLayoutRounding="True"
              PreviewKeyDown="UserControl_PreviewKeyDown"
              Unloaded="UserControl_Unloaded">
@@ -22,7 +23,8 @@
                 <RowDefinition Height="6*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0">
+            <Grid Grid.Column="0"
+                  Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -32,13 +34,13 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <ListBox x:Name="meshlist"
-                     Grid.Column="0"
-                     Grid.Row="0"
-                     ToolTip="Mesh List"
-                     SelectionMode="Extended"
-                     KeyUp="meshlist_KeyUp"
-                     MouseUp="meshlist_MouseUp"
-                     SelectionChanged="meshlist_SelectionChanged" />
+                         Grid.Column="0"
+                         Grid.Row="0"
+                         ToolTip="Mesh List"
+                         SelectionMode="Extended"
+                         KeyUp="meshlist_KeyUp"
+                         MouseUp="meshlist_MouseUp"
+                         SelectionChanged="meshlist_SelectionChanged" />
                 <ListBox x:Name="engineglowlist"
                          Grid.Column="1"
                          Grid.Row="0"
@@ -46,14 +48,33 @@
                          SelectionMode="Extended"
                          KeyUp="engineglowlist_KeyUp"
                          MouseUp="engineglowlist_MouseUp" />
-                <StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center">
-                    <Button x:Name="egdeletebut" Margin="20 2" Height="25" Content="Delete" Click="egdeletebut_Click" />
-                    <Button x:Name="egcutbut" Margin="20 2" Height="25" Content="Cut" Click="egcutbut_Click" />
-                    <Button x:Name="egcopybut" Margin="20 2" Height="25" Content="Copy" Click="egcopybut_Click" />
-                    <Button x:Name="egpastebut" Margin="20 2" Height="25" Content="Paste" Click="egpastebut_Click" />
+                <StackPanel Grid.Column="2"
+                            Grid.Row="0"
+                            VerticalAlignment="Center">
+                    <Button x:Name="egdeletebut"
+                            Margin="20 2"
+                            Height="25"
+                            Content="Delete"
+                            Click="egdeletebut_Click" />
+                    <Button x:Name="egcutbut"
+                            Margin="20 2"
+                            Height="25"
+                            Content="Cut"
+                            Click="egcutbut_Click" />
+                    <Button x:Name="egcopybut"
+                            Margin="20 2"
+                            Height="25"
+                            Content="Copy"
+                            Click="egcopybut_Click" />
+                    <Button x:Name="egpastebut"
+                            Margin="20 2"
+                            Height="25"
+                            Content="Paste"
+                            Click="egpastebut_Click" />
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="1">
+            <Grid Grid.Column="0"
+                  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
@@ -71,41 +92,210 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Text="Position:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="1" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Xegtext}" />
-                <Label Grid.Column="1" Grid.Row="1" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Yegtext}" />
-                <Label Grid.Column="2" Grid.Row="1" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Zegtext}" />
-                <TextBox x:Name="Xegtext" Grid.Column="0" Grid.Row="2" Height="20" Width="130" ToolTip="X position" PreviewKeyDown="Xegtext_PreviewKeyDown" LostFocus="Xegtext_LostFocus" />
-                <TextBox x:Name="Yegtext" Grid.Column="1" Grid.Row="2" Height="20" Width="130" ToolTip="Y position" PreviewKeyDown="Yegtext_PreviewKeyDown" LostFocus="Yegtext_LostFocus" />
-                <TextBox x:Name="Zegtext" Grid.Column="2" Grid.Row="2" Height="20" Width="130" ToolTip="Z position" PreviewKeyDown="Zegtext_PreviewKeyDown" LostFocus="Zegtext_LostFocus" />
-                <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="egtextCopy_Click" />
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="egtextPaste_Click" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.ColumnSpan="3"
+                           Text="Position:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Xegtext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Yegtext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Zegtext}" />
+                <TextBox x:Name="Xegtext"
+                         Grid.Column="0"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="X position"
+                         PreviewKeyDown="Xegtext_PreviewKeyDown"
+                         LostFocus="Xegtext_LostFocus" />
+                <TextBox x:Name="Yegtext"
+                         Grid.Column="1"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="Y position"
+                         PreviewKeyDown="Yegtext_PreviewKeyDown"
+                         LostFocus="Yegtext_LostFocus" />
+                <TextBox x:Name="Zegtext"
+                         Grid.Column="2"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="Z position"
+                         PreviewKeyDown="Zegtext_PreviewKeyDown"
+                         LostFocus="Zegtext_LostFocus" />
+                <StackPanel Grid.Column="3"
+                            Grid.Row="1"
+                            Grid.RowSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource copyIcon}"
+                            ToolTip="Copy"
+                            Click="egtextCopy_Click" />
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource pasteIcon}"
+                            ToolTip="Paste"
+                            Click="egtextPaste_Click" />
                 </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="Size:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="4" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Widthegtext}" />
-                <Label Grid.Column="1" Grid.Row="4" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Heightegtext}" />
-                <Label Grid.Column="2" Grid.Row="4" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Lengthegtext}" />
-                <TextBox x:Name="Widthegtext" Grid.Column="0" Grid.Row="5" Height="20" Width="130" ToolTip="width" GotFocus="Widthegtext_GotFocus" PreviewKeyDown="Widthegtext_PreviewKeyDown" LostFocus="Widthegtext_LostFocus" />
-                <TextBox x:Name="Heightegtext" Grid.Column="1" Grid.Row="5" Height="20" Width="130" ToolTip="height" GotFocus="Heightegtext_GotFocus" PreviewKeyDown="Heightegtext_PreviewKeyDown" LostFocus="Heightegtext_LostFocus" />
-                <TextBox x:Name="Lengthegtext" Grid.Column="2" Grid.Row="5" Height="20" Width="130" ToolTip="length" GotFocus="Lengthegtext_GotFocus" PreviewKeyDown="Lengthegtext_PreviewKeyDown" LostFocus="Lengthegtext_LostFocus" />
-                <StackPanel Grid.Column="3" Grid.Row="4" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="egsizetextCopy_CLick" />
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="egsizetextPaste_Click" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="3"
+                           Grid.ColumnSpan="3"
+                           Text="Size:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Widthegtext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Heightegtext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Lengthegtext}" />
+                <TextBox x:Name="Widthegtext"
+                         Grid.Column="0"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="width"
+                         GotFocus="Widthegtext_GotFocus"
+                         PreviewKeyDown="Widthegtext_PreviewKeyDown"
+                         LostFocus="Widthegtext_LostFocus" />
+                <TextBox x:Name="Heightegtext"
+                         Grid.Column="1"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="height"
+                         GotFocus="Heightegtext_GotFocus"
+                         PreviewKeyDown="Heightegtext_PreviewKeyDown"
+                         LostFocus="Heightegtext_LostFocus" />
+                <TextBox x:Name="Lengthegtext"
+                         Grid.Column="2"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="length"
+                         GotFocus="Lengthegtext_GotFocus"
+                         PreviewKeyDown="Lengthegtext_PreviewKeyDown"
+                         LostFocus="Lengthegtext_LostFocus" />
+                <StackPanel Grid.Column="3"
+                            Grid.Row="4"
+                            Grid.RowSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource copyIcon}"
+                            ToolTip="Copy"
+                            Click="egsizetextCopy_CLick" />
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource pasteIcon}"
+                            ToolTip="Paste"
+                            Click="egsizetextPaste_Click" />
                 </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Text="Rotation:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="7" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Xegangletext}" />
-                <Label Grid.Column="1" Grid.Row="7" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Yegangletext}" />
-                <Label Grid.Column="2" Grid.Row="7" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Zegangletext}" />
-                <TextBox x:Name="Xegangletext" Grid.Column="0" Grid.Row="8" Height="20" Width="130" ToolTip="rotation X (°)" PreviewKeyDown="Xegangletext_PreviewKeyDown" LostFocus="Xegangletext_LostFocus" />
-                <TextBox x:Name="Yegangletext" Grid.Column="1" Grid.Row="8" Height="20" Width="130" ToolTip="rotation Y (°)" PreviewKeyDown="Yegangletext_PreviewKeyDown" LostFocus="Yegangletext_LostFocus" />
-                <TextBox x:Name="Zegangletext" Grid.Column="2" Grid.Row="8" Height="20" Width="130" ToolTip="rotation Z (°)" PreviewKeyDown="Zegangletext_PreviewKeyDown" LostFocus="Zegangletext_LostFocus" />
-                <StackPanel Grid.Column="3" Grid.Row="7" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource copyIcon}" ToolTip="Copy" Click="egangletextCopy_Click" />
-                    <Button Width="24" Height="24" Margin="5" ContentTemplate="{StaticResource pasteIcon}" ToolTip="Paste" Click="egangletextPaste_Click" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="6"
+                           Grid.ColumnSpan="3"
+                           Text="Rotation:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Xegangletext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Yegangletext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Zegangletext}" />
+                <TextBox x:Name="Xegangletext"
+                         Grid.Column="0"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="rotation X (°)"
+                         PreviewKeyDown="Xegangletext_PreviewKeyDown"
+                         LostFocus="Xegangletext_LostFocus" />
+                <TextBox x:Name="Yegangletext"
+                         Grid.Column="1"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="rotation Y (°)"
+                         PreviewKeyDown="Yegangletext_PreviewKeyDown"
+                         LostFocus="Yegangletext_LostFocus" />
+                <TextBox x:Name="Zegangletext"
+                         Grid.Column="2"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="rotation Z (°)"
+                         PreviewKeyDown="Zegangletext_PreviewKeyDown"
+                         LostFocus="Zegangletext_LostFocus" />
+                <StackPanel Grid.Column="3"
+                            Grid.Row="7"
+                            Grid.RowSpan="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource copyIcon}"
+                            ToolTip="Copy"
+                            Click="egangletextCopy_Click" />
+                    <Button Width="24"
+                            Height="24"
+                            Margin="5"
+                            ContentTemplate="{StaticResource pasteIcon}"
+                            ToolTip="Paste"
+                            Click="egangletextPaste_Click" />
                 </StackPanel>
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="2">
+            <Grid Grid.Column="0"
+                  Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -120,22 +310,123 @@
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Text="Inner color:" FontWeight="Bold" />
-                <TextBox x:Name="Reginnertext" Grid.Column="0" Grid.Row="1" Height="29" Width="80" ToolTip="inner R" Background="Red" PreviewKeyDown="Reginnertext_PreviewKeyDown" LostFocus="Reginnertext_LostFocus" />
-                <TextBox x:Name="Geginnertext" Grid.Column="1" Grid.Row="1" Height="29" Width="80" ToolTip="inner G" Background="Green" PreviewKeyDown="Geginnertext_PreviewKeyDown" LostFocus="Geginnertext_LostFocus" />
-                <TextBox x:Name="Beginnertext" Grid.Column="2" Grid.Row="1" Height="29" Width="80" ToolTip="inner B" Background="Blue" PreviewKeyDown="Beginnertext_PreviewKeyDown" LostFocus="Beginnertext_LostFocus" />
-                <TextBox x:Name="Aeginnertext" Grid.Column="3" Grid.Row="1" Height="29" Width="80" ToolTip="inner A" Background="#FFC0FF" PreviewKeyDown="Aeginnertext_PreviewKeyDown" LostFocus="Aeginnertext_LostFocus" />
-                <Border x:Name="eginnerdisplay" Grid.Column="4" Grid.Row="1" Height="30" Width="40" BorderThickness="1" BorderBrush="Black" />
-                <xctk:ColorPicker x:Name="eginnercolorpicker" Grid.Column="5" Grid.Row="1" Height="30" Width="80" AvailableColorsSortingMode="HueSaturationBrightness" ColorMode="ColorCanvas" PreviewKeyDown="eginnercolorpicker_PreviewKeyDown" LostFocus="eginnercolorpicker_LostFocus" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Text="Outer color:" FontWeight="Bold" />
-                <TextBox x:Name="Regoutertext" Grid.Column="0" Grid.Row="3" Height="29" Width="80" ToolTip="outer R" Background="Red" PreviewKeyDown="Regoutertext_PreviewKeyDown" LostFocus="Regoutertext_LostFocus" />
-                <TextBox x:Name="Gegoutertext" Grid.Column="1" Grid.Row="3" Height="29" Width="80" ToolTip="outer G" Background="Green" PreviewKeyDown="Gegoutertext_PreviewKeyDown" LostFocus="Gegoutertext_LostFocus" />
-                <TextBox x:Name="Begoutertext" Grid.Column="2" Grid.Row="3" Height="29" Width="80" ToolTip="outer B" Background="Blue" PreviewKeyDown="Begoutertext_PreviewKeyDown" LostFocus="Begoutertext_LostFocus" />
-                <TextBox x:Name="Aegoutertext" Grid.Column="3" Grid.Row="3" Height="29" Width="80" ToolTip="outer A" Background="#FFC0FF" PreviewKeyDown="Aegoutertext_PreviewKeyDown" LostFocus="Aegoutertext_LostFocus" />
-                <Border x:Name="egouterdisplay" Grid.Column="4" Grid.Row="3" Height="30" Width="40" BorderThickness="1" BorderBrush="Black" />
-                <xctk:ColorPicker x:Name="egoutercolorpicker" Grid.Column="5" Grid.Row="3" Height="30" Width="80" AvailableColorsSortingMode="HueSaturationBrightness" ColorMode="ColorCanvas" PreviewKeyDown="egoutercolorpicker_PreviewKeyDown" LostFocus="egoutercolorpicker_LostFocus" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.ColumnSpan="6"
+                           Text="Inner color:"
+                           FontWeight="Bold" />
+                <TextBox x:Name="Reginnertext"
+                         Grid.Column="0"
+                         Grid.Row="1"
+                         Height="29"
+                         Width="80"
+                         ToolTip="inner R"
+                         Background="Red"
+                         PreviewKeyDown="Reginnertext_PreviewKeyDown"
+                         LostFocus="Reginnertext_LostFocus" />
+                <TextBox x:Name="Geginnertext"
+                         Grid.Column="1"
+                         Grid.Row="1"
+                         Height="29"
+                         Width="80"
+                         ToolTip="inner G"
+                         Background="Green"
+                         PreviewKeyDown="Geginnertext_PreviewKeyDown"
+                         LostFocus="Geginnertext_LostFocus" />
+                <TextBox x:Name="Beginnertext"
+                         Grid.Column="2"
+                         Grid.Row="1"
+                         Height="29"
+                         Width="80"
+                         ToolTip="inner B"
+                         Background="Blue"
+                         PreviewKeyDown="Beginnertext_PreviewKeyDown"
+                         LostFocus="Beginnertext_LostFocus" />
+                <TextBox x:Name="Aeginnertext"
+                         Grid.Column="3"
+                         Grid.Row="1"
+                         Height="29"
+                         Width="80"
+                         ToolTip="inner A"
+                         Background="#FFC0FF"
+                         PreviewKeyDown="Aeginnertext_PreviewKeyDown"
+                         LostFocus="Aeginnertext_LostFocus" />
+                <Border x:Name="eginnerdisplay"
+                        Grid.Column="4"
+                        Grid.Row="1"
+                        Height="30"
+                        Width="40"
+                        BorderThickness="1"
+                        BorderBrush="Black" />
+                <xctk:ColorPicker x:Name="eginnercolorpicker"
+                                  Grid.Column="5"
+                                  Grid.Row="1"
+                                  Height="30"
+                                  Width="80"
+                                  AvailableColorsSortingMode="HueSaturationBrightness"
+                                  ColorMode="ColorCanvas"
+                                  PreviewKeyDown="eginnercolorpicker_PreviewKeyDown"
+                                  LostFocus="eginnercolorpicker_LostFocus" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="2"
+                           Grid.ColumnSpan="6"
+                           Text="Outer color:"
+                           FontWeight="Bold" />
+                <TextBox x:Name="Regoutertext"
+                         Grid.Column="0"
+                         Grid.Row="3"
+                         Height="29"
+                         Width="80"
+                         ToolTip="outer R"
+                         Background="Red"
+                         PreviewKeyDown="Regoutertext_PreviewKeyDown"
+                         LostFocus="Regoutertext_LostFocus" />
+                <TextBox x:Name="Gegoutertext"
+                         Grid.Column="1"
+                         Grid.Row="3"
+                         Height="29"
+                         Width="80"
+                         ToolTip="outer G"
+                         Background="Green"
+                         PreviewKeyDown="Gegoutertext_PreviewKeyDown"
+                         LostFocus="Gegoutertext_LostFocus" />
+                <TextBox x:Name="Begoutertext"
+                         Grid.Column="2"
+                         Grid.Row="3"
+                         Height="29"
+                         Width="80"
+                         ToolTip="outer B"
+                         Background="Blue"
+                         PreviewKeyDown="Begoutertext_PreviewKeyDown"
+                         LostFocus="Begoutertext_LostFocus" />
+                <TextBox x:Name="Aegoutertext"
+                         Grid.Column="3"
+                         Grid.Row="3"
+                         Height="29"
+                         Width="80"
+                         ToolTip="outer A"
+                         Background="#FFC0FF"
+                         PreviewKeyDown="Aegoutertext_PreviewKeyDown"
+                         LostFocus="Aegoutertext_LostFocus" />
+                <Border x:Name="egouterdisplay"
+                        Grid.Column="4"
+                        Grid.Row="3"
+                        Height="30"
+                        Width="40"
+                        BorderThickness="1"
+                        BorderBrush="Black" />
+                <xctk:ColorPicker x:Name="egoutercolorpicker"
+                                  Grid.Column="5"
+                                  Grid.Row="3"
+                                  Height="30"
+                                  Width="80"
+                                  AvailableColorsSortingMode="HueSaturationBrightness"
+                                  ColorMode="ColorCanvas"
+                                  PreviewKeyDown="egoutercolorpicker_PreviewKeyDown"
+                                  LostFocus="egoutercolorpicker_LostFocus" />
             </Grid>
-            <Grid Grid.Column="0" Grid.Row="3">
+            <Grid Grid.Column="0"
+                  Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -152,31 +443,165 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Text="Direction 1:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="1" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Adensity3egtext}" />
-                <Label Grid.Column="1" Grid.Row="1" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Bdensity3egtext}" />
-                <Label Grid.Column="2" Grid.Row="1" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Cdensity3egtext}" />
-                <TextBox x:Name="Adensity3egtext" Grid.Column="0" Grid.Row="2" Height="20" Width="130" ToolTip="direction1 X" IsReadOnly="True" MouseUp="Adensity3egtext_MouseUp" />
-                <TextBox x:Name="Bdensity3egtext" Grid.Column="1" Grid.Row="2" Height="20" Width="130" ToolTip="direction1 Y" IsReadOnly="True" MouseUp="Bdensity3egtext_MouseUp" />
-                <TextBox x:Name="Cdensity3egtext" Grid.Column="2" Grid.Row="2" Height="20" Width="130" ToolTip="direction1 Z" IsReadOnly="True" MouseUp="Cdensity3egtext_MouseUp" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="Direction 2:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="4" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Adensity1egtext}" />
-                <Label Grid.Column="1" Grid.Row="4" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Bdensity1egtext}" />
-                <Label Grid.Column="2" Grid.Row="4" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Cdensity1egtext}" />
-                <TextBox x:Name="Adensity1egtext" Grid.Column="0" Grid.Row="5" Height="20" Width="130" ToolTip="direction2 X" IsReadOnly="True" MouseUp="Adensity1egtext_MouseUp" />
-                <TextBox x:Name="Bdensity1egtext" Grid.Column="1" Grid.Row="5" Height="20" Width="130" ToolTip="direction2 Y" IsReadOnly="True" MouseUp="Bdensity1egtext_MouseUp" />
-                <TextBox x:Name="Cdensity1egtext" Grid.Column="2" Grid.Row="5" Height="20" Width="130" ToolTip="direction2 Z" IsReadOnly="True" MouseUp="Cdensity1egtext_MouseUp" />
-                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Text="Direction 3:" FontWeight="Bold" />
-                <Label Grid.Column="0" Grid.Row="7" Padding="0" Content="x" FontWeight="Bold" Target="{Binding Adensity2egtext}" />
-                <Label Grid.Column="1" Grid.Row="7" Padding="0" Content="y" FontWeight="Bold" Target="{Binding Bdensity2egtext}" />
-                <Label Grid.Column="2" Grid.Row="7" Padding="0" Content="z" FontWeight="Bold" Target="{Binding Cdensity2egtext}" />
-                <TextBox x:Name="Adensity2egtext" Grid.Column="0" Grid.Row="8" Height="20" Width="130" ToolTip="direction3 X" IsReadOnly="True" MouseUp="Adensity2egtext_MouseUp" />
-                <TextBox x:Name="Bdensity2egtext" Grid.Column="1" Grid.Row="8" Height="20" Width="130" ToolTip="direction3 Y" IsReadOnly="True" MouseUp="Bdensity2egtext_MouseUp" />
-                <TextBox x:Name="Cdensity2egtext" Grid.Column="2" Grid.Row="8" Height="20" Width="130" ToolTip="direction3 Z" IsReadOnly="True" MouseUp="Cdensity2egtext_MouseUp" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.ColumnSpan="3"
+                           Text="Direction 1:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Adensity3egtext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Bdensity3egtext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="1"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Cdensity3egtext}" />
+                <TextBox x:Name="Adensity3egtext"
+                         Grid.Column="0"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction1 X"
+                         IsReadOnly="True"
+                         MouseUp="Adensity3egtext_MouseUp" />
+                <TextBox x:Name="Bdensity3egtext"
+                         Grid.Column="1"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction1 Y"
+                         IsReadOnly="True"
+                         MouseUp="Bdensity3egtext_MouseUp" />
+                <TextBox x:Name="Cdensity3egtext"
+                         Grid.Column="2"
+                         Grid.Row="2"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction1 Z"
+                         IsReadOnly="True"
+                         MouseUp="Cdensity3egtext_MouseUp" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="3"
+                           Grid.ColumnSpan="3"
+                           Text="Direction 2:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Adensity1egtext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Bdensity1egtext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="4"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Cdensity1egtext}" />
+                <TextBox x:Name="Adensity1egtext"
+                         Grid.Column="0"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction2 X"
+                         IsReadOnly="True"
+                         MouseUp="Adensity1egtext_MouseUp" />
+                <TextBox x:Name="Bdensity1egtext"
+                         Grid.Column="1"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction2 Y"
+                         IsReadOnly="True"
+                         MouseUp="Bdensity1egtext_MouseUp" />
+                <TextBox x:Name="Cdensity1egtext"
+                         Grid.Column="2"
+                         Grid.Row="5"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction2 Z"
+                         IsReadOnly="True"
+                         MouseUp="Cdensity1egtext_MouseUp" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="6"
+                           Grid.ColumnSpan="3"
+                           Text="Direction 3:"
+                           FontWeight="Bold" />
+                <Label Grid.Column="0"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="x"
+                       FontWeight="Bold"
+                       Target="{Binding Adensity2egtext}" />
+                <Label Grid.Column="1"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="y"
+                       FontWeight="Bold"
+                       Target="{Binding Bdensity2egtext}" />
+                <Label Grid.Column="2"
+                       Grid.Row="7"
+                       Padding="0"
+                       Content="z"
+                       FontWeight="Bold"
+                       Target="{Binding Cdensity2egtext}" />
+                <TextBox x:Name="Adensity2egtext"
+                         Grid.Column="0"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction3 X"
+                         IsReadOnly="True"
+                         MouseUp="Adensity2egtext_MouseUp" />
+                <TextBox x:Name="Bdensity2egtext"
+                         Grid.Column="1"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction3 Y"
+                         IsReadOnly="True"
+                         MouseUp="Bdensity2egtext_MouseUp" />
+                <TextBox x:Name="Cdensity2egtext"
+                         Grid.Column="2"
+                         Grid.Row="8"
+                         Height="20"
+                         Width="130"
+                         ToolTip="direction3 Z"
+                         IsReadOnly="True"
+                         MouseUp="Cdensity2egtext_MouseUp" />
             </Grid>
-            <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="egaddbut" Margin="10 0" Height="30" Width="100" Content="Add EG" Click="egaddbut_Click" />
-                <Button x:Name="egsetfacebut" Margin="10 0" Height="30" Width="100" Content="Set to Face" Click="egsetfacebut_Click" />
+            <StackPanel Grid.Column="0"
+                        Grid.Row="4"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button x:Name="egaddbut"
+                        Margin="10 0"
+                        Height="30"
+                        Width="100"
+                        Content="Add EG"
+                        Click="egaddbut_Click" />
+                <Button x:Name="egsetfacebut"
+                        Margin="10 0"
+                        Height="30"
+                        Width="100"
+                        Content="Set to Face"
+                        Click="egsetfacebut_Click" />
             </StackPanel>
         </Grid>
     </GroupBox>

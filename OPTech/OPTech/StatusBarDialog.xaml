@@ -5,16 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPTech"
         mc:Ignorable="d"
-        Title="Processing" Height="205" Width="819"
+        Title="Processing"
+        Height="205"
+        Width="819"
         UseLayoutRounding="True"
         ResizeMode="NoResize"
         WindowStyle="ToolWindow"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner">
-    <GroupBox x:Name="progressframe" Height="185" Width="806">
+    <GroupBox x:Name="progressframe"
+              Height="185"
+              Width="806">
         <Canvas>
-            <ProgressBar x:Name="progressbar" Canvas.Left="60" Canvas.Top="99" Height="57" Width="698" />
-            <TextBlock x:Name="progresstext" Canvas.Left="228" Canvas.Top="29" Height="44" Width="386" TextAlignment="Center" />
+            <ProgressBar x:Name="progressbar"
+                         Canvas.Left="60"
+                         Canvas.Top="99"
+                         Height="57"
+                         Width="698" />
+            <TextBlock x:Name="progresstext"
+                       Canvas.Left="228"
+                       Canvas.Top="29"
+                       Height="44"
+                       Width="386"
+                       TextAlignment="Center" />
         </Canvas>
     </GroupBox>
 </Window>

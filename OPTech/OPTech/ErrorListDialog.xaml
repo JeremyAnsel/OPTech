@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPTech"
         mc:Ignorable="d"
-        Title="Errors" Height="668" Width="437"
+        Title="Errors"
+        Height="668"
+        Width="437"
         UseLayoutRounding="True"
         ResizeMode="NoResize"
         WindowStyle="ToolWindow"
@@ -13,8 +15,10 @@
         WindowStartupLocation="CenterOwner">
     <Canvas>
         <TextBox x:Name="errorlist"
-                 Canvas.Left="0" Canvas.Top="0"
-                 Height="638" Width="422"
+                 Canvas.Left="0"
+                 Canvas.Top="0"
+                 Height="638"
+                 Width="422"
                  IsReadOnly="True"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Auto" />

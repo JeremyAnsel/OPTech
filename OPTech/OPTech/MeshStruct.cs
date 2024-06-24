@@ -65,9 +65,9 @@ namespace OPTech
             this.RotAxisY = 0;
             this.RotAxisZ = 32767;
             this.RotAimX = 0;
-            this.RotAimY = 32767;
+            this.RotAimY = -32767;
             this.RotAimZ = 0;
-            this.RotDegreeX = 32767;
+            this.RotDegreeX = -32767;
             this.RotDegreeY = 0;
             this.RotDegreeZ = 0;
         }
@@ -285,9 +285,9 @@ namespace OPTech
             this.RotAxisY = 0;
             this.RotAxisZ = 32767;
             this.RotAimX = 0;
-            this.RotAimY = 32767;
+            this.RotAimY = -32767;
             this.RotAimZ = 0;
-            this.RotDegreeX = 32767;
+            this.RotDegreeX = -32767;
             this.RotDegreeY = 0;
             this.RotDegreeZ = 0;
         }

@@ -13,7 +13,7 @@ namespace OPTech
         {
             if (left == Global.frmgeometry.meshlist
                 || left == Global.frmgeometry.meshlistFace
-                || left == Global.frmhardpoint.meshlist
+                || left == Global.frmhitzone.meshlist
                 || left == Global.frmhardpoint.meshlist
                 || left == Global.frmengineglow.meshlist)
             {

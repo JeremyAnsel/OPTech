@@ -768,8 +768,8 @@ namespace OPTech
             for (int EachMesh = 0; EachMesh < this.meshlist.Items.Count; EachMesh++)
             {
                 string meshName = this.meshlist.GetText(EachMesh);
-                frmmeshchoice.meshlist.Items.Add(meshName + ": HIGH LOD");
-                frmmeshchoice.meshlist.Items.Add(meshName + ": LOW LOD");
+                frmmeshchoice.meshlist.Items.Add(EachMesh.ToString(CultureInfo.InvariantCulture) + " - " + meshName + ": HIGH LOD");
+                frmmeshchoice.meshlist.Items.Add(EachMesh.ToString(CultureInfo.InvariantCulture) + " - " + meshName + ": LOW LOD");
             }
 
             frmmeshchoice.meshlist.SelectedIndex = 0;
@@ -1516,8 +1516,8 @@ namespace OPTech
                 string highFacesCount = mesh.LODArray.Count > 0 ? mesh.LODArray[0].FaceArray.Count.ToString() : "-";
                 string lowFacesCount = mesh.LODArray.Count > 1 ? mesh.LODArray[1].FaceArray.Count.ToString() : "-";
 
-                frmmeshchoice.meshlist.Items.Add($"{meshName} - ({highFacesCount}) : HIGH LOD");
-                frmmeshchoice.meshlist.Items.Add($"{meshName} - ({lowFacesCount}) : LOW LOD");
+                frmmeshchoice.meshlist.Items.Add($"{EachMesh.ToString(CultureInfo.InvariantCulture)} - {meshName} - ({highFacesCount}) : HIGH LOD");
+                frmmeshchoice.meshlist.Items.Add($"{EachMesh.ToString(CultureInfo.InvariantCulture)} - {meshName} - ({lowFacesCount}) : LOW LOD");
             }
 
             frmmeshchoice.meshlist.SelectedIndex = 0;

@@ -225,6 +225,13 @@ namespace OPTech
             Global.frmoptech.pageRateText.Text = Global.PageRate.ToString(CultureInfo.InvariantCulture);
         }
 
+        public static void SetClipboardText(string x, string y)
+        {
+            string text = string.Join("; ", x, y);
+            System.Windows.Clipboard.SetText(text);
+            Global.frmoptech.clipboardText.Text = text;
+        }
+
         public static void SetClipboardText(string x, string y, string z)
         {
             string text = string.Join("; ", x, y, z);

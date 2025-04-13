@@ -13625,5 +13625,35 @@ namespace OPTech
             this.Zvertextext.Text = values[2];
             this.Zvertextext_LostFocus(null, null);
         }
+
+        private void coordtextCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Ucoordlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            Global.SetClipboardText(this.Ucoordtext.Text, this.Vcoordtext.Text);
+        }
+
+        private void coordtextPaste_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Ucoordlist.SelectedIndex == -1)
+            {
+                return;
+            }
+
+            var values = Global.GetClipboardText();
+
+            if (values.Length < 2)
+            {
+                return;
+            }
+
+            this.Ucoordtext.Text = values[0];
+            this.Ucoordtext_LostFocus(null, null);
+            this.Vcoordtext.Text = values[1];
+            this.Vcoordtext_LostFocus(null, null);
+        }
     }
 }

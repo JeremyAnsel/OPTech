@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace OPTech
 {
@@ -29,7 +27,9 @@ namespace OPTech
         {
             get
             {
-                return System.IO.Path.Combine(Global.opzpath, this.TextureName);
+                string path = System.IO.Path.Combine(Global.opzpath, this.TextureName);
+                path = ImageHelpers.GetExistingImageFilePath(path);
+                return path;
             }
         }
 

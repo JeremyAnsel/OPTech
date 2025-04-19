@@ -1,7 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.Enumerations;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -1684,7 +1683,7 @@ namespace OPTech
                         {
                             string fileName = texture.FullTexturePath;
 
-                            if (System.IO.File.Exists(fileName))
+                            if (ImageHelpers.ImageFilePathExists(fileName))
                             {
                                 Global.frmgeometry.texturepreview.Source = ImageHelpers.LoadImage(fileName);
                                 Global.frmgeometry.textureviewer.Source = ImageHelpers.LoadImage(fileName);
@@ -2236,7 +2235,7 @@ namespace OPTech
                 Global.frmtexture.illumtexturelist.SelectCheck(EachTexture, texture.IllumValues.Count > 0);
             }
 
-            if (textureIndex != -1 && textureIndex < Global.OPT.TextureArray.Count && System.IO.File.Exists(Global.OPT.TextureArray[textureIndex].FullTexturePath))
+            if (textureIndex != -1 && textureIndex < Global.OPT.TextureArray.Count && ImageHelpers.ImageFilePathExists(Global.OPT.TextureArray[textureIndex].FullTexturePath))
             {
                 var whichTexture = Global.OPT.TextureArray[textureIndex];
 
@@ -2253,7 +2252,7 @@ namespace OPTech
                 {
                     var texture = Global.OPT.TextureArray[EachTexture];
 
-                    if (System.IO.File.Exists(texture.FullTexturePath))
+                    if (ImageHelpers.ImageFilePathExists(texture.FullTexturePath))
                     {
                         texture.CreateTexture(Global.OpenGL);
                     }
@@ -2298,7 +2297,7 @@ namespace OPTech
                     Global.frmtexture.transbluetintlist.AddText(filter.BValue.ToString(CultureInfo.InvariantCulture));
                 }
 
-                System.IO.FileStream filestreamTexture;
+                System.IO.Stream filestreamTexture;
 
                 int ImageWidth;
                 int ImageHeight;
@@ -2307,7 +2306,7 @@ namespace OPTech
 
                 try
                 {
-                    filestreamTexture = new System.IO.FileStream(whichTexture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                    filestreamTexture = ImageHelpers.GetFileStream(whichTexture.FullTexturePath);
 
                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                     {
@@ -2395,7 +2394,7 @@ namespace OPTech
 
                 try
                 {
-                    filestreamTexture = new System.IO.FileStream(whichTexture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                    filestreamTexture = ImageHelpers.GetFileStream(whichTexture.FullTexturePath);
 
                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                     {

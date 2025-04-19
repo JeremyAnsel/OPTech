@@ -12146,7 +12146,7 @@ namespace OPTech
             string textureName = this.texturelist.GetSelectedText();
             string fileName = System.IO.Path.Combine(Global.opzpath, textureName);
 
-            if (!System.IO.File.Exists(fileName))
+            if (!ImageHelpers.ImageFilePathExists(fileName))
             {
                 this.texturepreview.Source = null;
                 Xceed.Wpf.Toolkit.MessageBox.Show(Global.frmoptech, string.Format(CultureInfo.InvariantCulture, "The texture \"{0}\" is missing.", textureName));
@@ -12169,9 +12169,7 @@ namespace OPTech
             }
 
             // TODO
-            this.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
 
             if (this.texturelist.ItemsSource.Cast<string>().FirstOrDefault() == null)
             {

@@ -2519,9 +2519,7 @@ namespace OPTech
 
             System.IO.File.Copy("default.bmp", System.IO.Path.Combine(Global.opzpath, "default.bmp"), true);
 
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             this.frmgeometry.meshlist.Items.Clear();
             this.frmtexture.transtexturelist.Items.Clear();
             this.frmtexture.illumtexturelist.Items.Clear();
@@ -2595,9 +2593,7 @@ namespace OPTech
             this.dispbar_mesh_Click(null, null);
 
             Global.opzpath = System.IO.Path.GetDirectoryName(dialog.FileName);
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             this.frmgeometry.meshlist.Items.Clear();
             Global.CX.MeshScreens(-1, whichLOD);
             Global.CX.FaceScreens(-1, whichLOD, -1);
@@ -2780,7 +2776,7 @@ namespace OPTech
 
                             while (currentLine != null && file.Peek() != ' ')
                             {
-                                if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                if (currentLine != "BLANK" && !ImageHelpers.IsImageFilePath(currentLine))
                                 {
                                     break;
                                 }
@@ -2795,7 +2791,7 @@ namespace OPTech
 
                                 string filename = System.IO.Path.Combine(Global.opzpath, textureName);
 
-                                if (!System.IO.File.Exists(filename))
+                                if (!ImageHelpers.ImageFilePathExists(filename))
                                 {
                                     textureName = "default.bmp";
                                 }
@@ -2898,7 +2894,7 @@ namespace OPTech
                         }
                     }
 
-                    if (addTexture && !System.IO.File.Exists(texture.FullTexturePath))
+                    if (addTexture && !ImageHelpers.ImageFilePathExists(texture.FullTexturePath))
                     {
                         textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is missing.", texture.TextureName);
                         textureErrors.AppendLine();
@@ -2995,14 +2991,15 @@ namespace OPTech
                     }
                 }
 
-                foreach (var texture in Global.OPT.TextureArray)
-                {
-                    if (texture.BitsPerPixel != 8)
-                    {
-                        textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
-                        textureErrors.AppendLine();
-                    }
-                }
+                // todo
+                //foreach (var texture in Global.OPT.TextureArray)
+                //{
+                //    if (texture.BitsPerPixel != 8)
+                //    {
+                //        textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
+                //        textureErrors.AppendLine();
+                //    }
+                //}
 
                 if (textureErrors.Length > 0)
                 {
@@ -3325,9 +3322,7 @@ namespace OPTech
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
             Global.CX.TextureScreens(0);
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             Global.CX.CreateCall();
             UndoStack.Push("import " + System.IO.Path.GetFileName(dialog.FileName));
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import .OPT");
@@ -3663,9 +3658,7 @@ namespace OPTech
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
             Global.CX.TextureScreens(0);
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             OptRead.CalcDomain();
             this.FaceNormalCalculator(MeshKeeper);
             this.VertexNormalCalculator(MeshKeeper);
@@ -3971,9 +3964,7 @@ namespace OPTech
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
             Global.CX.TextureScreens(0);
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             Global.CX.CreateCall();
             UndoStack.Push("import " + System.IO.Path.GetFileName(dialog.FileName));
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import .OBJ");
@@ -4005,9 +3996,7 @@ namespace OPTech
 
             string opzpath2 = System.IO.Path.GetDirectoryName(dialog.FileName);
 
-            foreach (var fileName2 in System.IO.Directory
-                .EnumerateFiles(opzpath2, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t)))
+            foreach (var fileName2 in ImageHelpers.EnumerateImages(opzpath2))
             {
                 string path2 = System.IO.Path.Combine(opzpath2, fileName2);
                 string path1 = System.IO.Path.Combine(Global.opzpath, fileName2);
@@ -4018,9 +4007,7 @@ namespace OPTech
                 }
             }
 
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
 
             string version;
             using (var file = new System.IO.StreamReader(dialog.FileName, Encoding.ASCII))
@@ -4193,7 +4180,7 @@ namespace OPTech
 
                             while (currentLine != null && file.Peek() != ' ')
                             {
-                                if (currentLine != "BLANK" && !currentLine.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                if (currentLine != "BLANK" && !ImageHelpers.IsImageFilePath(currentLine))
                                 {
                                     break;
                                 }
@@ -4208,7 +4195,7 @@ namespace OPTech
 
                                 string filename = System.IO.Path.Combine(Global.opzpath, textureName);
 
-                                if (!System.IO.File.Exists(filename))
+                                if (!ImageHelpers.ImageFilePathExists(filename))
                                 {
                                     textureName = "default.bmp";
                                 }
@@ -4292,7 +4279,7 @@ namespace OPTech
 
                     bool addTexture = true;
 
-                    if (!System.IO.File.Exists(texture.FullTexturePath))
+                    if (!ImageHelpers.ImageFilePathExists(texture.FullTexturePath))
                     {
                         textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is missing.", texture.TextureName);
                         textureErrors.AppendLine();
@@ -4400,14 +4387,15 @@ namespace OPTech
                     }
                 }
 
-                foreach (var texture in Global.OPT.TextureArray)
-                {
-                    if (texture.BitsPerPixel != 8)
-                    {
-                        textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
-                        textureErrors.AppendLine();
-                    }
-                }
+                // todo
+                //foreach (var texture in Global.OPT.TextureArray)
+                //{
+                //    if (texture.BitsPerPixel != 8)
+                //    {
+                //        textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
+                //        textureErrors.AppendLine();
+                //    }
+                //}
 
                 if (textureErrors.Length > 0)
                 {
@@ -4429,9 +4417,7 @@ namespace OPTech
             this.frmtexture.transtexturelist.SelectedIndex = 0;
             this.frmtexture.illumtexturelist.SelectedIndex = 0;
             Global.CX.TextureScreens(0);
-            this.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                .EnumerateFiles(Global.opzpath, "*.bmp")
-                .Select(t => System.IO.Path.GetFileName(t));
+            this.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             Global.CX.CreateCall();
             UndoStack.Push("import " + System.IO.Path.GetFileName(dialog.FileName));
             Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "import Project");
@@ -4617,18 +4603,19 @@ namespace OPTech
 
             foreach (var texture in Global.OPT.TextureArray)
             {
-                if (!System.IO.File.Exists(texture.FullTexturePath))
+                if (!ImageHelpers.ImageFilePathExists(texture.FullTexturePath))
                 {
                     textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is missing.", texture.TextureName);
                     textureErrors.AppendLine();
                     continue;
                 }
 
-                if (texture.BitsPerPixel != 8)
-                {
-                    textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
-                    textureErrors.AppendLine();
-                }
+                // todo
+                //if (texture.BitsPerPixel != 8)
+                //{
+                //    textureErrors.AppendFormat(CultureInfo.InvariantCulture, "The texture \"{0}\" is not 8-bpp.", texture.TextureName);
+                //    textureErrors.AppendLine();
+                //}
             }
 
             if (textureErrors.Length > 0)
@@ -5234,6 +5221,7 @@ namespace OPTech
                                                         TextureArray[faceGroupIndex / 2].Add("default.bmp");
                                                     }
 
+                                                    int fgTexIndex = 0;
                                                     int HoldTexLoc = 0;
 
                                                     for (int textureIndex = 0; textureIndex < Global.OPT.TextureArray.Count; textureIndex++)
@@ -5250,475 +5238,7 @@ namespace OPTech
                                                     if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                     {
                                                         Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
-                                                        file.Seek(0, System.IO.SeekOrigin.End);
-                                                        file.Write(100 + (int)file.BaseStream.Length + 24);
-                                                        file.Write(20);
-
-                                                        System.IO.FileStream filestreamTexture;
-
-                                                        int ImageWidth;
-                                                        int ImageHeight;
-                                                        int ImageSize;
-                                                        int ImageColorsCount;
-                                                        int ImageMipWidth;
-                                                        int ImageMipHeight;
-                                                        int ImageSizeSum;
-                                                        int TransRefPos = -1;
-
-                                                        if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count == 0)
-                                                        {
-                                                            file.Write(0);
-                                                            file.Write(0);
-                                                            file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                            file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
-                                                            file.Write(HoldTexLocBytes);
-                                                            file.Write((byte)0);
-
-                                                            filestreamTexture = null;
-
-                                                            try
-                                                            {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                {
-                                                                    filestreamTexture = null;
-
-                                                                    ImageWidth = fileTexture.ReadInt32(18);
-                                                                    ImageHeight = fileTexture.ReadInt32(22);
-                                                                    //ImageSize = fileTexture.ReadInt32(34);
-
-                                                                    //if (ImageSize == 0)
-                                                                    //{
-                                                                    //    ImageSize = ImageWidth * ImageHeight;
-                                                                    //}
-
-                                                                    ImageSize = ImageWidth * ImageHeight;
-
-                                                                    ImageColorsCount = fileTexture.ReadInt32(46);
-
-                                                                    if (ImageColorsCount == 0)
-                                                                    {
-                                                                        ImageColorsCount = 256;
-                                                                    }
-                                                                }
-                                                            }
-                                                            finally
-                                                            {
-                                                                if (filestreamTexture != null)
-                                                                {
-                                                                    filestreamTexture.Dispose();
-                                                                }
-                                                            }
-
-                                                            ImageMipWidth = ImageWidth;
-                                                            ImageMipHeight = ImageHeight;
-                                                            ImageSizeSum = 0;
-                                                            while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
-                                                            {
-                                                                ImageSizeSum += ImageMipWidth * ImageMipHeight;
-                                                                ImageMipWidth /= 2;
-                                                                ImageMipHeight /= 2;
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            file.Write(1);
-                                                            file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
-                                                            file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                            file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
-                                                            file.Write(HoldTexLocBytes);
-                                                            file.Write((byte)0);
-
-                                                            filestreamTexture = null;
-
-                                                            try
-                                                            {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                {
-                                                                    filestreamTexture = null;
-
-                                                                    ImageWidth = fileTexture.ReadInt32(18);
-                                                                    ImageHeight = fileTexture.ReadInt32(22);
-                                                                    //ImageSize = fileTexture.ReadInt32(34);
-
-                                                                    //if (ImageSize == 0)
-                                                                    //{
-                                                                    //    ImageSize = ImageWidth * ImageHeight;
-                                                                    //}
-
-                                                                    ImageSize = ImageWidth * ImageHeight;
-
-                                                                    ImageColorsCount = fileTexture.ReadInt32(46);
-
-                                                                    if (ImageColorsCount == 0)
-                                                                    {
-                                                                        ImageColorsCount = 256;
-                                                                    }
-                                                                }
-                                                            }
-                                                            finally
-                                                            {
-                                                                if (filestreamTexture != null)
-                                                                {
-                                                                    filestreamTexture.Dispose();
-                                                                }
-                                                            }
-
-                                                            ImageMipWidth = ImageWidth;
-                                                            ImageMipHeight = ImageHeight;
-                                                            ImageSizeSum = 0;
-                                                            while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
-                                                            {
-                                                                ImageSizeSum += ImageMipWidth * ImageMipHeight;
-                                                                ImageMipWidth /= 2;
-                                                                ImageMipHeight /= 2;
-                                                            }
-
-                                                            TransRefPos = (int)file.BaseStream.Length;
-
-                                                            file.Write(0);
-                                                        }
-
-                                                        int PaletteRefPos = (int)file.BaseStream.Length;
-
-                                                        file.Write(0);
-                                                        file.Write(0);
-                                                        file.Write(ImageWidth * ImageHeight);
-                                                        file.Write(ImageSizeSum);
-                                                        file.Write(ImageWidth);
-                                                        file.Write(ImageHeight);
-
-                                                        byte[] TextureBytes;
-
-                                                        filestreamTexture = null;
-
-                                                        try
-                                                        {
-                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                            using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                            {
-                                                                filestreamTexture = null;
-
-                                                                TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
-                                                            }
-                                                        }
-                                                        finally
-                                                        {
-                                                            if (filestreamTexture != null)
-                                                            {
-                                                                filestreamTexture.Dispose();
-                                                            }
-                                                        }
-
-                                                        int TexRefPos = (int)file.BaseStream.Length;
-
-                                                        file.Write(TextureBytes);
-
-                                                        int xLength = 1;
-                                                        int yLength = 1;
-                                                        int width = ImageWidth;
-                                                        int height = ImageHeight;
-
-                                                        while (width > 1 || height > 1)
-                                                        {
-                                                            if (width > 1)
-                                                            {
-                                                                width /= 2;
-                                                                xLength *= 2;
-                                                            }
-
-                                                            if (height > 1)
-                                                            {
-                                                                height /= 2;
-                                                                yLength *= 2;
-                                                            }
-
-                                                            for (int h = 0; h < height; h++)
-                                                            {
-                                                                for (int w = 0; w < width; w++)
-                                                                {
-                                                                    int i = h * yLength * ImageWidth + w * xLength;
-                                                                    byte p = TextureBytes[i];
-                                                                    file.Write(p);
-                                                                }
-                                                            }
-                                                        }
-
-                                                        byte[] PaletteBytes;
-
-                                                        filestreamTexture = null;
-
-                                                        try
-                                                        {
-                                                            filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                            using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                            {
-                                                                filestreamTexture = null;
-
-                                                                PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
-                                                            }
-                                                        }
-                                                        finally
-                                                        {
-                                                            if (filestreamTexture != null)
-                                                            {
-                                                                filestreamTexture.Dispose();
-                                                            }
-                                                        }
-
-                                                        //bool VertFound = false;
-                                                        //int OtherPalette = 0;
-                                                        //for (; OtherPalette < PaletteArray[0].Count; OtherPalette++)
-                                                        //{
-                                                        //    byte[] PaletteBytesComp;
-
-                                                        //    filestreamTexture = null;
-
-                                                        //    try
-                                                        //    {
-                                                        //        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                        //        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                        //        {
-                                                        //            filestreamTexture = null;
-
-                                                        //            int ImageWidthComp = fileTexture.ReadInt32(18);
-                                                        //            int ImageHeightComp = fileTexture.ReadInt32(22);
-                                                        //            fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidthComp * ImageHeightComp) - 1024, System.IO.SeekOrigin.Begin);
-                                                        //            PaletteBytesComp = fileTexture.ReadBytes(1024);
-                                                        //        }
-                                                        //    }
-                                                        //    finally
-                                                        //    {
-                                                        //        if (filestreamTexture != null)
-                                                        //        {
-                                                        //            filestreamTexture.Dispose();
-                                                        //        }
-                                                        //    }
-
-                                                        //    if (Enumerable.SequenceEqual(PaletteBytes, PaletteBytesComp))
-                                                        //    {
-                                                        //        VertFound = true;
-                                                        //        break;
-                                                        //    }
-                                                        //}
-
-                                                        int PalBOffset = -1;
-                                                        int PaletteServer = -1;
-
-                                                        //if (!VertFound || Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
-                                                        //{
-                                                        PaletteArray[0].Add(HoldTexLoc);
-                                                        PaletteArray[1].Add((int)file.BaseStream.Length);
-
-                                                        file.Write(PaletteRefPos, 100 + (int)file.BaseStream.Length);
-
-                                                        file.Seek(0, System.IO.SeekOrigin.End);
-
-                                                        for (int i = 0; i < 256; i++)
-                                                        {
-                                                            file.Write((ushort)0);
-                                                        }
-
-                                                        int ColorDiff = -56 + 8;
-                                                        for (int paletteIndex = 1; paletteIndex < 16; paletteIndex++)
-                                                        {
-                                                            if (paletteIndex == 7)
-                                                            {
-                                                                PalBOffset = (int)file.BaseStream.Length;
-                                                            }
-
-                                                            for (int pixelIndex = 0; pixelIndex < 1024; pixelIndex += 4)
-                                                            {
-                                                                int FakeColorR = PaletteBytes[pixelIndex + 2] + ColorDiff;
-                                                                byte ColorR;
-                                                                if (FakeColorR < 0)
-                                                                {
-                                                                    ColorR = 0;
-                                                                }
-                                                                else if (FakeColorR > 255)
-                                                                {
-                                                                    ColorR = 255;
-                                                                }
-                                                                else
-                                                                {
-                                                                    ColorR = (byte)FakeColorR;
-                                                                }
-
-                                                                int FakeColorG = PaletteBytes[pixelIndex + 1] + ColorDiff;
-                                                                byte ColorG;
-                                                                if (FakeColorG < 0)
-                                                                {
-                                                                    ColorG = 0;
-                                                                }
-                                                                else if (FakeColorG > 255)
-                                                                {
-                                                                    ColorG = 255;
-                                                                }
-                                                                else
-                                                                {
-                                                                    ColorG = (byte)FakeColorG;
-                                                                }
-
-                                                                int FakeColorB = PaletteBytes[pixelIndex] + ColorDiff;
-                                                                byte ColorB;
-                                                                if (FakeColorB < 0)
-                                                                {
-                                                                    ColorB = 0;
-                                                                }
-                                                                else if (FakeColorB > 255)
-                                                                {
-                                                                    ColorB = 255;
-                                                                }
-                                                                else
-                                                                {
-                                                                    ColorB = (byte)FakeColorB;
-                                                                }
-
-                                                                ushort Color = MakeShortBinary(ColorR, ColorG, ColorB);
-                                                                file.Write(Color);
-                                                            }
-
-                                                            ColorDiff += 8;
-                                                        }
-
-                                                        PaletteServer = (int)file.BaseStream.Length - 8192;
-                                                        //}
-                                                        //else if (VertFound)
-                                                        //{
-                                                        //    file.Write(PaletteRefPos, 100 + PaletteArray[1][OtherPalette]);
-                                                        //    PalBOffset = PaletteArray[1][OtherPalette] + 3584;
-                                                        //    PaletteServer = (int)file.BaseStream.Length - 8192;
-                                                        //}
-
-                                                        if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count > 0)
-                                                        {
-                                                            file.Write(TransRefPos, 100 + (int)file.BaseStream.Length);
-                                                            file.Seek(0, System.IO.SeekOrigin.End);
-                                                            file.Write(0);
-                                                            file.Write(26);
-                                                            file.Write(0);
-                                                            file.Write(0);
-                                                            file.Write(ImageSizeSum);
-                                                            file.Write(100 + (int)file.BaseStream.Length + 4);
-
-                                                            var ColorTable = new List<int>[2];
-                                                            ColorTable[0] = new List<int>(10240);
-                                                            ColorTable[1] = new List<int>(10240);
-                                                            file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
-                                                            var PaletteData = new byte[512];
-                                                            file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
-
-                                                            for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].TransValues.Count; ColorScan++)
-                                                            {
-                                                                var filter = Global.OPT.TextureArray[HoldTexLoc].TransValues[ColorScan];
-
-                                                                for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
-                                                                {
-                                                                    byte RedColor;
-                                                                    byte GreenColor;
-                                                                    byte BlueColor;
-                                                                    OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
-
-                                                                    byte RedCheck = filter.RValue;
-                                                                    byte GreenCheck = filter.GValue;
-                                                                    byte BlueCheck = filter.BValue;
-                                                                    byte ColorTolerance = filter.Tolerance;
-
-                                                                    if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
-                                                                    {
-                                                                        ColorTable[0].Add(rgbIndex / 2);
-                                                                        ColorTable[1].Add(filter.Characteristic);
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            for (int pixelIndex = 0; pixelIndex < ImageSizeSum; pixelIndex++)
-                                                            {
-                                                                file.Seek(TexRefPos + pixelIndex, System.IO.SeekOrigin.Begin);
-                                                                int DataB = file.BaseStream.ReadByte();
-
-                                                                bool FilterColor = false;
-                                                                byte OpacityValue = 0;
-                                                                for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
-                                                                {
-                                                                    if (DataB == ColorTable[0][colorIndex])
-                                                                    {
-                                                                        FilterColor = true;
-                                                                        OpacityValue = (byte)ColorTable[1][colorIndex];
-                                                                    }
-                                                                }
-
-                                                                file.Seek(0, System.IO.SeekOrigin.End);
-                                                                if (FilterColor)
-                                                                {
-                                                                    file.Write(OpacityValue);
-                                                                }
-                                                                else
-                                                                {
-                                                                    file.Write((byte)255);
-                                                                }
-                                                            }
-                                                        }
-
-                                                        if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
-                                                        {
-                                                            var ColorTable = new List<int>[2];
-                                                            ColorTable[0] = new List<int>(10240);
-                                                            ColorTable[1] = new List<int>(10240);
-                                                            file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
-                                                            var PaletteData = new byte[512];
-                                                            file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
-
-                                                            for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count; ColorScan++)
-                                                            {
-                                                                var filter = Global.OPT.TextureArray[HoldTexLoc].IllumValues[ColorScan];
-
-                                                                for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
-                                                                {
-                                                                    byte RedColor;
-                                                                    byte GreenColor;
-                                                                    byte BlueColor;
-                                                                    OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
-
-                                                                    byte RedCheck = filter.RValue;
-                                                                    byte GreenCheck = filter.GValue;
-                                                                    byte BlueCheck = filter.BValue;
-                                                                    byte ColorTolerance = filter.Tolerance;
-
-                                                                    if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
-                                                                    {
-                                                                        ColorTable[0].Add(rgbIndex / 2);
-                                                                        ColorTable[1].Add(filter.Characteristic);
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            file.Seek(PaletteServer, System.IO.SeekOrigin.Begin);
-                                                            byte[] PaletteString = new byte[8192];
-                                                            file.BaseStream.Read(PaletteString, 0, PaletteString.Length);
-
-                                                            for (int paletteIndex = 0; paletteIndex < 16; paletteIndex++)
-                                                            {
-                                                                for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
-                                                                {
-                                                                    int characteristic = ColorTable[1][colorIndex];
-
-                                                                    if (characteristic < 1 || characteristic > 16)
-                                                                    {
-                                                                        continue;
-                                                                    }
-
-                                                                    ushort ColorTake = BitConverter.ToUInt16(PaletteString, (characteristic - 1) * 512 + ColorTable[0][colorIndex] * 2);
-                                                                    file.Write((PaletteServer + 8192) - (16 - paletteIndex) * 512 + ColorTable[0][colorIndex] * 2, ColorTake);
-                                                                }
-                                                            }
-                                                        }
+                                                        optxwacreate_WriteTexture(file, rand, HoldTexLoc, HoldTexLocBytes, TextureArray, PaletteArray, faceGroupIndex, fgTexIndex);
                                                     }
                                                     else
                                                     {
@@ -5772,475 +5292,7 @@ namespace OPTech
                                                         if (Global.OPT.TextureArray[HoldTexLoc].Usage == "UNUSED")
                                                         {
                                                             Global.OPT.TextureArray[HoldTexLoc].Usage = "USED";
-                                                            file.Seek(0, System.IO.SeekOrigin.End);
-                                                            file.Write(100 + (int)file.BaseStream.Length + 24);
-                                                            file.Write(20);
-
-                                                            System.IO.FileStream filestreamTexture;
-
-                                                            int ImageWidth;
-                                                            int ImageHeight;
-                                                            int ImageSize;
-                                                            int ImageColorsCount;
-                                                            int ImageMipWidth;
-                                                            int ImageMipHeight;
-                                                            int ImageSizeSum;
-                                                            int TransRefPos = -1;
-
-                                                            if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count == 0)
-                                                            {
-                                                                file.Write(0);
-                                                                file.Write(0);
-                                                                file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                                file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
-                                                                file.Write(HoldTexLocBytes);
-                                                                file.Write((byte)0);
-
-                                                                filestreamTexture = null;
-
-                                                                try
-                                                                {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                    using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                    {
-                                                                        filestreamTexture = null;
-
-                                                                        ImageWidth = fileTexture.ReadInt32(18);
-                                                                        ImageHeight = fileTexture.ReadInt32(22);
-                                                                        //ImageSize = fileTexture.ReadInt32(34);
-
-                                                                        //if (ImageSize == 0)
-                                                                        //{
-                                                                        //    ImageSize = ImageWidth * ImageHeight;
-                                                                        //}
-
-                                                                        ImageSize = ImageWidth * ImageHeight;
-
-                                                                        ImageColorsCount = fileTexture.ReadInt32(46);
-
-                                                                        if (ImageColorsCount == 0)
-                                                                        {
-                                                                            ImageColorsCount = 256;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                finally
-                                                                {
-                                                                    if (filestreamTexture != null)
-                                                                    {
-                                                                        filestreamTexture.Dispose();
-                                                                    }
-                                                                }
-
-                                                                ImageMipWidth = ImageWidth;
-                                                                ImageMipHeight = ImageHeight;
-                                                                ImageSizeSum = 0;
-                                                                while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
-                                                                {
-                                                                    ImageSizeSum += ImageMipWidth * ImageMipHeight;
-                                                                    ImageMipWidth /= 2;
-                                                                    ImageMipHeight /= 2;
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                file.Write(1);
-                                                                file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
-                                                                file.Write((int)(2147483647 * rand.NextDouble() + 1));
-                                                                file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
-                                                                file.Write(HoldTexLocBytes);
-                                                                file.Write((byte)0);
-
-                                                                filestreamTexture = null;
-
-                                                                try
-                                                                {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                    using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                    {
-                                                                        filestreamTexture = null;
-
-                                                                        ImageWidth = fileTexture.ReadInt32(18);
-                                                                        ImageHeight = fileTexture.ReadInt32(22);
-                                                                        //ImageSize = fileTexture.ReadInt32(34);
-
-                                                                        //if (ImageSize == 0)
-                                                                        //{
-                                                                        //    ImageSize = ImageWidth * ImageHeight;
-                                                                        //}
-
-                                                                        ImageSize = ImageWidth * ImageHeight;
-
-                                                                        ImageColorsCount = fileTexture.ReadInt32(46);
-
-                                                                        if (ImageColorsCount == 0)
-                                                                        {
-                                                                            ImageColorsCount = 256;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                finally
-                                                                {
-                                                                    if (filestreamTexture != null)
-                                                                    {
-                                                                        filestreamTexture.Dispose();
-                                                                    }
-                                                                }
-
-                                                                ImageMipWidth = ImageWidth;
-                                                                ImageMipHeight = ImageHeight;
-                                                                ImageSizeSum = 0;
-                                                                while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
-                                                                {
-                                                                    ImageSizeSum += ImageMipWidth * ImageMipHeight;
-                                                                    ImageMipWidth /= 2;
-                                                                    ImageMipHeight /= 2;
-                                                                }
-
-                                                                TransRefPos = (int)file.BaseStream.Length;
-
-                                                                file.Write(0);
-                                                            }
-
-                                                            int PaletteRefPos = (int)file.BaseStream.Length;
-
-                                                            file.Write(0);
-                                                            file.Write(0);
-                                                            file.Write(ImageWidth * ImageHeight);
-                                                            file.Write(ImageSizeSum);
-                                                            file.Write(ImageWidth);
-                                                            file.Write(ImageHeight);
-
-                                                            byte[] TextureBytes;
-
-                                                            filestreamTexture = null;
-
-                                                            try
-                                                            {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                {
-                                                                    filestreamTexture = null;
-
-                                                                    TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
-                                                                }
-                                                            }
-                                                            finally
-                                                            {
-                                                                if (filestreamTexture != null)
-                                                                {
-                                                                    filestreamTexture.Dispose();
-                                                                }
-                                                            }
-
-                                                            int TexRefPos = (int)file.BaseStream.Length;
-
-                                                            file.Write(TextureBytes);
-
-                                                            int xLength = 1;
-                                                            int yLength = 1;
-                                                            int width = ImageWidth;
-                                                            int height = ImageHeight;
-
-                                                            while (width > 1 || height > 1)
-                                                            {
-                                                                if (width > 1)
-                                                                {
-                                                                    width /= 2;
-                                                                    xLength *= 2;
-                                                                }
-
-                                                                if (height > 1)
-                                                                {
-                                                                    height /= 2;
-                                                                    yLength *= 2;
-                                                                }
-
-                                                                for (int h = 0; h < height; h++)
-                                                                {
-                                                                    for (int w = 0; w < width; w++)
-                                                                    {
-                                                                        int i = h * yLength * ImageWidth + w * xLength;
-                                                                        byte p = TextureBytes[i];
-                                                                        file.Write(p);
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            byte[] PaletteBytes;
-
-                                                            filestreamTexture = null;
-
-                                                            try
-                                                            {
-                                                                filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                                using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                                {
-                                                                    filestreamTexture = null;
-
-                                                                    PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
-                                                                }
-                                                            }
-                                                            finally
-                                                            {
-                                                                if (filestreamTexture != null)
-                                                                {
-                                                                    filestreamTexture.Dispose();
-                                                                }
-                                                            }
-
-                                                            //bool VertFound = false;
-                                                            //int OtherPalette = 0;
-                                                            //for (; OtherPalette < PaletteArray[0].Count; OtherPalette++)
-                                                            //{
-                                                            //    byte[] PaletteBytesComp;
-
-                                                            //    filestreamTexture = null;
-
-                                                            //    try
-                                                            //    {
-                                                            //        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName), System.IO.FileMode.Open, System.IO.FileAccess.Read);
-
-                                                            //        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
-                                                            //        {
-                                                            //            filestreamTexture = null;
-
-                                                            //            int ImageWidthComp = fileTexture.ReadInt32(18);
-                                                            //            int ImageHeightComp = fileTexture.ReadInt32(22);
-                                                            //            fileTexture.BaseStream.Seek((int)fileTexture.BaseStream.Length - (ImageWidthComp * ImageHeightComp) - 1024, System.IO.SeekOrigin.Begin);
-                                                            //            PaletteBytesComp = fileTexture.ReadBytes(1024);
-                                                            //        }
-                                                            //    }
-                                                            //    finally
-                                                            //    {
-                                                            //        if (filestreamTexture != null)
-                                                            //        {
-                                                            //            filestreamTexture.Dispose();
-                                                            //        }
-                                                            //    }
-
-                                                            //    if (Enumerable.SequenceEqual(PaletteBytes, PaletteBytesComp))
-                                                            //    {
-                                                            //        VertFound = true;
-                                                            //        break;
-                                                            //    }
-                                                            //}
-
-                                                            int PalBOffset = -1;
-                                                            int PaletteServer = -1;
-
-                                                            //if (!VertFound || Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
-                                                            //{
-                                                            PaletteArray[0].Add(HoldTexLoc);
-                                                            PaletteArray[1].Add((int)file.BaseStream.Length);
-
-                                                            file.Write(PaletteRefPos, 100 + (int)file.BaseStream.Length);
-
-                                                            file.Seek(0, System.IO.SeekOrigin.End);
-
-                                                            for (int i = 0; i < 256; i++)
-                                                            {
-                                                                file.Write((ushort)0);
-                                                            }
-
-                                                            int ColorDiff = -56 + 8;
-                                                            for (int paletteIndex = 1; paletteIndex < 16; paletteIndex++)
-                                                            {
-                                                                if (paletteIndex == 7)
-                                                                {
-                                                                    PalBOffset = (int)file.BaseStream.Length;
-                                                                }
-
-                                                                for (int pixelIndex = 0; pixelIndex < 1024; pixelIndex += 4)
-                                                                {
-                                                                    int FakeColorR = PaletteBytes[pixelIndex + 2] + ColorDiff;
-                                                                    byte ColorR;
-                                                                    if (FakeColorR < 0)
-                                                                    {
-                                                                        ColorR = 0;
-                                                                    }
-                                                                    else if (FakeColorR > 255)
-                                                                    {
-                                                                        ColorR = 255;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ColorR = (byte)FakeColorR;
-                                                                    }
-
-                                                                    int FakeColorG = PaletteBytes[pixelIndex + 1] + ColorDiff;
-                                                                    byte ColorG;
-                                                                    if (FakeColorG < 0)
-                                                                    {
-                                                                        ColorG = 0;
-                                                                    }
-                                                                    else if (FakeColorG > 255)
-                                                                    {
-                                                                        ColorG = 255;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ColorG = (byte)FakeColorG;
-                                                                    }
-
-                                                                    int FakeColorB = PaletteBytes[pixelIndex] + ColorDiff;
-                                                                    byte ColorB;
-                                                                    if (FakeColorB < 0)
-                                                                    {
-                                                                        ColorB = 0;
-                                                                    }
-                                                                    else if (FakeColorB > 255)
-                                                                    {
-                                                                        ColorB = 255;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ColorB = (byte)FakeColorB;
-                                                                    }
-
-                                                                    ushort Color = MakeShortBinary(ColorR, ColorG, ColorB);
-                                                                    file.Write(Color);
-                                                                }
-
-                                                                ColorDiff += 8;
-                                                            }
-
-                                                            PaletteServer = (int)file.BaseStream.Length - 8192;
-                                                            //}
-                                                            //else if (VertFound)
-                                                            //{
-                                                            //    file.Write(PaletteRefPos, 100 + PaletteArray[1][OtherPalette]);
-                                                            //    PalBOffset = PaletteArray[1][OtherPalette] + 3584;
-                                                            //    PaletteServer = (int)file.BaseStream.Length - 8192;
-                                                            //}
-
-                                                            if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count > 0)
-                                                            {
-                                                                file.Write(TransRefPos, 100 + (int)file.BaseStream.Length);
-                                                                file.Seek(0, System.IO.SeekOrigin.End);
-                                                                file.Write(0);
-                                                                file.Write(26);
-                                                                file.Write(0);
-                                                                file.Write(0);
-                                                                file.Write(ImageSizeSum);
-                                                                file.Write(100 + (int)file.BaseStream.Length + 4);
-
-                                                                var ColorTable = new List<int>[2];
-                                                                ColorTable[0] = new List<int>(10240);
-                                                                ColorTable[1] = new List<int>(10240);
-                                                                file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
-                                                                var PaletteData = new byte[512];
-                                                                file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
-
-                                                                for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].TransValues.Count; ColorScan++)
-                                                                {
-                                                                    var filter = Global.OPT.TextureArray[HoldTexLoc].TransValues[ColorScan];
-
-                                                                    for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
-                                                                    {
-                                                                        byte RedColor;
-                                                                        byte GreenColor;
-                                                                        byte BlueColor;
-                                                                        OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
-
-                                                                        byte RedCheck = filter.RValue;
-                                                                        byte GreenCheck = filter.GValue;
-                                                                        byte BlueCheck = filter.BValue;
-                                                                        byte ColorTolerance = filter.Tolerance;
-
-                                                                        if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
-                                                                        {
-                                                                            ColorTable[0].Add(rgbIndex / 2);
-                                                                            ColorTable[1].Add(filter.Characteristic);
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                for (int pixelIndex = 0; pixelIndex < ImageSizeSum; pixelIndex++)
-                                                                {
-                                                                    file.Seek(TexRefPos + pixelIndex, System.IO.SeekOrigin.Begin);
-                                                                    int DataB = file.BaseStream.ReadByte();
-
-                                                                    bool FilterColor = false;
-                                                                    byte OpacityValue = 0;
-                                                                    for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
-                                                                    {
-                                                                        if (DataB == ColorTable[0][colorIndex])
-                                                                        {
-                                                                            FilterColor = true;
-                                                                            OpacityValue = (byte)ColorTable[1][colorIndex];
-                                                                        }
-                                                                    }
-
-                                                                    file.Seek(0, System.IO.SeekOrigin.End);
-                                                                    if (FilterColor)
-                                                                    {
-                                                                        file.Write(OpacityValue);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        file.Write((byte)255);
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
-                                                            {
-                                                                var ColorTable = new List<int>[2];
-                                                                ColorTable[0] = new List<int>(10240);
-                                                                ColorTable[1] = new List<int>(10240);
-                                                                file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
-                                                                var PaletteData = new byte[512];
-                                                                file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
-
-                                                                for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count; ColorScan++)
-                                                                {
-                                                                    var filter = Global.OPT.TextureArray[HoldTexLoc].IllumValues[ColorScan];
-
-                                                                    for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
-                                                                    {
-                                                                        byte RedColor;
-                                                                        byte GreenColor;
-                                                                        byte BlueColor;
-                                                                        OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
-
-                                                                        byte RedCheck = filter.RValue;
-                                                                        byte GreenCheck = filter.GValue;
-                                                                        byte BlueCheck = filter.BValue;
-                                                                        byte ColorTolerance = filter.Tolerance;
-
-                                                                        if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
-                                                                        {
-                                                                            ColorTable[0].Add(rgbIndex / 2);
-                                                                            ColorTable[1].Add(filter.Characteristic);
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                file.Seek(PaletteServer, System.IO.SeekOrigin.Begin);
-                                                                byte[] PaletteString = new byte[8192];
-                                                                file.BaseStream.Read(PaletteString, 0, PaletteString.Length);
-
-                                                                for (int paletteIndex = 0; paletteIndex < 16; paletteIndex++)
-                                                                {
-                                                                    for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
-                                                                    {
-                                                                        int characteristic = ColorTable[1][colorIndex];
-
-                                                                        if (characteristic < 1 || characteristic > 16)
-                                                                        {
-                                                                            continue;
-                                                                        }
-
-                                                                        ushort ColorTake = BitConverter.ToUInt16(PaletteString, (characteristic - 1) * 512 + ColorTable[0][colorIndex] * 2);
-                                                                        file.Write((PaletteServer + 8192) - (16 - paletteIndex) * 512 + ColorTable[0][colorIndex] * 2, ColorTake);
-                                                                    }
-                                                                }
-                                                            }
+                                                            optxwacreate_WriteTexture(file, rand, HoldTexLoc, HoldTexLocBytes, TextureArray, PaletteArray, faceGroupIndex, fgTexIndex);
                                                         }
                                                         else
                                                         {
@@ -6438,6 +5490,774 @@ namespace OPTech
             else
             {
                 Xceed.Wpf.Toolkit.MessageBox.Show(this, "Done", "create .OPT (XWA)");
+            }
+        }
+
+        private static void optxwacreate_WriteTexture(
+            System.IO.BinaryWriter file,
+            Random rand,
+            int HoldTexLoc,
+            byte[] HoldTexLocBytes,
+            List<List<string>> TextureArray,
+            List<int>[] PaletteArray,
+            int faceGroupIndex,
+            int fgTexIndex)
+        {
+            string filePath = System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][fgTexIndex]);
+            int ImageBpp = ImageHelpers.GetBitsPerPixel(filePath);
+
+            if (ImageBpp == 8)
+            {
+                // 8-bpp
+
+                file.Seek(0, System.IO.SeekOrigin.End);
+                file.Write(100 + (int)file.BaseStream.Length + 24);
+                file.Write(20);
+
+                System.IO.Stream filestreamTexture;
+
+                int ImageWidth;
+                int ImageHeight;
+                int ImageSize;
+                int ImageColorsCount;
+                int ImageMipWidth;
+                int ImageMipHeight;
+                int ImageSizeSum;
+                int TransRefPos = -1;
+
+                if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count == 0)
+                {
+                    file.Write(0);
+                    file.Write(0);
+                    file.Write((int)(2147483647 * rand.NextDouble() + 1));
+                    file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                    file.Write(HoldTexLocBytes);
+                    file.Write((byte)0);
+
+                    filestreamTexture = null;
+
+                    try
+                    {
+                        filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                        {
+                            filestreamTexture = null;
+
+                            ImageWidth = fileTexture.ReadInt32(18);
+                            ImageHeight = fileTexture.ReadInt32(22);
+                            //ImageSize = fileTexture.ReadInt32(34);
+
+                            //if (ImageSize == 0)
+                            //{
+                            //    ImageSize = ImageWidth * ImageHeight;
+                            //}
+
+                            ImageSize = ImageWidth * ImageHeight;
+
+                            ImageColorsCount = fileTexture.ReadInt32(46);
+
+                            if (ImageColorsCount == 0)
+                            {
+                                ImageColorsCount = 256;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        if (filestreamTexture != null)
+                        {
+                            filestreamTexture.Dispose();
+                        }
+                    }
+
+                    ImageMipWidth = ImageWidth;
+                    ImageMipHeight = ImageHeight;
+                    ImageSizeSum = 0;
+                    while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
+                    {
+                        ImageSizeSum += ImageMipWidth * ImageMipHeight;
+                        ImageMipWidth /= 2;
+                        ImageMipHeight /= 2;
+                    }
+                }
+                else
+                {
+                    file.Write(1);
+                    file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
+                    file.Write((int)(2147483647 * rand.NextDouble() + 1));
+                    file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
+                    file.Write(HoldTexLocBytes);
+                    file.Write((byte)0);
+
+                    filestreamTexture = null;
+
+                    try
+                    {
+                        filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                        {
+                            filestreamTexture = null;
+
+                            ImageWidth = fileTexture.ReadInt32(18);
+                            ImageHeight = fileTexture.ReadInt32(22);
+                            //ImageSize = fileTexture.ReadInt32(34);
+
+                            //if (ImageSize == 0)
+                            //{
+                            //    ImageSize = ImageWidth * ImageHeight;
+                            //}
+
+                            ImageSize = ImageWidth * ImageHeight;
+
+                            ImageColorsCount = fileTexture.ReadInt32(46);
+
+                            if (ImageColorsCount == 0)
+                            {
+                                ImageColorsCount = 256;
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        if (filestreamTexture != null)
+                        {
+                            filestreamTexture.Dispose();
+                        }
+                    }
+
+                    ImageMipWidth = ImageWidth;
+                    ImageMipHeight = ImageHeight;
+                    ImageSizeSum = 0;
+                    while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
+                    {
+                        ImageSizeSum += ImageMipWidth * ImageMipHeight;
+                        ImageMipWidth /= 2;
+                        ImageMipHeight /= 2;
+                    }
+
+                    TransRefPos = (int)file.BaseStream.Length;
+
+                    file.Write(0);
+                }
+
+                int PaletteRefPos = (int)file.BaseStream.Length;
+
+                file.Write(0);
+                file.Write(0);
+                file.Write(ImageWidth * ImageHeight);
+                file.Write(ImageSizeSum);
+                file.Write(ImageWidth);
+                file.Write(ImageHeight);
+
+                byte[] TextureBytes;
+
+                filestreamTexture = null;
+
+                try
+                {
+                    filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                    using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                    {
+                        filestreamTexture = null;
+
+                        TextureBytes = fileTexture.ReadTextureData8Bpp(ImageWidth, ImageHeight);
+                    }
+                }
+                finally
+                {
+                    if (filestreamTexture != null)
+                    {
+                        filestreamTexture.Dispose();
+                    }
+                }
+
+                int TexRefPos = (int)file.BaseStream.Length;
+
+                file.Write(TextureBytes);
+
+                int xLength = 1;
+                int yLength = 1;
+                int width = ImageWidth;
+                int height = ImageHeight;
+
+                while (width > 1 || height > 1)
+                {
+                    if (width > 1)
+                    {
+                        width /= 2;
+                        xLength *= 2;
+                    }
+
+                    if (height > 1)
+                    {
+                        height /= 2;
+                        yLength *= 2;
+                    }
+
+                    for (int h = 0; h < height; h++)
+                    {
+                        for (int w = 0; w < width; w++)
+                        {
+                            int i = h * yLength * ImageWidth + w * xLength;
+                            byte p = TextureBytes[i];
+                            file.Write(p);
+                        }
+                    }
+                }
+
+                byte[] PaletteBytes;
+
+                filestreamTexture = null;
+
+                try
+                {
+                    filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                    using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                    {
+                        filestreamTexture = null;
+
+                        PaletteBytes = fileTexture.ReadTexturePalette(ImageWidth, ImageHeight, ImageColorsCount);
+                    }
+                }
+                finally
+                {
+                    if (filestreamTexture != null)
+                    {
+                        filestreamTexture.Dispose();
+                    }
+                }
+
+                int PalBOffset = -1;
+                int PaletteServer = -1;
+
+                PaletteArray[0].Add(HoldTexLoc);
+                PaletteArray[1].Add((int)file.BaseStream.Length);
+
+                file.Write(PaletteRefPos, 100 + (int)file.BaseStream.Length);
+
+                file.Seek(0, System.IO.SeekOrigin.End);
+
+                for (int i = 0; i < 256; i++)
+                {
+                    file.Write((ushort)0);
+                }
+
+                int ColorDiff = -56 + 8;
+                for (int paletteIndex = 1; paletteIndex < 16; paletteIndex++)
+                {
+                    if (paletteIndex == 7)
+                    {
+                        PalBOffset = (int)file.BaseStream.Length;
+                    }
+
+                    for (int pixelIndex = 0; pixelIndex < 1024; pixelIndex += 4)
+                    {
+                        int FakeColorR = PaletteBytes[pixelIndex + 2] + ColorDiff;
+                        byte ColorR;
+                        if (FakeColorR < 0)
+                        {
+                            ColorR = 0;
+                        }
+                        else if (FakeColorR > 255)
+                        {
+                            ColorR = 255;
+                        }
+                        else
+                        {
+                            ColorR = (byte)FakeColorR;
+                        }
+
+                        int FakeColorG = PaletteBytes[pixelIndex + 1] + ColorDiff;
+                        byte ColorG;
+                        if (FakeColorG < 0)
+                        {
+                            ColorG = 0;
+                        }
+                        else if (FakeColorG > 255)
+                        {
+                            ColorG = 255;
+                        }
+                        else
+                        {
+                            ColorG = (byte)FakeColorG;
+                        }
+
+                        int FakeColorB = PaletteBytes[pixelIndex] + ColorDiff;
+                        byte ColorB;
+                        if (FakeColorB < 0)
+                        {
+                            ColorB = 0;
+                        }
+                        else if (FakeColorB > 255)
+                        {
+                            ColorB = 255;
+                        }
+                        else
+                        {
+                            ColorB = (byte)FakeColorB;
+                        }
+
+                        ushort Color = MakeShortBinary(ColorR, ColorG, ColorB);
+                        file.Write(Color);
+                    }
+
+                    ColorDiff += 8;
+                }
+
+                PaletteServer = (int)file.BaseStream.Length - 8192;
+
+                if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count > 0)
+                {
+                    file.Write(TransRefPos, 100 + (int)file.BaseStream.Length);
+                    file.Seek(0, System.IO.SeekOrigin.End);
+                    file.Write(0);
+                    file.Write(26);
+                    file.Write(0);
+                    file.Write(0);
+                    file.Write(ImageSizeSum);
+                    file.Write(100 + (int)file.BaseStream.Length + 4);
+
+                    var ColorTable = new List<int>[2];
+                    ColorTable[0] = new List<int>(10240);
+                    ColorTable[1] = new List<int>(10240);
+                    file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
+                    var PaletteData = new byte[512];
+                    file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
+
+                    for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].TransValues.Count; ColorScan++)
+                    {
+                        var filter = Global.OPT.TextureArray[HoldTexLoc].TransValues[ColorScan];
+
+                        for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
+                        {
+                            byte RedColor;
+                            byte GreenColor;
+                            byte BlueColor;
+                            OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
+
+                            byte RedCheck = filter.RValue;
+                            byte GreenCheck = filter.GValue;
+                            byte BlueCheck = filter.BValue;
+                            byte ColorTolerance = filter.Tolerance;
+
+                            if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
+                            {
+                                ColorTable[0].Add(rgbIndex / 2);
+                                ColorTable[1].Add(filter.Characteristic);
+                            }
+                        }
+                    }
+
+                    for (int pixelIndex = 0; pixelIndex < ImageSizeSum; pixelIndex++)
+                    {
+                        file.Seek(TexRefPos + pixelIndex, System.IO.SeekOrigin.Begin);
+                        int DataB = file.BaseStream.ReadByte();
+
+                        bool FilterColor = false;
+                        byte OpacityValue = 0;
+                        for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
+                        {
+                            if (DataB == ColorTable[0][colorIndex])
+                            {
+                                FilterColor = true;
+                                OpacityValue = (byte)ColorTable[1][colorIndex];
+                            }
+                        }
+
+                        file.Seek(0, System.IO.SeekOrigin.End);
+                        if (FilterColor)
+                        {
+                            file.Write(OpacityValue);
+                        }
+                        else
+                        {
+                            file.Write((byte)255);
+                        }
+                    }
+                }
+
+                if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
+                {
+                    var ColorTable = new List<int>[2];
+                    ColorTable[0] = new List<int>(10240);
+                    ColorTable[1] = new List<int>(10240);
+                    file.Seek(PalBOffset, System.IO.SeekOrigin.Begin);
+                    var PaletteData = new byte[512];
+                    file.BaseStream.Read(PaletteData, 0, PaletteData.Length);
+
+                    for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count; ColorScan++)
+                    {
+                        var filter = Global.OPT.TextureArray[HoldTexLoc].IllumValues[ColorScan];
+
+                        for (int rgbIndex = 0; rgbIndex < 512; rgbIndex += 2)
+                        {
+                            byte RedColor;
+                            byte GreenColor;
+                            byte BlueColor;
+                            OptRead.BufferColorTrunc(PaletteData, rgbIndex, out RedColor, out GreenColor, out BlueColor);
+
+                            byte RedCheck = filter.RValue;
+                            byte GreenCheck = filter.GValue;
+                            byte BlueCheck = filter.BValue;
+                            byte ColorTolerance = filter.Tolerance;
+
+                            if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
+                            {
+                                ColorTable[0].Add(rgbIndex / 2);
+                                ColorTable[1].Add(filter.Characteristic);
+                            }
+                        }
+                    }
+
+                    file.Seek(PaletteServer, System.IO.SeekOrigin.Begin);
+                    byte[] PaletteString = new byte[8192];
+                    file.BaseStream.Read(PaletteString, 0, PaletteString.Length);
+
+                    for (int paletteIndex = 0; paletteIndex < 16; paletteIndex++)
+                    {
+                        for (int colorIndex = 0; colorIndex < ColorTable[0].Count; colorIndex++)
+                        {
+                            int characteristic = ColorTable[1][colorIndex];
+
+                            if (characteristic < 1 || characteristic > 16)
+                            {
+                                continue;
+                            }
+
+                            ushort ColorTake = BitConverter.ToUInt16(PaletteString, (characteristic - 1) * 512 + ColorTable[0][colorIndex] * 2);
+                            file.Write((PaletteServer + 8192) - (16 - paletteIndex) * 512 + ColorTable[0][colorIndex] * 2, ColorTake);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // 32-bpp
+
+                file.Seek(0, System.IO.SeekOrigin.End);
+                file.Write(100 + (int)file.BaseStream.Length + 24);
+                file.Write(20);
+
+                System.IO.Stream filestreamTexture;
+
+                int ImageWidth;
+                int ImageHeight;
+                int ImageSize;
+                int ImageColorsCount;
+                int ImageMipWidth;
+                int ImageMipHeight;
+                int ImageSizeSum;
+                int IllumRefPos = -1;
+
+                if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count == 0)
+                {
+                    file.Write(0);
+                    file.Write(0);
+                    file.Write((int)(2147483647 * rand.NextDouble() + 1));
+                    file.Write(100 + (int)file.BaseStream.Length + 4 + HoldTexLocBytes.Length + 1);
+                    file.Write(HoldTexLocBytes);
+                    file.Write((byte)0);
+
+                    filestreamTexture = null;
+
+                    try
+                    {
+                        filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                        {
+                            filestreamTexture = null;
+
+                            ImageWidth = fileTexture.ReadInt32(18);
+                            ImageHeight = fileTexture.ReadInt32(22);
+                            //ImageSize = fileTexture.ReadInt32(34);
+
+                            //if (ImageSize == 0)
+                            //{
+                            //    ImageSize = ImageWidth * ImageHeight;
+                            //}
+
+                            ImageSize = ImageWidth * ImageHeight;
+
+                            ImageColorsCount = fileTexture.ReadInt32(46);
+
+                            //if (ImageColorsCount == 0)
+                            //{
+                            //    ImageColorsCount = 256;
+                            //}
+                        }
+                    }
+                    finally
+                    {
+                        if (filestreamTexture != null)
+                        {
+                            filestreamTexture.Dispose();
+                        }
+                    }
+
+                    ImageMipWidth = ImageWidth;
+                    ImageMipHeight = ImageHeight;
+                    ImageSizeSum = 0;
+                    while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
+                    {
+                        ImageSizeSum += ImageMipWidth * ImageMipHeight;
+                        ImageMipWidth /= 2;
+                        ImageMipHeight /= 2;
+                    }
+                }
+                else
+                {
+                    file.Write(1);
+                    file.Write(100 + (int)file.BaseStream.Length + 12 + HoldTexLocBytes.Length + 1);
+                    file.Write((int)(2147483647 * rand.NextDouble() + 1));
+                    file.Write(100 + (int)file.BaseStream.Length + 8 + HoldTexLocBytes.Length + 1);
+                    file.Write(HoldTexLocBytes);
+                    file.Write((byte)0);
+
+                    filestreamTexture = null;
+
+                    try
+                    {
+                        filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                        {
+                            filestreamTexture = null;
+
+                            ImageWidth = fileTexture.ReadInt32(18);
+                            ImageHeight = fileTexture.ReadInt32(22);
+                            //ImageSize = fileTexture.ReadInt32(34);
+
+                            //if (ImageSize == 0)
+                            //{
+                            //    ImageSize = ImageWidth * ImageHeight;
+                            //}
+
+                            ImageSize = ImageWidth * ImageHeight;
+
+                            ImageColorsCount = fileTexture.ReadInt32(46);
+
+                            //if (ImageColorsCount == 0)
+                            //{
+                            //    ImageColorsCount = 256;
+                            //}
+                        }
+                    }
+                    finally
+                    {
+                        if (filestreamTexture != null)
+                        {
+                            filestreamTexture.Dispose();
+                        }
+                    }
+
+                    ImageMipWidth = ImageWidth;
+                    ImageMipHeight = ImageHeight;
+                    ImageSizeSum = 0;
+                    while (ImageMipWidth >= 1 && ImageMipHeight >= 1)
+                    {
+                        ImageSizeSum += ImageMipWidth * ImageMipHeight;
+                        ImageMipWidth /= 2;
+                        ImageMipHeight /= 2;
+                    }
+
+                    IllumRefPos = (int)file.BaseStream.Length;
+
+                    file.Write(0);
+                }
+
+                int PaletteRefPos = (int)file.BaseStream.Length;
+
+                file.Write(0);
+                file.Write(0);
+                file.Write((ImageWidth * ImageHeight == ImageSizeSum * 4) ? 0 : (ImageWidth * ImageHeight));
+                file.Write(ImageSizeSum * 4);
+                file.Write(ImageWidth);
+                file.Write(ImageHeight);
+
+                byte[] TextureBytes;
+                bool TextureBytesHasAlpha = false;
+
+                filestreamTexture = null;
+
+                try
+                {
+                    filestreamTexture = ImageHelpers.GetFileStream(filePath);
+
+                    using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
+                    {
+                        filestreamTexture = null;
+
+                        TextureBytes = fileTexture.ReadTextureData32Bpp(ImageWidth, ImageHeight);
+
+                        int length = ImageWidth * ImageHeight;
+                        for (int i = 0; i < length; i++)
+                        {
+                            if (TextureBytes[i * 4 + 3] != 0xff)
+                            {
+                                TextureBytesHasAlpha = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    if (filestreamTexture != null)
+                    {
+                        filestreamTexture.Dispose();
+                    }
+                }
+
+                int TexRefPos = (int)file.BaseStream.Length;
+
+                file.Write(TextureBytes);
+
+                int xLength = 1;
+                int yLength = 1;
+                int width = ImageWidth;
+                int height = ImageHeight;
+
+                while (width > 1 || height > 1)
+                {
+                    if (width > 1)
+                    {
+                        width /= 2;
+                        xLength *= 2;
+                    }
+
+                    if (height > 1)
+                    {
+                        height /= 2;
+                        yLength *= 2;
+                    }
+
+                    for (int h = 0; h < height; h++)
+                    {
+                        for (int w = 0; w < width; w++)
+                        {
+                            int i = h * yLength * ImageWidth + w * xLength;
+                            file.Write(TextureBytes[i * 4 + 0]);
+                            file.Write(TextureBytes[i * 4 + 1]);
+                            file.Write(TextureBytes[i * 4 + 2]);
+                            file.Write(TextureBytes[i * 4 + 3]);
+                        }
+                    }
+                }
+
+                int PaletteServer = -1;
+
+                PaletteArray[0].Add(HoldTexLoc);
+                PaletteArray[1].Add((int)file.BaseStream.Length);
+
+                file.Write(PaletteRefPos, 100 + (int)file.BaseStream.Length);
+                file.Seek(0, System.IO.SeekOrigin.End);
+
+                for (int i = 0; i < 256 * 16; i++)
+                {
+                    file.Write((ushort)0);
+                }
+
+                PaletteServer = (int)file.BaseStream.Length - 8192;
+
+                if (TextureBytesHasAlpha || Global.OPT.TextureArray[HoldTexLoc].TransValues.Count > 0)
+                {
+                    file.Seek(PaletteServer + 2, System.IO.SeekOrigin.Begin);
+                    file.Write((byte)0xff);
+                    file.Seek(0, System.IO.SeekOrigin.End);
+                }
+
+                if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
+                {
+                    file.Seek(PaletteServer + 4, System.IO.SeekOrigin.Begin);
+                    file.Write((byte)0xff);
+                    file.Seek(0, System.IO.SeekOrigin.End);
+                }
+
+                if (Global.OPT.TextureArray[HoldTexLoc].TransValues.Count > 0)
+                {
+                    for (int pixelIndex = 0; pixelIndex < ImageSizeSum; pixelIndex++)
+                    {
+                        file.Seek(TexRefPos + pixelIndex * 4, System.IO.SeekOrigin.Begin);
+
+                        byte BlueColor = (byte)file.BaseStream.ReadByte();
+                        byte GreenColor = (byte)file.BaseStream.ReadByte();
+                        byte RedColor = (byte)file.BaseStream.ReadByte();
+
+                        bool FilterColor = false;
+                        byte OpacityValue = 0;
+
+                        for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].TransValues.Count; ColorScan++)
+                        {
+                            var filter = Global.OPT.TextureArray[HoldTexLoc].TransValues[ColorScan];
+
+                            byte RedCheck = filter.RValue;
+                            byte GreenCheck = filter.GValue;
+                            byte BlueCheck = filter.BValue;
+                            byte ColorTolerance = filter.Tolerance;
+
+                            if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
+                            {
+                                FilterColor = true;
+                                OpacityValue = filter.Characteristic;
+                                break;
+                            }
+                        }
+
+                        if (FilterColor)
+                        {
+                            file.Write(OpacityValue);
+                        }
+                    }
+
+                    file.Seek(0, System.IO.SeekOrigin.End);
+                }
+
+                if (Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count > 0)
+                {
+                    file.Write(IllumRefPos, 100 + (int)file.BaseStream.Length);
+                    file.Seek(0, System.IO.SeekOrigin.End);
+                    file.Write(0);
+                    file.Write(26);
+                    file.Write(0);
+                    file.Write(0);
+                    file.Write(ImageSizeSum);
+                    file.Write(100 + (int)file.BaseStream.Length + 4);
+
+                    for (int pixelIndex = 0; pixelIndex < ImageSizeSum; pixelIndex++)
+                    {
+                        file.Seek(TexRefPos + pixelIndex * 4, System.IO.SeekOrigin.Begin);
+
+                        byte BlueColor = (byte)file.BaseStream.ReadByte();
+                        byte GreenColor = (byte)file.BaseStream.ReadByte();
+                        byte RedColor = (byte)file.BaseStream.ReadByte();
+
+                        byte OpacityValue = 0;
+
+                        for (int ColorScan = 0; ColorScan < Global.OPT.TextureArray[HoldTexLoc].IllumValues.Count; ColorScan++)
+                        {
+                            var filter = Global.OPT.TextureArray[HoldTexLoc].IllumValues[ColorScan];
+
+                            byte RedCheck = filter.RValue;
+                            byte GreenCheck = filter.GValue;
+                            byte BlueCheck = filter.BValue;
+                            byte ColorTolerance = filter.Tolerance;
+
+                            if (RedColor >= RedCheck - ColorTolerance && RedColor <= RedCheck + ColorTolerance && GreenColor >= GreenCheck - ColorTolerance && GreenColor <= GreenCheck + ColorTolerance && BlueColor >= BlueCheck - ColorTolerance && BlueColor <= BlueCheck + ColorTolerance)
+                            {
+                                OpacityValue = filter.Characteristic;
+                                break;
+                            }
+                        }
+
+                        file.Seek(0, System.IO.SeekOrigin.End);
+                        file.Write(OpacityValue);
+                    }
+                }
             }
         }
 
@@ -7024,7 +6844,7 @@ namespace OPTech
                                                                 file.Write(HoldTexLocBytes);
                                                                 file.Write((byte)0);
 
-                                                                System.IO.FileStream filestreamTexture;
+                                                                System.IO.Stream filestreamTexture;
 
                                                                 int ImageWidth;
                                                                 int ImageHeight;
@@ -7038,7 +6858,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]));
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -7096,7 +6916,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]));
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -7153,7 +6973,7 @@ namespace OPTech
 
                                                                 try
                                                                 {
-                                                                    filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][0]));
 
                                                                     using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     {
@@ -7180,7 +7000,7 @@ namespace OPTech
 
                                                                 //    try
                                                                 //    {
-                                                                //        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                //        filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName));
 
                                                                 //        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                 //        {
@@ -7418,7 +7238,7 @@ namespace OPTech
                                                                     file.Write(HoldTexLocBytes);
                                                                     file.Write((byte)0);
 
-                                                                    System.IO.FileStream filestreamTexture;
+                                                                    System.IO.Stream filestreamTexture;
 
                                                                     int ImageWidth;
                                                                     int ImageHeight;
@@ -7432,7 +7252,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]));
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {
@@ -7490,7 +7310,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]));
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {
@@ -7547,7 +7367,7 @@ namespace OPTech
 
                                                                     try
                                                                     {
-                                                                        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                        filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, TextureArray[faceGroupIndex / 2][EachFGTex]));
 
                                                                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                         {
@@ -7574,7 +7394,7 @@ namespace OPTech
 
                                                                     //    try
                                                                     //    {
-                                                                    //        filestreamTexture = new System.IO.FileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName), System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                                                                    //        filestreamTexture = ImageHelpers.GetFileStream(System.IO.Path.Combine(Global.opzpath, Global.OPT.TextureArray[PaletteArray[0][OtherPalette]].TextureName));
 
                                                                     //        using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                                                                     //        {

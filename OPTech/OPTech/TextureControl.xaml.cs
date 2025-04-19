@@ -206,11 +206,11 @@ namespace OPTech
                     {
                         int ImageWidth = 0;
                         int ImageHeight = 0;
-                        System.IO.FileStream filestreamTexture = null;
+                        System.IO.Stream filestreamTexture = null;
 
                         try
                         {
-                            filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                            filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                             {
@@ -290,11 +290,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -370,11 +370,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -464,11 +464,11 @@ namespace OPTech
                     {
                         int ImageWidth = 0;
                         int ImageHeight = 0;
-                        System.IO.FileStream filestreamTexture = null;
+                        System.IO.Stream filestreamTexture = null;
 
                         try
                         {
-                            filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                            filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                             {
@@ -547,11 +547,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -626,11 +626,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -823,11 +823,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -933,11 +933,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1043,11 +1043,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1153,11 +1153,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1263,11 +1263,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1373,11 +1373,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1714,11 +1714,11 @@ namespace OPTech
                     {
                         int ImageWidth = 0;
                         int ImageHeight = 0;
-                        System.IO.FileStream filestreamTexture = null;
+                        System.IO.Stream filestreamTexture = null;
 
                         try
                         {
-                            filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                            filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                             {
@@ -1804,11 +1804,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1884,11 +1884,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -1978,11 +1978,11 @@ namespace OPTech
                     {
                         int ImageWidth = 0;
                         int ImageHeight = 0;
-                        System.IO.FileStream filestreamTexture = null;
+                        System.IO.Stream filestreamTexture = null;
 
                         try
                         {
-                            filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                            filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                             using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                             {
@@ -2061,11 +2061,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2140,11 +2140,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2337,11 +2337,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2447,11 +2447,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2557,11 +2557,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2667,11 +2667,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2777,11 +2777,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {
@@ -2887,11 +2887,11 @@ namespace OPTech
                 {
                     int ImageWidth = 0;
                     int ImageHeight = 0;
-                    System.IO.FileStream filestreamTexture = null;
+                    System.IO.Stream filestreamTexture = null;
 
                     try
                     {
-                        filestreamTexture = new System.IO.FileStream(texture.FullTexturePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+                        filestreamTexture = ImageHelpers.GetFileStream(texture.FullTexturePath);
 
                         using (var fileTexture = new System.IO.BinaryReader(filestreamTexture, Encoding.ASCII))
                         {

@@ -69,6 +69,23 @@ namespace OPTech
             return bytes;
         }
 
+        public static byte[] ReadTextureData32Bpp(this System.IO.BinaryReader file, int width, int height)
+        {
+            int index = 0;
+            int imageSize = width * height * 4;
+            var bytes = new byte[width * height * 4];
+
+            file.BaseStream.Seek((int)file.BaseStream.Length - imageSize, System.IO.SeekOrigin.Begin);
+
+            for (int y = 0; y < height; y++)
+            {
+                file.Read(bytes, index, width * 4);
+                index += width * 4;
+            }
+
+            return bytes;
+        }
+
         public static byte[] ReadTexturePalette(this System.IO.BinaryReader file, int width, int height, int colorsCount)
         {
             int padding = ((width + 3) & ~0x03) - width;

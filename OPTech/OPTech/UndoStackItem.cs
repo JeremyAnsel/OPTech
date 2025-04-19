@@ -151,9 +151,7 @@ namespace OPTech
             }
             else
             {
-                Global.frmgeometry.texturelist.ItemsSource = System.IO.Directory
-                    .EnumerateFiles(Global.opzpath, "*.bmp")
-                    .Select(t => System.IO.Path.GetFileName(t));
+                Global.frmgeometry.texturelist.ItemsSource = ImageHelpers.EnumerateImages(Global.opzpath);
             }
 
             Global.CX.MeshScreens(-1, whichLOD);

@@ -881,7 +881,7 @@ namespace OPTech
                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
                                     ScrollOPT = JAlpha - GlobalOffset + 24;
                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                    byte[] AlphaData = file.ReadBytes(ImgSize);
+                                    byte[] AlphaData = file.ReadBytes(BytesSize);
 
                                     TexEntryStruct.Add(new TextureStruct());
                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
@@ -1030,7 +1030,7 @@ namespace OPTech
                                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
                                                     ScrollOPT = JAlpha - GlobalOffset + 24;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                    byte[] AlphaData = file.ReadBytes(ImgSize);
+                                                    byte[] AlphaData = file.ReadBytes(BytesSize);
 
                                                     TexEntryStruct.Add(new TextureStruct());
                                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);
@@ -1132,7 +1132,7 @@ namespace OPTech
                                                     byte[] fullPalData = file.ReadBytes(256 * 2 * 16);
                                                     ScrollOPT = JAlpha - GlobalOffset + 24;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
-                                                    byte[] AlphaData = file.ReadBytes(ImgSize);
+                                                    byte[] AlphaData = file.ReadBytes(BytesSize);
 
                                                     TexEntryStruct.Add(new TextureStruct());
                                                     OptRead.AddTextureIllum(TexEntryStruct.Last(), fullPalData, TexData, ImgWidth, ImgHeight);

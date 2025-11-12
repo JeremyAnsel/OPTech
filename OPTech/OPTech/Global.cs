@@ -91,12 +91,13 @@ namespace OPTech
 
         public static float Round(float value, int digits)
         {
+            value = Math.Max(Math.Min(value, (float)decimal.MaxValue / 10), (float)decimal.MinValue / 10);
             return (float)Math.Round((decimal)value, digits, MidpointRounding.AwayFromZero);
         }
 
         public static float Round(float value)
         {
-            return (float)Math.Round((decimal)value, 4, MidpointRounding.AwayFromZero);
+            return Round(value, 4);
         }
 
         public static bool IsPowerOf2(int value)

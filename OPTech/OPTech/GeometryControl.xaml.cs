@@ -4269,6 +4269,18 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
+        private static void ScaleValue(float scale, ref float value, float center)
+        {
+            if (center == 0.0f)
+            {
+                value = scale / 100 * value;
+            }
+            else
+            {
+                value = scale / 100 * (value - center) + center;
+            }
+        }
+
         private void Xmeshsizetext_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (this.meshlist.SelectedIndex == -1)
@@ -4326,6 +4338,8 @@ namespace OPTech
                         lodEnd = whichLOD + 1;
                     }
 
+                    float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterX : Global.OPT.CenterX;
+
                     for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                     {
                         var lod = mesh.LODArray[lodIndex];
@@ -4338,7 +4352,7 @@ namespace OPTech
                             {
                                 var vertex = face.VertexArray[EachVertex];
 
-                                vertex.XCoord = value / 100 * (vertex.XCoord - Global.OPT.CenterX) + Global.OPT.CenterX;
+                                ScaleValue(value, ref vertex.XCoord, center);
                             }
                         }
 
@@ -4348,20 +4362,23 @@ namespace OPTech
                             {
                                 var hardpoint = mesh.HPArray[EachHardpoint];
 
-                                hardpoint.HPCenterX = value / 100 * (hardpoint.HPCenterX - Global.OPT.CenterX) + Global.OPT.CenterX;
+                                ScaleValue(value, ref hardpoint.HPCenterX, center);
                             }
 
                             for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                             {
                                 var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                                engineGlow.EGCenterX = value / 100 * (engineGlow.EGCenterX - Global.OPT.CenterX) + Global.OPT.CenterX;
-                                engineGlow.EGVectorX = value / 100 * engineGlow.EGVectorX;
+                                ScaleValue(value, ref engineGlow.EGCenterX, center);
+                                ScaleValue(value, ref engineGlow.EGVectorX, 0);
                             }
 
-                            mesh.HitMinX = value / 100 * (mesh.HitMinX - Global.OPT.CenterX) + Global.OPT.CenterX;
-                            mesh.HitMaxX = value / 100 * (mesh.HitMaxX - Global.OPT.CenterX) + Global.OPT.CenterX;
+                            ScaleValue(value, ref mesh.HitMinX, center);
+                            ScaleValue(value, ref mesh.HitMaxX, center);
                             mesh.HitSpanX = mesh.HitMaxX - mesh.HitMinX;
+                            ScaleValue(value, ref mesh.HitCenterX, center);
+                            ScaleValue(value, ref mesh.HitTargetX, center);
+                            ScaleValue(value, ref mesh.RotPivotX, center);
                         }
                     }
                 }
@@ -4423,6 +4440,8 @@ namespace OPTech
                     lodEnd = whichLOD + 1;
                 }
 
+                float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterX : Global.OPT.CenterX;
+
                 for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                 {
                     var lod = mesh.LODArray[lodIndex];
@@ -4435,7 +4454,7 @@ namespace OPTech
                         {
                             var vertex = face.VertexArray[EachVertex];
 
-                            vertex.XCoord = value / 100 * (vertex.XCoord - Global.OPT.CenterX) + Global.OPT.CenterX;
+                            ScaleValue(value, ref vertex.XCoord, center);
                         }
                     }
 
@@ -4445,20 +4464,23 @@ namespace OPTech
                         {
                             var hardpoint = mesh.HPArray[EachHardpoint];
 
-                            hardpoint.HPCenterX = value / 100 * (hardpoint.HPCenterX - Global.OPT.CenterX) + Global.OPT.CenterX;
+                            ScaleValue(value, ref hardpoint.HPCenterX, center);
                         }
 
                         for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                         {
                             var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                            engineGlow.EGCenterX = value / 100 * (engineGlow.EGCenterX - Global.OPT.CenterX) + Global.OPT.CenterX;
-                            engineGlow.EGVectorX = value / 100 * engineGlow.EGVectorX;
+                            ScaleValue(value, ref engineGlow.EGCenterX, center);
+                            ScaleValue(value, ref engineGlow.EGVectorX, 0);
                         }
 
-                        mesh.HitMinX = value / 100 * (mesh.HitMinX - Global.OPT.CenterX) + Global.OPT.CenterX;
-                        mesh.HitMaxX = value / 100 * (mesh.HitMaxX - Global.OPT.CenterX) + Global.OPT.CenterX;
+                        ScaleValue(value, ref mesh.HitMinX, center);
+                        ScaleValue(value, ref mesh.HitMaxX, center);
                         mesh.HitSpanX = mesh.HitMaxX - mesh.HitMinX;
+                        ScaleValue(value, ref mesh.HitCenterX, center);
+                        ScaleValue(value, ref mesh.HitTargetX, center);
+                        ScaleValue(value, ref mesh.RotPivotX, center);
                     }
                 }
             }
@@ -4532,6 +4554,8 @@ namespace OPTech
                         lodEnd = whichLOD + 1;
                     }
 
+                    float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterY : Global.OPT.CenterY;
+
                     for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                     {
                         var lod = mesh.LODArray[lodIndex];
@@ -4544,7 +4568,7 @@ namespace OPTech
                             {
                                 var vertex = face.VertexArray[EachVertex];
 
-                                vertex.YCoord = value / 100 * (vertex.YCoord - Global.OPT.CenterY) + Global.OPT.CenterY;
+                                ScaleValue(value, ref vertex.YCoord, center);
                             }
                         }
 
@@ -4554,20 +4578,23 @@ namespace OPTech
                             {
                                 var hardpoint = mesh.HPArray[EachHardpoint];
 
-                                hardpoint.HPCenterY = value / 100 * (hardpoint.HPCenterY - Global.OPT.CenterY) + Global.OPT.CenterY;
+                                ScaleValue(value, ref hardpoint.HPCenterY, center);
                             }
 
                             for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                             {
                                 var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                                engineGlow.EGCenterY = value / 100 * (engineGlow.EGCenterY - Global.OPT.CenterY) + Global.OPT.CenterY;
-                                engineGlow.EGVectorY = value / 100 * engineGlow.EGVectorY;
+                                ScaleValue(value, ref engineGlow.EGCenterY, center);
+                                ScaleValue(value, ref engineGlow.EGVectorY, 0);
                             }
 
-                            mesh.HitMinY = value / 100 * (mesh.HitMinY - Global.OPT.CenterY) + Global.OPT.CenterY;
-                            mesh.HitMaxY = value / 100 * (mesh.HitMaxY - Global.OPT.CenterY) + Global.OPT.CenterY;
+                            ScaleValue(value, ref mesh.HitMinY, center);
+                            ScaleValue(value, ref mesh.HitMaxY, center);
                             mesh.HitSpanY = mesh.HitMaxY - mesh.HitMinY;
+                            ScaleValue(value, ref mesh.HitCenterY, center);
+                            ScaleValue(value, ref mesh.HitTargetY, center);
+                            ScaleValue(value, ref mesh.RotPivotY, center);
                         }
                     }
                 }
@@ -4629,6 +4656,8 @@ namespace OPTech
                     lodEnd = whichLOD + 1;
                 }
 
+                float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterY : Global.OPT.CenterY;
+
                 for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                 {
                     var lod = mesh.LODArray[lodIndex];
@@ -4641,7 +4670,7 @@ namespace OPTech
                         {
                             var vertex = face.VertexArray[EachVertex];
 
-                            vertex.YCoord = value / 100 * (vertex.YCoord - Global.OPT.CenterY) + Global.OPT.CenterY;
+                            ScaleValue(value, ref vertex.YCoord, center);
                         }
                     }
 
@@ -4651,20 +4680,23 @@ namespace OPTech
                         {
                             var hardpoint = mesh.HPArray[EachHardpoint];
 
-                            hardpoint.HPCenterY = value / 100 * (hardpoint.HPCenterY - Global.OPT.CenterY) + Global.OPT.CenterY;
+                            ScaleValue(value, ref hardpoint.HPCenterY, center);
                         }
 
                         for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                         {
                             var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                            engineGlow.EGCenterY = value / 100 * (engineGlow.EGCenterY - Global.OPT.CenterY) + Global.OPT.CenterY;
-                            engineGlow.EGVectorY = value / 100 * engineGlow.EGVectorY;
+                            ScaleValue(value, ref engineGlow.EGCenterY, center);
+                            ScaleValue(value, ref engineGlow.EGVectorY, 0);
                         }
 
-                        mesh.HitMinY = value / 100 * (mesh.HitMinY - Global.OPT.CenterY) + Global.OPT.CenterY;
-                        mesh.HitMaxY = value / 100 * (mesh.HitMaxY - Global.OPT.CenterY) + Global.OPT.CenterY;
+                        ScaleValue(value, ref mesh.HitMinY, center);
+                        ScaleValue(value, ref mesh.HitMaxY, center);
                         mesh.HitSpanY = mesh.HitMaxY - mesh.HitMinY;
+                        ScaleValue(value, ref mesh.HitCenterY, center);
+                        ScaleValue(value, ref mesh.HitTargetY, center);
+                        ScaleValue(value, ref mesh.RotPivotY, center);
                     }
                 }
             }
@@ -4738,6 +4770,8 @@ namespace OPTech
                         lodEnd = whichLOD + 1;
                     }
 
+                    float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterZ : Global.OPT.CenterZ;
+
                     for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                     {
                         var lod = mesh.LODArray[lodIndex];
@@ -4750,7 +4784,7 @@ namespace OPTech
                             {
                                 var vertex = face.VertexArray[EachVertex];
 
-                                vertex.ZCoord = value / 100 * (vertex.ZCoord - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                                ScaleValue(value, ref vertex.ZCoord, center);
                             }
                         }
 
@@ -4760,20 +4794,23 @@ namespace OPTech
                             {
                                 var hardpoint = mesh.HPArray[EachHardpoint];
 
-                                hardpoint.HPCenterZ = value / 100 * (hardpoint.HPCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                                ScaleValue(value, ref hardpoint.HPCenterZ, center);
                             }
 
                             for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                             {
                                 var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                                engineGlow.EGCenterZ = value / 100 * (engineGlow.EGCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                                //engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
+                                ScaleValue(value, ref engineGlow.EGCenterZ, center);
+                                //ScaleValue(value, ref engineGlow.EGVectorZ, 0);
                             }
 
-                            mesh.HitMinZ = value / 100 * (mesh.HitMinZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                            mesh.HitMaxZ = value / 100 * (mesh.HitMaxZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                            ScaleValue(value, ref mesh.HitMinZ, center);
+                            ScaleValue(value, ref mesh.HitMaxZ, center);
                             mesh.HitSpanZ = mesh.HitMaxZ - mesh.HitMinZ;
+                            ScaleValue(value, ref mesh.HitCenterZ, center);
+                            ScaleValue(value, ref mesh.HitTargetZ, center);
+                            ScaleValue(value, ref mesh.RotPivotZ, center);
                         }
                     }
                 }
@@ -4835,6 +4872,8 @@ namespace OPTech
                     lodEnd = whichLOD + 1;
                 }
 
+                float center = this.preservepositioncheck.IsChecked == true ? mesh.HitCenterZ : Global.OPT.CenterZ;
+
                 for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
                 {
                     var lod = mesh.LODArray[lodIndex];
@@ -4847,7 +4886,7 @@ namespace OPTech
                         {
                             var vertex = face.VertexArray[EachVertex];
 
-                            vertex.ZCoord = value / 100 * (vertex.ZCoord - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                            ScaleValue(value, ref vertex.ZCoord, center);
                         }
                     }
 
@@ -4857,20 +4896,23 @@ namespace OPTech
                         {
                             var hardpoint = mesh.HPArray[EachHardpoint];
 
-                            hardpoint.HPCenterZ = value / 100 * (hardpoint.HPCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                            ScaleValue(value, ref hardpoint.HPCenterZ, center);
                         }
 
                         for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
                         {
                             var engineGlow = mesh.EGArray[EachEngineGlow];
 
-                            engineGlow.EGCenterZ = value / 100 * (engineGlow.EGCenterZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                            //engineGlow.EGVectorZ = value / 100 * engineGlow.EGVectorZ;
+                            ScaleValue(value, ref engineGlow.EGCenterZ, center);
+                            //ScaleValue(value, ref engineGlow.EGVectorZ, 0);
                         }
 
-                        mesh.HitMinZ = value / 100 * (mesh.HitMinZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
-                        mesh.HitMaxZ = value / 100 * (mesh.HitMaxZ - Global.OPT.CenterZ) + Global.OPT.CenterZ;
+                        ScaleValue(value, ref mesh.HitMinZ, center);
+                        ScaleValue(value, ref mesh.HitMaxZ, center);
                         mesh.HitSpanZ = mesh.HitMaxZ - mesh.HitMinZ;
+                        ScaleValue(value, ref mesh.HitCenterZ, center);
+                        ScaleValue(value, ref mesh.HitTargetZ, center);
+                        ScaleValue(value, ref mesh.RotPivotZ, center);
                     }
                 }
             }

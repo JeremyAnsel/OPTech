@@ -273,6 +273,15 @@
                                             ToolTip="Scale OPT..."
                                             Content="Custom..."
                                             Click="meshscalebut_Click" />
+                                    <CheckBox x:Name="preservepositioncheck"
+                                              Grid.Column="2"
+                                              Grid.ColumnSpan="2"
+                                              Grid.Row="10"
+                                              Margin="2 2 2 2"
+                                              HorizontalAlignment="Center"
+                                              ToolTip="Preserve position in scaling"
+                                              Content="Preserve postion"
+                                              IsChecked="False" />
                                     <TextBlock Grid.Column="0"
                                                Grid.Row="10"
                                                FontWeight="Bold"

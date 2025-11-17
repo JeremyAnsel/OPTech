@@ -1023,7 +1023,7 @@ namespace OPTech
                                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgHeight, textureName);
+                                                    OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                                     ScrollOPT = JBPalette - GlobalOffset;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
@@ -1125,7 +1125,7 @@ namespace OPTech
                                                     ScrollOPT = JBPalette - GlobalOffset + 3584;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);
                                                     byte[] PalData = file.ReadBytes(256 * 2);
-                                                    OptRead.BMPWriter(PalData, TexData, ImgSize, ImgHeight, textureName);
+                                                    OptRead.BMPWriter(PalData, TexData, ImgWidth, ImgHeight, textureName);
 
                                                     ScrollOPT = JBPalette - GlobalOffset;
                                                     file.BaseStream.Seek(ScrollOPT, System.IO.SeekOrigin.Begin);

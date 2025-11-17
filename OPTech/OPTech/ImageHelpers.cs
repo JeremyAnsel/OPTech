@@ -83,6 +83,11 @@ namespace OPTech
 
         public static int GetBitsPerPixel(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return 0;
+            }
+
             try
             {
                 filePath = GetExistingImageFilePath(filePath);
@@ -97,6 +102,11 @@ namespace OPTech
 
         public static int GetPixelWidth(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return 0;
+            }
+
             try
             {
                 filePath = GetExistingImageFilePath(filePath);
@@ -117,6 +127,11 @@ namespace OPTech
 
         public static int GetPixelHeight(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return 0;
+            }
+
             try
             {
                 filePath = GetExistingImageFilePath(filePath);

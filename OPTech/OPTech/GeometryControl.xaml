@@ -216,6 +216,7 @@
                                              Grid.Column="0"
                                              Grid.Row="7"
                                              Margin="10 0 10 0"
+                                             Text="0"
                                              ToolTip="mesh rotation X (°)"
                                              Background="#C0FFFF"
                                              PreviewKeyDown="Xmeshangletext_PreviewKeyDown"
@@ -224,6 +225,7 @@
                                              Grid.Column="1"
                                              Grid.Row="7"
                                              Margin="10 0 10 0"
+                                             Text="0"
                                              ToolTip="mesh rotation Y (°)"
                                              Background="#C0FFFF"
                                              PreviewKeyDown="Ymeshangletext_PreviewKeyDown"
@@ -232,10 +234,34 @@
                                              Grid.Column="2"
                                              Grid.Row="7"
                                              Margin="10 0 10 0"
+                                             Text="0"
                                              ToolTip="mesh rotation Z (°)"
                                              Background="#C0FFFF"
                                              PreviewKeyDown="Zmeshangletext_PreviewKeyDown"
                                              LostFocus="Zmeshangletext_LostFocus" />
+                                    <StackPanel Grid.Column="3"
+                                                Grid.Row="7"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <Button Width="24"
+                                                Height="24"
+                                                Margin="2"
+                                                Padding="0"
+                                                Content="&lt;"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                ToolTip="Backward rotation"
+                                                Click="MeshAngleTextBackward_Click" />
+                                        <Button Width="24"
+                                                Height="24"
+                                                Margin="2"
+                                                Padding="0"
+                                                Content="&gt;"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                ToolTip="Forward rotation"
+                                                Click="MeshAngleTextForward_Click" />
+                                    </StackPanel>
                                     <TextBlock Grid.Column="0"
                                                Grid.Row="8"
                                                FontWeight="Bold"
@@ -245,6 +271,7 @@
                                              Grid.Column="0"
                                              Grid.Row="9"
                                              Margin="10 0 10 0"
+                                             Text="100"
                                              ToolTip="mesh scale X (%)"
                                              Background="#C0C0FF"
                                              PreviewKeyDown="Xmeshsizetext_PreviewKeyDown"
@@ -253,6 +280,7 @@
                                              Grid.Column="1"
                                              Grid.Row="9"
                                              Margin="10 0 10 0"
+                                             Text="100"
                                              ToolTip="mesh scale Y (%)"
                                              Background="#C0C0FF"
                                              PreviewKeyDown="Ymeshsizetext_PreviewKeyDown"
@@ -261,6 +289,7 @@
                                              Grid.Column="2"
                                              Grid.Row="9"
                                              Margin="10 0 10 0"
+                                             Text="100"
                                              ToolTip="mesh scale Z (%)"
                                              Background="#C0C0FF"
                                              PreviewKeyDown="Zmeshsizetext_PreviewKeyDown"
@@ -497,6 +526,7 @@
                                                    Text="Rotate" />
                                         <TextBox x:Name="Xfaceangletext"
                                                  Margin="10 2"
+                                                 Text="0"
                                                  ToolTip="face rotation X (°)"
                                                  Background="#C0FFFF"
                                                  PreviewKeyDown="Xfaceangletext_PreviewKeyDown"
@@ -508,6 +538,7 @@
                                                    FontWeight="Bold" />
                                         <TextBox x:Name="Yfaceangletext"
                                                  Margin="10 2"
+                                                 Text="0"
                                                  ToolTip="face rotation Y (°)"
                                                  Background="#C0FFFF"
                                                  PreviewKeyDown="Yfaceangletext_PreviewKeyDown"
@@ -519,11 +550,35 @@
                                                    FontWeight="Bold" />
                                         <TextBox x:Name="Zfaceangletext"
                                                  Margin="10 2"
+                                                 Text="0"
                                                  ToolTip="face rotation Z (°)"
                                                  Background="#C0FFFF"
                                                  PreviewKeyDown="Zfaceangletext_PreviewKeyDown"
                                                  LostFocus="Zfaceangletext_LostFocus" />
                                     </DockPanel>
+                                    <StackPanel Grid.Column="3"
+                                                Grid.Row="3"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <Button Width="24"
+                                                Height="24"
+                                                Margin="2"
+                                                Padding="0"
+                                                Content="&lt;"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                ToolTip="Backward rotation"
+                                                Click="FaceAngleTextBackward_Click" />
+                                        <Button Width="24"
+                                                Height="24"
+                                                Margin="2"
+                                                Padding="0"
+                                                Content="&gt;"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                ToolTip="Forward rotation"
+                                                Click="FaceAngleTextForward_Click" />
+                                    </StackPanel>
                                     <DockPanel Grid.Column="0"
                                                Grid.Row="4">
                                         <TextBlock DockPanel.Dock="Top"
@@ -531,6 +586,7 @@
                                                    Text="Scale" />
                                         <TextBox x:Name="Xfacesizetext"
                                                  Margin="10 2"
+                                                 Text="100"
                                                  ToolTip="face scale X (%)"
                                                  Background="#C0C0FF"
                                                  PreviewKeyDown="Xfacesizetext_PreviewKeyDown"
@@ -542,6 +598,7 @@
                                                    FontWeight="Bold" />
                                         <TextBox x:Name="Yfacesizetext"
                                                  Margin="10 2"
+                                                 Text="100"
                                                  ToolTip="face scale Y (%)"
                                                  Background="#C0C0FF"
                                                  PreviewKeyDown="Yfacesizetext_PreviewKeyDown"
@@ -553,6 +610,7 @@
                                                    FontWeight="Bold" />
                                         <TextBox x:Name="Zfacesizetext"
                                                  Margin="10 2"
+                                                 Text="100"
                                                  ToolTip="face scale Z (%)"
                                                  Background="#C0C0FF"
                                                  PreviewKeyDown="Zfacesizetext_PreviewKeyDown"

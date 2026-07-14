@@ -1,19 +1,11 @@
-﻿using SharpGL.SceneGraph;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OPTech
 {
@@ -3177,196 +3169,7 @@ namespace OPTech
             mesh.RotDegreeZ = z;
         }
 
-        private void Xmeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (this.meshlist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            bool ProcessChanges = false;
-
-            switch (e.Key)
-            {
-                case Key.Return:
-                    ProcessChanges = true;
-                    break;
-            }
-
-            if (ProcessChanges)
-            {
-                e.Handled = true;
-
-                float value;
-                float.TryParse(this.Xmeshangletext.Text, out value);
-                this.Xmeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                double RadianX = 0;
-                double RadianY = value * Math.PI / 180;
-                double RadianZ = 0;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
-                    {
-                        continue;
-                    }
-
-                    int lodStart;
-                    int lodEnd;
-
-                    if (this.applyalllodcheck.IsChecked == true)
-                    {
-                        lodStart = 0;
-                        lodEnd = mesh.LODArray.Count;
-                    }
-                    else
-                    {
-                        lodStart = whichLOD;
-                        lodEnd = whichLOD + 1;
-                    }
-
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
-
-                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
-                    {
-                        var lod = mesh.LODArray[lodIndex];
-
-                        float XCoord;
-                        float YCoord;
-                        float ZCoord;
-
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                            face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                            face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                            face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                            {
-                                var vertex = face.VertexArray[EachVertex];
-
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-
-                        if (lodIndex == 0)
-                        {
-                            for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
-                            {
-                                var hardpoint = mesh.HPArray[EachHardpoint];
-
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                hardpoint.HPCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                hardpoint.HPCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-
-                            for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
-                            {
-                                var engineGlow = mesh.EGArray[EachEngineGlow];
-
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                engineGlow.EGCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                engineGlow.EGCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
-                Global.CX.HardpointScreens(-1, -1);
-                Global.CX.EngineGlowScreens(-1, -1);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
-            }
-        }
-
-        private void Xmeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Xmeshangletext_Process(bool forward)
         {
             if (this.meshlist.SelectedIndex == -1)
             {
@@ -3386,6 +3189,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Xmeshangletext.Text, out value);
             this.Xmeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             double RadianX = 0;
             double RadianY = value * Math.PI / 180;
@@ -3541,23 +3349,8 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
-        private void Ymeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Xmeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (this.meshlist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
             bool ProcessChanges = false;
 
             switch (e.Key)
@@ -3570,167 +3363,16 @@ namespace OPTech
             if (ProcessChanges)
             {
                 e.Handled = true;
-
-                float value;
-                float.TryParse(this.Ymeshangletext.Text, out value);
-                this.Ymeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                double RadianX = value * Math.PI / 180;
-                double RadianY = 0;
-                double RadianZ = 0;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
-                    {
-                        continue;
-                    }
-
-                    int lodStart;
-                    int lodEnd;
-
-                    if (this.applyalllodcheck.IsChecked == true)
-                    {
-                        lodStart = 0;
-                        lodEnd = mesh.LODArray.Count;
-                    }
-                    else
-                    {
-                        lodStart = whichLOD;
-                        lodEnd = whichLOD + 1;
-                    }
-
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
-
-                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
-                    {
-                        var lod = mesh.LODArray[lodIndex];
-
-                        float XCoord;
-                        float YCoord;
-                        float ZCoord;
-
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                            face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                            face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                            face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                            {
-                                var vertex = face.VertexArray[EachVertex];
-
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-
-                        if (lodIndex == 0)
-                        {
-                            for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
-                            {
-                                var hardpoint = mesh.HPArray[EachHardpoint];
-
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                hardpoint.HPCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                hardpoint.HPCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-
-                            for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
-                            {
-                                var engineGlow = mesh.EGArray[EachEngineGlow];
-
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                engineGlow.EGCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                engineGlow.EGCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
-                Global.CX.HardpointScreens(-1, -1);
-                Global.CX.EngineGlowScreens(-1, -1);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
+                //Xmeshangletext_Process(true);
             }
         }
 
-        private void Ymeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Xmeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Xmeshangletext_Process(true);
+        }
+
+        private void Ymeshangletext_Process(bool forward)
         {
             if (this.meshlist.SelectedIndex == -1)
             {
@@ -3750,6 +3392,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Ymeshangletext.Text, out value);
             this.Ymeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             double RadianX = value * Math.PI / 180;
             double RadianY = 0;
@@ -3905,23 +3552,8 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
-        private void Zmeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Ymeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (this.meshlist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
             bool ProcessChanges = false;
 
             switch (e.Key)
@@ -3934,167 +3566,16 @@ namespace OPTech
             if (ProcessChanges)
             {
                 e.Handled = true;
-
-                float value;
-                float.TryParse(this.Zmeshangletext.Text, out value);
-                this.Zmeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                double RadianX = 0;
-                double RadianY = 0;
-                double RadianZ = value * Math.PI / 180;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD || mesh.LODArray.All(t => !t.Selected))
-                    {
-                        continue;
-                    }
-
-                    int lodStart;
-                    int lodEnd;
-
-                    if (this.applyalllodcheck.IsChecked == true)
-                    {
-                        lodStart = 0;
-                        lodEnd = mesh.LODArray.Count;
-                    }
-                    else
-                    {
-                        lodStart = whichLOD;
-                        lodEnd = whichLOD + 1;
-                    }
-
-                    RotateMesh(mesh, RadianX, RadianY, RadianZ);
-
-                    for (int lodIndex = lodStart; lodIndex < lodEnd; lodIndex++)
-                    {
-                        var lod = mesh.LODArray[lodIndex];
-
-                        float XCoord;
-                        float YCoord;
-                        float ZCoord;
-
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                            face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                            face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                            XCoord = face.ICoord;
-                            YCoord = face.JCoord;
-                            ZCoord = face.KCoord;
-                            face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                            face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                            for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                            {
-                                var vertex = face.VertexArray[EachVertex];
-
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.XCoord;
-                                YCoord = vertex.YCoord;
-                                ZCoord = vertex.ZCoord;
-                                vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = vertex.ICoord;
-                                YCoord = vertex.JCoord;
-                                ZCoord = vertex.KCoord;
-                                vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-
-                        if (lodIndex == 0)
-                        {
-                            for (int EachHardpoint = 0; EachHardpoint < mesh.HPArray.Count; EachHardpoint++)
-                            {
-                                var hardpoint = mesh.HPArray[EachHardpoint];
-
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                hardpoint.HPCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                hardpoint.HPCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = hardpoint.HPCenterX;
-                                YCoord = hardpoint.HPCenterY;
-                                ZCoord = hardpoint.HPCenterZ;
-                                hardpoint.HPCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                hardpoint.HPCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-
-                            for (int EachEngineGlow = 0; EachEngineGlow < mesh.EGArray.Count; EachEngineGlow++)
-                            {
-                                var engineGlow = mesh.EGArray[EachEngineGlow];
-
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                engineGlow.EGCenterZ = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                engineGlow.EGCenterZ = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = engineGlow.EGCenterX;
-                                YCoord = engineGlow.EGCenterY;
-                                ZCoord = engineGlow.EGCenterZ;
-                                engineGlow.EGCenterX = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                engineGlow.EGCenterY = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.MeshScreens(this.meshlist.SelectedIndex, whichLOD);
-                Global.CX.HardpointScreens(-1, -1);
-                Global.CX.EngineGlowScreens(-1, -1);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
+                //Ymeshangletext_Process(true);
             }
         }
 
-        private void Zmeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Ymeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Ymeshangletext_Process(true);
+        }
+
+        private void Zmeshangletext_Process(bool forward)
         {
             if (this.meshlist.SelectedIndex == -1)
             {
@@ -4114,6 +3595,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Zmeshangletext.Text, out value);
             this.Zmeshangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             double RadianX = 0;
             double RadianY = 0;
@@ -4267,6 +3753,46 @@ namespace OPTech
             Global.CX.EngineGlowScreens(-1, -1);
             Global.CX.CreateCall();
             Global.ModelChanged = true;
+        }
+
+        private void Zmeshangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            bool ProcessChanges = false;
+
+            switch (e.Key)
+            {
+                case Key.Return:
+                    ProcessChanges = true;
+                    break;
+            }
+
+            if (ProcessChanges)
+            {
+                e.Handled = true;
+                //Zmeshangletext_Process(true);
+            }
+        }
+
+        private void Zmeshangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Zmeshangletext_Process(true);
+        }
+
+        private void MeshAngleText_Process(bool forward)
+        {
+            Ymeshangletext_Process(forward);
+            Xmeshangletext_Process(forward);
+            Zmeshangletext_Process(forward);
+        }
+
+        private void MeshAngleTextForward_Click(object sender, RoutedEventArgs e)
+        {
+            MeshAngleText_Process(true);
+        }
+
+        private void MeshAngleTextBackward_Click(object sender, RoutedEventArgs e)
+        {
+            MeshAngleText_Process(false);
         }
 
         private static void ScaleValue(float scale, ref float value, float center)
@@ -5584,142 +5110,7 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
-        private void Xfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (this.facelist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
-            bool ProcessChanges = false;
-
-            switch (e.Key)
-            {
-                case Key.Return:
-                    ProcessChanges = true;
-                    break;
-            }
-
-            if (ProcessChanges)
-            {
-                e.Handled = true;
-
-                float value;
-                float.TryParse(this.Xfaceangletext.Text, out value);
-                this.Xfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                int IndexMesh = -1;
-                int IndexFace = -1;
-
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-
-                double RadianX = 0;
-                double RadianY = value * Math.PI / 180;
-                double RadianZ = 0;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD)
-                    {
-                        continue;
-                    }
-
-                    var lod = mesh.LODArray[whichLOD];
-
-                    if (lod.Selected)
-                    {
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            if (face.Selected)
-                            {
-                                float XCoord;
-                                float YCoord;
-                                float ZCoord;
-
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                                {
-                                    var vertex = face.VertexArray[EachVertex];
-
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
-            }
-        }
-
-        private void Xfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Xfaceangletext_Process(bool forward)
         {
             if (this.facelist.SelectedIndex == -1)
             {
@@ -5739,6 +5130,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Xfaceangletext.Text, out value);
             this.Xfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             int IndexMesh = -1;
             int IndexFace = -1;
@@ -5840,23 +5236,8 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
-        private void Yfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Xfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (this.facelist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
             bool ProcessChanges = false;
 
             switch (e.Key)
@@ -5869,113 +5250,16 @@ namespace OPTech
             if (ProcessChanges)
             {
                 e.Handled = true;
-
-                float value;
-                float.TryParse(this.Yfaceangletext.Text, out value);
-                this.Yfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                int IndexMesh = -1;
-                int IndexFace = -1;
-
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-
-                double RadianX = value * Math.PI / 180;
-                double RadianY = 0;
-                double RadianZ = 0;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD)
-                    {
-                        continue;
-                    }
-
-                    var lod = mesh.LODArray[whichLOD];
-
-                    if (lod.Selected)
-                    {
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            if (face.Selected)
-                            {
-                                float XCoord;
-                                float YCoord;
-                                float ZCoord;
-
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                                {
-                                    var vertex = face.VertexArray[EachVertex];
-
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
+                //Xfaceangletext_Process(true);
             }
         }
 
-        private void Yfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Xfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Xfaceangletext_Process(true);
+        }
+
+        private void Yfaceangletext_Process(bool forward)
         {
             if (this.facelist.SelectedIndex == -1)
             {
@@ -5995,6 +5279,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Yfaceangletext.Text, out value);
             this.Yfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             int IndexMesh = -1;
             int IndexFace = -1;
@@ -6096,23 +5385,8 @@ namespace OPTech
             Global.ModelChanged = true;
         }
 
-        private void Zfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Yfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (this.facelist.SelectedIndex == -1)
-            {
-                return;
-            }
-
-            int whichLOD;
-            if (Global.DetailMode == "high")
-            {
-                whichLOD = 0;
-            }
-            else
-            {
-                whichLOD = 1;
-            }
-
             bool ProcessChanges = false;
 
             switch (e.Key)
@@ -6125,113 +5399,16 @@ namespace OPTech
             if (ProcessChanges)
             {
                 e.Handled = true;
-
-                float value;
-                float.TryParse(this.Zfaceangletext.Text, out value);
-                this.Zfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
-
-                int IndexMesh = -1;
-                int IndexFace = -1;
-
-                string text = this.facelist.GetSelectedText();
-                StringHelpers.SplitFace(text, out IndexMesh, out IndexFace);
-
-                double RadianX = 0;
-                double RadianY = 0;
-                double RadianZ = value * Math.PI / 180;
-
-                for (int EachSelMesh = 0; EachSelMesh < Global.OPT.MeshArray.Count; EachSelMesh++)
-                {
-                    var mesh = Global.OPT.MeshArray[EachSelMesh];
-
-                    if (mesh.LODArray.Count <= whichLOD)
-                    {
-                        continue;
-                    }
-
-                    var lod = mesh.LODArray[whichLOD];
-
-                    if (lod.Selected)
-                    {
-                        for (int EachFace = 0; EachFace < lod.FaceArray.Count; EachFace++)
-                        {
-                            var face = lod.FaceArray[EachFace];
-
-                            if (face.Selected)
-                            {
-                                float XCoord;
-                                float YCoord;
-                                float ZCoord;
-
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                face.KCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                face.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                XCoord = face.ICoord;
-                                YCoord = face.JCoord;
-                                ZCoord = face.KCoord;
-                                face.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                face.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                for (int EachVertex = 0; EachVertex < 4; EachVertex++)
-                                {
-                                    var vertex = face.VertexArray[EachVertex];
-
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = ZCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.ZCoord = ZCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.ZCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.XCoord;
-                                    YCoord = vertex.YCoord;
-                                    ZCoord = vertex.ZCoord;
-                                    vertex.XCoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.YCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = XCoord * (float)Math.Sin(RadianX) + XCoord * (float)Math.Cos(RadianX);
-                                    vertex.KCoord = XCoord * (float)Math.Cos(RadianX) - XCoord * (float)Math.Sin(RadianX);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianY) - ZCoord * (float)Math.Sin(RadianY);
-                                    vertex.KCoord = YCoord * (float)Math.Sin(RadianY) + ZCoord * (float)Math.Cos(RadianY);
-                                    XCoord = vertex.ICoord;
-                                    YCoord = vertex.JCoord;
-                                    ZCoord = vertex.KCoord;
-                                    vertex.ICoord = YCoord * (float)Math.Sin(RadianZ) + XCoord * (float)Math.Cos(RadianZ);
-                                    vertex.JCoord = YCoord * (float)Math.Cos(RadianZ) - XCoord * (float)Math.Sin(RadianZ);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                double RememberZoom = Global.OrthoZoom;
-                OptRead.CalcDomain();
-                Global.OrthoZoom = RememberZoom;
-                Global.CX.InitCamera();
-                Global.NumberTrim();
-                Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
-                Global.CX.CreateCall();
-                Global.ModelChanged = true;
+                //Yfaceangletext_Process(true);
             }
         }
 
-        private void Zfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        private void Yfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Yfaceangletext_Process(true);
+        }
+
+        private void Zfaceangletext_Process(bool forward)
         {
             if (this.facelist.SelectedIndex == -1)
             {
@@ -6251,6 +5428,11 @@ namespace OPTech
             float value;
             float.TryParse(this.Zfaceangletext.Text, out value);
             this.Zfaceangletext.Text = value.ToString(CultureInfo.InvariantCulture);
+
+            if (!forward)
+            {
+                value = -value;
+            }
 
             int IndexMesh = -1;
             int IndexFace = -1;
@@ -6350,6 +5532,46 @@ namespace OPTech
             Global.CX.FaceScreens(IndexMesh, whichLOD, IndexFace);
             Global.CX.CreateCall();
             Global.ModelChanged = true;
+        }
+
+        private void Zfaceangletext_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            bool ProcessChanges = false;
+
+            switch (e.Key)
+            {
+                case Key.Return:
+                    ProcessChanges = true;
+                    break;
+            }
+
+            if (ProcessChanges)
+            {
+                e.Handled = true;
+                //Zfaceangletext_Process(true);
+            }
+        }
+
+        private void Zfaceangletext_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //Zfaceangletext_Process(true);
+        }
+
+        private void FaceAngleText_Process(bool forward)
+        {
+            Yfaceangletext_Process(forward);
+            Xfaceangletext_Process(forward);
+            Zfaceangletext_Process(forward);
+        }
+
+        private void FaceAngleTextForward_Click(object sender, RoutedEventArgs e)
+        {
+            FaceAngleText_Process(true);
+        }
+
+        private void FaceAngleTextBackward_Click(object sender, RoutedEventArgs e)
+        {
+            FaceAngleText_Process(false);
         }
 
         private void Xfacesizetext_PreviewKeyDown(object sender, KeyEventArgs e)

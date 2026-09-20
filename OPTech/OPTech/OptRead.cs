@@ -772,7 +772,11 @@ namespace OPTech
                                 int texLength;
                                 TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
+                                string textureName = TexEntry.Last() + ".BMP";
+                                if (Global.AppendOptNamePrefixToTextureName)
+                                {
+                                    textureName = fileNameWithoutExtension + "_" + textureName;
+                                }
                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                 {
                                     TexEntry[TexEntry.Count - 1] = string.Empty;
@@ -921,7 +925,11 @@ namespace OPTech
                                                 int texLength;
                                                 TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
+                                                string textureName = TexEntry.Last() + ".BMP";
+                                                if (Global.AppendOptNamePrefixToTextureName)
+                                                {
+                                                    textureName = fileNameWithoutExtension + "_" + textureName;
+                                                }
                                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                                 {
                                                     TexEntry[TexEntry.Count - 1] = string.Empty;
@@ -1062,7 +1070,11 @@ namespace OPTech
                                                 int texLength;
                                                 TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                                string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
+                                                string textureName = TexEntry.Last() + ".BMP";
+                                                if (Global.AppendOptNamePrefixToTextureName)
+                                                {
+                                                    textureName = fileNameWithoutExtension + "_" + textureName;
+                                                }
                                                 if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                                 {
                                                     TexEntry[TexEntry.Count - 1] = string.Empty;
@@ -1154,7 +1166,11 @@ namespace OPTech
                                     int texLength;
                                     TexEntry.Add(file.ReadNullTerminatedString(ScrollOPT, out texLength));
 
-                                    string textureName = fileNameWithoutExtension + "_" + TexEntry.Last() + ".BMP";
+                                    string textureName = TexEntry.Last() + ".BMP";
+                                    if (Global.AppendOptNamePrefixToTextureName)
+                                    {
+                                        textureName = fileNameWithoutExtension + "_" + textureName;
+                                    }
                                     if (Global.OPT.TextureArray.Select(t => t.TextureName).Contains(textureName))
                                     {
                                         TexEntry[TexEntry.Count - 1] = string.Empty;
@@ -1204,7 +1220,11 @@ namespace OPTech
 
                                     //var texture = new TextureStruct();
                                     var texture = TexEntryStruct[EachFG];
-                                    texture.TextureName = fileNameWithoutExtension + "_" + TexEntry[EachFG] + ".BMP";
+                                    texture.TextureName = TexEntry[EachFG] + ".BMP";
+                                    if (Global.AppendOptNamePrefixToTextureName)
+                                    {
+                                        texture.TextureName = fileNameWithoutExtension + "_" + texture.TextureName;
+                                    }
 
                                     if (texture.Width == 0 || texture.Height == 0)
                                     {
@@ -2333,7 +2353,12 @@ namespace OPTech
                                             continue;
                                         }
 
-                                        face.TextureList.Add(fileNameWithoutExtension + "_" + textureName + ".BMP");
+                                        string name = textureName + ".BMP";
+                                        if (Global.AppendOptNamePrefixToTextureName)
+                                        {
+                                            name = fileNameWithoutExtension + "_" + name;
+                                        }
+                                        face.TextureList.Add(name);
                                     }
                                 }
 

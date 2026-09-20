@@ -81,6 +81,8 @@ namespace OPTech
         public static byte GSoftVector2Color;
         public static byte BSoftVector2Color;
 
+        public static bool AppendOptNamePrefixToTextureName = true;
+
         public static double NormalLength = 30;
         public static OptStruct OPT = new OptStruct();
         public static CXXX CX = new CXXX();

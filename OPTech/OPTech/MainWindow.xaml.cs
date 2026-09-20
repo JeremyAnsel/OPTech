@@ -3272,6 +3272,8 @@ namespace OPTech
                 return;
             }
 
+            Global.AppendOptNamePrefixToTextureName = Xceed.Wpf.Toolkit.MessageBox.Show(this, "Do you want to prefix texture names with the opt name?", "Import OPT", MessageBoxButton.YesNo) != MessageBoxResult.No;
+
             Global.ModelChanged = true;
 
             this.saveopzmenu.IsEnabled = true;
